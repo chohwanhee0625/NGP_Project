@@ -58,6 +58,7 @@ std::uniform_real_distribution<float> grandomcolor{0.f,1.f};
 //
 void main(int argc, char** argv)
 {
+	// 고광신 왔다 감 ㅅㄱㅂ(11/01 - 4:40)
 
 	glutInit(&argc, argv);						  // GLUT 초기화 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); // [깊이검사 depth test 추가]디스플레이 모드 설정
