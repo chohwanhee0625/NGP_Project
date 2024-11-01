@@ -1,14 +1,15 @@
 #pragma once
-// ÇÊ¿äÇÑ ¶óÀÌºê·¯¸®, using, enum ¸ğÀ½
-//"#pragma once" Áö½Ã¹®Àº Çì´õ ÆÄÀÏÀÇ ³»¿ëÀÌ ÀÌ¹Ì ÇÑ ¹ø
-// Æ÷ÇÔµÇ¾ú´Ù¸é ÇØ´ç Çì´õ ÆÄÀÏÀ» ´Ù½Ã Æ÷ÇÔÇÏÁö
-// ¾Êµµ·Ï ÄÄÆÄÀÏ·¯¿¡ Áö½ÃÇÕ´Ï´Ù.
+// í•„ìš”í•œ ë¼ì´ë¸ŒëŸ¬ë¦¬, using, enum ëª¨ìŒ
+//"#pragma once" ì§€ì‹œë¬¸ì€ í—¤ë” íŒŒì¼ì˜ ë‚´ìš©ì´ ì´ë¯¸ í•œ ë²ˆ
+// í¬í•¨ë˜ì—ˆë‹¤ë©´ í•´ë‹¹ í—¤ë” íŒŒì¼ì„ ë‹¤ì‹œ í¬í•¨í•˜ì§€
+// ì•Šë„ë¡ ì»´íŒŒì¼ëŸ¬ì— ì§€ì‹œí•©ë‹ˆë‹¤.
 
 #include "include.h"
 
 #include <gl/glew.h>
 #include <gl/freeglut.h>
 #include <gl/freeglut_ext.h>
+
 
 #include <gl/glm/glm.hpp>
 #include <gl/glm/ext.hpp>
@@ -33,7 +34,7 @@ using std::vector;
 
 enum class Toggle
 {
-	Perpective = 0, // ½ÃÁ¡
+	Perpective = 0, // ì‹œì 
 	Light = 1,
 	NearFar = 2,
 	END = 10,
