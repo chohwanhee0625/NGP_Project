@@ -61,7 +61,7 @@ void main(int argc, char** argv)
 	// 고광신 왔다 감 ㅅㄱㅂ(11/01 - 4:40)
 	// gwangsin branch test (11/01 - 4:40)
 	// gwangsin main branch test (11/01 - 5:05)
-
+	// main -> branch (11/01 - 9:08)
 
 	glutInit(&argc, argv);						  // GLUT 초기화 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); // [깊이검사 depth test 추가]디스플레이 모드 설정
