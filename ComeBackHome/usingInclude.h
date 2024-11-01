@@ -6,6 +6,8 @@
 
 #include "include.h"
 
+#include "PacketClass.h"
+
 #include <gl/glew.h>
 #include <gl/freeglut.h>
 #include <gl/freeglut_ext.h>
