@@ -5,6 +5,7 @@
 // 않도록 컴파일러에 지시합니다.
 
 #include "include.h"
+
 #include "PacketClass.h"
 
 #include <gl/glew.h>
