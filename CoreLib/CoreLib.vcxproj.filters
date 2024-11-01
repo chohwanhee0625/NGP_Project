@@ -2,8 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="include.cpp" />
+    <ClCompile Include="PacketClass.cpp">
+      <Filter>PacketClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h" />
+    <ClInclude Include="PacketClass.h">
+      <Filter>PacketClass</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="PacketClass">
+      <UniqueIdentifier>{6ba7b3da-4e2f-4aec-a4f8-54b5e7a4c2b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
