@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Class">
+      <UniqueIdentifier>{beb3b3ba-c90c-455a-9abb-258cf539de86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Default">
+      <UniqueIdentifier>{3680f8eb-1963-46fc-95f4-28e472452252}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{4ac7f137-3317-43cc-a946-f6958c6f8986}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object">
+      <UniqueIdentifier>{0fa9b503-6942-4854-8743-840d7b3b04aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Ground">
+      <UniqueIdentifier>{7f03e50b-3289-41d5-a56c-4ec893605d73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Player">
+      <UniqueIdentifier>{9c7ad7f3-84f7-4914-b30c-f60ea2977952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Camera">
+      <UniqueIdentifier>{2d224984-7283-47e2-98f2-9be671908107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Light">
+      <UniqueIdentifier>{689bed00-32cf-4ec2-890f-2a00918f44d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Border">
+      <UniqueIdentifier>{e6e93b83-0752-4a22-b652-517f81ab35be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\obstacle">
+      <UniqueIdentifier>{762149f1-cf2c-4cf6-a9ff-8e5c8edb7c68}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vertex.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="fragment.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="vertex2.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="fragment2.glsl">
+      <Filter>Shader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="소스.cpp" />
+    <ClCompile Include="grass.cpp">
+      <Filter>Class\Object\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Basis.cpp">
+      <Filter>Class\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Chicken.cpp">
+      <Filter>Class\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Road.cpp">
+      <Filter>Class\Object\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Class\Object\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Class\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Class\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Border.cpp">
+      <Filter>Class\Object\Border</Filter>
+    </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>Class\Object\obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Class\Object\obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Family.cpp">
+      <Filter>Class\Object\Player</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="extern.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="usingInclude.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="소스1.h" />
+    <ClInclude Include="소스.h" />
+    <ClInclude Include="grass.h">
+      <Filter>Class\Object\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Basis.h">
+      <Filter>Class\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Chicken.h">
+      <Filter>Class\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Road.h">
+      <Filter>Class\Object\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Class\Object\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Class\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Class\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Border.h">
+      <Filter>Class\Object\Border</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>Class\Object\obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Class\Object\obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Family.h">
+      <Filter>Class\Object\Player</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
