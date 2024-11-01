@@ -60,6 +60,7 @@ void main(int argc, char** argv)
 {
 	// 고광신 왔다 감 ㅅㄱㅂ(11/01 - 4:40)
 	// gwangsin branch test (11/01 - 4:40)
+	// gwangsin main branch test (11/01 - 5:05)
 
 
 	glutInit(&argc, argv);						  // GLUT 초기화 
