@@ -63,6 +63,7 @@ void main(int argc, char** argv)
 	// gwangsin main branch test (11/01 - 5:05)
 	// main -> branch (11/01 - 9:08)
 	// main2 -> branch (11/01 - 9:11)
+	// 이름 변경
 
 	glutInit(&argc, argv);						  // GLUT 초기화 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); // [깊이검사 depth test 추가]디스플레이 모드 설정
