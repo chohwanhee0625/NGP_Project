@@ -15,8 +15,11 @@
 #include <Windows.h>
 #include <mmsystem.h>
 
+#include "nlohmann/json.hpp"
+
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "mswsock.lib")
 #pragma comment(lib, "winmm.lib")
 
 //using namespace std;
+using namespace nlohmann;
