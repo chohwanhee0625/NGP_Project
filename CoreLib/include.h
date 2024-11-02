@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <queue>
 #include <assert.h>
 #include <random>
 
