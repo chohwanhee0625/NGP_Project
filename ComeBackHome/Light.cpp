@@ -3,6 +3,8 @@
 #include "Light.h"
 #include "extern.h"
 
+//===========================================================================================
+
 // 선형 보간 함수
 float Interpolation(float a, float b, float t) {
 	return a + t * (b - a);

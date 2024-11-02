@@ -3,6 +3,8 @@
 #include "Car.h"
 #include "extern.h"
 
+//===========================================================================================
+
 void tagCar::Move()
 {
 	m_x_distance += m_velocity * m_dir;
@@ -84,7 +86,7 @@ void tagCar::DrawObject()
 
 }
 
-void tagCar::initMatrix4()
+void tagCar::InitMatrix4()
 {
 	m_x_scale = 0.07f;
 	m_y_scale = 0.025f;
@@ -131,7 +133,7 @@ void tagCar::make_car()
 	gVec.push_back(wheel_4_small);
 }
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagCarMiddle::Move()
 {
@@ -208,7 +210,7 @@ void tagCarMiddle::DrawObject()
 
 }
 
-void tagCarMiddle::initMatrix4()
+void tagCarMiddle::InitMatrix4()
 {
 	m_x_scale = 0.04f;
 	m_y_scale = 0.03f;
@@ -220,7 +222,7 @@ void tagCarMiddle::initMatrix4()
 	//	m_z_distance = -0.5f * m_idx;
 }
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagCarWindow::Move()
 {
@@ -299,7 +301,7 @@ void tagCarWindow::DrawObject()
 
 }
 
-void tagCarWindow::initMatrix4()
+void tagCarWindow::InitMatrix4()
 {
 	m_x_scale = 0.03f;
 	m_y_scale = 0.017f;
@@ -311,7 +313,7 @@ void tagCarWindow::initMatrix4()
 	//	m_z_distance = -0.5f * m_idx;
 }
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagCarWheel_1::Move()
 {
@@ -390,7 +392,7 @@ void tagCarWheel_1::DrawObject()
 
 }
 
-void tagCarWheel_1::initMatrix4()
+void tagCarWheel_1::InitMatrix4()
 {
 	m_x_scale = 0.015f;
 	m_y_scale = 0.015f;
@@ -401,7 +403,7 @@ void tagCarWheel_1::initMatrix4()
 	m_z_distance = -0.1 * m_idx + 0.018; 
 }
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagCarWheel_1_small::Move()
 {
@@ -480,7 +482,7 @@ void tagCarWheel_1_small::DrawObject()
 
 }
 
-void tagCarWheel_1_small::initMatrix4()
+void tagCarWheel_1_small::InitMatrix4()
 {
 	m_x_scale = 0.0075f;
 	m_y_scale = 0.0075f;
@@ -491,7 +493,7 @@ void tagCarWheel_1_small::initMatrix4()
 	m_z_distance = -0.1 * m_idx + 0.018;
 }
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagCarWheel_2::Move()
 {
@@ -570,7 +572,7 @@ void tagCarWheel_2::DrawObject()
 
 }
 
-void tagCarWheel_2::initMatrix4()
+void tagCarWheel_2::InitMatrix4()
 {
 	m_x_scale = 0.015f;
 	m_y_scale = 0.015f;
@@ -581,7 +583,7 @@ void tagCarWheel_2::initMatrix4()
 	m_z_distance = -0.1 * m_idx - 0.018;
 }
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagCarWheel_2_small::Move()
 {
@@ -660,7 +662,7 @@ void tagCarWheel_2_small::DrawObject()
 
 }
 
-void tagCarWheel_2_small::initMatrix4()
+void tagCarWheel_2_small::InitMatrix4()
 {
 	m_x_scale = 0.0075f;
 	m_y_scale = 0.0075f;
@@ -671,8 +673,7 @@ void tagCarWheel_2_small::initMatrix4()
 	m_z_distance = -0.1 * m_idx - 0.018;
 }
 
-
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagCarWheel_3::Move()
 {
@@ -751,7 +752,7 @@ void tagCarWheel_3::DrawObject()
 
 }
 
-void tagCarWheel_3::initMatrix4()
+void tagCarWheel_3::InitMatrix4()
 {
 	m_x_scale = 0.015f;
 	m_y_scale = 0.015f;
@@ -762,7 +763,7 @@ void tagCarWheel_3::initMatrix4()
 	m_z_distance = -0.1 * m_idx + 0.018;
 }
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagCarWheel_3_small::Move()
 {
@@ -841,7 +842,7 @@ void tagCarWheel_3_small::DrawObject()
 
 }
 
-void tagCarWheel_3_small::initMatrix4()
+void tagCarWheel_3_small::InitMatrix4()
 {
 	m_x_scale = 0.0075f;
 	m_y_scale = 0.0075f;
@@ -852,8 +853,7 @@ void tagCarWheel_3_small::initMatrix4()
 	m_z_distance = -0.1 * m_idx + 0.018;
 }
 
-
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagCarWheel_4::Move()
 {
@@ -932,7 +932,7 @@ void tagCarWheel_4::DrawObject()
 
 }
 
-void tagCarWheel_4::initMatrix4()
+void tagCarWheel_4::InitMatrix4()
 {
 	m_x_scale = 0.015f;
 	m_y_scale = 0.015f;
@@ -943,7 +943,7 @@ void tagCarWheel_4::initMatrix4()
 	m_z_distance = -0.1 * m_idx - 0.018;
 }
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagCarWheel_4_small::Move()
 {
@@ -1022,7 +1022,7 @@ void tagCarWheel_4_small::DrawObject()
 
 }
 
-void tagCarWheel_4_small::initMatrix4()
+void tagCarWheel_4_small::InitMatrix4()
 {
 	m_x_scale = 0.0075f;
 	m_y_scale = 0.0075f;

@@ -3,7 +3,7 @@
 #include "Basis.h"
 #include "Tree.h"
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagWood::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -68,7 +68,7 @@ void tagWood::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagWood::initMatrix4()
+void tagWood::InitMatrix4()
 {
 	m_x_scale = 0.03f;
 	m_y_scale = 0.15f;
@@ -83,7 +83,7 @@ void tagWood::update()
 {
 }
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagLeafone::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -148,7 +148,7 @@ void tagLeafone::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagLeafone::initMatrix4()
+void tagLeafone::InitMatrix4()
 {
 	m_x_scale = 0.05f;
 	m_y_scale = 0.03f;
@@ -176,7 +176,7 @@ void tagLeafone::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
 }
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagLeaftwo::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -241,7 +241,7 @@ void tagLeaftwo::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagLeaftwo::initMatrix4()
+void tagLeaftwo::InitMatrix4()
 {
 	m_x_scale = 0.05f;
 	m_y_scale = 0.03f;
@@ -269,7 +269,7 @@ void tagLeaftwo::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
 }
 
-// --------------------------------------------------------------------------
+//===========================================================================================
 
 void tagLeafthree::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -334,7 +334,7 @@ void tagLeafthree::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagLeafthree::initMatrix4()
+void tagLeafthree::InitMatrix4()
 {
 	m_x_scale = 0.05f;
 	m_y_scale = 0.03f;

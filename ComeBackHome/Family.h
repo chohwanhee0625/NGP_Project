@@ -1,7 +1,9 @@
 #pragma once
-class Basis;
+class BasisComponent;
 
-class tagBodyMom : public Basis
+//========================================================================
+// 몸
+class tagBodyMom : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -11,13 +13,13 @@ private:
 public:
 
 	tagBodyMom(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int i)
-		: Basis()
+		: BasisComponent()
 		, idx{i}
 	{
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -25,7 +27,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	virtual void make_car() {};
@@ -33,10 +35,9 @@ public:
 	void update() override;
 };
 
-
 //========================================================================
 // 머리
-class tagHeadMom : public Basis
+class tagHeadMom : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -45,13 +46,13 @@ private:
 public:
 
 	tagHeadMom(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3],int i)
-		: Basis()
+		: BasisComponent()
 		, idx{ i }
 	{
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 
 	}
@@ -60,17 +61,16 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	void update() override;
 	virtual void make_car() {};
 };
 
-
 //========================================================================
 // 입
-class tagMouseMom : public Basis
+class tagMouseMom : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -84,13 +84,13 @@ private:
 public:
 
 	tagMouseMom(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3],int i)
-		: Basis()
+		: BasisComponent()
 		, idx{ i }
 	{
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -98,7 +98,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 
 	void initModelLocation();
@@ -106,10 +106,9 @@ public:
 	virtual void make_car() {};
 };
 
-
 //========================================================================
 // 눈
-class tagEyesMom : public Basis
+class tagEyesMom : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -124,13 +123,13 @@ private:
 public:
 
 	tagEyesMom(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3],int i)
-		: Basis()
+		: BasisComponent()
 		, idx{ i }
 	{
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -138,7 +137,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	void update() override;
@@ -146,11 +145,9 @@ public:
 
 };
 
-
-
 //========================================================================
 // 왼쪽 팔
-class tagLeftArmMom : public Basis
+class tagLeftArmMom : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -169,7 +166,7 @@ private:
 public:
 
 	tagLeftArmMom(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int i)
-		: Basis(),
+		: BasisComponent(),
 		sign{ MINUS },
 		hand_degree{ 0.f },
 		hand_velo{ 0.8f },
@@ -183,7 +180,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -191,7 +188,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
@@ -200,10 +197,8 @@ public:
 };
 
 //========================================================================
-
-
 // 오른쪽 팔  
-class tagRightArmMom : public Basis
+class tagRightArmMom : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -223,7 +218,7 @@ private:
 public:
 
 	tagRightArmMom(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3],int i)
-		: Basis(),
+		: BasisComponent(),
 		sign{ PLUS },
 		hand_degree{ 0.f },
 		hand_velo{ 0.8f },
@@ -236,7 +231,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -244,7 +239,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();;
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
@@ -252,10 +247,9 @@ public:
 	virtual void make_car() {};
 };
 
-
 //========================================================================
 // 왼쪽 다리
-class tagLeftLegMom : public Basis
+class tagLeftLegMom : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -274,7 +268,7 @@ private:
 public:
 
 	tagLeftLegMom(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int i)
-		: Basis(),
+		: BasisComponent(),
 		sign{ PLUS },
 		hand_degree{ 0.f },
 		hand_velo{ 0.8f },
@@ -287,7 +281,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -295,7 +289,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
@@ -303,10 +297,9 @@ public:
 	virtual void make_car() {};
 };
 
-
 //======================================================================
 // 오른쪽 다리
-class tagRightLegMom : public Basis
+class tagRightLegMom : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -326,7 +319,7 @@ private:
 public:
 
 	tagRightLegMom(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int i)
-		: Basis(),
+		: BasisComponent(),
 		sign{ MINUS },
 		hand_degree{ 0.f },
 		hand_velo{ 0.8f },
@@ -339,7 +332,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -348,7 +341,7 @@ public:
 	void InitBuffer();
 	void DrawObject();
 	void WorldMatrix();
-	void initMatrix4();
+	void InitMatrix4();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
 	void update() override;
