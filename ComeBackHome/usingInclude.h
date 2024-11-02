@@ -5,13 +5,11 @@
 // 않도록 컴파일러에 지시합니다.
 
 #include "include.h"
-
 #include "PacketClass.h"
 
 #include <gl/glew.h>
 #include <gl/freeglut.h>
 #include <gl/freeglut_ext.h>
-
 
 #include <gl/glm/glm.hpp>
 #include <gl/glm/ext.hpp>
