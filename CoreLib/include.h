@@ -21,10 +21,6 @@
 #pragma comment(lib, "mswsock.lib")
 #pragma comment(lib, "winmm.lib")
 
-#define R 0
-#define G 1
-#define B 2
-
 //using namespace std;
 using namespace nlohmann;
 
