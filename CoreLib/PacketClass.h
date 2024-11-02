@@ -1,6 +1,7 @@
 #pragma once
 #include "include.h"
 
+
 class INIT_DATA_P
 {
 private:
@@ -61,6 +62,7 @@ public:
 	void from_json(std::string& j_str);
 
 };
+
 
 
 
