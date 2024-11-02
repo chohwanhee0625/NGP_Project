@@ -2,51 +2,61 @@
 #pragma once
 #include "Basis.h"
 
+//===========================================================================================
 
-void ShowMenu();
 void make_shaderProgram();
 void make_vertexShaders();
 void make_fragmentShaders();
-GLvoid drawScene();
-GLvoid Reshape(int w, int h);
 char* filetobuf(const char*);
+
+GLvoid DrawScene();
+GLvoid Reshape(int w, int h);
 GLvoid Keyboard(unsigned char key, int x, int y);
+GLvoid KeyUpboard(unsigned char key, int x, int y);
 void TimerFunction(int value);
 
-//========================================================================
+void ShowMenu();
+void main_viewport();
+void chicken_viewport();
+void border_viewport();
+
+//===========================================================================================
+
+void InitLight();
+void InitBorder();
 
 void gVecClear();
 void gVecDraw();
-void gVecupdate();
+void gVecUpdate();
+
 void SetgVec();
-void Set_Ground();
-void initLight();
-void initBorder();
-void first_viewport();
-void second_viewport();
-void third_viewport();
+void SetChicken();
+void SetGround();
+void SetWoods();
+void SetCars();
+void SetRoadLane();
+void SetMother();
 
-//========================================================================
+//===========================================================================================
 
-void setInitToggle();
-void setOffAllofToggle(); // ¾È¾¸
-void setLightToggle();
-void setPerspectiveToggle();
-GLvoid KeyUpboard(unsigned char key, int x, int y);
+void SetInitToggle();
+void SetOffAllofToggle(); // ¾È¾¸
+void SetLightToggle();
+void SetPerspectiveToggle();
+void SetNearFarCameraToggle(); // °¡±î¿î 3ÀÎÄª Ä«¸Þ¶ó Åä±Û
 
-//========================================================================
+//===========================================================================================
 
-void SetFaceDir(unsigned char key);
+void SetChickenFaceDir(unsigned char key);
+void SetOffGlobalDir();
+
 void ChickenHandling();
+void ChickenMove();
+
+void ChickenRun();
 void ChickenWalk();
-void maketrees();
-void makecars();
-void makelines();
-void Chickenrun();
-void Chickenrwalk();
-void Chicken_jump();
-void Dir_false();
-void setNearFarToggle();
-void makeMom();
+void ChickenJump();
+
+//===========================================================================================
 
 #endif

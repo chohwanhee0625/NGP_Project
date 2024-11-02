@@ -3,6 +3,7 @@
 #include "Basis.h"
 #include "Border.h"
 
+//===========================================================================================
 
 void Border::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -67,7 +68,7 @@ void Border::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void Border::initMatrix4()
+void Border::InitMatrix4()
 {
 
 	m_x_scale = 1.f;

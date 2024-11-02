@@ -1,8 +1,8 @@
 #pragma once
 
-
-
-class tagRoad : public Basis
+//===========================================================================================
+// 도로
+class tagRoad : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -14,14 +14,14 @@ public:
 	tagRoad()
 	{}
 	tagRoad(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint idx)
-		: Basis()
+		: BasisComponent()
 		, m_inum{idx}
 		, m_bLR{(bool)gBoolUniform(gRandomEngine)}
 	{
 		initDir(m_bLR); // 도로 방향값 인자로 줘서 -1,1 초기화
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -30,7 +30,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 
 	void update() override;
 	void make_car() override;
@@ -39,7 +39,9 @@ public:
 
 };
 
-class tagRoadLine : public Basis
+//===========================================================================================
+// 차선
+class tagRoadLine : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -51,11 +53,11 @@ public:
 	tagRoadLine()
 	{}
 	tagRoadLine(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
-		: Basis(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
+		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -63,7 +65,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	virtual void make_car() {};
 	void update()override {};
 

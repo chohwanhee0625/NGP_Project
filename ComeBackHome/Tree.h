@@ -1,6 +1,8 @@
 #pragma once
 
-class tagWood: public Basis
+//===========================================================================================
+// 나무
+class tagWood: public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -12,11 +14,11 @@ public:
 	tagWood()
 	{}
 	tagWood(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
-		: Basis(), m_x_idx{x_idx}, m_z_idx{z_idx}
+		: BasisComponent(), m_x_idx{x_idx}, m_z_idx{z_idx}
 	{
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -24,17 +26,16 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void update() override;
 	void make_car()override {};
 
 	
 };
 
-
-// --------------------------------------------------------------------------
-
-class tagLeafone : public Basis
+//===========================================================================================
+// 잎 1
+class tagLeafone : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -46,11 +47,11 @@ public:
 	tagLeafone()
 	{}
 	tagLeafone(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
-		: Basis(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
+		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -58,7 +59,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void update() override;
 	virtual void Move() {  };
 	void make_car()override {};
@@ -66,9 +67,9 @@ public:
 	void WorldMatrix() override;
 };
 
-// --------------------------------------------------------------------------
-
-class tagLeaftwo : public Basis
+//===========================================================================================
+// 잎2
+class tagLeaftwo : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -80,11 +81,11 @@ public:
 	tagLeaftwo()
 	{}
 	tagLeaftwo(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
-		: Basis(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
+		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -92,7 +93,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void update() override;
 	
 	void make_car()override {};
@@ -100,9 +101,9 @@ public:
 	void WorldMatrix() override;
 };
 
-// --------------------------------------------------------------------------
-
-class tagLeafthree : public Basis
+//===========================================================================================
+// 잎3
+class tagLeafthree : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -114,11 +115,11 @@ public:
 	tagLeafthree()
 	{}
 	tagLeafthree(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
-		: Basis(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
+		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -126,7 +127,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void update() override;
 	void make_car()override {};
 	void WorldMatrix() override;

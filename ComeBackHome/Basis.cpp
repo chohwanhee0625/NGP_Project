@@ -1,6 +1,6 @@
 #include "Basis.h"
 
-void Basis::WorldMatrix()
+void BasisComponent::WorldMatrix()
 {
 	initTotalworld();
 

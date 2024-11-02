@@ -3,6 +3,8 @@
 #include "Basis.h"
 #include "Wall.h"
 
+//===========================================================================================
+
 void tagWall::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
@@ -67,7 +69,7 @@ void tagWall::DrawObject()
 
 }
 
-void tagWall::initMatrix4()
+void tagWall::InitMatrix4()
 {
 	m_x_distance = -0.52f;
 	m_y_distance =  0.20f;

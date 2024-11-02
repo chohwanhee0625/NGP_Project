@@ -2,7 +2,7 @@
 #include "usingInclude.h"
 #include "extern.h"
 
-class Basis
+class BasisComponent
 {
 protected:
 	GLuint  m_vao;
@@ -26,7 +26,7 @@ protected:
 	// --------------------------------------------------
 
 public:
-	Basis() :
+	BasisComponent() :
 		m_vao{},
 		m_pos_vbo{},
 		m_color_vbo{},
@@ -50,8 +50,8 @@ public:
 
 public:
 	virtual void DrawObject() = 0;
-	virtual void initMatrix4() = 0;
-	virtual ~Basis() {}
+	virtual void InitMatrix4() = 0;
+	virtual ~BasisComponent() {}
 	virtual void WorldMatrix();
 	void initTotalworld() { m_Total_world = glm::mat4{ 1.0f }; }
 	virtual void make_car() = 0;

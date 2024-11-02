@@ -10,20 +10,20 @@ extern GLuint gShaderProgramID; //--- 셰이더 프로그램
 extern int gWidth;
 extern int gHeight;
 
-extern int max_z;
+extern int g_max_z;
 
-extern vector<Basis*> gVec;
+extern vector<BasisComponent*> gVec;
 
 extern bool gToggle[(int)Toggle::END];
 extern Camera gCamera;
 extern Light* gLight;
 extern Border* gBorder;
 
-extern bool isMoveChicken;
-extern bool B_Dir[4];
-extern bool isreach;
+extern bool gIsMovingChicken;
+extern bool gChickenDir[4];
+extern bool gIsReach;
 
-//========================================================================
+//===========================================================================================
 extern const GLfloat cube_vertex_array[36 * 3];
 extern const GLfloat colors[36];
 extern const GLfloat cube_color[36 * 3];

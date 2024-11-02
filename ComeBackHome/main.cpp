@@ -6,6 +6,8 @@
 #include "Light.h"
 #include "Border.h"
 
+//===========================================================================================
+
 GLchar* gVertexSource;
 GLchar* gFragmentSource; //--- 소스코드 저장 변수
 GLuint gVertexShader;
@@ -14,19 +16,19 @@ GLuint gShaderProgramID; //--- 셰이더 프로그램
 
 int gWidth{ 800 };
 int gHeight{ 600 }; 
-int max_z{};
+int g_max_z{};
 // 윈도우 크기
 
-bool isreach{};
-vector<Basis*> gVec; // --> 모든 객체를 Basis 부모 클래스 포인터로 다형성을 사용해 관리하기 위한 변수
+bool gIsReach{};
+vector<BasisComponent*> gVec; // --> 모든 객체를 Basis 부모 클래스 포인터로 다형성을 사용해 관리하기 위한 변수
 bool gToggle[(int)Toggle::END]; // 명령어 토글 
 
 Camera gCamera; // 카메라 클래스 
 Light* gLight; // 조명 클래스 
 Border* gBorder; // 화면 우측 상단 핑크색 경계 클래스
 
-bool isMoveChicken{ OFF };
-bool B_Dir[4]{};
+bool gIsMovingChicken{ OFF };
+bool gChickenDir[4]{};
 
 int seednum;
 
@@ -37,6 +39,8 @@ std::uniform_int_distribution<int> gRoadSet{ 5, 10 };
 std::uniform_int_distribution<int> gCarspeed{1,3};
 std::uniform_real_distribution<float> grandomcolor{0.f,1.f};
 // 랜덤 기능 사용할 때 
+
+//===========================================================================================
 
 //bool ConnectScene()
 //{
@@ -56,14 +60,9 @@ std::uniform_real_distribution<float> grandomcolor{0.f,1.f};
 //
 //}
 //
+
 void main(int argc, char** argv)
 {
-	// 고광신 왔다 감 ㅅㄱㅂ(11/01 - 4:40)
-	// gwangsin branch test (11/01 - 4:40)
-	// gwangsin main branch test (11/01 - 5:05)
-	// main -> branch (11/01 - 9:08)
-	// main2 -> branch (11/01 - 9:11)
-
 	glutInit(&argc, argv);						  // GLUT 초기화 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); // [깊이검사 depth test 추가]디스플레이 모드 설정
 	glutInitWindowPosition(100, 100);			  // 윈도우의 위치 지정 
@@ -84,25 +83,24 @@ void main(int argc, char** argv)
 
 	make_shaderProgram(); // 쉐이더 프로그램 만들기
 	ShowMenu(); // 게임 플레이 방법
-	setInitToggle(); // 토글 초기화 
-	initLight(); // 조명 초기 세팅
+	SetInitToggle(); // 토글 초기화 
+	InitLight(); // 조명 초기 세팅
 
 	//while (ConnectScene() == false);
 
-	initBorder(); // 우측 상단 핑크색 경계 만들기 
+	InitBorder(); // 우측 상단 핑크색 경계 만들기 
 	SetgVec(); // 초기 객체 만들기 
 
 	glEnable(GL_DEPTH_TEST);
 	glFrontFace(GL_CCW);
 	
 	// => 콜백함수 설정 
-	glutDisplayFunc(drawScene);					 // 출력 함수의 지정 
+	glutDisplayFunc(DrawScene);					 // 출력 함수의 지정 
 	glutReshapeFunc(Reshape);					 // 다시 그리기 함수 지정
 	glutKeyboardFunc(Keyboard);
 	glutTimerFunc(10, TimerFunction, 1);
 	glutKeyboardUpFunc(KeyUpboard);
 	// TODO : 마우스 이벤트 함수 추가
-
 
 	glutMainLoop();								 // 이벤트 처리 시작 
 }
