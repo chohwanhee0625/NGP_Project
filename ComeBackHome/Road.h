@@ -41,7 +41,7 @@ public:
 
 //===========================================================================================
 // 차선
-class tagRoadLine : public BasisComponent
+class tagRoadLane : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -50,9 +50,9 @@ private:
 	GLint   m_z_idx;
 
 public:
-	tagRoadLine()
+	tagRoadLane()
 	{}
-	tagRoadLine(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
+	tagRoadLane(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
 		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
 		initVertex(cube_array);

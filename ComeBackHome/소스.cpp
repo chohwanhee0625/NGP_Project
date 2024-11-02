@@ -355,7 +355,7 @@ void SetGround()
 
 	int count{};
 	tagRoad* pRoad{};
-	tagRoadLine* pLine{};
+	tagRoadLane* pLine{};
 	tagGrass* pFloor{};
 	int idx{ 0 };
 	pFloor = new tagGrass{ cube_vertex_array_normal, floor_color, idx ,false };
@@ -372,7 +372,7 @@ void SetGround()
 			pRoad = new tagRoad{ cube_vertex_array_normal, floor_color, j+idx}; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
 			gVec.push_back(pRoad);
 			
-			pLine = new tagRoadLine{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
+			pLine = new tagRoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
 			gVec.push_back(pLine); 
 		}
 		idx += cnt; // 도로 개수만큼 idx 증가

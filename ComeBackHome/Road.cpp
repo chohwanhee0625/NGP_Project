@@ -102,14 +102,14 @@ void tagRoad::initDir(GLboolean dir)
 
 //===========================================================================================
 
-void tagRoadLine::initVertex(const GLfloat rec_array[36 * 6])
+void tagRoadLane::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagRoadLine::initColor(const GLfloat color_array[36 * 3])
+void tagRoadLane::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3; i += 3) {
 		m_color[i + 0] = 0.5235f;
@@ -118,7 +118,7 @@ void tagRoadLine::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagRoadLine::InitBuffer()
+void tagRoadLane::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -144,7 +144,7 @@ void tagRoadLine::InitBuffer()
 
 }
 
-void tagRoadLine::DrawObject()
+void tagRoadLane::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -165,7 +165,7 @@ void tagRoadLine::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagRoadLine::InitMatrix4()
+void tagRoadLane::InitMatrix4()
 {
 	m_x_scale = 0.07f;
 	m_y_scale = 0.01f;
@@ -178,9 +178,9 @@ void tagRoadLine::InitMatrix4()
 
 void tagRoad::make_line()
 {
-	tagRoadLine* pLine{};
+	tagRoadLane* pLine{};
 	for (int i = -2; i < 8; ++i) {
-		pLine = new tagRoadLine{ m_vertex, m_color, i ,m_inum };
+		pLine = new tagRoadLane{ m_vertex, m_color, i ,m_inum };
 		gVec.push_back(pLine);
 	}
 }
