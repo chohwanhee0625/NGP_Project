@@ -64,8 +64,11 @@ public:
 };
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> d0e888ef6f55337bb033813aef40a7735d4ab9e2
 class UPDATE_DATA
 {
 private:
