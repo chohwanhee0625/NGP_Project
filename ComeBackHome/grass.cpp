@@ -3,6 +3,7 @@
 #include "Basis.h"
 #include "grass.h"
 
+//===========================================================================================
 
 void tagGrass::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -67,7 +68,7 @@ void tagGrass::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagGrass::initMatrix4()
+void tagGrass::InitMatrix4()
 {
 	
 	m_x_scale = 2.5f;

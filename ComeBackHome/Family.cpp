@@ -7,6 +7,8 @@
 #include "Car.h"
 #include "Tree.h"
 
+//===========================================================================================
+
 const float v{ 0.001 };
 
 void tagBodyMom::DrawObject()
@@ -72,7 +74,7 @@ void tagBodyMom::initVertex(const GLfloat rec_array[36 * 6])
 	}
 }
 
-void tagBodyMom::initMatrix4()
+void tagBodyMom::InitMatrix4()
 {
 	m_x_scale = 0.01f * 50;
 	m_y_scale = 0.01f * 50;
@@ -97,7 +99,7 @@ void tagBodyMom::WorldMatrix()
 
 void tagBodyMom::update()
 {
-	if (isreach)
+	if (gIsReach)
 	{
 		m_y_distance += v;
 		m_z_distance += v;
@@ -108,7 +110,7 @@ void tagBodyMom::initModelLocation()
 {
 }
 
-//========================================================================
+//===========================================================================================
 
 void tagHeadMom::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -173,7 +175,7 @@ void tagHeadMom::DrawObject()
 
 }
 
-void tagHeadMom::initMatrix4()
+void tagHeadMom::InitMatrix4()
 {
 	m_x_scale = 0.01f * 50;
 	m_y_scale = 0.01f * 50;
@@ -198,7 +200,7 @@ void tagHeadMom::WorldMatrix()
 
 void tagHeadMom::update()
 {
-	if (isreach)
+	if (gIsReach)
 	{
 		m_y_distance += v;
 		m_z_distance += v;
@@ -209,7 +211,7 @@ void tagHeadMom::initModelLocation()
 {
 }
 
-//========================================================================
+//===========================================================================================
 
 void tagMouseMom::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -275,7 +277,7 @@ void tagMouseMom::DrawObject()
 
 }
 
-void tagMouseMom::initMatrix4()
+void tagMouseMom::InitMatrix4()
 {
 	m_x_scale = 0.01f / 4 * 50.f;
 	m_y_scale = 0.01f / 3 * 50.f;
@@ -305,7 +307,7 @@ void tagMouseMom::WorldMatrix()
 
 void tagMouseMom::update()
 {
-	if (isreach)
+	if (gIsReach)
 	{
 		m_y_distance += v;
 		m_z_distance += v;
@@ -321,7 +323,7 @@ void tagMouseMom::initModelLocation()
 	m_far_z = m_far_value;
 }
 
-//========================================================================
+//===========================================================================================
 
 void tagEyesMom::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -387,7 +389,7 @@ void tagEyesMom::DrawObject()
 
 }
 
-void tagEyesMom::initMatrix4()
+void tagEyesMom::InitMatrix4()
 {
 	m_x_scale = 0.011f * 55.;
 	m_y_scale = 0.01f / 5 * 50.;
@@ -412,7 +414,7 @@ void tagEyesMom::WorldMatrix()
 
 void tagEyesMom::update()
 {
-	if (isreach)
+	if (gIsReach)
 	{
 		m_y_distance += v;
 		m_z_distance += v;
@@ -428,7 +430,7 @@ void tagEyesMom::initModelLocation()
 	m_far_z = m_far_value;
 }
 
-//========================================================================
+//===========================================================================================
 
 void tagLeftArmMom::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -493,7 +495,7 @@ void tagLeftArmMom::DrawObject()
 
 }
 
-void tagLeftArmMom::initMatrix4()
+void tagLeftArmMom::InitMatrix4()
 {
 	m_x_scale = 0.00125f * 50.f;
 	m_y_scale = 0.005f * 60.f;
@@ -537,7 +539,7 @@ void tagLeftArmMom::update()
 
 	hand_degree += hand_velo * sign;
 
-	if (isreach)
+	if (gIsReach)
 	{
 		m_y_distance += v;
 		m_z_distance += v;
@@ -558,7 +560,7 @@ void tagLeftArmMom::initModelLocation()
 	m_far_z = 0.0;
 }
 
-//========================================================================
+//===========================================================================================
 
 void tagRightArmMom::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -624,7 +626,7 @@ void tagRightArmMom::DrawObject()
 
 }
 
-void tagRightArmMom::initMatrix4()
+void tagRightArmMom::InitMatrix4()
 {
 	m_x_scale = 0.00125f * 50;
 	m_y_scale = 0.005f * 60.f;
@@ -666,7 +668,7 @@ void tagRightArmMom::update()
 
 	hand_degree += hand_velo * sign;
 
-	if (isreach)
+	if (gIsReach)
 	{
 		m_y_distance += v;
 		m_z_distance += v;
@@ -686,7 +688,8 @@ void tagRightArmMom::initModelLocation()
 	m_far_y = 0.0;
 	m_far_z = 0.0;
 }
-//========================================================================
+
+//===========================================================================================
 
 void tagLeftLegMom::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -751,7 +754,7 @@ void tagLeftLegMom::DrawObject()
 
 }
 
-void tagLeftLegMom::initMatrix4()
+void tagLeftLegMom::InitMatrix4()
 {
 	m_x_scale = 0.00125f * 50.;
 	m_y_scale = 0.0125f * 50.;
@@ -793,7 +796,7 @@ void tagLeftLegMom::update()
 
 	hand_degree += hand_velo * sign;
 
-	if (isreach)
+	if (gIsReach)
 	{
 		m_y_distance += v;
 		m_z_distance += v;
@@ -813,8 +816,8 @@ void tagLeftLegMom::initModelLocation()
 	m_far_y = 0.0;
 	m_far_z = 0.0;
 }
-//========================================================================
-#if 1
+
+//===========================================================================================
 
 void tagRightLegMom::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -878,7 +881,7 @@ void tagRightLegMom::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagRightLegMom::initMatrix4()
+void tagRightLegMom::InitMatrix4()
 {
 	m_x_scale = 0.00125f * 50.;
 	m_y_scale = 0.0125f * 50.;
@@ -922,7 +925,7 @@ void tagRightLegMom::update()
 
 	hand_degree += hand_velo * sign;
 
-	if (isreach)
+	if (gIsReach)
 	{
 		m_y_distance += v;
 		m_z_distance += v;
@@ -942,5 +945,3 @@ void tagRightLegMom::initModelLocation()
 	m_far_y = 0.0;
 	m_far_z = 0.0;
 }
-
-#endif

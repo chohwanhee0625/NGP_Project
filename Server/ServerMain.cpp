@@ -1,6 +1,6 @@
 #include "include.h"
 
-Test test;
+// Test test;
 
 int main()
 {

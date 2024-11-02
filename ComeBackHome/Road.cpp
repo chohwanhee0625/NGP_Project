@@ -4,6 +4,8 @@
 #include "Road.h"
 #include "Car.h"
 
+//===========================================================================================
+
 void tagRoad::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
@@ -68,7 +70,7 @@ void tagRoad::DrawObject()
 
 }
 
-void tagRoad::initMatrix4()
+void tagRoad::InitMatrix4()
 {
 	m_x_scale = 2.5f;
 	m_y_scale = 1.f;
@@ -97,6 +99,8 @@ void tagRoad::initDir(GLboolean dir)
 	else if (dir == RIGHT)
 		m_dir = MINUS;
 }
+
+//===========================================================================================
 
 void tagRoadLine::initVertex(const GLfloat rec_array[36 * 6])
 {
@@ -161,7 +165,7 @@ void tagRoadLine::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagRoadLine::initMatrix4()
+void tagRoadLine::InitMatrix4()
 {
 	m_x_scale = 0.07f;
 	m_y_scale = 0.01f;

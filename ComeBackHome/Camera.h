@@ -51,7 +51,7 @@ public:
 		camera_at_z = 0;
 		m_sign = PLUS;
 	}
-	void Walk();
+	void Move();
 
 	void PerspectiveProjection();
 	void setViewTransform_firstVeiwPort();
