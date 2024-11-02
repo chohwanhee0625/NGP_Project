@@ -3,6 +3,8 @@
 #include "Camera.h"
 #include "extern.h"
 
+//===========================================================================================
+
 void Camera::PerspectiveProjection()
 {
 	Total_projection = glm::perspective(glm::radians(45.0f), 1.f, 0.1f, 50.f);
@@ -106,8 +108,6 @@ void Camera::setViewTransform_thirdVeiwPort()
 	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(Total_view));
 }
 
-
-
 void Camera::setFaceDir(unsigned char key)
 {
 	switch (key)
@@ -141,7 +141,7 @@ void Camera::setFaceDir(unsigned char key)
 	}
 }
 
-void Camera::Walk()
+void Camera::Move()
 {
 		camera_move_z = gVec.at(0)->getZdistance();
 		camera_move_x = gVec.at(0)->getXdistance();

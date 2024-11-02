@@ -1,9 +1,12 @@
 #pragma once
 // 닭 부위가 사각형이니 각각 쪼개어 변환을 수행하는 원리
  
-class Basis;
+class BasisComponent;
 
-class tagBody : public Basis
+
+//========================================================================
+// 몸
+class tagBody : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -20,7 +23,7 @@ private:
 public:
 
 	tagBody(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
-		: Basis(),
+		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ 0.002f },
 		face_degree{ 0.f },
@@ -31,7 +34,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -39,7 +42,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	void setFaceDir(unsigned char key);
@@ -67,10 +70,9 @@ public:
 	}
 };
 
-
 //========================================================================
 // 머리
-class tagHead : public Basis
+class tagHead : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -83,7 +85,7 @@ private:
 public:
 
 	tagHead(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
-		: Basis(),
+		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ 0.002f },
 		face_degree{ 0.f }
@@ -91,7 +93,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 
 	}
@@ -100,7 +102,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	void setFaceDir(unsigned char key);
@@ -117,10 +119,9 @@ public:
 	Dir Get_dir()override { return face; }
 };
 
-
 //========================================================================
 // 입
-class tagMouse : public Basis
+class tagMouse : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -140,7 +141,7 @@ private:
 public:
 
 	tagMouse(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
-		: Basis(),
+		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ 0.002f },
 		face_degree{ 0.f },
@@ -151,7 +152,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -159,7 +160,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 
 	void initModelLocation();
@@ -179,10 +180,9 @@ public:
 	Dir Get_dir()override { return face; }
 };
 
-
 //========================================================================
 // 눈
-class tagEyes : public Basis
+class tagEyes : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -201,7 +201,7 @@ private:
 public:
 
 	tagEyes(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
-		: Basis(),
+		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ 0.002f },
 		face_degree{ 0.f },
@@ -212,7 +212,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -220,7 +220,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	void setFaceDir(unsigned char key);
@@ -236,10 +236,9 @@ public:
 	Dir Get_dir()override { return face; }
 };
 
-
 //========================================================================
 // 왼쪽 팔
-class tagLeftArm : public Basis
+class tagLeftArm : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -262,7 +261,7 @@ private:
 public:
 
 	tagLeftArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
-		: Basis(),
+		: BasisComponent(),
 		sign{ MINUS },
 		hand_degree{ 0.f },
 		hand_velo{ 0.8f },
@@ -278,7 +277,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -286,7 +285,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	void handling();
@@ -302,10 +301,9 @@ public:
 	Dir Get_dir()override { return face; }
 };
 
-
 //========================================================================
 // 오른쪽 팔  
-class tagRightArm : public Basis
+class tagRightArm : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -329,7 +327,7 @@ private:
 public:
 
 	tagRightArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
-		: Basis(),
+		: BasisComponent(),
 		sign{ PLUS },
 		hand_degree{ 0.f },
 		hand_velo{ 0.8f },
@@ -344,7 +342,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -352,7 +350,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();;
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	void handling();
@@ -368,10 +366,9 @@ public:
 	Dir Get_dir()override { return face; }
 };
 
-
 //========================================================================
 // 왼쪽 다리
-class tagLeftLeg : public Basis
+class tagLeftLeg : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -394,7 +391,7 @@ private:
 public:
 
 	tagLeftLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
-		: Basis(),
+		: BasisComponent(),
 		sign{ PLUS },
 		hand_degree{ 0.f },
 		hand_velo{ 0.8f },
@@ -409,7 +406,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -417,7 +414,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
 	void handling();
@@ -433,10 +430,9 @@ public:
 	Dir Get_dir()override { return face; }
 };
 
-
 //========================================================================
 // 오른쪽 다리
-class tagRightLeg : public Basis
+class tagRightLeg : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -461,7 +457,7 @@ private:
 public:
 
 	tagRightLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
-		: Basis(),
+		: BasisComponent(),
 		sign{ MINUS },
 		hand_degree{ 0.f },
 		hand_velo{ 0.8f },
@@ -476,7 +472,7 @@ public:
 		initModelLocation();
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -485,7 +481,7 @@ public:
 	void InitBuffer();
 	void DrawObject();
 	void WorldMatrix();
-	void initMatrix4();
+	void InitMatrix4();
 	void initModelLocation();
 	void handling();
 	void setFaceDir(unsigned char key);
@@ -499,6 +495,4 @@ public:
 	void update_yPos()override;
 	Dir Get_dir()override { return face; }
 };
-
-
 

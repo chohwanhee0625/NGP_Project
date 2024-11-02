@@ -1,7 +1,7 @@
 #pragma once
 #include "usingInclude.h"
 
-class Border : public Basis
+class Border : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -11,11 +11,11 @@ public:
 	Border()
 	{}
 	Border(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
-		: Basis()
+		: BasisComponent()
 	{
 		initVertex(cube_array);
 		initColor(color_array);
-		initMatrix4();
+		InitMatrix4();
 		InitBuffer();
 	}
 
@@ -23,7 +23,7 @@ public:
 	void initColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
-	void initMatrix4();
+	void InitMatrix4();
 	virtual void make_car() {};
 	void update()override;
 };

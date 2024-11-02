@@ -18,7 +18,7 @@
 
 #define SQUARE 0.1 
 
-class Basis;
+class BasisComponent;
 class Camera;
 class Light;
 class Border;
