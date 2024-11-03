@@ -59,5 +59,5 @@ public:
 	void setViewTransform_thirdVeiwPort();
 	void setViewTransform_firstVeiwPort_One();
 
-	void setFaceDir(unsigned char key);
+	void SetCameraFaceDir(unsigned char key);
 };

@@ -75,13 +75,13 @@ void Border::InitMatrix4()
 	m_y_scale = 0.1f;
 	m_z_scale = 1.f;
 
-	m_x_distance = 0.f;
-	m_y_distance = 0.1;
-	m_z_distance = 30.f;
+	m_x_pos = 0.f;
+	m_y_pos = 0.1;
+	m_z_pos = 30.f;
 
 
 }
 
-void Border::update()
+void Border::Update()
 {
 }

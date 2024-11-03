@@ -187,7 +187,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
-			gCamera.setFaceDir(STOP);
+			gCamera.SetCameraFaceDir(STOP);
 			SetOffGlobalDir();
 		}
 		break;
@@ -196,7 +196,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
-			gCamera.setFaceDir(STOP);
+			gCamera.SetCameraFaceDir(STOP);
 			SetOffGlobalDir();
 		}
 		break;
@@ -205,7 +205,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
-			gCamera.setFaceDir(STOP);
+			gCamera.SetCameraFaceDir(STOP);
 			SetOffGlobalDir();
 		}
 		break;
@@ -214,7 +214,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
-			gCamera.setFaceDir(STOP);
+			gCamera.SetCameraFaceDir(STOP);
 			SetOffGlobalDir();
 		}
 
@@ -264,7 +264,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		break;
 	
 	case 'm': case'M':
-		gVec.at(0)->changeboll();
+		gVec.at(0)->SwitchCollisionState();
 		break;
 	case 'u': case'U':
 		ChickenRun();
@@ -382,6 +382,7 @@ void SetGround()
 		++idx;
 	}
 
+	// true: 마지막 잔디 땅 표시 -> 나무 설치X, 엄마 위치( 1칸 아님 )
 	pFloor = new tagGrass{ cube_vertex_array_normal, floor_color, idx ,true};
 	gVec.push_back(pFloor);
 	
@@ -402,7 +403,7 @@ void SetCars()
 		if (dynamic_cast<tagRoad*>(gVec[i]) != nullptr)
 		{
 			cnt++;
-			gVec.at(i)->make_car();
+			gVec.at(i)->CreateCar();
 		}
 	}
 	cout << "차 개수: " << cnt << '\n';
@@ -417,16 +418,16 @@ void SetWoods()
 
 	for (int i{}; i < size; ++i)
 	{
-		if (dynamic_cast<tagGrass*>(gVec[i]) != nullptr && !gVec.at(i)->Is_final())
+		if (dynamic_cast<tagGrass*>(gVec[i]) != nullptr && !gVec.at(i)->IsFinalGrass())
 		{
 			for (int j = 1; j < 13; ++j) {
 				bool TF{ (bool)gBoolUniform(gRandomEngine) };
 
 				if (TF) {
-					tagWood* pWood = new tagWood{ cube_vertex_array_normal, floor_color, j , gVec[i]->Get_zidx() };
-					tagLeafone* pGrass1 = new tagLeafone{ cube_vertex_array_normal, floor_color, j , gVec[i]->Get_zidx() };
-					tagLeaftwo* pGrass2 = new tagLeaftwo{ cube_vertex_array_normal, floor_color, j , gVec[i]->Get_zidx() };
-					tagLeafthree* pGrass3 = new tagLeafthree{ cube_vertex_array_normal, floor_color, j , gVec[i]->Get_zidx() }; // grass의 inum필요 
+					tagWood* pWood = new tagWood{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
+					tagLeafone* pGrass1 = new tagLeafone{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
+					tagLeaftwo* pGrass2 = new tagLeaftwo{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
+					tagLeafthree* pGrass3 = new tagLeafthree{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() }; // grass의 inum필요 
 
 					gVec.push_back(pWood);
 					gVec.push_back(pGrass1);
@@ -450,7 +451,7 @@ void SetRoadLane()
 		if (dynamic_cast<tagRoad*>(gVec[i]) != nullptr)
 		{
 			cnt++;
-			gVec.at(i)->make_line();
+			gVec.at(i)->CreateLane();
 		}
 	}
 	cout << "차선 개수: " << cnt << '\n';
@@ -462,9 +463,9 @@ void SetMother()
 
 	for (int i{}; i < size; ++i)
 	{
-		if (dynamic_cast<tagGrass*>(gVec[i]) != nullptr && !gVec.at(i)->Is_final()) 
+		if (dynamic_cast<tagGrass*>(gVec[i]) != nullptr && !gVec.at(i)->IsFinalGrass()) 
 		{ 
-			g_max_z = gVec[i]->Get_zidx(); // 맨 마지막 잔디의 인덱스를 얻기 -> 엄마닭의 위치 초기화를 위함
+			g_max_z = gVec[i]->GetZindex(); // 맨 마지막 잔디의 인덱스를 얻기 -> 엄마닭의 위치 초기화를 위함
 		}
 	}
 
@@ -508,7 +509,7 @@ void gVecDraw()
 void gVecUpdate()
 {
 	for (auto& obj : gVec) {
-		obj->update();
+		obj->Update();
 	}
 }
 
@@ -578,14 +579,14 @@ void SetNearFarCameraToggle()
 
 void ChickenJump()
 {
-	gVec.at(0)->jump();
+	gVec.at(0)->ChickenJump();
 }
 
 void ChickenRun()
 {
 	for (int i{}; i < 8; ++i)
 	{
-		gVec.at(i)->upvelo();
+		gVec.at(i)->SetChickenRunSpeed();
 	}
 }
 
@@ -593,7 +594,7 @@ void ChickenWalk()
 {
 	for (int i{}; i < 8; ++i)
 	{
-		gVec.at(i)->downvelo();
+		gVec.at(i)->SetChickenWalkSpeed();
 	}
 }
 

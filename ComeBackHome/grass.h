@@ -29,9 +29,9 @@ public:
 	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
-	void update() override;
+	void Update() override;
 	
-	virtual void make_car() {};
-	virtual int Get_zidx() { return m_inum; }
-	bool Is_final() override{ return m_final; }
+
+	virtual int GetZindex() { return m_inum; }
+	bool IsFinalGrass() override{ return m_final; }
 }; 

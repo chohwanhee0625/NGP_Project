@@ -32,10 +32,12 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	void update() override;
-	void make_car() override;
-	int Get_zidx()override { return m_inum; }
-	void make_line()override;
+	void Update() override;
+
+	void CreateCar() override;
+
+	int GetZindex()override { return m_inum; }
+	void CreateLane()override;
 
 };
 
@@ -66,7 +68,7 @@ public:
 	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
-	virtual void make_car() {};
-	void update()override {};
+
+	void Update()override {};
 
 };

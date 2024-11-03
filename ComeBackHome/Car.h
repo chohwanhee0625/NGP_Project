@@ -26,7 +26,7 @@ public:
 		initColor(color_array);
 		InitMatrix4();
 		InitBuffer();
-		make_car();
+		CreateCar();
 	}
 
 	void initVertex(const GLfloat rec_array[36 * 6]);
@@ -36,8 +36,8 @@ public:
 	void InitMatrix4();
 
 	virtual void Move();
-	virtual void make_car();
-	void update()override;
+	virtual void CreateCar();
+	void Update()override;
 };
 
 //===========================================================================================
@@ -72,8 +72,8 @@ public:
 	void InitMatrix4();
 
 	virtual void Move();
-	virtual void make_car() {};
-	void update()override;
+
+	void Update()override;
 };
 
 //===========================================================================================
@@ -108,8 +108,8 @@ public:
 	void InitMatrix4();
 
 	virtual void Move();
-	virtual void make_car() {};
-	void update()override;
+
+	void Update()override;
 };
 
 //===========================================================================================
@@ -144,8 +144,8 @@ public:
 	void InitMatrix4();
 
 	virtual void Move();
-	virtual void make_car() {};
-	void update()override;
+
+	void Update()override;
 };
 
 //===========================================================================================
@@ -180,8 +180,8 @@ public:
 	void InitMatrix4();
 
 	virtual void Move();
-	virtual void make_car() {};
-	void update()override;
+
+	void Update()override;
 };
 
 //===========================================================================================
@@ -216,8 +216,8 @@ public:
 	void InitMatrix4();
 
 	virtual void Move();
-	virtual void make_car() {};
-	void update()override;
+
+	void Update()override;
 };
 
 //===========================================================================================
@@ -252,8 +252,8 @@ public:
 	void InitMatrix4();
 
 	virtual void Move();
-	virtual void make_car() {};
-	void update()override;
+
+	void Update()override;
 };
 
 //===========================================================================================
@@ -288,8 +288,8 @@ public:
 	void InitMatrix4();
 
 	virtual void Move();
-	virtual void make_car() {};
-	void update()override;
+
+	void Update()override;
 };
 
 //===========================================================================================
@@ -324,8 +324,8 @@ public:
 	void InitMatrix4();
 
 	virtual void Move();
-	virtual void make_car() {};
-	void update()override;
+
+	void Update()override;
 };
 
 //===========================================================================================
@@ -360,8 +360,8 @@ public:
 	void InitMatrix4();
 
 	virtual void Move();
-	virtual void make_car() {};
-	void update()override;
+
+	void Update()override;
 };
 
 //===========================================================================================
@@ -396,6 +396,6 @@ public:
 	void InitMatrix4();
 
 	virtual void Move();
-	virtual void make_car() {};
-	void update()override;
+
+	void Update()override;
 };

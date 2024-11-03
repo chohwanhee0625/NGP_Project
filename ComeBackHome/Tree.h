@@ -27,8 +27,8 @@ public:
 	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
-	void update() override;
-	void make_car()override {};
+	void Update() override;
+
 
 	
 };
@@ -60,9 +60,9 @@ public:
 	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
-	void update() override;
+	void Update() override;
 	virtual void Move() {  };
-	void make_car()override {};
+
 
 	void WorldMatrix() override;
 };
@@ -94,9 +94,9 @@ public:
 	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
-	void update() override;
+	void Update() override;
 	
-	void make_car()override {};
+
 
 	void WorldMatrix() override;
 };
@@ -128,7 +128,7 @@ public:
 	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
-	void update() override;
-	void make_car()override {};
+	void Update() override;
+
 	void WorldMatrix() override;
 };

@@ -76,20 +76,19 @@ void tagRoad::InitMatrix4()
 	m_y_scale = 1.f;
 	m_z_scale = 0.1;
 
-	m_x_distance = 0.f;
-	m_y_distance = -0.52;
-	m_z_distance = -(m_inum * m_z_scale);
+	m_x_pos = 0.f;
+	m_y_pos = -0.52;
+	m_z_pos = -(m_inum * m_z_scale);
 }
 
-void tagRoad::update()
+void tagRoad::Update()
 {
 }
 
-void tagRoad::make_car()
+void tagRoad::CreateCar()
 {
-	tagCar* car = new tagCar(m_vertex,m_color, m_dir, m_inum);
+	tagCar* car = new tagCar(m_vertex, m_color, m_dir, m_inum);
 	gVec.push_back(car);
-
 }
 
 void tagRoad::initDir(GLboolean dir)
@@ -171,12 +170,12 @@ void tagRoadLane::InitMatrix4()
 	m_y_scale = 0.01f;
 	m_z_scale = 0.0115f;
 
-	m_x_distance = -0.46 + 0.15 * m_x_idx; // m_idx 범위 (0~6), 0.15는 선 간격
-	m_y_distance = -0.02458; // 고정 상수 
-	m_z_distance = -(m_z_idx * 0.1 + 0.05); // +0.05는 도로 반쪽 길이만큼 더한거 -> 안하면 도로가 선 위로 주행함 
+	m_x_pos = -0.46 + 0.15 * m_x_idx; // m_idx 범위 (0~6), 0.15는 선 간격
+	m_y_pos = -0.02458; // 고정 상수 
+	m_z_pos = -(m_z_idx * 0.1 + 0.05); // +0.05는 도로 반쪽 길이만큼 더한거 -> 안하면 도로가 선 위로 주행함 
 }
 
-void tagRoad::make_line()
+void tagRoad::CreateLane()
 {
 	tagRoadLane* pLine{};
 	for (int i = -2; i < 8; ++i) {

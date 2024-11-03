@@ -75,13 +75,13 @@ void tagGrass::InitMatrix4()
 	m_y_scale = 1.f;
 	m_z_scale = 0.1;
 
-	m_x_distance = 0.f;
-	m_y_distance = -0.515;
-	m_z_distance = -(m_inum * m_z_scale);
+	m_x_pos = 0.f;
+	m_y_pos = -0.515;
+	m_z_pos = -(m_inum * m_z_scale);
 
 
 }
 
-void tagGrass::update()
+void tagGrass::Update()
 {
 }

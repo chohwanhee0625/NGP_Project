@@ -45,26 +45,27 @@ public:
 	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
-	void setFaceDir(unsigned char key);
+	void SetChickenFaceDir(unsigned char key);
 	void Walk();
 	void setWalkVelo(float speed) { walk_velo += speed; }
-	virtual void make_car() {};
 
-	void update() override;
+	void Update() override;
 	void Collision();
 
 	void update_yvelo();
 	void Set_yvelo_zero();
 
-	void update_yPos()override;
-	void jump();
+	void UpdateChickenYpos();
+	void ChickenJump();
 
-	void upvelo()override { walk_velo = 0.01f; };
-	void downvelo()override { walk_velo = 0.002f; };
+	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
+	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
 
-	Dir Get_dir()override { return face; }
+	Dir GetChickenDir()override { return face; }
 
-	void changeboll()override {
+	void SwitchCollisionState()override {
+		// false = 무적
+		// true = 일반
 		if (m_coll) m_coll = false;
 		else m_coll = true;
 	}
@@ -105,18 +106,17 @@ public:
 	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
-	void setFaceDir(unsigned char key);
+	void SetChickenFaceDir(unsigned char key);
 	void Walk();
 	void setWalkVelo(float speed) {
 		walk_velo += speed;
 	}
-	void update() override;
-	virtual void make_car() {};
+	void Update() override;
 
-	void update_yPos()override;
-	void upvelo()override { walk_velo = 0.01f; };
-	void downvelo()override { walk_velo = 0.002f; };
-	Dir Get_dir()override { return face; }
+	void UpdateChickenYpos();
+	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
+	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	Dir GetChickenDir()override { return face; }
 };
 
 //========================================================================
@@ -165,19 +165,18 @@ public:
 
 	void initModelLocation();
 
-	void setFaceDir(unsigned char key);
+	void SetChickenFaceDir(unsigned char key);
 	void Walk();
 	void setWalkVelo(float speed) {
 		walk_velo += speed;
 	}
-	void update() override;
-	virtual void make_car() {};
+	void Update() override;
 
 	float Get_yvelo() { return m_fyvelo; }
-	void upvelo()override { walk_velo = 0.01f; };
-	void downvelo()override { walk_velo = 0.002f; };
-	void update_yPos()override;
-	Dir Get_dir()override { return face; }
+	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
+	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void UpdateChickenYpos();
+	Dir GetChickenDir()override { return face; }
 };
 
 //========================================================================
@@ -223,17 +222,17 @@ public:
 	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
-	void setFaceDir(unsigned char key);
+	void SetChickenFaceDir(unsigned char key);
 	void Walk();
 	void setWalkVelo(float speed) {
 		walk_velo += speed;
 	}
-	void update() override;
-	virtual void make_car() {};
-	void upvelo()override { walk_velo = 0.01f; };
-	void downvelo()override { walk_velo = 0.002f; };
-	void update_yPos()override;
-	Dir Get_dir()override { return face; }
+	void Update() override;
+
+	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
+	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void UpdateChickenYpos();
+	Dir GetChickenDir()override { return face; }
 };
 
 //========================================================================
@@ -289,16 +288,16 @@ public:
 	void WorldMatrix();
 	void initModelLocation();
 	void handling();
-	void setFaceDir(unsigned char key);
+	void SetChickenFaceDir(unsigned char key);
 	void Walk();
 	void setWalkVelo(float speed) { walk_velo += speed; }
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void update() override;
-	virtual void make_car() {};
-	void upvelo()override { walk_velo = 0.01f; };
-	void downvelo()override { walk_velo = 0.002f; };
-	void update_yPos()override;
-	Dir Get_dir()override { return face; }
+	void Update() override;
+
+	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
+	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void UpdateChickenYpos();
+	Dir GetChickenDir()override { return face; }
 };
 
 //========================================================================
@@ -354,16 +353,16 @@ public:
 	void WorldMatrix();
 	void initModelLocation();
 	void handling();
-	void setFaceDir(unsigned char key);
+	void SetChickenFaceDir(unsigned char key);
 	void Walk();
 	void setWalkVelo(float speed) { walk_velo += speed; }
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void update() override;
-	virtual void make_car() {};
-	void upvelo()override { walk_velo = 0.01f; };
-	void downvelo()override { walk_velo = 0.002f; };
-	void update_yPos()override;
-	Dir Get_dir()override { return face; }
+	void Update() override;
+
+	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
+	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void UpdateChickenYpos();
+	Dir GetChickenDir()override { return face; }
 };
 
 //========================================================================
@@ -418,16 +417,16 @@ public:
 	void WorldMatrix();
 	void initModelLocation();
 	void handling();
-	void setFaceDir(unsigned char key);
+	void SetChickenFaceDir(unsigned char key);
 	void Walk();
 	void setWalkVelo(float speed) { walk_velo += speed; }
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void update() override;
-	virtual void make_car() {};
-	void upvelo()override { walk_velo = 0.01f; };
-	void downvelo()override { walk_velo = 0.002f; };
-	void update_yPos()override;
-	Dir Get_dir()override { return face; }
+	void Update() override;
+
+	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
+	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void UpdateChickenYpos();
+	Dir GetChickenDir()override { return face; }
 };
 
 //========================================================================
@@ -484,15 +483,15 @@ public:
 	void InitMatrix4();
 	void initModelLocation();
 	void handling();
-	void setFaceDir(unsigned char key);
+	void SetChickenFaceDir(unsigned char key);
 	void Walk();
 	void setWalkVelo(float speed) { walk_velo += speed; }
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void update() override;
-	virtual void make_car() {};
-	void upvelo()override { walk_velo = 0.01f; };
-	void downvelo()override { walk_velo = 0.002f; };
-	void update_yPos()override;
-	Dir Get_dir()override { return face; }
+	void Update() override;
+
+	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
+	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void UpdateChickenYpos();
+	Dir GetChickenDir()override { return face; }
 };
 

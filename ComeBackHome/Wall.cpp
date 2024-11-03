@@ -71,15 +71,15 @@ void tagWall::DrawObject()
 
 void tagWall::InitMatrix4()
 {
-	m_x_distance = -0.52f;
-	m_y_distance =  0.20f;
-	m_z_distance = -7.45f;
+	m_x_pos = -0.52f;
+	m_y_pos =  0.20f;
+	m_z_pos = -7.45f;
 
 	m_x_scale = 0.05f;
 	m_y_scale = 0.5f;
 	m_z_scale = 15.0;
 }
 
-void tagWall::update()
+void tagWall::Update()
 {
 }

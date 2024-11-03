@@ -47,7 +47,7 @@ void Light::setTransform()
 
 void Light::update()
 {
-	float chicken_z_distance = -(gVec[0]->getZdistance()); // 치킨 z거리 범위 0 ~ 15, -z가 앞으로 가는 것이기에 -로 양수화
+	float chicken_z_distance = -(gVec[0]->GetZpos()); // 치킨 z거리 범위 0 ~ 15, -z가 앞으로 가는 것이기에 -로 양수화
 
 	if (0 <= chicken_z_distance && chicken_z_distance <= 7.f) {
 		// 거리 7스텝으로 나눠서 보간 ( 선형보간에서 t 범위 0 ~ 1 ) - 1차 보간 

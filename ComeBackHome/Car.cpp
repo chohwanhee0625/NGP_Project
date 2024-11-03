@@ -7,14 +7,14 @@
 
 void tagCar::Move()
 {
-	m_x_distance += m_velocity * m_dir;
-	if (m_dir == PLUS  && m_x_distance > 0.55 )
-		m_x_distance = -0.55f;
-	else if (m_dir == MINUS && m_x_distance < -0.55)
-		m_x_distance = 0.55f;
+	m_x_pos += m_velocity * m_dir;
+	if (m_dir == PLUS  && m_x_pos > 0.55 )
+		m_x_pos = -0.55f;
+	else if (m_dir == MINUS && m_x_pos < -0.55)
+		m_x_pos = 0.55f;
 }
 
-void tagCar::update()
+void tagCar::Update()
 {
 	Move();
 }
@@ -92,15 +92,15 @@ void tagCar::InitMatrix4()
 	m_y_scale = 0.025f;
 	m_z_scale = 0.05;
 
-	m_x_distance = -0.55f * m_dir;
-	m_y_distance = 0.005;
-	m_z_distance = -0.1 * m_idx; //(0.1f + (0.1 * (float)m_idx)); //* m_idx;
+	m_x_pos = -0.55f * m_dir;
+	m_y_pos = 0.005;
+	m_z_pos = -0.1 * m_idx; //(0.1f + (0.1 * (float)m_idx)); //* m_idx;
 //	m_z_distance = -0.5f * m_idx;
 
 	m_velocity = m_velocity + (m_idx * 0.000015 * gCarspeed(gRandomEngine));
 }
 
-void tagCar::make_car()
+void tagCar::CreateCar()
 {
 	tagCarMiddle* middle = new tagCarMiddle(m_vertex, m_color, m_dir, m_idx, m_velocity);
 	gVec.push_back(middle);
@@ -137,14 +137,14 @@ void tagCar::make_car()
 
 void tagCarMiddle::Move()
 {
-	m_x_distance += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_distance > 0.55)
-		m_x_distance = -0.55f;
-	else if (m_dir == MINUS && m_x_distance < -0.55)
-		m_x_distance = 0.55f;
+	m_x_pos += m_velocity * m_dir;
+	if (m_dir == PLUS && m_x_pos > 0.55)
+		m_x_pos = -0.55f;
+	else if (m_dir == MINUS && m_x_pos < -0.55)
+		m_x_pos = 0.55f;
 }
 
-void tagCarMiddle::update()
+void tagCarMiddle::Update()
 {
 	Move();
 }
@@ -216,9 +216,9 @@ void tagCarMiddle::InitMatrix4()
 	m_y_scale = 0.03f;
 	m_z_scale = 0.05;
 
-	m_x_distance = -0.55f * m_dir;
-	m_y_distance = 0.005 + 0.5 * m_y_scale;
-	m_z_distance = -0.1 * m_idx; //(0.1f + (0.1 * (float)m_idx)); //* m_idx;
+	m_x_pos = -0.55f * m_dir;
+	m_y_pos = 0.005 + 0.5 * m_y_scale;
+	m_z_pos = -0.1 * m_idx; //(0.1f + (0.1 * (float)m_idx)); //* m_idx;
 	//	m_z_distance = -0.5f * m_idx;
 }
 
@@ -226,14 +226,14 @@ void tagCarMiddle::InitMatrix4()
 
 void tagCarWindow::Move()
 {
-	m_x_distance += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_distance > 0.55)
-		m_x_distance = -0.55f;
-	else if (m_dir == MINUS && m_x_distance < -0.55)
-		m_x_distance = 0.55f;
+	m_x_pos += m_velocity * m_dir;
+	if (m_dir == PLUS && m_x_pos > 0.55)
+		m_x_pos = -0.55f;
+	else if (m_dir == MINUS && m_x_pos < -0.55)
+		m_x_pos = 0.55f;
 }
 
-void tagCarWindow::update()
+void tagCarWindow::Update()
 {
 	Move();
 }
@@ -307,9 +307,9 @@ void tagCarWindow::InitMatrix4()
 	m_y_scale = 0.017f;
 	m_z_scale = 0.05001;
 
-	m_x_distance = -0.55f * m_dir;
-	m_y_distance = 0.013 + 0.5 * m_y_scale;
-	m_z_distance = -0.1 * m_idx; //(0.1f + (0.1 * (float)m_idx)); //* m_idx;
+	m_x_pos = -0.55f * m_dir;
+	m_y_pos = 0.013 + 0.5 * m_y_scale;
+	m_z_pos = -0.1 * m_idx; //(0.1f + (0.1 * (float)m_idx)); //* m_idx;
 	//	m_z_distance = -0.5f * m_idx;
 }
 
@@ -317,14 +317,14 @@ void tagCarWindow::InitMatrix4()
 
 void tagCarWheel_1::Move()
 {
-	m_x_distance += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_distance > 0.55)
-		m_x_distance = -0.55f;
-	else if (m_dir == MINUS && m_x_distance < -0.55)
-		m_x_distance = 0.55f;
+	m_x_pos += m_velocity * m_dir;
+	if (m_dir == PLUS && m_x_pos > 0.55)
+		m_x_pos = -0.55f;
+	else if (m_dir == MINUS && m_x_pos < -0.55)
+		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_1::update()
+void tagCarWheel_1::Update()
 {
 	Move();
 }
@@ -398,23 +398,23 @@ void tagCarWheel_1::InitMatrix4()
 	m_y_scale = 0.015f;
 	m_z_scale = 0.015f;
 
-	m_x_distance = -0.55f * m_dir - 0.02;
-	m_y_distance = -0.01;
-	m_z_distance = -0.1 * m_idx + 0.018; 
+	m_x_pos = -0.55f * m_dir - 0.02;
+	m_y_pos = -0.01;
+	m_z_pos = -0.1 * m_idx + 0.018; 
 }
 
 //===========================================================================================
 
 void tagCarWheel_1_small::Move()
 {
-	m_x_distance += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_distance > 0.55)
-		m_x_distance = -0.55f;
-	else if (m_dir == MINUS && m_x_distance < -0.55)
-		m_x_distance = 0.55f;
+	m_x_pos += m_velocity * m_dir;
+	if (m_dir == PLUS && m_x_pos > 0.55)
+		m_x_pos = -0.55f;
+	else if (m_dir == MINUS && m_x_pos < -0.55)
+		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_1_small::update()
+void tagCarWheel_1_small::Update()
 {
 	Move();
 }
@@ -488,23 +488,23 @@ void tagCarWheel_1_small::InitMatrix4()
 	m_y_scale = 0.0075f;
 	m_z_scale = 0.01501f;
 
-	m_x_distance = -0.55f * m_dir - 0.02;
-	m_y_distance = -0.01;
-	m_z_distance = -0.1 * m_idx + 0.018;
+	m_x_pos = -0.55f * m_dir - 0.02;
+	m_y_pos = -0.01;
+	m_z_pos = -0.1 * m_idx + 0.018;
 }
 
 //===========================================================================================
 
 void tagCarWheel_2::Move()
 {
-	m_x_distance += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_distance > 0.55)
-		m_x_distance = -0.55f;
-	else if (m_dir == MINUS && m_x_distance < -0.55)
-		m_x_distance = 0.55f;
+	m_x_pos += m_velocity * m_dir;
+	if (m_dir == PLUS && m_x_pos > 0.55)
+		m_x_pos = -0.55f;
+	else if (m_dir == MINUS && m_x_pos < -0.55)
+		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_2::update()
+void tagCarWheel_2::Update()
 {
 	Move();
 }
@@ -578,23 +578,23 @@ void tagCarWheel_2::InitMatrix4()
 	m_y_scale = 0.015f;
 	m_z_scale = 0.015f;
 
-	m_x_distance = -0.55f * m_dir - 0.02;
-	m_y_distance = -0.01;
-	m_z_distance = -0.1 * m_idx - 0.018;
+	m_x_pos = -0.55f * m_dir - 0.02;
+	m_y_pos = -0.01;
+	m_z_pos = -0.1 * m_idx - 0.018;
 }
 
 //===========================================================================================
 
 void tagCarWheel_2_small::Move()
 {
-	m_x_distance += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_distance > 0.55)
-		m_x_distance = -0.55f;
-	else if (m_dir == MINUS && m_x_distance < -0.55)
-		m_x_distance = 0.55f;
+	m_x_pos += m_velocity * m_dir;
+	if (m_dir == PLUS && m_x_pos > 0.55)
+		m_x_pos = -0.55f;
+	else if (m_dir == MINUS && m_x_pos < -0.55)
+		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_2_small::update()
+void tagCarWheel_2_small::Update()
 {
 	Move();
 }
@@ -668,23 +668,23 @@ void tagCarWheel_2_small::InitMatrix4()
 	m_y_scale = 0.0075f;
 	m_z_scale = 0.01501f;
 
-	m_x_distance = -0.55f * m_dir - 0.02;
-	m_y_distance = -0.01;
-	m_z_distance = -0.1 * m_idx - 0.018;
+	m_x_pos = -0.55f * m_dir - 0.02;
+	m_y_pos = -0.01;
+	m_z_pos = -0.1 * m_idx - 0.018;
 }
 
 //===========================================================================================
 
 void tagCarWheel_3::Move()
 {
-	m_x_distance += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_distance > 0.55)
-		m_x_distance = -0.55f;
-	else if (m_dir == MINUS && m_x_distance < -0.55)
-		m_x_distance = 0.55f;
+	m_x_pos += m_velocity * m_dir;
+	if (m_dir == PLUS && m_x_pos > 0.55)
+		m_x_pos = -0.55f;
+	else if (m_dir == MINUS && m_x_pos < -0.55)
+		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_3::update()
+void tagCarWheel_3::Update()
 {
 	Move();
 }
@@ -758,23 +758,23 @@ void tagCarWheel_3::InitMatrix4()
 	m_y_scale = 0.015f;
 	m_z_scale = 0.015f;
 
-	m_x_distance = -0.55f * m_dir + 0.02;
-	m_y_distance = -0.01;
-	m_z_distance = -0.1 * m_idx + 0.018;
+	m_x_pos = -0.55f * m_dir + 0.02;
+	m_y_pos = -0.01;
+	m_z_pos = -0.1 * m_idx + 0.018;
 }
 
 //===========================================================================================
 
 void tagCarWheel_3_small::Move()
 {
-	m_x_distance += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_distance > 0.55)
-		m_x_distance = -0.55f;
-	else if (m_dir == MINUS && m_x_distance < -0.55)
-		m_x_distance = 0.55f;
+	m_x_pos += m_velocity * m_dir;
+	if (m_dir == PLUS && m_x_pos > 0.55)
+		m_x_pos = -0.55f;
+	else if (m_dir == MINUS && m_x_pos < -0.55)
+		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_3_small::update()
+void tagCarWheel_3_small::Update()
 {
 	Move();
 }
@@ -848,23 +848,23 @@ void tagCarWheel_3_small::InitMatrix4()
 	m_y_scale = 0.0075f;
 	m_z_scale = 0.01501f;
 
-	m_x_distance = -0.55f * m_dir + 0.02;
-	m_y_distance = -0.01;
-	m_z_distance = -0.1 * m_idx + 0.018;
+	m_x_pos = -0.55f * m_dir + 0.02;
+	m_y_pos = -0.01;
+	m_z_pos = -0.1 * m_idx + 0.018;
 }
 
 //===========================================================================================
 
 void tagCarWheel_4::Move()
 {
-	m_x_distance += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_distance > 0.55)
-		m_x_distance = -0.55f;
-	else if (m_dir == MINUS && m_x_distance < -0.55)
-		m_x_distance = 0.55f;
+	m_x_pos += m_velocity * m_dir;
+	if (m_dir == PLUS && m_x_pos > 0.55)
+		m_x_pos = -0.55f;
+	else if (m_dir == MINUS && m_x_pos < -0.55)
+		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_4::update()
+void tagCarWheel_4::Update()
 {
 	Move();
 }
@@ -938,23 +938,23 @@ void tagCarWheel_4::InitMatrix4()
 	m_y_scale = 0.015f;
 	m_z_scale = 0.015f;
 
-	m_x_distance = -0.55f * m_dir + 0.02;
-	m_y_distance = -0.01;
-	m_z_distance = -0.1 * m_idx - 0.018;
+	m_x_pos = -0.55f * m_dir + 0.02;
+	m_y_pos = -0.01;
+	m_z_pos = -0.1 * m_idx - 0.018;
 }
 
 //===========================================================================================
 
 void tagCarWheel_4_small::Move()
 {
-	m_x_distance += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_distance > 0.55)
-		m_x_distance = -0.55f;
-	else if (m_dir == MINUS && m_x_distance < -0.55)
-		m_x_distance = 0.55f;
+	m_x_pos += m_velocity * m_dir;
+	if (m_dir == PLUS && m_x_pos > 0.55)
+		m_x_pos = -0.55f;
+	else if (m_dir == MINUS && m_x_pos < -0.55)
+		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_4_small::update()
+void tagCarWheel_4_small::Update()
 {
 	Move();
 }
@@ -1028,7 +1028,7 @@ void tagCarWheel_4_small::InitMatrix4()
 	m_y_scale = 0.0075f;
 	m_z_scale = 0.01501f;
 
-	m_x_distance = -0.55f * m_dir + 0.02;
-	m_y_distance = -0.01;
-	m_z_distance = -0.1 * m_idx - 0.018;
+	m_x_pos = -0.55f * m_dir + 0.02;
+	m_y_pos = -0.01;
+	m_z_pos = -0.1 * m_idx - 0.018;
 }

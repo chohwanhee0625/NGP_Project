@@ -30,9 +30,8 @@ public:
 	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
-	virtual void make_car() {};
 
-	void update() override;
+	void Update() override;
 };
 
 //========================================================================
@@ -64,8 +63,7 @@ public:
 	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
-	void update() override;
-	virtual void make_car() {};
+	void Update() override;
 };
 
 //========================================================================
@@ -102,8 +100,7 @@ public:
 	void WorldMatrix();
 
 	void initModelLocation();
-	void update() override;
-	virtual void make_car() {};
+	void Update() override;
 };
 
 //========================================================================
@@ -140,8 +137,7 @@ public:
 	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
-	void update() override;
-	virtual void make_car() {};
+	void Update() override;
 
 };
 
@@ -192,8 +188,7 @@ public:
 	void WorldMatrix();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void update() override;
-	virtual void make_car() {};
+	void Update() override;
 };
 
 //========================================================================
@@ -243,8 +238,7 @@ public:
 	void WorldMatrix();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void update() override;
-	virtual void make_car() {};
+	void Update() override;
 };
 
 //========================================================================
@@ -293,8 +287,7 @@ public:
 	void WorldMatrix();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void update() override;
-	virtual void make_car() {};
+	void Update() override;
 };
 
 //======================================================================
@@ -344,7 +337,6 @@ public:
 	void InitMatrix4();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void update() override;
-	virtual void make_car() {};
+	void Update() override;
 };
 

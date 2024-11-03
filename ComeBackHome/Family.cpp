@@ -80,29 +80,29 @@ void tagBodyMom::InitMatrix4()
 	m_y_scale = 0.01f * 50;
 	m_z_scale = 0.01f * 50;
 
-	m_x_distance = 0.f;
-	m_y_distance = 0.5 * m_y_scale * 1.5;
-	m_z_distance = -0.1f * idx;
+	m_x_pos = 0.f;
+	m_y_pos = 0.5 * m_y_scale * 1.5;
+	m_z_pos = -0.1f * idx;
 }
 
 void tagBodyMom::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(180.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(180.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagBodyMom::update()
+void tagBodyMom::Update()
 {
 	if (gIsReach)
 	{
-		m_y_distance += v;
-		m_z_distance += v;
+		m_y_pos += v;
+		m_z_pos += v;
 	}
 }
 
@@ -181,29 +181,29 @@ void tagHeadMom::InitMatrix4()
 	m_y_scale = 0.01f * 50;
 	m_z_scale = 0.01f * 50;
 
-	m_x_distance = 0.f;
-	m_y_distance = 0.01 * 25 + 0.5 * m_y_scale * 2;
-	m_z_distance = -0.1f * idx;
+	m_x_pos = 0.f;
+	m_y_pos = 0.01 * 25 + 0.5 * m_y_scale * 2;
+	m_z_pos = -0.1f * idx;
 }
 
 void tagHeadMom::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(180.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(180.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagHeadMom::update()
+void tagHeadMom::Update()
 {
 	if (gIsReach)
 	{
-		m_y_distance += v;
-		m_z_distance += v;
+		m_y_pos += v;
+		m_z_pos += v;
 	}
 }
 
@@ -283,34 +283,34 @@ void tagMouseMom::InitMatrix4()
 	m_y_scale = 0.01f / 3 * 50.f;
 	m_z_scale = 0.0125f * 50.f;
 
-	m_x_distance = 0.0f;
-	m_y_distance = 0.01 * 50 + 0.5 * m_y_scale * 2;
-	m_z_distance = -0.1f * idx; +0.1; //-14.90f;
+	m_x_pos = 0.0f;
+	m_y_pos = 0.01 * 50 + 0.5 * m_y_scale * 2;
+	m_z_pos = -0.1f * idx; +0.1; //-14.90f;
 }
 
 void tagMouseMom::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기본
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기본
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
 
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagMouseMom::update()
+void tagMouseMom::Update()
 {
 	if (gIsReach)
 	{
-		m_y_distance += v;
-		m_z_distance += v;
+		m_y_pos += v;
+		m_z_pos += v;
 	}
 }
 
@@ -395,29 +395,29 @@ void tagEyesMom::InitMatrix4()
 	m_y_scale = 0.01f / 5 * 50.;
 	m_z_scale = 0.01f / 5 * 50.;
 
-	m_x_distance = 0.f;
-	m_y_distance = 0.0105 * 60 + 0.5 * m_y_scale * 2;
-	m_z_distance = -0.1f * idx;
+	m_x_pos = 0.f;
+	m_y_pos = 0.0105 * 60 + 0.5 * m_y_scale * 2;
+	m_z_pos = -0.1f * idx;
 }
 
 void tagEyesMom::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagEyesMom::update()
+void tagEyesMom::Update()
 {
 	if (gIsReach)
 	{
-		m_y_distance += v;
-		m_z_distance += v;
+		m_y_pos += v;
+		m_z_pos += v;
 	}
 }
 
@@ -501,34 +501,34 @@ void tagLeftArmMom::InitMatrix4()
 	m_y_scale = 0.005f * 60.f;
 	m_z_scale = 0.005f * 60.f;
 
-	m_x_distance = 0.0;
-	m_y_distance = 0.0005f * 50+ 0.5 * m_y_scale * 2;
-	m_z_distance = -0.1f * idx;
+	m_x_pos = 0.0;
+	m_y_pos = 0.0005f * 50+ 0.5 * m_y_scale * 2;
+	m_z_pos = -0.1f * idx;
 
 }
 
 void tagLeftArmMom::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기본
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기본
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본 
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(hand_degree), glm::vec3(0.0f, 0.0f, 1.0f));
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::rotate(m_total_world, glm::radians(hand_degree), glm::vec3(0.0f, 0.0f, 1.0f));
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
 
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagLeftArmMom::update()
+void tagLeftArmMom::Update()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -541,8 +541,8 @@ void tagLeftArmMom::update()
 
 	if (gIsReach)
 	{
-		m_y_distance += v;
-		m_z_distance += v;
+		m_y_pos += v;
+		m_z_pos += v;
 	}
 }
 
@@ -632,32 +632,32 @@ void tagRightArmMom::InitMatrix4()
 	m_y_scale = 0.005f * 60.f;
 	m_z_scale = 0.005f * 60.f;
 
-	m_x_distance = 0.0;
-	m_y_distance = 0.0005f * 50 + 0.5 * m_y_scale * 2;
-	m_z_distance = -0.1f * idx;
+	m_x_pos = 0.0;
+	m_y_pos = 0.0005f * 50 + 0.5 * m_y_scale * 2;
+	m_z_pos = -0.1f * idx;
 
 }
 
 void tagRightArmMom::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(-hand_degree), glm::vec3(0.0f, 0.0f, 1.0f));
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::rotate(m_total_world, glm::radians(-hand_degree), glm::vec3(0.0f, 0.0f, 1.0f));
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
 
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagRightArmMom::update()
+void tagRightArmMom::Update()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -670,8 +670,8 @@ void tagRightArmMom::update()
 
 	if (gIsReach)
 	{
-		m_y_distance += v;
-		m_z_distance += v;
+		m_y_pos += v;
+		m_z_pos += v;
 	}
 }
 
@@ -760,31 +760,31 @@ void tagLeftLegMom::InitMatrix4()
 	m_y_scale = 0.0125f * 50.;
 	m_z_scale = 0.00125f * 50.;
 
-	m_x_distance = 0.f;
-	m_y_distance = -0.005f + 0.15 * m_y_scale;
-	m_z_distance = -0.1f * idx;
+	m_x_pos = 0.f;
+	m_y_pos = -0.005f + 0.15 * m_y_scale;
+	m_z_pos = -0.1f * idx;
 }
 
 void tagLeftLegMom::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(hand_degree), glm::vec3(1.0f, 0.0f, 0.0f));
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::rotate(m_total_world, glm::radians(hand_degree), glm::vec3(1.0f, 0.0f, 0.0f));
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
 
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagLeftLegMom::update()
+void tagLeftLegMom::Update()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -798,8 +798,8 @@ void tagLeftLegMom::update()
 
 	if (gIsReach)
 	{
-		m_y_distance += v;
-		m_z_distance += v;
+		m_y_pos += v;
+		m_z_pos += v;
 	}
 }
 
@@ -887,33 +887,33 @@ void tagRightLegMom::InitMatrix4()
 	m_y_scale = 0.0125f * 50.;
 	m_z_scale = 0.00125f * 50.;
 
-	m_x_distance = 0.f;
-	m_y_distance = -0.005f + 0.15 * m_y_scale;
-	m_z_distance = -0.1f * idx;
+	m_x_pos = 0.f;
+	m_y_pos = -0.005f + 0.15 * m_y_scale;
+	m_z_pos = -0.1f * idx;
 }
 
 void tagRightLegMom::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본 
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(hand_degree), glm::vec3(1.0f, 0.0f, 0.0f));
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::rotate(m_total_world, glm::radians(hand_degree), glm::vec3(1.0f, 0.0f, 0.0f));
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
 
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagRightLegMom::update()
+void tagRightLegMom::Update()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -927,8 +927,8 @@ void tagRightLegMom::update()
 
 	if (gIsReach)
 	{
-		m_y_distance += v;
-		m_z_distance += v;
+		m_y_pos += v;
+		m_z_pos += v;
 	}
 }
 

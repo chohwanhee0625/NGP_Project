@@ -24,6 +24,6 @@ public:
 	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
-	virtual void make_car() {};
-	void update()override;
+
+	void Update()override;
 };

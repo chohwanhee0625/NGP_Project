@@ -108,7 +108,7 @@ void Camera::setViewTransform_thirdVeiwPort()
 	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(Total_view));
 }
 
-void Camera::setFaceDir(unsigned char key)
+void Camera::SetCameraFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -143,9 +143,9 @@ void Camera::setFaceDir(unsigned char key)
 
 void Camera::Move()
 {
-		camera_move_z = gVec.at(0)->getZdistance();
-		camera_move_x = gVec.at(0)->getXdistance();
-		camera_move_y = gVec.at(0)->GetYdistance();
+		camera_move_z = gVec.at(0)->GetZpos();
+		camera_move_x = gVec.at(0)->GetXpos();
+		camera_move_y = gVec.at(0)->GetYpos();
 	
 		/*switch (face)
 	{

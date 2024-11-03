@@ -74,12 +74,12 @@ void tagWood::InitMatrix4()
 	m_y_scale = 0.15f;
 	m_z_scale = 0.03f;
 
-	m_x_distance = -0.46 + 0.07 * m_x_idx;
-	m_y_distance = 0.;
-	m_z_distance = -(m_z_idx * 0.1);
+	m_x_pos = -0.46 + 0.07 * m_x_idx;
+	m_y_pos = 0.;
+	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void tagWood::update()
+void tagWood::Update()
 {
 }
 
@@ -154,26 +154,26 @@ void tagLeafone::InitMatrix4()
 	m_y_scale = 0.03f;
 	m_z_scale = 0.05f;
 
-	m_x_distance = -0.46 + 0.07 * m_x_idx;
-	m_y_distance = 0.05;
-	m_z_distance = -(m_z_idx * 0.1);
+	m_x_pos = -0.46 + 0.07 * m_x_idx;
+	m_y_pos = 0.05;
+	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void tagLeafone::update()
+void tagLeafone::Update()
 {
 	m_y_degree += 0.2;
 }
 
 void tagLeafone::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
 //===========================================================================================
@@ -247,26 +247,26 @@ void tagLeaftwo::InitMatrix4()
 	m_y_scale = 0.03f;
 	m_z_scale = 0.05f;
 	
-	m_x_distance = -0.46 + 0.07 * m_x_idx;
-	m_y_distance = 0.05 +  m_y_scale ;
-	m_z_distance = -(m_z_idx * 0.1);
+	m_x_pos = -0.46 + 0.07 * m_x_idx;
+	m_y_pos = 0.05 +  m_y_scale ;
+	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void tagLeaftwo::update()
+void tagLeaftwo::Update()
 {
 	m_y_degree += 0.2;
 }
 
 void tagLeaftwo::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
 //===========================================================================================
@@ -340,12 +340,12 @@ void tagLeafthree::InitMatrix4()
 	m_y_scale = 0.03f;
 	m_z_scale = 0.05f;
 
-	m_x_distance = -0.46 + 0.07 * m_x_idx;
-	m_y_distance = 0.05 + m_y_scale * 2;
-	m_z_distance = -(m_z_idx * 0.1);
+	m_x_pos = -0.46 + 0.07 * m_x_idx;
+	m_y_pos = 0.05 + m_y_scale * 2;
+	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void tagLeafthree::update()
+void tagLeafthree::Update()
 {
 	m_y_degree += 0.2;
 }
@@ -353,12 +353,12 @@ void tagLeafthree::update()
 void tagLeafthree::WorldMatrix()
 {
 	
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
