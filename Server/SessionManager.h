@@ -40,11 +40,10 @@ public:
 private:
 	std::vector<std::thread> m_threads;
 
-	PlayerData				m_playerData[2];
+	std::atomic<PlayerData> m_playerData[2];
 	INIT_DATA_R				m_roadData;
 	INIT_DATA_C				m_carData;
 	INIT_DATA_W				m_woodData;
-
 	std::atomic<bool>		m_winner[2]{ false, false };
 	std::atomic<bool>		m_endflag[2]{ false, false };
 };
