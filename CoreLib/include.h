@@ -4,13 +4,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <queue>
 #include <assert.h>
 #include <random>
 
 #include <thread>
 #include <mutex>
-#include <atomic>
 
 #include <WinSock2.h>
 #include <WS2tcpip.h>

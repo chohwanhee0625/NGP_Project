@@ -4,10 +4,10 @@
 class Light
 {
 private:
-	glm::mat4 Total_view;
+	glm::mat4 total_view;
 	
-	glm::vec3 lightPos;
-	glm::vec3 lightColor;
+	glm::vec3 light_pos;
+	glm::vec3 light_color;
 
 	GLfloat sunset_t;
 	GLfloat night_t;
@@ -15,12 +15,12 @@ private:
 public:
 	Light() 
 	{
-		initLight();
+		InitLight();
 	}
 
-	void initLight();
-	void setTransform();
-	void update();
-	void sunsetInterpolation(float t);// 노을 보간
-	void nightInterpolation(float t); // 밤 보간 
+	void InitLight();
+	void SetTransform();
+	void Update();
+	void SetSunsetInterpolation(float t);// 노을 보간
+	void SetNightInterpolation(float t); // 밤 보간 
 };
