@@ -152,6 +152,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ServerMain.cpp" />
+    <ClCompile Include="SessionManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SessionManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
