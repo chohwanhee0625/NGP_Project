@@ -5,14 +5,7 @@
 
 //===========================================================================================
 
-void tagWood::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagWood::initColor(const GLfloat color_array[36 * 3])
+void Wood::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3; i += 3) {
 		m_color[i + 0] = 0.3059f;
@@ -21,33 +14,7 @@ void tagWood::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagWood::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-}
-
-void tagWood::DrawObject()
+void Wood::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -68,31 +35,24 @@ void tagWood::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagWood::InitMatrix4()
+void Wood::InitMatrix4()
 {
 	m_x_scale = 0.03f;
 	m_y_scale = 0.15f;
 	m_z_scale = 0.03f;
 
-	m_x_distance = -0.46 + 0.07 * m_x_idx;
-	m_y_distance = 0.;
-	m_z_distance = -(m_z_idx * 0.1);
+	m_x_pos = -0.46 + 0.07 * m_x_idx;
+	m_y_pos = 0.;
+	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void tagWood::update()
+void Wood::Update()
 {
 }
 
 //===========================================================================================
 
-void tagLeafone::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagLeafone::initColor(const GLfloat color_array[36 * 3])
+void WoodLeaf_1::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3; i += 3) {
 		m_color[i + 0] = 0.7098f;
@@ -101,33 +61,7 @@ void tagLeafone::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagLeafone::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-}
-
-void tagLeafone::DrawObject()
+void WoodLeaf_1::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -148,44 +82,37 @@ void tagLeafone::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagLeafone::InitMatrix4()
+void WoodLeaf_1::InitMatrix4()
 {
 	m_x_scale = 0.05f;
 	m_y_scale = 0.03f;
 	m_z_scale = 0.05f;
 
-	m_x_distance = -0.46 + 0.07 * m_x_idx;
-	m_y_distance = 0.05;
-	m_z_distance = -(m_z_idx * 0.1);
+	m_x_pos = -0.46 + 0.07 * m_x_idx;
+	m_y_pos = 0.05;
+	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void tagLeafone::update()
+void WoodLeaf_1::Update()
 {
 	m_y_degree += 0.2;
 }
 
-void tagLeafone::WorldMatrix()
+void WoodLeaf_1::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
 //===========================================================================================
 
-void tagLeaftwo::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagLeaftwo::initColor(const GLfloat color_array[36 * 3])
+void WoodLeaf_2::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3; i += 3) {
 		m_color[i + 0] = 0.4549f;
@@ -194,33 +121,7 @@ void tagLeaftwo::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagLeaftwo::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-}
-
-void tagLeaftwo::DrawObject()
+void WoodLeaf_2::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -241,44 +142,37 @@ void tagLeaftwo::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagLeaftwo::InitMatrix4()
+void WoodLeaf_2::InitMatrix4()
 {
 	m_x_scale = 0.05f;
 	m_y_scale = 0.03f;
 	m_z_scale = 0.05f;
 	
-	m_x_distance = -0.46 + 0.07 * m_x_idx;
-	m_y_distance = 0.05 +  m_y_scale ;
-	m_z_distance = -(m_z_idx * 0.1);
+	m_x_pos = -0.46 + 0.07 * m_x_idx;
+	m_y_pos = 0.05 +  m_y_scale ;
+	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void tagLeaftwo::update()
+void WoodLeaf_2::Update()
 {
 	m_y_degree += 0.2;
 }
 
-void tagLeaftwo::WorldMatrix()
+void WoodLeaf_2::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
 //===========================================================================================
 
-void tagLeafthree::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagLeafthree::initColor(const GLfloat color_array[36 * 3])
+void WoodLeaf_3::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3; i += 3) {
 		m_color[i + 0] = 0.7098f;
@@ -287,33 +181,7 @@ void tagLeafthree::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagLeafthree::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-}
-
-void tagLeafthree::DrawObject()
+void WoodLeaf_3::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -334,31 +202,31 @@ void tagLeafthree::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagLeafthree::InitMatrix4()
+void WoodLeaf_3::InitMatrix4()
 {
 	m_x_scale = 0.05f;
 	m_y_scale = 0.03f;
 	m_z_scale = 0.05f;
 
-	m_x_distance = -0.46 + 0.07 * m_x_idx;
-	m_y_distance = 0.05 + m_y_scale * 2;
-	m_z_distance = -(m_z_idx * 0.1);
+	m_x_pos = -0.46 + 0.07 * m_x_idx;
+	m_y_pos = 0.05 + m_y_scale * 2;
+	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void tagLeafthree::update()
+void WoodLeaf_3::Update()
 {
 	m_y_degree += 0.2;
 }
 
-void tagLeafthree::WorldMatrix()
+void WoodLeaf_3::WorldMatrix()
 {
 	
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }

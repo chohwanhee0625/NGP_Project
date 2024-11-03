@@ -6,49 +6,16 @@
 
 //===========================================================================================
 
-void tagRoad::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagRoad::initColor(const GLfloat color_array[36 * 3])
+void Road::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3; i += 3) {
-		  m_color[i + 0] = 0.2824f;
-      m_color[i + 1] = 0.3059f;
-      m_color[i + 2] = 0.3608f;
+		m_color[i + 0] = 0.2824f;
+		m_color[i + 1] = 0.3059f;
+		m_color[i + 2] = 0.3608f;
 	}
 }
 
-void tagRoad::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-}
-
-void tagRoad::DrawObject()
+void Road::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -70,46 +37,51 @@ void tagRoad::DrawObject()
 
 }
 
-void tagRoad::InitMatrix4()
+void Road::InitMatrix4()
 {
 	m_x_scale = 2.5f;
 	m_y_scale = 1.f;
 	m_z_scale = 0.1;
 
-	m_x_distance = 0.f;
-	m_y_distance = -0.52;
-	m_z_distance = -(m_inum * m_z_scale);
+	m_x_pos = 0.f;
+	m_y_pos = -0.52;
+	m_z_pos = -(m_index * m_z_scale);
 }
 
-void tagRoad::update()
+void Road::Update()
 {
 }
 
-void tagRoad::make_car()
+void Road::InitCarSpawnDir()
 {
-	tagCar* car = new tagCar(m_vertex,m_color, m_dir, m_inum);
+	// 0 : LEFT  -> +1 -> 왼쪽에서 태어나서 오른쪽으로 이동
+	// 1 : RIGHT -> -1 -> 오른쪽에서 태어나서 왼쪽으로 이동
+	GLboolean bLeftOrRight{ (bool)gBoolUniform(gRandomEngine) };
+
+	if (bLeftOrRight == LEFT)
+		m_car_spawn_dir = PLUS;
+	else if (bLeftOrRight == RIGHT)
+		m_car_spawn_dir = MINUS;
+}
+
+void Road::CreateCar()
+{
+	Car* car = new Car(m_vertex, m_color, m_car_spawn_dir, m_index);
 	gVec.push_back(car);
-
 }
 
-void tagRoad::initDir(GLboolean dir)
+void Road::CreateLane()
 {
-	if (dir == LEFT)
-		m_dir = PLUS;
-	else if (dir == RIGHT)
-		m_dir = MINUS;
+	RoadLane* pLine{};
+	for (int i = -2; i < 8; ++i) {
+		pLine = new RoadLane{ m_vertex, m_color, i ,m_index };
+		gVec.push_back(pLine);
+	}
 }
 
 //===========================================================================================
 
-void tagRoadLine::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagRoadLine::initColor(const GLfloat color_array[36 * 3])
+void RoadLane::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3; i += 3) {
 		m_color[i + 0] = 0.5235f;
@@ -118,33 +90,7 @@ void tagRoadLine::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagRoadLine::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-}
-
-void tagRoadLine::DrawObject()
+void RoadLane::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -165,22 +111,13 @@ void tagRoadLine::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagRoadLine::InitMatrix4()
+void RoadLane::InitMatrix4()
 {
 	m_x_scale = 0.07f;
 	m_y_scale = 0.01f;
 	m_z_scale = 0.0115f;
 
-	m_x_distance = -0.46 + 0.15 * m_x_idx; // m_idx 범위 (0~6), 0.15는 선 간격
-	m_y_distance = -0.02458; // 고정 상수 
-	m_z_distance = -(m_z_idx * 0.1 + 0.05); // +0.05는 도로 반쪽 길이만큼 더한거 -> 안하면 도로가 선 위로 주행함 
-}
-
-void tagRoad::make_line()
-{
-	tagRoadLine* pLine{};
-	for (int i = -2; i < 8; ++i) {
-		pLine = new tagRoadLine{ m_vertex, m_color, i ,m_inum };
-		gVec.push_back(pLine);
-	}
+	m_x_pos = -0.46 + 0.15 * m_x_idx; // m_idx 범위 (0~6), 0.15는 선 간격
+	m_y_pos = -0.02458; // 고정 상수 
+	m_z_pos = -(m_z_idx * 0.1 + 0.05); // +0.05는 도로 반쪽 길이만큼 더한거 -> 안하면 도로가 선 위로 주행함 
 }
