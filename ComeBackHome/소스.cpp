@@ -112,11 +112,17 @@ void main_viewport()
 	glViewport(0, 0, g_window_w, g_window_h); // 800, 600
 
 	gCamera.PerspectiveProjection();
-	if (gToggle[(int)Toggle::Perpective] == Third)
-		gCamera.setViewTransform_firstVeiwPort();
-	else if (gToggle[(int)Toggle::Perpective] == One)
-		gCamera.setViewTransform_firstVeiwPort_One();
-	gLight->update();
+	
+	if (gToggle[(int)Toggle::Perpective] == Third) {
+		// 3인칭
+		gCamera.SetViewTransform_ThirdPersonViewport();
+	}
+	else if (gToggle[(int)Toggle::Perpective] == One) {
+		// 1인칭
+		gCamera.SetViewTransform_FirstPersonViewport();
+	}
+
+	gLight->Update();
 
 	gVecDraw();
 }
@@ -129,8 +135,9 @@ void chicken_viewport()
 	glViewport(gWidth - 150, gHeight - 130, 140, 120);
 
 	gCamera.PerspectiveProjection();
-	gCamera.setViewTransform_secondVeiwPort();
-	gLight->update();
+	// 치킨 고정 카메라
+	gCamera.SetViewTransform_ChickenViewport();
+	gLight->Update();
 
 	gVecDraw();
 }
@@ -141,8 +148,9 @@ void border_viewport()
 	int g_window_h = gHeight;
 
 	gCamera.PerspectiveProjection();
-	gCamera.setViewTransform_thirdVeiwPort();
-	gLight->initLight();
+	// Border 카메라
+	gCamera.SetViewTransform_BorderViewport();
+	gLight->InitLight();
 
 	glViewport(gWidth - 150 - 10, gHeight - 130 - 10, 140 + 20, 130 + 20);
 
@@ -291,8 +299,8 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	case 'r': case'R':
 		SetOffAllofToggle(); 
 		SetInitToggle();
-		gCamera.initCamera();
-		gLight->initLight();
+		gCamera.InitCamera();
+		gLight->InitLight();
 		gIsMovingChicken = OFF;
 		gVecClear();
 		SetgVec();
@@ -329,23 +337,23 @@ void SetgVec() // 육면체, 사면체 처음 위치 - 면 총 10개
 void SetChicken()
 {
 	// 플레이할 주인공 닭 만들기  
-	tagBody* body = new tagBody{ cube_vertex_array_normal, cube_color }; // 0 - 몸
+	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color }; // 0 - 몸
 	gVec.push_back(body);
-	tagHead* head = new tagHead{ cube_vertex_array_normal, cube_color }; // 1 - 머리
+	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color }; // 1 - 머리
 	gVec.push_back(head);
-	tagMouse* mouse = new tagMouse{ cube_vertex_array_normal, cube_color }; // 2 - 주둥이
+	ChickenMouse* mouse = new ChickenMouse{ cube_vertex_array_normal, cube_color }; // 2 - 주둥이
 	gVec.push_back(mouse);
-	tagEyes* eyes = new tagEyes{ cube_vertex_array_normal, cube_color }; // 3 - 눈
+	ChickenEyes* eyes = new ChickenEyes{ cube_vertex_array_normal, cube_color }; // 3 - 눈
 	gVec.push_back(eyes);
 
-	tagLeftArm* Larm = new tagLeftArm{ cube_vertex_array_normal, cube_color }; // 4 - 왼팔
+	ChickenLeftArm* Larm = new ChickenLeftArm{ cube_vertex_array_normal, cube_color }; // 4 - 왼팔
 	gVec.push_back(Larm);
-	tagRightArm* Rarm = new tagRightArm{ cube_vertex_array_normal, cube_color }; // 5 - 오른팔
+	ChickenRightArm* Rarm = new ChickenRightArm{ cube_vertex_array_normal, cube_color }; // 5 - 오른팔
 	gVec.push_back(Rarm);
 
-	tagLeftLeg* Lleg = new tagLeftLeg{ cube_vertex_array_normal, cube_color }; // 6 - 왼다리
+	ChickenLeftLeg* Lleg = new ChickenLeftLeg{ cube_vertex_array_normal, cube_color }; // 6 - 왼다리
 	gVec.push_back(Lleg);
-	tagRightLeg* Rleg = new tagRightLeg{ cube_vertex_array_normal, cube_color }; // 7 - 오른다리
+	ChickenRightLeg* Rleg = new ChickenRightLeg{ cube_vertex_array_normal, cube_color }; // 7 - 오른다리
 	gVec.push_back(Rleg);
 }
 
@@ -354,11 +362,11 @@ void SetGround()
 	// 땅 만들기 ( 잔디, 도로 )
 
 	int count{};
-	tagRoad* pRoad{};
-	tagRoadLane* pLine{};
-	tagGrass* pFloor{};
+	Road* pRoad{};
+	RoadLane* pLine{};
+	Grass* pFloor{};
 	int idx{ 0 };
-	pFloor = new tagGrass{ cube_vertex_array_normal, floor_color, idx ,false };
+	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,false };
 	gVec.push_back(pFloor);
 	++idx;
 
@@ -369,26 +377,26 @@ void SetGround()
 		for (int j = 0; j < cnt; ++j) {
 			count++;
 			
-			pRoad = new tagRoad{ cube_vertex_array_normal, floor_color, j+idx}; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
+			pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx}; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
 			gVec.push_back(pRoad);
 			
-			pLine = new tagRoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
+			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
 			gVec.push_back(pLine); 
 		}
 		idx += cnt; // 도로 개수만큼 idx 증가
 
-		pFloor = new tagGrass{ cube_vertex_array_normal, floor_color, idx,false }; // 잔디 1칸 설치
+		pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx,false }; // 잔디 1칸 설치
 		gVec.push_back(pFloor);
 		++idx;
 	}
 
 	// true: 마지막 잔디 땅 표시 -> 나무 설치X, 엄마 위치( 1칸 아님 )
-	pFloor = new tagGrass{ cube_vertex_array_normal, floor_color, idx ,true};
+	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,true};
 	gVec.push_back(pFloor);
 	
 	for (int i{}; i < 10; ++i)
 	{
-		pFloor = new tagGrass{ cube_vertex_array_normal, floor_color, i+idx ,true };
+		pFloor = new Grass{ cube_vertex_array_normal, floor_color, i+idx ,true };
 		gVec.push_back(pFloor);
 	}
 	// 도착 지점 잔디 설치
@@ -400,7 +408,7 @@ void SetCars()
 	int size{ int(gVec.size()) };
 	for (int i{}; i < size; ++i)
 	{
-		if (dynamic_cast<tagRoad*>(gVec[i]) != nullptr)
+		if (dynamic_cast<Road*>(gVec[i]) != nullptr)
 		{
 			cnt++;
 			gVec.at(i)->CreateCar();
@@ -418,16 +426,16 @@ void SetWoods()
 
 	for (int i{}; i < size; ++i)
 	{
-		if (dynamic_cast<tagGrass*>(gVec[i]) != nullptr && !gVec.at(i)->IsFinalGrass())
+		if (dynamic_cast<Grass*>(gVec[i]) != nullptr && !gVec.at(i)->IsFinalGrass())
 		{
 			for (int j = 1; j < 13; ++j) {
 				bool TF{ (bool)gBoolUniform(gRandomEngine) };
 
 				if (TF) {
-					tagWood* pWood = new tagWood{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
-					tagLeafone* pGrass1 = new tagLeafone{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
-					tagLeaftwo* pGrass2 = new tagLeaftwo{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
-					tagLeafthree* pGrass3 = new tagLeafthree{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() }; // grass의 inum필요 
+					Wood* pWood = new Wood{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
+					WoodLeaf_1* pGrass1 = new WoodLeaf_1{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
+					WoodLeaf_2* pGrass2 = new WoodLeaf_2{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
+					WoodLeaf_3* pGrass3 = new WoodLeaf_3{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() }; // grass의 inum필요 
 
 					gVec.push_back(pWood);
 					gVec.push_back(pGrass1);
@@ -448,7 +456,7 @@ void SetRoadLane()
 	int size{ int(gVec.size()) };
 	for (int i{}; i < size; ++i)
 	{
-		if (dynamic_cast<tagRoad*>(gVec[i]) != nullptr)
+		if (dynamic_cast<Road*>(gVec[i]) != nullptr)
 		{
 			cnt++;
 			gVec.at(i)->CreateLane();
@@ -463,27 +471,30 @@ void SetMother()
 
 	for (int i{}; i < size; ++i)
 	{
-		if (dynamic_cast<tagGrass*>(gVec[i]) != nullptr && !gVec.at(i)->IsFinalGrass()) 
+		if (dynamic_cast<Grass*>(gVec[i]) != nullptr && !gVec.at(i)->IsFinalGrass()) 
 		{ 
 			g_max_z = gVec[i]->GetZindex(); // 맨 마지막 잔디의 인덱스를 얻기 -> 엄마닭의 위치 초기화를 위함
 		}
 	}
 
-	tagBodyMom* body = new tagBodyMom{ cube_vertex_array_normal, cube_color ,g_max_z + 5 }; // 0
+	MotherBody* body = new MotherBody{ cube_vertex_array_normal, cube_color ,g_max_z + 5 }; // 0
 	gVec.push_back(body);
-	tagHeadMom* head = new tagHeadMom{ cube_vertex_array_normal, cube_color,g_max_z + 5 }; // 1
+
+	MotherHead* head = new MotherHead{ cube_vertex_array_normal, cube_color,g_max_z + 5 }; // 1
 	gVec.push_back(head);
-	tagMouseMom* mouse = new tagMouseMom{ cube_vertex_array_normal, cube_color,g_max_z + 5 }; // 2
+	MotherMouse* mouse = new MotherMouse{ cube_vertex_array_normal, cube_color,g_max_z + 5 }; // 2
 	gVec.push_back(mouse);
-	tagEyesMom* eyes = new tagEyesMom{ cube_vertex_array_normal, cube_color ,g_max_z + 5 }; // 3
+	MotherEyes* eyes = new MotherEyes{ cube_vertex_array_normal, cube_color ,g_max_z + 5 }; // 3
 	gVec.push_back(eyes);
-	tagLeftArmMom* Larm = new tagLeftArmMom{ cube_vertex_array_normal, cube_color,g_max_z + 5 }; // 4
+
+	MotherLeftArm* Larm = new MotherLeftArm{ cube_vertex_array_normal, cube_color,g_max_z + 5 }; // 4
 	gVec.push_back(Larm);
-	tagRightArmMom* Rarm = new tagRightArmMom{ cube_vertex_array_normal, cube_color ,g_max_z +5 }; // 5
+	MotherRightArm* Rarm = new MotherRightArm{ cube_vertex_array_normal, cube_color ,g_max_z +5 }; // 5
 	gVec.push_back(Rarm);
-	tagLeftLegMom* Lleg = new tagLeftLegMom{ cube_vertex_array_normal, cube_color ,g_max_z + 5 }; // 6
+
+	MotherLeftLeg* Lleg = new MotherLeftLeg{ cube_vertex_array_normal, cube_color ,g_max_z + 5 }; // 6
 	gVec.push_back(Lleg);
-	tagRightLegMom* Rleg = new tagRightLegMom{ cube_vertex_array_normal, cube_color,g_max_z +5 }; // 7
+	MotherRightLeg* Rleg = new MotherRightLeg{ cube_vertex_array_normal, cube_color,g_max_z +5 }; // 7
 	gVec.push_back(Rleg);
 
 }
