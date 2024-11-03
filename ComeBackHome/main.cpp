@@ -63,6 +63,7 @@ std::uniform_real_distribution<float> grandomcolor{0.f,1.f};
 
 void main(int argc, char** argv)
 {
+	// gwangsin [11/02 : 7:22]
 	glutInit(&argc, argv);						  // GLUT 초기화 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); // [깊이검사 depth test 추가]디스플레이 모드 설정
 	glutInitWindowPosition(100, 100);			  // 윈도우의 위치 지정 

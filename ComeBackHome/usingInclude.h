@@ -69,6 +69,11 @@ enum myEnum
 
 typedef int Sign;
 
-
+enum class RGB
+{
+	R,
+	G,
+	B
+};
 
 

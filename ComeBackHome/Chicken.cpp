@@ -13,72 +13,72 @@ const float v{ 0.002 };
 
 void SetChickenFaceDir(unsigned char key)
 {
-	tagBody* body = dynamic_cast<tagBody*>(gVec[0]);
-	body->setFaceDir(key);
-	tagHead* head = dynamic_cast<tagHead*>(gVec[1]);
-	head->setFaceDir(key);
-	tagMouse* mouse = dynamic_cast<tagMouse*>(gVec[2]);
-	mouse->setFaceDir(key);
-	tagEyes* eyes = dynamic_cast<tagEyes*>(gVec[3]);
-	eyes->setFaceDir(key);
+	ChickenBody* body = dynamic_cast<ChickenBody*>(gVec[0]);
+	body->SetChickenFaceDir(key);
+	ChickenHead* head = dynamic_cast<ChickenHead*>(gVec[1]);
+	head->SetChickenFaceDir(key);
+	ChickenMouse* mouse = dynamic_cast<ChickenMouse*>(gVec[2]);
+	mouse->SetChickenFaceDir(key);
+	ChickenEyes* eyes = dynamic_cast<ChickenEyes*>(gVec[3]);
+	eyes->SetChickenFaceDir(key);
 
-	tagLeftArm* Larm = dynamic_cast<tagLeftArm*>(gVec[4]);
-	Larm->setFaceDir(key);
+	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
+	Larm->SetChickenFaceDir(key);
 
-	tagRightArm* Rarm = dynamic_cast<tagRightArm*>(gVec[5]);
-	Rarm->setFaceDir(key);
+	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
+	Rarm->SetChickenFaceDir(key);
 
-	tagLeftLeg* Lleg = dynamic_cast<tagLeftLeg*>(gVec[6]);
-	Lleg->setFaceDir(key);
+	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
+	Lleg->SetChickenFaceDir(key);
 
-	tagRightLeg* Rleg = dynamic_cast<tagRightLeg*>(gVec[7]);
-	Rleg->setFaceDir(key);
+	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
+	Rleg->SetChickenFaceDir(key);
 
-	gCamera.setFaceDir(key);
+	gCamera.SetCameraFaceDir(key);
 
 
 }
 
 void ChickenHandling()
 {
-	tagLeftArm* Larm = dynamic_cast<tagLeftArm*>(gVec[4]);
+	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
 	Larm->handling();
 
-	tagRightArm* Rarm = dynamic_cast<tagRightArm*>(gVec[5]);
+	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
 	Rarm->handling();
 
-	tagLeftLeg* Lleg = dynamic_cast<tagLeftLeg*>(gVec[6]);
+	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
 	Lleg->handling();
 
-	tagRightLeg* Rleg = dynamic_cast<tagRightLeg*>(gVec[7]);
+	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
 	Rleg->handling();
 }
 
 void ChickenMove()
 {
-	tagBody* body = dynamic_cast<tagBody*>(gVec[0]);
+	ChickenBody* body = dynamic_cast<ChickenBody*>(gVec[0]);
 	body->Walk();
-	tagHead* head = dynamic_cast<tagHead*>(gVec[1]);
+	ChickenHead* head = dynamic_cast<ChickenHead*>(gVec[1]);
 	head->Walk();
-	tagMouse* mouse = dynamic_cast<tagMouse*>(gVec[2]);
+	ChickenMouse* mouse = dynamic_cast<ChickenMouse*>(gVec[2]);
 	mouse->Walk();
-	tagEyes* eyes = dynamic_cast<tagEyes*>(gVec[3]);
+	ChickenEyes* eyes = dynamic_cast<ChickenEyes*>(gVec[3]);
 	eyes->Walk();
 
-	tagLeftArm* Larm = dynamic_cast<tagLeftArm*>(gVec[4]);
+	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
 	Larm->Walk();
-	tagRightArm* Rarm = dynamic_cast<tagRightArm*>(gVec[5]);
+	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
 	Rarm->Walk();
-	tagLeftLeg* Lleg = dynamic_cast<tagLeftLeg*>(gVec[6]);
+	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
 	Lleg->Walk();
-	tagRightLeg* Rleg = dynamic_cast<tagRightLeg*>(gVec[7]);
+	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
 	Rleg->Walk();
 
 }
 
 //===========================================================================================
 
-void tagBody::DrawObject()
+void ChickenBody::DrawObject()
 {
 	// --------------------------------------------------------------------------------
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
@@ -100,32 +100,7 @@ void tagBody::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagBody::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-}
-
-void tagBody::initColor(const GLfloat color_array[36 * 3])
+void ChickenBody::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.f;
@@ -134,37 +109,30 @@ void tagBody::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagBody::initVertex(const GLfloat rec_array[36 * 6])
+void ChickenBody::InitMatrix4()
 {
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagBody::InitMatrix4()
-{
-	m_x_distance = 0.f;
-	m_y_distance = 0.0f;
-	m_z_distance = 0.f;
+	m_x_pos = 0.f;
+	m_y_pos = 0.0f;
+	m_z_pos = 0.f;
 
 	m_x_scale = 0.01f;
 	m_y_scale = 0.01f;
 	m_z_scale = 0.01f;
 }
 
-void tagBody::WorldMatrix()
+void ChickenBody::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagBody::setFaceDir(unsigned char key)
+void ChickenBody::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -194,7 +162,7 @@ void tagBody::setFaceDir(unsigned char key)
 	}
 }
 
-void tagBody::Walk()
+void ChickenBody::Walk()
 {
 	
 		switch (face)
@@ -203,31 +171,31 @@ void tagBody::Walk()
 			break;
 
 		case South:
-			m_z_distance += walk_velo;
+			m_z_pos += walk_velo;
 			break;
 
 		case West:
-			m_x_distance -= walk_velo;
+			m_x_pos -= walk_velo;
 			break;
 
 		case East:
-			m_x_distance += walk_velo;
+			m_x_pos += walk_velo;
 			break;
 
 		case North:
-			m_z_distance -= walk_velo;
+			m_z_pos -= walk_velo;
 			break;
 		}
 	
 
 }
 
-void tagBody::update()
+void ChickenBody::Update()
 {
-	if (m_z_distance > -(g_max_z) * 0.1 && !gIsReach) {
+	if (m_z_pos > -(g_max_z) * 0.1 && !gIsReach) {
 		Collision();
 		Walk();
-		update_yPos();
+		UpdateChickenYpos();
 		
 	}
 	else
@@ -235,67 +203,70 @@ void tagBody::update()
 		if(!gIsReach)
 			PlaySound(L"BackSound.wav", NULL, SND_ASYNC);
 		
+		// 도착하면 y,z 위치 증가 -> y_pos가 2.1이 넘어갈 때까지
 		gIsReach = true;
 		for (int i{}; i < 8; ++i) {
-			gVec.at(i)->SetYdistance(gVec.at(i)->GetYdistance() + v);
-			gVec.at(i)->SetZdistance(gVec.at(i)->getZdistance() + v);
-			gVec.at(i)->setFaceDir('s');
+			gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + v);
+			gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + v);
+			gVec.at(i)->SetChickenFaceDir('s');
 		}
 
-		if (m_y_distance >= 2.1)
+		if (m_y_pos >= 2.1)
 		{
 			glutLeaveMainLoop();
 		}
 	}
 }
 
-void tagBody::Collision()
+void ChickenBody::Collision()
 {
+	// m_coll이 false면 충돌검사 X [ 무적모드 ]
+	//			 true면 충돌검사 O [ 생존모드 ]
 	if (!m_coll) return;
 
-	if (m_x_distance > 0.5)
+	if (m_x_pos > 0.5)
 	{
-		m_x_distance = 0.5;
-		gCamera.setFaceDir(STOP);
+		m_x_pos = 0.5;
+		gCamera.SetCameraFaceDir(STOP);
 		for (int j{}; j < 8; ++j)
 		{
-			gVec.at(j)->setFaceDir(STOP);
-			gVec.at(j)->SetXdistance(0.5);
+			gVec.at(j)->SetChickenFaceDir(STOP);
+			gVec.at(j)->SetXpos(0.5);
 		}
 	}
-	else if (m_x_distance < -0.5)
+	else if (m_x_pos < -0.5)
 	{
-		m_x_distance = -0.5;
-		gCamera.setFaceDir(STOP);
+		m_x_pos = -0.5;
+		gCamera.SetCameraFaceDir(STOP);
 		for (int j{}; j < 8; ++j)
 		{
-			gVec.at(j)->setFaceDir(STOP);
-			gVec.at(j)->SetXdistance(-0.5);
+			gVec.at(j)->SetChickenFaceDir(STOP);
+			gVec.at(j)->SetXpos(-0.5);
 		}
 	}
 
-	if (m_z_distance > 0.01)
+	if (m_z_pos > 0.01)
 	{
-		m_z_distance = 0.01;
-		gCamera.setFaceDir(STOP);
+		m_z_pos = 0.01;
+		gCamera.SetCameraFaceDir(STOP);
 		for (int j{}; j < 8; ++j)
 		{
-			gVec.at(j)->setFaceDir(STOP);
-			gVec.at(j)->SetZdistance(0.01);
+			gVec.at(j)->SetChickenFaceDir(STOP);
+			gVec.at(j)->SetZpos(0.01);
 		}
 	}
 
 	float Chickenpivot[6]{
-	  getXmax(), getXmin(), getYmax(),getYmin(),getZmax(), getZmin()
+	  GetXmaxBoundary(), GetXminBoundary(), GetYmaxBoundary(),GetYminBoundary(),GetZmaxBoundary(), GetZminBoundary()
 	};
 
 	int size = static_cast<int>(gVec.size());
 	
 	for (int i = 0; i < size; ++i) {
-		if (dynamic_cast<tagCar*>(gVec[i]) != nullptr) {
+		if (dynamic_cast<Car*>(gVec[i]) != nullptr) {
 			float colPivot[6]{
-				gVec[i]->getXmax(), gVec[i]->getXmin(), gVec[i]->getYmax(),
-				gVec[i]->getYmin(), gVec[i]->getZmax(), gVec[i]->getZmin()
+				gVec[i]->GetXmaxBoundary(), gVec[i]->GetXminBoundary(), gVec[i]->GetYmaxBoundary(),
+				gVec[i]->GetYminBoundary(), gVec[i]->GetZmaxBoundary(), gVec[i]->GetZminBoundary()
 			};
 
 			// 충돌 판정 (AABB 충돌 검사)
@@ -312,15 +283,15 @@ void tagBody::Collision()
 				for (int j{}; j < 8; ++j)
 				{
 					gVec.at(j)->InitMatrix4();
-					gCamera.initCamera();
+					gCamera.InitCamera();
 				}
 			}		
 		}
 
-		if (dynamic_cast<tagWood*>(gVec[i]) != nullptr) {
+		if (dynamic_cast<Wood*>(gVec[i]) != nullptr) {
 			float colPivot[6]{
-				gVec[i]->getXmax(), gVec[i]->getXmin(), gVec[i]->getYmax(),
-				gVec[i]->getYmin(), gVec[i]->getZmax(), gVec[i]->getZmin()
+				gVec[i]->GetXmaxBoundary(), gVec[i]->GetXminBoundary(), gVec[i]->GetYmaxBoundary(),
+				gVec[i]->GetYminBoundary(), gVec[i]->GetZmaxBoundary(), gVec[i]->GetZminBoundary()
 			};
 
 			// 충돌 판정 (AABB 충돌 검사)
@@ -334,36 +305,36 @@ void tagBody::Collision()
 				cout << "충돌 성공!" << i << endl;
 				for (int j{}; j < 8; ++j)
 				{
-					if (South == gVec.at(j)->Get_dir())
+					if (South == gVec.at(j)->GetChickenDir())
 					{
-						float z{ gVec.at(j)->getZdistance() };
+						float z{ gVec.at(j)->GetZpos() };
 						z -= 0.0025;
-						gVec.at(j)->SetZdistance(z);
+						gVec.at(j)->SetZpos(z);
 					}
 
-					else if (West == gVec.at(j)->Get_dir())
+					else if (West == gVec.at(j)->GetChickenDir())
 					{
-						float x{ gVec.at(j)->getXdistance() };
+						float x{ gVec.at(j)->GetXpos() };
 						x += 0.0025;
-						gVec.at(j)->SetXdistance(x);
+						gVec.at(j)->SetXpos(x);
 					}
 
-					else if (East == gVec.at(j)->Get_dir())
+					else if (East == gVec.at(j)->GetChickenDir())
 					{
-						float x{ gVec.at(j)->getXdistance() };
+						float x{ gVec.at(j)->GetXpos() };
 						x -= 0.0025;
-						gVec.at(j)->SetXdistance(x);
+						gVec.at(j)->SetXpos(x);
 					}
 
-					else if (North == gVec.at(j)->Get_dir())
+					else if (North == gVec.at(j)->GetChickenDir())
 					{
-						float z{ gVec.at(j)->getZdistance() };
+						float z{ gVec.at(j)->GetZpos() };
 						z += 0.0025;
-						gVec.at(j)->SetZdistance(z);
+						gVec.at(j)->SetZpos(z);
 					}
 
-					gCamera.setFaceDir(STOP);
-					gVec.at(j)->setFaceDir(STOP);
+					gCamera.SetCameraFaceDir(STOP);
+					gVec.at(j)->SetChickenFaceDir(STOP);
 				}
 			}
 
@@ -373,41 +344,41 @@ void tagBody::Collision()
 	}
 }
 
-void tagBody::update_yvelo()
+void ChickenBody::update_yvelo()
 {
-	if (m_y_distance > 0.0) {
+	if (m_y_pos > 0.0) {
 		m_fyvelo -= m_fgravity;
 	}
 	else
 	{
-		m_y_distance = 0;
+		m_y_pos = 0;
 		Set_yvelo_zero();
 	}
 
 }
 
-void tagBody::Set_yvelo_zero()
+void ChickenBody::Set_yvelo_zero()
 {
 	m_fyvelo = 0.0;
 }
 
-void tagBody::update_yPos()
+void ChickenBody::UpdateChickenYpos()
 {
 	update_yvelo();
-	m_y_distance += m_fyvelo;
+	m_y_pos += m_fyvelo;
 
 }
 
-void tagBody::jump()
+void ChickenBody::ChickenJump()
 {
-	if (GetYdistance() <= 0) {
+	if (GetYpos() <= 0) {
 		PlaySound(L"jump_2.wav", NULL, SND_ASYNC);
-		m_y_distance += 0.01;
+		m_y_pos += 0.01;
 		m_fyvelo = 0.005;
 	}
 }
 
-void tagBody::initModelLocation()
+void ChickenBody::initModelLocation()
 {
 	face = STOP;
 	walk_velo = 0.002f;
@@ -416,14 +387,7 @@ void tagBody::initModelLocation()
 
 //===========================================================================================
 
-void tagHead::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagHead::initColor(const GLfloat color_array[36 * 3])
+void ChickenHead::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.0f;
@@ -432,32 +396,7 @@ void tagHead::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagHead::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-}
-
-void tagHead::DrawObject()
+void ChickenHead::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -479,30 +418,30 @@ void tagHead::DrawObject()
 
 }
 
-void tagHead::InitMatrix4()
+void ChickenHead::InitMatrix4()
 {
 	m_x_scale = 0.01f;
 	m_y_scale = 0.01f;
 	m_z_scale = 0.01f;
 
-	m_x_distance = 0.f;
-	m_y_distance = 0.01;
-	m_z_distance = 0.f;
+	m_x_pos = 0.f;
+	m_y_pos = 0.01;
+	m_z_pos = 0.f;
 }
 
-void tagHead::WorldMatrix()
+void ChickenHead::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagHead::setFaceDir(unsigned char key)
+void ChickenHead::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -532,7 +471,7 @@ void tagHead::setFaceDir(unsigned char key)
 	}
 }
 
-void tagHead::Walk()
+void ChickenHead::Walk()
 {
 	switch (face)
 	{
@@ -540,37 +479,37 @@ void tagHead::Walk()
 		break;
 
 	case South:
-		m_z_distance += walk_velo;
+		m_z_pos += walk_velo;
 		break;
 
 	case West:
-		m_x_distance -= walk_velo;
+		m_x_pos -= walk_velo;
 		break;
 
 	case East:
-		m_x_distance += walk_velo;
+		m_x_pos += walk_velo;
 		break;
 
 	case North:
-		m_z_distance -= walk_velo;
+		m_z_pos -= walk_velo;
 		break;
 	}
 }
 
-void tagHead::update()
+void ChickenHead::Update()
 {
 	if (!gIsReach) {
-		update_yPos();
+		UpdateChickenYpos();
 		Walk();
 	}
 }
 
-void tagHead::update_yPos()
+void ChickenHead::UpdateChickenYpos()
 {
-	m_y_distance = gVec.at(0)->GetYdistance() + 0.01;
+	m_y_pos = gVec.at(0)->GetYpos() + 0.01;
 }
 
-void tagHead::initModelLocation()
+void ChickenHead::initModelLocation()
 {
 	face = STOP;
 	walk_velo = 0.002f;
@@ -579,14 +518,7 @@ void tagHead::initModelLocation()
 
 //===========================================================================================
 
-void tagMouse::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagMouse::initColor(const GLfloat color_array[36 * 3])
+void ChickenMouse::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.99607843137f;
@@ -595,33 +527,7 @@ void tagMouse::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagMouse::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-}
-
-void tagMouse::DrawObject()
+void ChickenMouse::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -643,35 +549,35 @@ void tagMouse::DrawObject()
 
 }
 
-void tagMouse::InitMatrix4()
+void ChickenMouse::InitMatrix4()
 {
 	m_x_scale = 0.01f / 4;
 	m_y_scale = 0.01f / 3;
 	m_z_scale = 0.0125f;
 
-	m_x_distance = 0.0f;
-	m_y_distance = 0.01f;
-	m_z_distance = 0.0f;
+	m_x_pos = 0.0f;
+	m_y_pos = 0.01f;
+	m_z_pos = 0.0f;
 }
 
-void tagMouse::WorldMatrix()
+void ChickenMouse::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기본
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기본
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
 
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagMouse::setFaceDir(unsigned char key)
+void ChickenMouse::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -713,7 +619,7 @@ void tagMouse::setFaceDir(unsigned char key)
 	}
 }
 
-void tagMouse::Walk()
+void ChickenMouse::Walk()
 {
 	switch (face)
 	{
@@ -721,38 +627,38 @@ void tagMouse::Walk()
 		break;
 
 	case South:
-		m_z_distance += walk_velo;
+		m_z_pos += walk_velo;
 		break;
 
 	case West:
-		m_x_distance -= walk_velo;
+		m_x_pos -= walk_velo;
 		break;
 
 	case East:
-		m_x_distance += walk_velo;
+		m_x_pos += walk_velo;
 		break;
 
 	case North:
-		m_z_distance -= walk_velo;
+		m_z_pos -= walk_velo;
 		break;
 	}
 }
 
-void tagMouse::update()
+void ChickenMouse::Update()
 {
 	if (!gIsReach) {
-		update_yPos();
+		UpdateChickenYpos();
 		Walk();
 	}
 	
 }
 
-void tagMouse::update_yPos()
+void ChickenMouse::UpdateChickenYpos()
 {
-	m_y_distance = gVec.at(0)->GetYdistance() + 0.01;
+	m_y_pos = gVec.at(0)->GetYpos() + 0.01;
 }
 
-void tagMouse::initModelLocation()
+void ChickenMouse::initModelLocation()
 {
 	face = STOP;
 	walk_velo = 0.002f;
@@ -766,14 +672,7 @@ void tagMouse::initModelLocation()
 
 //===========================================================================================
 
-void tagEyes::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagEyes::initColor(const GLfloat color_array[36 * 3])
+void ChickenEyes::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.;
@@ -782,33 +681,7 @@ void tagEyes::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagEyes::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-}
-
-void tagEyes::DrawObject()
+void ChickenEyes::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -830,30 +703,30 @@ void tagEyes::DrawObject()
 
 }
 
-void tagEyes::InitMatrix4()
+void ChickenEyes::InitMatrix4()
 {
 	m_x_scale = 0.011f;
 	m_y_scale = 0.01f / 5;
 	m_z_scale = 0.01f / 5;
 
-	m_x_distance = 0.f;
-	m_y_distance = 0.0105;
-	m_z_distance = 0.f;
+	m_x_pos = 0.f;
+	m_y_pos = 0.0105;
+	m_z_pos = 0.f;
 }
 
-void tagEyes::WorldMatrix()
+void ChickenEyes::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagEyes::setFaceDir(unsigned char key)
+void ChickenEyes::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -895,7 +768,7 @@ void tagEyes::setFaceDir(unsigned char key)
 	}
 }
 
-void tagEyes::Walk()
+void ChickenEyes::Walk()
 {
 	switch (face)
 	{
@@ -903,37 +776,37 @@ void tagEyes::Walk()
 		break;
 
 	case South:
-		m_z_distance += walk_velo;
+		m_z_pos += walk_velo;
 		break;
 
 	case West:
-		m_x_distance -= walk_velo;
+		m_x_pos -= walk_velo;
 		break;
 
 	case East:
-		m_x_distance += walk_velo;
+		m_x_pos += walk_velo;
 		break;
 
 	case North:
-		m_z_distance -= walk_velo;
+		m_z_pos -= walk_velo;
 		break;
 	}
 }
 
-void tagEyes::update()
+void ChickenEyes::Update()
 {
 	if (!gIsReach) {
-		update_yPos();
+		UpdateChickenYpos();
 		Walk();
 	}
 }
 
-void tagEyes::update_yPos()
+void ChickenEyes::UpdateChickenYpos()
 {
-	m_y_distance = gVec.at(0)->GetYdistance() + 0.0105;
+	m_y_pos = gVec.at(0)->GetYpos() + 0.0105;
 }
 
-void tagEyes::initModelLocation()
+void ChickenEyes::initModelLocation()
 {
 	face = STOP;
 	walk_velo = 0.002f;
@@ -947,14 +820,7 @@ void tagEyes::initModelLocation()
 
 //===========================================================================================
 
-void tagLeftArm::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagLeftArm::initColor(const GLfloat color_array[36 * 3])
+void ChickenLeftArm::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.9f;
@@ -963,32 +829,7 @@ void tagLeftArm::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagLeftArm::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-}
-
-void tagLeftArm::DrawObject()
+void ChickenLeftArm::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -1010,18 +851,18 @@ void tagLeftArm::DrawObject()
 
 }
 
-void tagLeftArm::InitMatrix4()
+void ChickenLeftArm::InitMatrix4()
 {
-	m_x_distance = 0.0;
-	m_y_distance = -0.0005f;
-	m_z_distance = 0.f;
+	m_x_pos = 0.0;
+	m_y_pos = -0.0005f;
+	m_z_pos = 0.f;
 
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.005f;
 	m_z_scale = 0.005f;
 }
 
-void tagLeftArm::handling()
+void ChickenLeftArm::handling()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -1033,28 +874,28 @@ void tagLeftArm::handling()
 	hand_degree += hand_velo * sign;
 }
 
-void tagLeftArm::WorldMatrix()
+void ChickenLeftArm::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기본
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기본
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본 
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(hand_degree), glm::vec3(0.0f, 0.0f, 1.0f));
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::rotate(m_total_world, glm::radians(hand_degree), glm::vec3(0.0f, 0.0f, 1.0f));
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
 
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagLeftArm::setFaceDir(unsigned char key)
+void ChickenLeftArm::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -1096,7 +937,7 @@ void tagLeftArm::setFaceDir(unsigned char key)
 	}
 }
 
-void tagLeftArm::Walk()
+void ChickenLeftArm::Walk()
 {
 	switch (face)
 	{
@@ -1104,27 +945,27 @@ void tagLeftArm::Walk()
 		break;
 
 	case South:
-		m_z_distance += walk_velo;
+		m_z_pos += walk_velo;
 		break;
 
 	case West:
-		m_x_distance -= walk_velo;
+		m_x_pos -= walk_velo;
 		break;
 
 	case East:
-		m_x_distance += walk_velo;
+		m_x_pos += walk_velo;
 		break;
 
 	case North:
-		m_z_distance -= walk_velo;
+		m_z_pos -= walk_velo;
 		break;
 	}
 }
 
-void tagLeftArm::update()
+void ChickenLeftArm::Update()
 {
 	if (!gIsReach) {
-		update_yPos();
+		UpdateChickenYpos();
 		Walk();
 		
 	}
@@ -1139,12 +980,12 @@ void tagLeftArm::update()
 	handling();
 }
 
-void tagLeftArm::update_yPos()
+void ChickenLeftArm::UpdateChickenYpos()
 {
-	m_y_distance = gVec.at(0)->GetYdistance() - 0.0005;
+	m_y_pos = gVec.at(0)->GetYpos() - 0.0005;
 }
 
-void tagLeftArm::initModelLocation()
+void ChickenLeftArm::initModelLocation()
 {
 	sign = MINUS;
 	hand_degree = 0.f;
@@ -1163,7 +1004,7 @@ void tagLeftArm::initModelLocation()
 
 //===========================================================================================
 
-void tagRightArm::handling()
+void ChickenRightArm::handling()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -1175,14 +1016,7 @@ void tagRightArm::handling()
 	hand_degree += hand_velo * sign;
 }
 
-void tagRightArm::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagRightArm::initColor(const GLfloat color_array[36 * 3])
+void ChickenRightArm::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.9f;
@@ -1191,33 +1025,7 @@ void tagRightArm::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagRightArm::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-}
-
-void tagRightArm::DrawObject()
+void ChickenRightArm::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -1239,37 +1047,37 @@ void tagRightArm::DrawObject()
 
 }
 
-void tagRightArm::InitMatrix4()
+void ChickenRightArm::InitMatrix4()
 {
-	m_x_distance = 0.0;
-	m_y_distance = 0.0005f;
-	m_z_distance = 0.f;
+	m_x_pos = 0.0;
+	m_y_pos = 0.0005f;
+	m_z_pos = 0.f;
 
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.005f;
 	m_z_scale = 0.005f;
 }
 
-void tagRightArm::WorldMatrix()
+void ChickenRightArm::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(-hand_degree), glm::vec3(0.0f, 0.0f, 1.0f));
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::rotate(m_total_world, glm::radians(-hand_degree), glm::vec3(0.0f, 0.0f, 1.0f));
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
 
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagRightArm::setFaceDir(unsigned char key)
+void ChickenRightArm::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -1311,7 +1119,7 @@ void tagRightArm::setFaceDir(unsigned char key)
 	}
 }
 
-void tagRightArm::Walk()
+void ChickenRightArm::Walk()
 {
 	switch (face)
 	{
@@ -1319,27 +1127,27 @@ void tagRightArm::Walk()
 		break;
 
 	case South:
-		m_z_distance += walk_velo;
+		m_z_pos += walk_velo;
 		break;
 
 	case West:
-		m_x_distance -= walk_velo;
+		m_x_pos -= walk_velo;
 		break;
 
 	case East:
-		m_x_distance += walk_velo;
+		m_x_pos += walk_velo;
 		break;
 
 	case North:
-		m_z_distance -= walk_velo;
+		m_z_pos -= walk_velo;
 		break;
 	}
 }
 
-void tagRightArm::update()
+void ChickenRightArm::Update()
 {
 	if (!gIsReach) {
-		update_yPos();
+		UpdateChickenYpos();
 		Walk();
 	}
 	else
@@ -1352,12 +1160,12 @@ void tagRightArm::update()
 	handling();
 }
 
-void tagRightArm::update_yPos()
+void ChickenRightArm::UpdateChickenYpos()
 {
-	m_y_distance = gVec.at(0)->GetYdistance() - 0.0005;
+	m_y_pos = gVec.at(0)->GetYpos() - 0.0005;
 }
 
-void tagRightArm::initModelLocation()
+void ChickenRightArm::initModelLocation()
 {
 	sign = PLUS;
 	hand_degree = 0.f;
@@ -1376,14 +1184,7 @@ void tagRightArm::initModelLocation()
 
 //===========================================================================================
 
-void tagLeftLeg::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagLeftLeg::initColor(const GLfloat color_array[36 * 3])
+void ChickenLeftLeg::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.0f;
@@ -1392,32 +1193,7 @@ void tagLeftLeg::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagLeftLeg::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-}
-
-void tagLeftLeg::DrawObject()
+void ChickenLeftLeg::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -1439,37 +1215,37 @@ void tagLeftLeg::DrawObject()
 
 }
 
-void tagLeftLeg::InitMatrix4()
+void ChickenLeftLeg::InitMatrix4()
 {
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.0125f;
 	m_z_scale = 0.00125f;
 
-	m_x_distance = 0.f;
-	m_y_distance = -0.005f;
-	m_z_distance = 0.f;
+	m_x_pos = 0.f;
+	m_y_pos = -0.005f;
+	m_z_pos = 0.f;
 }
 
-void tagLeftLeg::WorldMatrix()
+void ChickenLeftLeg::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(hand_degree), glm::vec3(1.0f, 0.0f, 0.0f));
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::rotate(m_total_world, glm::radians(hand_degree), glm::vec3(1.0f, 0.0f, 0.0f));
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
 
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagLeftLeg::handling()
+void ChickenLeftLeg::handling()
 {
 
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
@@ -1483,7 +1259,7 @@ void tagLeftLeg::handling()
 	hand_degree += hand_velo * sign;
 }
 
-void tagLeftLeg::setFaceDir(unsigned char key)
+void ChickenLeftLeg::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -1525,7 +1301,7 @@ void tagLeftLeg::setFaceDir(unsigned char key)
 	}
 }
 
-void tagLeftLeg::Walk()
+void ChickenLeftLeg::Walk()
 {
 	switch (face)
 	{
@@ -1533,38 +1309,38 @@ void tagLeftLeg::Walk()
 		break;
 
 	case South:
-		m_z_distance += walk_velo;
+		m_z_pos += walk_velo;
 		break;
 
 	case West:
-		m_x_distance -= walk_velo;
+		m_x_pos -= walk_velo;
 		break;
 
 	case East:
-		m_x_distance += walk_velo;
+		m_x_pos += walk_velo;
 		break;
 
 	case North:
-		m_z_distance -= walk_velo;
+		m_z_pos -= walk_velo;
 		break;
 	}
 }
 
-void tagLeftLeg::update()
+void ChickenLeftLeg::Update()
 {
 	if (!gIsReach) {
-		update_yPos();
+		UpdateChickenYpos();
 		Walk();
 	}
 	handling();
 }
 
-void tagLeftLeg::update_yPos()
+void ChickenLeftLeg::UpdateChickenYpos()
 {
-	m_y_distance = gVec.at(0)->GetYdistance() - 0.005;
+	m_y_pos = gVec.at(0)->GetYpos() - 0.005;
 }
 
-void tagLeftLeg::initModelLocation()
+void ChickenLeftLeg::initModelLocation()
 {
 	sign = PLUS;
 	hand_degree = 0.f;
@@ -1583,14 +1359,7 @@ void tagLeftLeg::initModelLocation()
 
 //===========================================================================================
 
-void tagRightLeg::initVertex(const GLfloat rec_array[36 * 6])
-{
-	for (int i = 0; i < 36 * 6; ++i) {
-		this->m_vertex[i] = rec_array[i];
-	}
-}
-
-void tagRightLeg::initColor(const GLfloat color_array[36 * 3])
+void ChickenRightLeg::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.0f;
@@ -1599,32 +1368,7 @@ void tagRightLeg::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagRightLeg::InitBuffer()
-{
-	glGenVertexArrays(1, &this->m_vao);
-	glBindVertexArray(this->m_vao);
-
-	glGenBuffers(1, &this->m_pos_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-
-	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(PosLocation);
-
-	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(NormalLocation);
-
-	glGenBuffers(1, &this->m_color_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-
-	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-}
-
-void tagRightLeg::DrawObject()
+void ChickenRightLeg::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -1645,18 +1389,18 @@ void tagRightLeg::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagRightLeg::InitMatrix4()
+void ChickenRightLeg::InitMatrix4()
 {
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.0125f;
 	m_z_scale = 0.00125f;
 
-	m_x_distance = 0.f;
-	m_y_distance = -0.005f;
-	m_z_distance = 0.f;
+	m_x_pos = 0.f;
+	m_y_pos = -0.005f;
+	m_z_pos = 0.f;
 }
 
-void tagRightLeg::handling()
+void ChickenRightLeg::handling()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -1669,28 +1413,28 @@ void tagRightLeg::handling()
 	hand_degree += hand_velo * sign;
 }
 
-void tagRightLeg::WorldMatrix()
+void ChickenRightLeg::WorldMatrix()
 {
-	initTotalworld();
+	InitTotalworld();
 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_x_distance, m_y_distance, m_z_distance)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // x축 회전 기
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 회전 기본 
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // 기본 이동 
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // 기본 이동 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // y축 얼굴
 
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
-	m_Total_world = glm::rotate(m_Total_world, glm::radians(hand_degree), glm::vec3(1.0f, 0.0f, 0.0f));
-	m_Total_world = glm::translate(m_Total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // 기본 이동
+	m_total_world = glm::rotate(m_total_world, glm::radians(hand_degree), glm::vec3(1.0f, 0.0f, 0.0f));
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // 기본 이동
 
-	m_Total_world = glm::scale(m_Total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // 기본 신축
 
 	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- 버텍스 세이더에서 모델링 변환 위치 가져오기
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_Total_world));
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagRightLeg::setFaceDir(unsigned char key)
+void ChickenRightLeg::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -1732,7 +1476,7 @@ void tagRightLeg::setFaceDir(unsigned char key)
 	}
 }
 
-void tagRightLeg::Walk()
+void ChickenRightLeg::Walk()
 {
 	switch (face)
 	{
@@ -1740,39 +1484,39 @@ void tagRightLeg::Walk()
 		break;
 
 	case South:
-		m_z_distance += walk_velo;
+		m_z_pos += walk_velo;
 		break;
 
 	case West:
-		m_x_distance -= walk_velo;
+		m_x_pos -= walk_velo;
 		break;
 
 	case East:
-		m_x_distance += walk_velo;
+		m_x_pos += walk_velo;
 		break;
 
 	case North:
-		m_z_distance -= walk_velo;
+		m_z_pos -= walk_velo;
 		break;
 	}
 }
 
-void tagRightLeg::update()
+void ChickenRightLeg::Update()
 {
 	if (!gIsReach) {
-		update_yPos();
+		UpdateChickenYpos();
 		Walk();
 
 	}
 	handling();
 }
 
-void tagRightLeg::update_yPos()
+void ChickenRightLeg::UpdateChickenYpos()
 {
-	m_y_distance = gVec.at(0)->GetYdistance() - 0.005;
+	m_y_pos = gVec.at(0)->GetYpos() - 0.005;
 }
 
-void tagRightLeg::initModelLocation()
+void ChickenRightLeg::initModelLocation()
 {
 	sign = MINUS;
 	hand_degree = 0.f;

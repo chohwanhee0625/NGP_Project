@@ -2,133 +2,110 @@
 
 //===========================================================================================
 // 나무
-class tagWood: public BasisComponent
+class Wood: public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
 	GLint	m_x_idx;
 	GLint   m_z_idx;
 
 public:
-	tagWood()
+	Wood()
 	{}
-	tagWood(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
+	Wood(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
 		: BasisComponent(), m_x_idx{x_idx}, m_z_idx{z_idx}
 	{
-		initVertex(cube_array);
-		initColor(color_array);
+		InitVertex(cube_array);
+		InitColor(color_array);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor(const GLfloat color_array[36 * 3]);
-	void InitBuffer();
+	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
-	void update() override;
-	void make_car()override {};
-
-	
+	void Update() override;
 };
 
 //===========================================================================================
 // 잎 1
-class tagLeafone : public BasisComponent
+class WoodLeaf_1 : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
 	GLint	m_x_idx;
 	GLint   m_z_idx;
 
 public:
-	tagLeafone()
+	WoodLeaf_1()
 	{}
-	tagLeafone(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
+	WoodLeaf_1(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
 		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
-		initVertex(cube_array);
-		initColor(color_array);
+		InitVertex(cube_array);
+		InitColor(color_array);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor(const GLfloat color_array[36 * 3]);
-	void InitBuffer();
+	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
-	void update() override;
-	virtual void Move() {  };
-	void make_car()override {};
+	void Update() override;
 
-	void WorldMatrix() override;
+	void WorldMatrix();
 };
 
 //===========================================================================================
 // 잎2
-class tagLeaftwo : public BasisComponent
+class WoodLeaf_2 : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
 	GLint	m_x_idx;
 	GLint   m_z_idx;
 
 public:
-	tagLeaftwo()
+	WoodLeaf_2()
 	{}
-	tagLeaftwo(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
+	WoodLeaf_2(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
 		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
-		initVertex(cube_array);
-		initColor(color_array);
+		InitVertex(cube_array);
+		InitColor(color_array);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor(const GLfloat color_array[36 * 3]);
-	void InitBuffer();
+	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
-	void update() override;
-	
-	void make_car()override {};
+	void Update() override;
 
-	void WorldMatrix() override;
+	void WorldMatrix();
 };
 
 //===========================================================================================
 // 잎3
-class tagLeafthree : public BasisComponent
+class WoodLeaf_3 : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
 	GLint	m_x_idx;
 	GLint   m_z_idx;
 
 public:
-	tagLeafthree()
+	WoodLeaf_3()
 	{}
-	tagLeafthree(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
+	WoodLeaf_3(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
 		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
-		initVertex(cube_array);
-		initColor(color_array);
+		InitVertex(cube_array);
+		InitColor(color_array);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor(const GLfloat color_array[36 * 3]);
-	void InitBuffer();
+	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
-	void update() override;
-	void make_car()override {};
-	void WorldMatrix() override;
+	void Update() override;
+
+	void WorldMatrix();
 };

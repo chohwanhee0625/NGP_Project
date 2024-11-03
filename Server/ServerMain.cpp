@@ -5,7 +5,7 @@
 
 int main()
 {
-	PacketClass test1(0, 1, 2);
+	/*PacketClass test1(0, 1, 2);
 	test1.colors.push_back({ 0.1f, 0.5f, 0.9f });
 	test1.colors.push_back({ 0.2f, 0.6f, 0.0f });
 	test1.colors.push_back({ 0.3f, 0.7f, 0.1f });
@@ -15,5 +15,5 @@ int main()
 	
 	PacketClass test2;
 	test2.from_json(j_str);
-	test2.print();
+	test2.print();*/
 }
