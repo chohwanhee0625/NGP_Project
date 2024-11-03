@@ -2,7 +2,7 @@
 
 //===========================================================================================
 // 나무
-class tagWood: public BasisComponent
+class Wood: public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -11,9 +11,9 @@ private:
 	GLint   m_z_idx;
 
 public:
-	tagWood()
+	Wood()
 	{}
-	tagWood(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
+	Wood(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
 		: BasisComponent(), m_x_idx{x_idx}, m_z_idx{z_idx}
 	{
 		initVertex(cube_array);
@@ -35,7 +35,7 @@ public:
 
 //===========================================================================================
 // 잎 1
-class tagLeafone : public BasisComponent
+class WoodLeaf_1 : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -44,9 +44,9 @@ private:
 	GLint   m_z_idx;
 
 public:
-	tagLeafone()
+	WoodLeaf_1()
 	{}
-	tagLeafone(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
+	WoodLeaf_1(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
 		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
 		initVertex(cube_array);
@@ -69,7 +69,7 @@ public:
 
 //===========================================================================================
 // 잎2
-class tagLeaftwo : public BasisComponent
+class WoodLeaf_2 : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -78,9 +78,9 @@ private:
 	GLint   m_z_idx;
 
 public:
-	tagLeaftwo()
+	WoodLeaf_2()
 	{}
-	tagLeaftwo(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
+	WoodLeaf_2(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
 		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
 		initVertex(cube_array);
@@ -103,7 +103,7 @@ public:
 
 //===========================================================================================
 // 잎3
-class tagLeafthree : public BasisComponent
+class WoodLeaf_3 : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -112,9 +112,9 @@ private:
 	GLint   m_z_idx;
 
 public:
-	tagLeafthree()
+	WoodLeaf_3()
 	{}
-	tagLeafthree(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
+	WoodLeaf_3(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
 		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
 		initVertex(cube_array);

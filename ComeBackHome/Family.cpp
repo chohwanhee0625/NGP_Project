@@ -11,7 +11,7 @@
 
 const float v{ 0.001 };
 
-void tagBodyMom::DrawObject()
+void MotherBody::DrawObject()
 {
 	// --------------------------------------------------------------------------------
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
@@ -33,7 +33,7 @@ void tagBodyMom::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagBodyMom::InitBuffer()
+void MotherBody::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -58,7 +58,7 @@ void tagBodyMom::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagBodyMom::initColor(const GLfloat color_array[36 * 3])
+void MotherBody::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.f;
@@ -67,14 +67,14 @@ void tagBodyMom::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagBodyMom::initVertex(const GLfloat rec_array[36 * 6])
+void MotherBody::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagBodyMom::InitMatrix4()
+void MotherBody::InitMatrix4()
 {
 	m_x_scale = 0.01f * 50;
 	m_y_scale = 0.01f * 50;
@@ -85,7 +85,7 @@ void tagBodyMom::InitMatrix4()
 	m_z_pos = -0.1f * idx;
 }
 
-void tagBodyMom::WorldMatrix()
+void MotherBody::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -97,7 +97,7 @@ void tagBodyMom::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagBodyMom::Update()
+void MotherBody::Update()
 {
 	if (gIsReach)
 	{
@@ -106,20 +106,20 @@ void tagBodyMom::Update()
 	}
 }
 
-void tagBodyMom::initModelLocation()
+void MotherBody::initModelLocation()
 {
 }
 
 //===========================================================================================
 
-void tagHeadMom::initVertex(const GLfloat rec_array[36 * 6])
+void MotherHead::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagHeadMom::initColor(const GLfloat color_array[36 * 3])
+void MotherHead::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.0f;
@@ -128,7 +128,7 @@ void tagHeadMom::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagHeadMom::InitBuffer()
+void MotherHead::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -153,7 +153,7 @@ void tagHeadMom::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagHeadMom::DrawObject()
+void MotherHead::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -175,7 +175,7 @@ void tagHeadMom::DrawObject()
 
 }
 
-void tagHeadMom::InitMatrix4()
+void MotherHead::InitMatrix4()
 {
 	m_x_scale = 0.01f * 50;
 	m_y_scale = 0.01f * 50;
@@ -186,7 +186,7 @@ void tagHeadMom::InitMatrix4()
 	m_z_pos = -0.1f * idx;
 }
 
-void tagHeadMom::WorldMatrix()
+void MotherHead::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -198,7 +198,7 @@ void tagHeadMom::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagHeadMom::Update()
+void MotherHead::Update()
 {
 	if (gIsReach)
 	{
@@ -207,20 +207,20 @@ void tagHeadMom::Update()
 	}
 }
 
-void tagHeadMom::initModelLocation()
+void MotherHead::initModelLocation()
 {
 }
 
 //===========================================================================================
 
-void tagMouseMom::initVertex(const GLfloat rec_array[36 * 6])
+void MotherMouse::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagMouseMom::initColor(const GLfloat color_array[36 * 3])
+void MotherMouse::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.99607843137f;
@@ -229,7 +229,7 @@ void tagMouseMom::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagMouseMom::InitBuffer()
+void MotherMouse::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -255,7 +255,7 @@ void tagMouseMom::InitBuffer()
 
 }
 
-void tagMouseMom::DrawObject()
+void MotherMouse::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -277,7 +277,7 @@ void tagMouseMom::DrawObject()
 
 }
 
-void tagMouseMom::InitMatrix4()
+void MotherMouse::InitMatrix4()
 {
 	m_x_scale = 0.01f / 4 * 50.f;
 	m_y_scale = 0.01f / 3 * 50.f;
@@ -288,7 +288,7 @@ void tagMouseMom::InitMatrix4()
 	m_z_pos = -0.1f * idx; +0.1; //-14.90f;
 }
 
-void tagMouseMom::WorldMatrix()
+void MotherMouse::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -305,7 +305,7 @@ void tagMouseMom::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagMouseMom::Update()
+void MotherMouse::Update()
 {
 	if (gIsReach)
 	{
@@ -314,7 +314,7 @@ void tagMouseMom::Update()
 	}
 }
 
-void tagMouseMom::initModelLocation()
+void MotherMouse::initModelLocation()
 {
 	m_far_value = 0.002;
 
@@ -325,14 +325,14 @@ void tagMouseMom::initModelLocation()
 
 //===========================================================================================
 
-void tagEyesMom::initVertex(const GLfloat rec_array[36 * 6])
+void MotherEyes::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagEyesMom::initColor(const GLfloat color_array[36 * 3])
+void MotherEyes::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.;
@@ -341,7 +341,7 @@ void tagEyesMom::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagEyesMom::InitBuffer()
+void MotherEyes::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -367,7 +367,7 @@ void tagEyesMom::InitBuffer()
 
 }
 
-void tagEyesMom::DrawObject()
+void MotherEyes::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -389,7 +389,7 @@ void tagEyesMom::DrawObject()
 
 }
 
-void tagEyesMom::InitMatrix4()
+void MotherEyes::InitMatrix4()
 {
 	m_x_scale = 0.011f * 55.;
 	m_y_scale = 0.01f / 5 * 50.;
@@ -400,7 +400,7 @@ void tagEyesMom::InitMatrix4()
 	m_z_pos = -0.1f * idx;
 }
 
-void tagEyesMom::WorldMatrix()
+void MotherEyes::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -412,7 +412,7 @@ void tagEyesMom::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagEyesMom::Update()
+void MotherEyes::Update()
 {
 	if (gIsReach)
 	{
@@ -421,7 +421,7 @@ void tagEyesMom::Update()
 	}
 }
 
-void tagEyesMom::initModelLocation()
+void MotherEyes::initModelLocation()
 {
 	m_far_value = 0.0;
 
@@ -432,14 +432,14 @@ void tagEyesMom::initModelLocation()
 
 //===========================================================================================
 
-void tagLeftArmMom::initVertex(const GLfloat rec_array[36 * 6])
+void MotherLeftArm::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagLeftArmMom::initColor(const GLfloat color_array[36 * 3])
+void MotherLeftArm::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.9f;
@@ -448,7 +448,7 @@ void tagLeftArmMom::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagLeftArmMom::InitBuffer()
+void MotherLeftArm::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -473,7 +473,7 @@ void tagLeftArmMom::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagLeftArmMom::DrawObject()
+void MotherLeftArm::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -495,7 +495,7 @@ void tagLeftArmMom::DrawObject()
 
 }
 
-void tagLeftArmMom::InitMatrix4()
+void MotherLeftArm::InitMatrix4()
 {
 	m_x_scale = 0.00125f * 50.f;
 	m_y_scale = 0.005f * 60.f;
@@ -507,7 +507,7 @@ void tagLeftArmMom::InitMatrix4()
 
 }
 
-void tagLeftArmMom::WorldMatrix()
+void MotherLeftArm::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -528,7 +528,7 @@ void tagLeftArmMom::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagLeftArmMom::Update()
+void MotherLeftArm::Update()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -546,7 +546,7 @@ void tagLeftArmMom::Update()
 	}
 }
 
-void tagLeftArmMom::initModelLocation()
+void MotherLeftArm::initModelLocation()
 {
 	sign = MINUS;
 	hand_degree = 0.f;
@@ -562,14 +562,14 @@ void tagLeftArmMom::initModelLocation()
 
 //===========================================================================================
 
-void tagRightArmMom::initVertex(const GLfloat rec_array[36 * 6])
+void MotherRightArm::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagRightArmMom::initColor(const GLfloat color_array[36 * 3])
+void MotherRightArm::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.9f;
@@ -578,7 +578,7 @@ void tagRightArmMom::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagRightArmMom::InitBuffer()
+void MotherRightArm::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -604,7 +604,7 @@ void tagRightArmMom::InitBuffer()
 
 }
 
-void tagRightArmMom::DrawObject()
+void MotherRightArm::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -626,7 +626,7 @@ void tagRightArmMom::DrawObject()
 
 }
 
-void tagRightArmMom::InitMatrix4()
+void MotherRightArm::InitMatrix4()
 {
 	m_x_scale = 0.00125f * 50;
 	m_y_scale = 0.005f * 60.f;
@@ -638,7 +638,7 @@ void tagRightArmMom::InitMatrix4()
 
 }
 
-void tagRightArmMom::WorldMatrix()
+void MotherRightArm::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -657,7 +657,7 @@ void tagRightArmMom::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagRightArmMom::Update()
+void MotherRightArm::Update()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -675,7 +675,7 @@ void tagRightArmMom::Update()
 	}
 }
 
-void tagRightArmMom::initModelLocation()
+void MotherRightArm::initModelLocation()
 {
 	sign = PLUS;
 	hand_degree = 0.f;
@@ -691,14 +691,14 @@ void tagRightArmMom::initModelLocation()
 
 //===========================================================================================
 
-void tagLeftLegMom::initVertex(const GLfloat rec_array[36 * 6])
+void MotherLeftLeg::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagLeftLegMom::initColor(const GLfloat color_array[36 * 3])
+void MotherLeftLeg::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.0f;
@@ -707,7 +707,7 @@ void tagLeftLegMom::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagLeftLegMom::InitBuffer()
+void MotherLeftLeg::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -732,7 +732,7 @@ void tagLeftLegMom::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagLeftLegMom::DrawObject()
+void MotherLeftLeg::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -754,7 +754,7 @@ void tagLeftLegMom::DrawObject()
 
 }
 
-void tagLeftLegMom::InitMatrix4()
+void MotherLeftLeg::InitMatrix4()
 {
 	m_x_scale = 0.00125f * 50.;
 	m_y_scale = 0.0125f * 50.;
@@ -765,7 +765,7 @@ void tagLeftLegMom::InitMatrix4()
 	m_z_pos = -0.1f * idx;
 }
 
-void tagLeftLegMom::WorldMatrix()
+void MotherLeftLeg::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -784,7 +784,7 @@ void tagLeftLegMom::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagLeftLegMom::Update()
+void MotherLeftLeg::Update()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -803,7 +803,7 @@ void tagLeftLegMom::Update()
 	}
 }
 
-void tagLeftLegMom::initModelLocation()
+void MotherLeftLeg::initModelLocation()
 {
 	sign = PLUS;
 	hand_degree = 0.f;
@@ -819,14 +819,14 @@ void tagLeftLegMom::initModelLocation()
 
 //===========================================================================================
 
-void tagRightLegMom::initVertex(const GLfloat rec_array[36 * 6])
+void MotherRightLeg::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagRightLegMom::initColor(const GLfloat color_array[36 * 3])
+void MotherRightLeg::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.0f;
@@ -835,7 +835,7 @@ void tagRightLegMom::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagRightLegMom::InitBuffer()
+void MotherRightLeg::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -860,7 +860,7 @@ void tagRightLegMom::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagRightLegMom::DrawObject()
+void MotherRightLeg::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -881,7 +881,7 @@ void tagRightLegMom::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagRightLegMom::InitMatrix4()
+void MotherRightLeg::InitMatrix4()
 {
 	m_x_scale = 0.00125f * 50.;
 	m_y_scale = 0.0125f * 50.;
@@ -892,7 +892,7 @@ void tagRightLegMom::InitMatrix4()
 	m_z_pos = -0.1f * idx;
 }
 
-void tagRightLegMom::WorldMatrix()
+void MotherRightLeg::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -913,7 +913,7 @@ void tagRightLegMom::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagRightLegMom::Update()
+void MotherRightLeg::Update()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -932,7 +932,7 @@ void tagRightLegMom::Update()
 	}
 }
 
-void tagRightLegMom::initModelLocation()
+void MotherRightLeg::initModelLocation()
 {
 	sign = MINUS;
 	hand_degree = 0.f;

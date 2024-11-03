@@ -6,7 +6,7 @@ class BasisComponent;
 
 //========================================================================
 // 몸
-class tagBody : public BasisComponent
+class ChickenBody : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -22,7 +22,7 @@ private:
 	bool	m_coll;
 public:
 
-	tagBody(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenBody(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ 0.002f },
@@ -73,7 +73,7 @@ public:
 
 //========================================================================
 // 머리
-class tagHead : public BasisComponent
+class ChickenHead : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -85,7 +85,7 @@ private:
 
 public:
 
-	tagHead(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenHead(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ 0.002f },
@@ -121,7 +121,7 @@ public:
 
 //========================================================================
 // 입
-class tagMouse : public BasisComponent
+class ChickenMouse : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -140,7 +140,7 @@ private:
 	GLfloat  m_fyvelo;
 public:
 
-	tagMouse(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenMouse(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ 0.002f },
@@ -181,7 +181,7 @@ public:
 
 //========================================================================
 // 눈
-class tagEyes : public BasisComponent
+class ChickenEyes : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -199,7 +199,7 @@ private:
 
 public:
 
-	tagEyes(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenEyes(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ 0.002f },
@@ -237,7 +237,7 @@ public:
 
 //========================================================================
 // 왼쪽 팔
-class tagLeftArm : public BasisComponent
+class ChickenLeftArm : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -259,7 +259,7 @@ private:
 
 public:
 
-	tagLeftArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenLeftArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		sign{ MINUS },
 		hand_degree{ 0.f },
@@ -302,7 +302,7 @@ public:
 
 //========================================================================
 // 오른쪽 팔  
-class tagRightArm : public BasisComponent
+class ChickenRightArm : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -325,7 +325,7 @@ private:
 
 public:
 
-	tagRightArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenRightArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		sign{ PLUS },
 		hand_degree{ 0.f },
@@ -367,7 +367,7 @@ public:
 
 //========================================================================
 // 왼쪽 다리
-class tagLeftLeg : public BasisComponent
+class ChickenLeftLeg : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -389,7 +389,7 @@ private:
 
 public:
 
-	tagLeftLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenLeftLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		sign{ PLUS },
 		hand_degree{ 0.f },
@@ -431,7 +431,7 @@ public:
 
 //========================================================================
 // 오른쪽 다리
-class tagRightLeg : public BasisComponent
+class ChickenRightLeg : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -455,7 +455,7 @@ private:
 	GLfloat  m_fyvelo;
 public:
 
-	tagRightLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenRightLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		sign{ MINUS },
 		hand_degree{ 0.f },

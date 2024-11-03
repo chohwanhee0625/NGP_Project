@@ -1,37 +1,37 @@
 #pragma once
 // 잔디 클래스
 
-class tagGrass : public BasisComponent
+class Grass : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
 	GLfloat m_color[36 * 3]; // 108
-	GLint	m_inum;
+	GLint	m_index;
 	bool	m_final; // 마지막 잔디인지
 
 public:
-	tagGrass()
+	Grass()
 	{}
 
-	tagGrass(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint idx, bool b)
+	Grass(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint idx, bool b)
 		: BasisComponent()
-		, m_inum{ idx }
+		, m_index{ idx }
 		, m_final{b}
 	{
-		initVertex(cube_array);
-		initColor(color_array);
+		InitVertex(cube_array);
+		InitColor(color_array);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor(const GLfloat color_array[36 * 3]);
+	void InitVertex(const GLfloat rec_array[36 * 6]);
+	void InitColor(const GLfloat color_array[36 * 3]);
 	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void Update() override;
 	
 
-	virtual int GetZindex() { return m_inum; }
+	virtual int GetZindex() { return m_index; }
 	bool IsFinalGrass() override{ return m_final; }
 }; 

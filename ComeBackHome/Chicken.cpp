@@ -13,25 +13,25 @@ const float v{ 0.002 };
 
 void SetChickenFaceDir(unsigned char key)
 {
-	tagBody* body = dynamic_cast<tagBody*>(gVec[0]);
+	ChickenBody* body = dynamic_cast<ChickenBody*>(gVec[0]);
 	body->SetChickenFaceDir(key);
-	tagHead* head = dynamic_cast<tagHead*>(gVec[1]);
+	ChickenHead* head = dynamic_cast<ChickenHead*>(gVec[1]);
 	head->SetChickenFaceDir(key);
-	tagMouse* mouse = dynamic_cast<tagMouse*>(gVec[2]);
+	ChickenMouse* mouse = dynamic_cast<ChickenMouse*>(gVec[2]);
 	mouse->SetChickenFaceDir(key);
-	tagEyes* eyes = dynamic_cast<tagEyes*>(gVec[3]);
+	ChickenEyes* eyes = dynamic_cast<ChickenEyes*>(gVec[3]);
 	eyes->SetChickenFaceDir(key);
 
-	tagLeftArm* Larm = dynamic_cast<tagLeftArm*>(gVec[4]);
+	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
 	Larm->SetChickenFaceDir(key);
 
-	tagRightArm* Rarm = dynamic_cast<tagRightArm*>(gVec[5]);
+	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
 	Rarm->SetChickenFaceDir(key);
 
-	tagLeftLeg* Lleg = dynamic_cast<tagLeftLeg*>(gVec[6]);
+	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
 	Lleg->SetChickenFaceDir(key);
 
-	tagRightLeg* Rleg = dynamic_cast<tagRightLeg*>(gVec[7]);
+	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
 	Rleg->SetChickenFaceDir(key);
 
 	gCamera.SetCameraFaceDir(key);
@@ -41,44 +41,44 @@ void SetChickenFaceDir(unsigned char key)
 
 void ChickenHandling()
 {
-	tagLeftArm* Larm = dynamic_cast<tagLeftArm*>(gVec[4]);
+	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
 	Larm->handling();
 
-	tagRightArm* Rarm = dynamic_cast<tagRightArm*>(gVec[5]);
+	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
 	Rarm->handling();
 
-	tagLeftLeg* Lleg = dynamic_cast<tagLeftLeg*>(gVec[6]);
+	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
 	Lleg->handling();
 
-	tagRightLeg* Rleg = dynamic_cast<tagRightLeg*>(gVec[7]);
+	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
 	Rleg->handling();
 }
 
 void ChickenMove()
 {
-	tagBody* body = dynamic_cast<tagBody*>(gVec[0]);
+	ChickenBody* body = dynamic_cast<ChickenBody*>(gVec[0]);
 	body->Walk();
-	tagHead* head = dynamic_cast<tagHead*>(gVec[1]);
+	ChickenHead* head = dynamic_cast<ChickenHead*>(gVec[1]);
 	head->Walk();
-	tagMouse* mouse = dynamic_cast<tagMouse*>(gVec[2]);
+	ChickenMouse* mouse = dynamic_cast<ChickenMouse*>(gVec[2]);
 	mouse->Walk();
-	tagEyes* eyes = dynamic_cast<tagEyes*>(gVec[3]);
+	ChickenEyes* eyes = dynamic_cast<ChickenEyes*>(gVec[3]);
 	eyes->Walk();
 
-	tagLeftArm* Larm = dynamic_cast<tagLeftArm*>(gVec[4]);
+	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
 	Larm->Walk();
-	tagRightArm* Rarm = dynamic_cast<tagRightArm*>(gVec[5]);
+	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
 	Rarm->Walk();
-	tagLeftLeg* Lleg = dynamic_cast<tagLeftLeg*>(gVec[6]);
+	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
 	Lleg->Walk();
-	tagRightLeg* Rleg = dynamic_cast<tagRightLeg*>(gVec[7]);
+	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
 	Rleg->Walk();
 
 }
 
 //===========================================================================================
 
-void tagBody::DrawObject()
+void ChickenBody::DrawObject()
 {
 	// --------------------------------------------------------------------------------
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
@@ -100,7 +100,7 @@ void tagBody::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagBody::InitBuffer()
+void ChickenBody::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -125,7 +125,7 @@ void tagBody::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagBody::initColor(const GLfloat color_array[36 * 3])
+void ChickenBody::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.f;
@@ -134,14 +134,14 @@ void tagBody::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagBody::initVertex(const GLfloat rec_array[36 * 6])
+void ChickenBody::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagBody::InitMatrix4()
+void ChickenBody::InitMatrix4()
 {
 	m_x_pos = 0.f;
 	m_y_pos = 0.0f;
@@ -152,7 +152,7 @@ void tagBody::InitMatrix4()
 	m_z_scale = 0.01f;
 }
 
-void tagBody::WorldMatrix()
+void ChickenBody::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -164,7 +164,7 @@ void tagBody::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagBody::SetChickenFaceDir(unsigned char key)
+void ChickenBody::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -194,7 +194,7 @@ void tagBody::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void tagBody::Walk()
+void ChickenBody::Walk()
 {
 	
 		switch (face)
@@ -222,7 +222,7 @@ void tagBody::Walk()
 
 }
 
-void tagBody::Update()
+void ChickenBody::Update()
 {
 	if (m_z_pos > -(g_max_z) * 0.1 && !gIsReach) {
 		Collision();
@@ -250,7 +250,7 @@ void tagBody::Update()
 	}
 }
 
-void tagBody::Collision()
+void ChickenBody::Collision()
 {
 	// m_coll이 false면 충돌검사 X [ 무적모드 ]
 	//			 true면 충돌검사 O [ 생존모드 ]
@@ -295,7 +295,7 @@ void tagBody::Collision()
 	int size = static_cast<int>(gVec.size());
 	
 	for (int i = 0; i < size; ++i) {
-		if (dynamic_cast<tagCar*>(gVec[i]) != nullptr) {
+		if (dynamic_cast<Car*>(gVec[i]) != nullptr) {
 			float colPivot[6]{
 				gVec[i]->GetXmaxBoundary(), gVec[i]->GetXminBoundary(), gVec[i]->GetYmaxBoundary(),
 				gVec[i]->GetYminBoundary(), gVec[i]->GetZmaxBoundary(), gVec[i]->GetZminBoundary()
@@ -315,12 +315,12 @@ void tagBody::Collision()
 				for (int j{}; j < 8; ++j)
 				{
 					gVec.at(j)->InitMatrix4();
-					gCamera.initCamera();
+					gCamera.InitCamera();
 				}
 			}		
 		}
 
-		if (dynamic_cast<tagWood*>(gVec[i]) != nullptr) {
+		if (dynamic_cast<Wood*>(gVec[i]) != nullptr) {
 			float colPivot[6]{
 				gVec[i]->GetXmaxBoundary(), gVec[i]->GetXminBoundary(), gVec[i]->GetYmaxBoundary(),
 				gVec[i]->GetYminBoundary(), gVec[i]->GetZmaxBoundary(), gVec[i]->GetZminBoundary()
@@ -376,7 +376,7 @@ void tagBody::Collision()
 	}
 }
 
-void tagBody::update_yvelo()
+void ChickenBody::update_yvelo()
 {
 	if (m_y_pos > 0.0) {
 		m_fyvelo -= m_fgravity;
@@ -389,19 +389,19 @@ void tagBody::update_yvelo()
 
 }
 
-void tagBody::Set_yvelo_zero()
+void ChickenBody::Set_yvelo_zero()
 {
 	m_fyvelo = 0.0;
 }
 
-void tagBody::UpdateChickenYpos()
+void ChickenBody::UpdateChickenYpos()
 {
 	update_yvelo();
 	m_y_pos += m_fyvelo;
 
 }
 
-void tagBody::ChickenJump()
+void ChickenBody::ChickenJump()
 {
 	if (GetYpos() <= 0) {
 		PlaySound(L"jump_2.wav", NULL, SND_ASYNC);
@@ -410,7 +410,7 @@ void tagBody::ChickenJump()
 	}
 }
 
-void tagBody::initModelLocation()
+void ChickenBody::initModelLocation()
 {
 	face = STOP;
 	walk_velo = 0.002f;
@@ -419,14 +419,14 @@ void tagBody::initModelLocation()
 
 //===========================================================================================
 
-void tagHead::initVertex(const GLfloat rec_array[36 * 6])
+void ChickenHead::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagHead::initColor(const GLfloat color_array[36 * 3])
+void ChickenHead::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.0f;
@@ -435,7 +435,7 @@ void tagHead::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagHead::InitBuffer()
+void ChickenHead::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -460,7 +460,7 @@ void tagHead::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagHead::DrawObject()
+void ChickenHead::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -482,7 +482,7 @@ void tagHead::DrawObject()
 
 }
 
-void tagHead::InitMatrix4()
+void ChickenHead::InitMatrix4()
 {
 	m_x_scale = 0.01f;
 	m_y_scale = 0.01f;
@@ -493,7 +493,7 @@ void tagHead::InitMatrix4()
 	m_z_pos = 0.f;
 }
 
-void tagHead::WorldMatrix()
+void ChickenHead::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -505,7 +505,7 @@ void tagHead::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagHead::SetChickenFaceDir(unsigned char key)
+void ChickenHead::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -535,7 +535,7 @@ void tagHead::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void tagHead::Walk()
+void ChickenHead::Walk()
 {
 	switch (face)
 	{
@@ -560,7 +560,7 @@ void tagHead::Walk()
 	}
 }
 
-void tagHead::Update()
+void ChickenHead::Update()
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
@@ -568,12 +568,12 @@ void tagHead::Update()
 	}
 }
 
-void tagHead::UpdateChickenYpos()
+void ChickenHead::UpdateChickenYpos()
 {
 	m_y_pos = gVec.at(0)->GetYpos() + 0.01;
 }
 
-void tagHead::initModelLocation()
+void ChickenHead::initModelLocation()
 {
 	face = STOP;
 	walk_velo = 0.002f;
@@ -582,14 +582,14 @@ void tagHead::initModelLocation()
 
 //===========================================================================================
 
-void tagMouse::initVertex(const GLfloat rec_array[36 * 6])
+void ChickenMouse::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagMouse::initColor(const GLfloat color_array[36 * 3])
+void ChickenMouse::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.99607843137f;
@@ -598,7 +598,7 @@ void tagMouse::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagMouse::InitBuffer()
+void ChickenMouse::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -624,7 +624,7 @@ void tagMouse::InitBuffer()
 
 }
 
-void tagMouse::DrawObject()
+void ChickenMouse::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -646,7 +646,7 @@ void tagMouse::DrawObject()
 
 }
 
-void tagMouse::InitMatrix4()
+void ChickenMouse::InitMatrix4()
 {
 	m_x_scale = 0.01f / 4;
 	m_y_scale = 0.01f / 3;
@@ -657,7 +657,7 @@ void tagMouse::InitMatrix4()
 	m_z_pos = 0.0f;
 }
 
-void tagMouse::WorldMatrix()
+void ChickenMouse::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -674,7 +674,7 @@ void tagMouse::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagMouse::SetChickenFaceDir(unsigned char key)
+void ChickenMouse::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -716,7 +716,7 @@ void tagMouse::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void tagMouse::Walk()
+void ChickenMouse::Walk()
 {
 	switch (face)
 	{
@@ -741,7 +741,7 @@ void tagMouse::Walk()
 	}
 }
 
-void tagMouse::Update()
+void ChickenMouse::Update()
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
@@ -750,12 +750,12 @@ void tagMouse::Update()
 	
 }
 
-void tagMouse::UpdateChickenYpos()
+void ChickenMouse::UpdateChickenYpos()
 {
 	m_y_pos = gVec.at(0)->GetYpos() + 0.01;
 }
 
-void tagMouse::initModelLocation()
+void ChickenMouse::initModelLocation()
 {
 	face = STOP;
 	walk_velo = 0.002f;
@@ -769,14 +769,14 @@ void tagMouse::initModelLocation()
 
 //===========================================================================================
 
-void tagEyes::initVertex(const GLfloat rec_array[36 * 6])
+void ChickenEyes::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagEyes::initColor(const GLfloat color_array[36 * 3])
+void ChickenEyes::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.;
@@ -785,7 +785,7 @@ void tagEyes::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagEyes::InitBuffer()
+void ChickenEyes::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -811,7 +811,7 @@ void tagEyes::InitBuffer()
 
 }
 
-void tagEyes::DrawObject()
+void ChickenEyes::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -833,7 +833,7 @@ void tagEyes::DrawObject()
 
 }
 
-void tagEyes::InitMatrix4()
+void ChickenEyes::InitMatrix4()
 {
 	m_x_scale = 0.011f;
 	m_y_scale = 0.01f / 5;
@@ -844,7 +844,7 @@ void tagEyes::InitMatrix4()
 	m_z_pos = 0.f;
 }
 
-void tagEyes::WorldMatrix()
+void ChickenEyes::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -856,7 +856,7 @@ void tagEyes::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagEyes::SetChickenFaceDir(unsigned char key)
+void ChickenEyes::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -898,7 +898,7 @@ void tagEyes::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void tagEyes::Walk()
+void ChickenEyes::Walk()
 {
 	switch (face)
 	{
@@ -923,7 +923,7 @@ void tagEyes::Walk()
 	}
 }
 
-void tagEyes::Update()
+void ChickenEyes::Update()
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
@@ -931,12 +931,12 @@ void tagEyes::Update()
 	}
 }
 
-void tagEyes::UpdateChickenYpos()
+void ChickenEyes::UpdateChickenYpos()
 {
 	m_y_pos = gVec.at(0)->GetYpos() + 0.0105;
 }
 
-void tagEyes::initModelLocation()
+void ChickenEyes::initModelLocation()
 {
 	face = STOP;
 	walk_velo = 0.002f;
@@ -950,14 +950,14 @@ void tagEyes::initModelLocation()
 
 //===========================================================================================
 
-void tagLeftArm::initVertex(const GLfloat rec_array[36 * 6])
+void ChickenLeftArm::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagLeftArm::initColor(const GLfloat color_array[36 * 3])
+void ChickenLeftArm::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.9f;
@@ -966,7 +966,7 @@ void tagLeftArm::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagLeftArm::InitBuffer()
+void ChickenLeftArm::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -991,7 +991,7 @@ void tagLeftArm::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagLeftArm::DrawObject()
+void ChickenLeftArm::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -1013,7 +1013,7 @@ void tagLeftArm::DrawObject()
 
 }
 
-void tagLeftArm::InitMatrix4()
+void ChickenLeftArm::InitMatrix4()
 {
 	m_x_pos = 0.0;
 	m_y_pos = -0.0005f;
@@ -1024,7 +1024,7 @@ void tagLeftArm::InitMatrix4()
 	m_z_scale = 0.005f;
 }
 
-void tagLeftArm::handling()
+void ChickenLeftArm::handling()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -1036,7 +1036,7 @@ void tagLeftArm::handling()
 	hand_degree += hand_velo * sign;
 }
 
-void tagLeftArm::WorldMatrix()
+void ChickenLeftArm::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -1057,7 +1057,7 @@ void tagLeftArm::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagLeftArm::SetChickenFaceDir(unsigned char key)
+void ChickenLeftArm::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -1099,7 +1099,7 @@ void tagLeftArm::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void tagLeftArm::Walk()
+void ChickenLeftArm::Walk()
 {
 	switch (face)
 	{
@@ -1124,7 +1124,7 @@ void tagLeftArm::Walk()
 	}
 }
 
-void tagLeftArm::Update()
+void ChickenLeftArm::Update()
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
@@ -1142,12 +1142,12 @@ void tagLeftArm::Update()
 	handling();
 }
 
-void tagLeftArm::UpdateChickenYpos()
+void ChickenLeftArm::UpdateChickenYpos()
 {
 	m_y_pos = gVec.at(0)->GetYpos() - 0.0005;
 }
 
-void tagLeftArm::initModelLocation()
+void ChickenLeftArm::initModelLocation()
 {
 	sign = MINUS;
 	hand_degree = 0.f;
@@ -1166,7 +1166,7 @@ void tagLeftArm::initModelLocation()
 
 //===========================================================================================
 
-void tagRightArm::handling()
+void ChickenRightArm::handling()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -1178,14 +1178,14 @@ void tagRightArm::handling()
 	hand_degree += hand_velo * sign;
 }
 
-void tagRightArm::initVertex(const GLfloat rec_array[36 * 6])
+void ChickenRightArm::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagRightArm::initColor(const GLfloat color_array[36 * 3])
+void ChickenRightArm::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.9f;
@@ -1194,7 +1194,7 @@ void tagRightArm::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagRightArm::InitBuffer()
+void ChickenRightArm::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -1220,7 +1220,7 @@ void tagRightArm::InitBuffer()
 
 }
 
-void tagRightArm::DrawObject()
+void ChickenRightArm::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -1242,7 +1242,7 @@ void tagRightArm::DrawObject()
 
 }
 
-void tagRightArm::InitMatrix4()
+void ChickenRightArm::InitMatrix4()
 {
 	m_x_pos = 0.0;
 	m_y_pos = 0.0005f;
@@ -1253,7 +1253,7 @@ void tagRightArm::InitMatrix4()
 	m_z_scale = 0.005f;
 }
 
-void tagRightArm::WorldMatrix()
+void ChickenRightArm::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -1272,7 +1272,7 @@ void tagRightArm::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagRightArm::SetChickenFaceDir(unsigned char key)
+void ChickenRightArm::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -1314,7 +1314,7 @@ void tagRightArm::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void tagRightArm::Walk()
+void ChickenRightArm::Walk()
 {
 	switch (face)
 	{
@@ -1339,7 +1339,7 @@ void tagRightArm::Walk()
 	}
 }
 
-void tagRightArm::Update()
+void ChickenRightArm::Update()
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
@@ -1355,12 +1355,12 @@ void tagRightArm::Update()
 	handling();
 }
 
-void tagRightArm::UpdateChickenYpos()
+void ChickenRightArm::UpdateChickenYpos()
 {
 	m_y_pos = gVec.at(0)->GetYpos() - 0.0005;
 }
 
-void tagRightArm::initModelLocation()
+void ChickenRightArm::initModelLocation()
 {
 	sign = PLUS;
 	hand_degree = 0.f;
@@ -1379,14 +1379,14 @@ void tagRightArm::initModelLocation()
 
 //===========================================================================================
 
-void tagLeftLeg::initVertex(const GLfloat rec_array[36 * 6])
+void ChickenLeftLeg::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagLeftLeg::initColor(const GLfloat color_array[36 * 3])
+void ChickenLeftLeg::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.0f;
@@ -1395,7 +1395,7 @@ void tagLeftLeg::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagLeftLeg::InitBuffer()
+void ChickenLeftLeg::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -1420,7 +1420,7 @@ void tagLeftLeg::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagLeftLeg::DrawObject()
+void ChickenLeftLeg::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -1442,7 +1442,7 @@ void tagLeftLeg::DrawObject()
 
 }
 
-void tagLeftLeg::InitMatrix4()
+void ChickenLeftLeg::InitMatrix4()
 {
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.0125f;
@@ -1453,7 +1453,7 @@ void tagLeftLeg::InitMatrix4()
 	m_z_pos = 0.f;
 }
 
-void tagLeftLeg::WorldMatrix()
+void ChickenLeftLeg::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -1472,7 +1472,7 @@ void tagLeftLeg::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagLeftLeg::handling()
+void ChickenLeftLeg::handling()
 {
 
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
@@ -1486,7 +1486,7 @@ void tagLeftLeg::handling()
 	hand_degree += hand_velo * sign;
 }
 
-void tagLeftLeg::SetChickenFaceDir(unsigned char key)
+void ChickenLeftLeg::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -1528,7 +1528,7 @@ void tagLeftLeg::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void tagLeftLeg::Walk()
+void ChickenLeftLeg::Walk()
 {
 	switch (face)
 	{
@@ -1553,7 +1553,7 @@ void tagLeftLeg::Walk()
 	}
 }
 
-void tagLeftLeg::Update()
+void ChickenLeftLeg::Update()
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
@@ -1562,12 +1562,12 @@ void tagLeftLeg::Update()
 	handling();
 }
 
-void tagLeftLeg::UpdateChickenYpos()
+void ChickenLeftLeg::UpdateChickenYpos()
 {
 	m_y_pos = gVec.at(0)->GetYpos() - 0.005;
 }
 
-void tagLeftLeg::initModelLocation()
+void ChickenLeftLeg::initModelLocation()
 {
 	sign = PLUS;
 	hand_degree = 0.f;
@@ -1586,14 +1586,14 @@ void tagLeftLeg::initModelLocation()
 
 //===========================================================================================
 
-void tagRightLeg::initVertex(const GLfloat rec_array[36 * 6])
+void ChickenRightLeg::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagRightLeg::initColor(const GLfloat color_array[36 * 3])
+void ChickenRightLeg::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.0f;
@@ -1602,7 +1602,7 @@ void tagRightLeg::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagRightLeg::InitBuffer()
+void ChickenRightLeg::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -1627,7 +1627,7 @@ void tagRightLeg::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagRightLeg::DrawObject()
+void ChickenRightLeg::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -1648,7 +1648,7 @@ void tagRightLeg::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagRightLeg::InitMatrix4()
+void ChickenRightLeg::InitMatrix4()
 {
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.0125f;
@@ -1659,7 +1659,7 @@ void tagRightLeg::InitMatrix4()
 	m_z_pos = 0.f;
 }
 
-void tagRightLeg::handling()
+void ChickenRightLeg::handling()
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -1672,7 +1672,7 @@ void tagRightLeg::handling()
 	hand_degree += hand_velo * sign;
 }
 
-void tagRightLeg::WorldMatrix()
+void ChickenRightLeg::WorldMatrix()
 {
 	InitTotalworld();
 
@@ -1693,7 +1693,7 @@ void tagRightLeg::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void tagRightLeg::SetChickenFaceDir(unsigned char key)
+void ChickenRightLeg::SetChickenFaceDir(unsigned char key)
 {
 	switch (key)
 	{
@@ -1735,7 +1735,7 @@ void tagRightLeg::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void tagRightLeg::Walk()
+void ChickenRightLeg::Walk()
 {
 	switch (face)
 	{
@@ -1760,7 +1760,7 @@ void tagRightLeg::Walk()
 	}
 }
 
-void tagRightLeg::Update()
+void ChickenRightLeg::Update()
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
@@ -1770,12 +1770,12 @@ void tagRightLeg::Update()
 	handling();
 }
 
-void tagRightLeg::UpdateChickenYpos()
+void ChickenRightLeg::UpdateChickenYpos()
 {
 	m_y_pos = gVec.at(0)->GetYpos() - 0.005;
 }
 
-void tagRightLeg::initModelLocation()
+void ChickenRightLeg::initModelLocation()
 {
 	sign = MINUS;
 	hand_degree = 0.f;

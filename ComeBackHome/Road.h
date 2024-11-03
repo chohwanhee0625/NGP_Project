@@ -2,7 +2,7 @@
 
 //===========================================================================================
 // 도로
-class tagRoad : public BasisComponent
+class Road : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -11,9 +11,9 @@ private:
 	GLboolean m_bLR;
 	int m_dir;
 public:
-	tagRoad()
+	Road()
 	{}
-	tagRoad(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint idx)
+	Road(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint idx)
 		: BasisComponent()
 		, m_inum{idx}
 		, m_bLR{(bool)gBoolUniform(gRandomEngine)}
@@ -43,7 +43,7 @@ public:
 
 //===========================================================================================
 // 차선
-class tagRoadLane : public BasisComponent
+class RoadLane : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -52,9 +52,9 @@ private:
 	GLint   m_z_idx;
 
 public:
-	tagRoadLane()
+	RoadLane()
 	{}
-	tagRoadLane(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
+	RoadLane(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint x_idx, GLint z_idx)
 		: BasisComponent(), m_x_idx{ x_idx }, m_z_idx{ z_idx }
 	{
 		initVertex(cube_array);

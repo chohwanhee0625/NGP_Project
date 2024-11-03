@@ -2,7 +2,7 @@
 
 //===========================================================================================
 // 차 몸체 
-class tagCar : public BasisComponent
+class Car : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -13,9 +13,9 @@ private:
 	int m_idx;
 
 public:
-	tagCar()
+	Car()
 	{}
-	tagCar(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int dir, int idx) 
+	Car(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int dir, int idx) 
 		: BasisComponent(),
 		m_velocity{ 0.001f} // 속도 변경 가능 
 		, m_idx{idx}, m_dir{dir}
@@ -42,7 +42,7 @@ public:
 
 //===========================================================================================
 // 차 중앙 
-class tagCarMiddle : public BasisComponent
+class CarMiddle : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -52,9 +52,9 @@ private:
 	int m_idx;
 
 public:
-	tagCarMiddle()
+	CarMiddle()
 	{}
-	tagCarMiddle(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int dir, int idx, GLfloat velo)
+	CarMiddle(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int dir, int idx, GLfloat velo)
 		: BasisComponent(),
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
@@ -78,7 +78,7 @@ public:
 
 //===========================================================================================
 // 창문
-class tagCarWindow : public BasisComponent
+class CarWindow : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -88,9 +88,9 @@ private:
 	int m_idx;
 
 public:
-	tagCarWindow()
+	CarWindow()
 	{}
-	tagCarWindow(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
+	CarWindow(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
 		: BasisComponent(),
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
@@ -114,7 +114,7 @@ public:
 
 //===========================================================================================
 // 바퀴 
-class tagCarWheel_1 : public BasisComponent
+class CarWheel_1 : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -124,9 +124,9 @@ private:
 	int m_idx;
 
 public:
-	tagCarWheel_1()
+	CarWheel_1()
 	{}
-	tagCarWheel_1(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
+	CarWheel_1(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
 		: BasisComponent(),
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
@@ -150,7 +150,7 @@ public:
 
 //===========================================================================================
 // 바퀴
-class tagCarWheel_1_small : public BasisComponent
+class CarSmallWheel_1 : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -160,9 +160,9 @@ private:
 	int m_idx;
 
 public:
-	tagCarWheel_1_small()
+	CarSmallWheel_1()
 	{}
-	tagCarWheel_1_small(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
+	CarSmallWheel_1(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
 		: BasisComponent(),
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
@@ -186,7 +186,7 @@ public:
 
 //===========================================================================================
 // 바퀴
-class tagCarWheel_2 : public BasisComponent
+class CarWheel_2 : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -196,9 +196,9 @@ private:
 	int m_idx;
 
 public:
-	tagCarWheel_2()
+	CarWheel_2()
 	{}
-	tagCarWheel_2(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
+	CarWheel_2(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
 		: BasisComponent(),
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
@@ -222,7 +222,7 @@ public:
 
 //===========================================================================================
 // 바퀴
-class tagCarWheel_2_small : public BasisComponent
+class CarSmallWheel_2 : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -232,9 +232,9 @@ private:
 	int m_idx;
 
 public:
-	tagCarWheel_2_small()
+	CarSmallWheel_2()
 	{}
-	tagCarWheel_2_small(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
+	CarSmallWheel_2(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
 		: BasisComponent(),
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
@@ -258,7 +258,7 @@ public:
 
 //===========================================================================================
 // 바퀴
-class tagCarWheel_3 : public BasisComponent
+class CarWheel_3 : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -268,9 +268,9 @@ private:
 	int m_idx;
 
 public:
-	tagCarWheel_3()
+	CarWheel_3()
 	{}
-	tagCarWheel_3(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
+	CarWheel_3(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
 		: BasisComponent(),
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
@@ -294,7 +294,7 @@ public:
 
 //===========================================================================================
 // 바퀴
-class tagCarWheel_3_small : public BasisComponent
+class CarSmallWheel_3 : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -304,9 +304,9 @@ private:
 	int m_idx;
 
 public:
-	tagCarWheel_3_small()
+	CarSmallWheel_3()
 	{}
-	tagCarWheel_3_small(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
+	CarSmallWheel_3(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
 		: BasisComponent(),
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
@@ -330,7 +330,7 @@ public:
 
 //===========================================================================================
 // 바퀴
-class tagCarWheel_4 : public BasisComponent
+class CarWheel_4 : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -340,9 +340,9 @@ private:
 	int m_idx;
 
 public:
-	tagCarWheel_4()
+	CarWheel_4()
 	{}
-	tagCarWheel_4(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
+	CarWheel_4(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
 		: BasisComponent(),
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
@@ -366,7 +366,7 @@ public:
 
 //===========================================================================================
 // 바퀴
-class tagCarWheel_4_small : public BasisComponent
+class CarSmallWheel_4 : public BasisComponent
 {
 private:
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
@@ -376,9 +376,9 @@ private:
 	int m_idx;
 
 public:
-	tagCarWheel_4_small()
+	CarSmallWheel_4()
 	{}
-	tagCarWheel_4_small(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
+	CarSmallWheel_4(const GLfloat cube_array[36 * 6], int dir, int idx, GLfloat velo)
 		: BasisComponent(),
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }

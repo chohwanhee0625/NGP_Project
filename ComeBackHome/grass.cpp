@@ -5,14 +5,14 @@
 
 //===========================================================================================
 
-void tagGrass::initVertex(const GLfloat rec_array[36 * 6])
+void Grass::InitVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagGrass::initColor(const GLfloat color_array[36 * 3])
+void Grass::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3; i += 3) {
 		m_color[i + 0] = 0.7333f;
@@ -21,7 +21,7 @@ void tagGrass::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagGrass::InitBuffer()
+void Grass::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -47,7 +47,7 @@ void tagGrass::InitBuffer()
 
 }
 
-void tagGrass::DrawObject()
+void Grass::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -68,7 +68,7 @@ void tagGrass::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-void tagGrass::InitMatrix4()
+void Grass::InitMatrix4()
 {
 	
 	m_x_scale = 2.5f;
@@ -77,11 +77,11 @@ void tagGrass::InitMatrix4()
 
 	m_x_pos = 0.f;
 	m_y_pos = -0.515;
-	m_z_pos = -(m_inum * m_z_scale);
+	m_z_pos = -(m_index * m_z_scale);
 
 
 }
 
-void tagGrass::Update()
+void Grass::Update()
 {
 }

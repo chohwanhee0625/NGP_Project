@@ -5,14 +5,14 @@
 
 //===========================================================================================
 
-void tagWall::initVertex(const GLfloat rec_array[36 * 6])
+void Wall::InitVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagWall::initColor(const GLfloat color_array[36 * 3])
+void Wall::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3; i += 3) {
 		m_color[i + 0] = 1.f;
@@ -21,7 +21,7 @@ void tagWall::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagWall::InitBuffer()
+void Wall::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -47,7 +47,7 @@ void tagWall::InitBuffer()
 
 }
 
-void tagWall::DrawObject()
+void Wall::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -69,7 +69,7 @@ void tagWall::DrawObject()
 
 }
 
-void tagWall::InitMatrix4()
+void Wall::InitMatrix4()
 {
 	m_x_pos = -0.52f;
 	m_y_pos =  0.20f;
@@ -80,6 +80,6 @@ void tagWall::InitMatrix4()
 	m_z_scale = 15.0;
 }
 
-void tagWall::Update()
+void Wall::Update()
 {
 }

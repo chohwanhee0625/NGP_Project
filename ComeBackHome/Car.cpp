@@ -5,7 +5,7 @@
 
 //===========================================================================================
 
-void tagCar::Move()
+void Car::Move()
 {
 	m_x_pos += m_velocity * m_dir;
 	if (m_dir == PLUS  && m_x_pos > 0.55 )
@@ -14,19 +14,19 @@ void tagCar::Move()
 		m_x_pos = 0.55f;
 }
 
-void tagCar::Update()
+void Car::Update()
 {
 	Move();
 }
 
-void tagCar::initVertex(const GLfloat rec_array[36 * 6])
+void Car::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagCar::initColor(const GLfloat color_array[36 * 3])
+void Car::initColor(const GLfloat color_array[36 * 3])
 {
 	float R = grandomcolor(gRandomEngine);
 	float G = grandomcolor(gRandomEngine);
@@ -39,7 +39,7 @@ void tagCar::initColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void tagCar::InitBuffer()
+void Car::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -64,7 +64,7 @@ void tagCar::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagCar::DrawObject()
+void Car::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -86,7 +86,7 @@ void tagCar::DrawObject()
 
 }
 
-void tagCar::InitMatrix4()
+void Car::InitMatrix4()
 {
 	m_x_scale = 0.07f;
 	m_y_scale = 0.025f;
@@ -100,42 +100,42 @@ void tagCar::InitMatrix4()
 	m_velocity = m_velocity + (m_idx * 0.000015 * gCarspeed(gRandomEngine));
 }
 
-void tagCar::CreateCar()
+void Car::CreateCar()
 {
-	tagCarMiddle* middle = new tagCarMiddle(m_vertex, m_color, m_dir, m_idx, m_velocity);
+	CarMiddle* middle = new CarMiddle(m_vertex, m_color, m_dir, m_idx, m_velocity);
 	gVec.push_back(middle);
 
-	tagCarWindow* winodw = new tagCarWindow(m_vertex, m_dir, m_idx, m_velocity);
+	CarWindow* winodw = new CarWindow(m_vertex, m_dir, m_idx, m_velocity);
 	gVec.push_back(winodw);
 
 	// 왼쪽 앞
-	tagCarWheel_1* wheel_1 = new tagCarWheel_1(m_vertex, m_dir, m_idx, m_velocity);
+	CarWheel_1* wheel_1 = new CarWheel_1(m_vertex, m_dir, m_idx, m_velocity);
 	gVec.push_back(wheel_1);
-	tagCarWheel_1_small* wheel_1_small = new tagCarWheel_1_small(m_vertex, m_dir, m_idx, m_velocity);
+	CarSmallWheel_1* wheel_1_small = new CarSmallWheel_1(m_vertex, m_dir, m_idx, m_velocity);
 	gVec.push_back(wheel_1_small);
 
 	// 왼쪽 뒤 
-	tagCarWheel_2* wheel_2 = new tagCarWheel_2(m_vertex, m_dir, m_idx, m_velocity);
+	CarWheel_2* wheel_2 = new CarWheel_2(m_vertex, m_dir, m_idx, m_velocity);
 	gVec.push_back(wheel_2);
-	tagCarWheel_2_small* wheel_2_small = new tagCarWheel_2_small(m_vertex, m_dir, m_idx, m_velocity);
+	CarSmallWheel_2* wheel_2_small = new CarSmallWheel_2(m_vertex, m_dir, m_idx, m_velocity);
 	gVec.push_back(wheel_2_small);
 
 	// 오른쪽 앞
-	tagCarWheel_3* wheel_3 = new tagCarWheel_3(m_vertex, m_dir, m_idx, m_velocity);
+	CarWheel_3* wheel_3 = new CarWheel_3(m_vertex, m_dir, m_idx, m_velocity);
 	gVec.push_back(wheel_3);
-	tagCarWheel_3_small* wheel_3_small = new tagCarWheel_3_small(m_vertex, m_dir, m_idx, m_velocity);
+	CarSmallWheel_3* wheel_3_small = new CarSmallWheel_3(m_vertex, m_dir, m_idx, m_velocity);
 	gVec.push_back(wheel_3_small);
 
 	// 오른쪽 뒤
-	tagCarWheel_4* wheel_4 = new tagCarWheel_4(m_vertex, m_dir, m_idx, m_velocity);
+	CarWheel_4* wheel_4 = new CarWheel_4(m_vertex, m_dir, m_idx, m_velocity);
 	gVec.push_back(wheel_4);
-	tagCarWheel_4_small* wheel_4_small = new tagCarWheel_4_small(m_vertex, m_dir, m_idx, m_velocity);
+	CarSmallWheel_4* wheel_4_small = new CarSmallWheel_4(m_vertex, m_dir, m_idx, m_velocity);
 	gVec.push_back(wheel_4_small);
 }
 
 //===========================================================================================
 
-void tagCarMiddle::Move()
+void CarMiddle::Move()
 {
 	m_x_pos += m_velocity * m_dir;
 	if (m_dir == PLUS && m_x_pos > 0.55)
@@ -144,26 +144,26 @@ void tagCarMiddle::Move()
 		m_x_pos = 0.55f;
 }
 
-void tagCarMiddle::Update()
+void CarMiddle::Update()
 {
 	Move();
 }
 
-void tagCarMiddle::initVertex(const GLfloat rec_array[36 * 6])
+void CarMiddle::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagCarMiddle::initColor(const GLfloat color_array[36 * 3])
+void CarMiddle::initColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3; ++i) {
 		m_color[i] = color_array[i];
 	}
 }
 
-void tagCarMiddle::InitBuffer()
+void CarMiddle::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -188,7 +188,7 @@ void tagCarMiddle::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagCarMiddle::DrawObject()
+void CarMiddle::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -210,7 +210,7 @@ void tagCarMiddle::DrawObject()
 
 }
 
-void tagCarMiddle::InitMatrix4()
+void CarMiddle::InitMatrix4()
 {
 	m_x_scale = 0.04f;
 	m_y_scale = 0.03f;
@@ -224,7 +224,7 @@ void tagCarMiddle::InitMatrix4()
 
 //===========================================================================================
 
-void tagCarWindow::Move()
+void CarWindow::Move()
 {
 	m_x_pos += m_velocity * m_dir;
 	if (m_dir == PLUS && m_x_pos > 0.55)
@@ -233,19 +233,19 @@ void tagCarWindow::Move()
 		m_x_pos = 0.55f;
 }
 
-void tagCarWindow::Update()
+void CarWindow::Update()
 {
 	Move();
 }
 
-void tagCarWindow::initVertex(const GLfloat rec_array[36 * 6])
+void CarWindow::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagCarWindow::initColor()
+void CarWindow::initColor()
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.6294f; // 0.5294f;
@@ -254,7 +254,7 @@ void tagCarWindow::initColor()
 	}
 }
 
-void tagCarWindow::InitBuffer()
+void CarWindow::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -279,7 +279,7 @@ void tagCarWindow::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagCarWindow::DrawObject()
+void CarWindow::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -301,7 +301,7 @@ void tagCarWindow::DrawObject()
 
 }
 
-void tagCarWindow::InitMatrix4()
+void CarWindow::InitMatrix4()
 {
 	m_x_scale = 0.03f;
 	m_y_scale = 0.017f;
@@ -315,7 +315,7 @@ void tagCarWindow::InitMatrix4()
 
 //===========================================================================================
 
-void tagCarWheel_1::Move()
+void CarWheel_1::Move()
 {
 	m_x_pos += m_velocity * m_dir;
 	if (m_dir == PLUS && m_x_pos > 0.55)
@@ -324,19 +324,19 @@ void tagCarWheel_1::Move()
 		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_1::Update()
+void CarWheel_1::Update()
 {
 	Move();
 }
 
-void tagCarWheel_1::initVertex(const GLfloat rec_array[36 * 6])
+void CarWheel_1::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagCarWheel_1::initColor()
+void CarWheel_1::initColor()
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.f; // 0.5294f;
@@ -345,7 +345,7 @@ void tagCarWheel_1::initColor()
 	}
 }
 
-void tagCarWheel_1::InitBuffer()
+void CarWheel_1::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -370,7 +370,7 @@ void tagCarWheel_1::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagCarWheel_1::DrawObject()
+void CarWheel_1::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -392,7 +392,7 @@ void tagCarWheel_1::DrawObject()
 
 }
 
-void tagCarWheel_1::InitMatrix4()
+void CarWheel_1::InitMatrix4()
 {
 	m_x_scale = 0.015f;
 	m_y_scale = 0.015f;
@@ -405,7 +405,7 @@ void tagCarWheel_1::InitMatrix4()
 
 //===========================================================================================
 
-void tagCarWheel_1_small::Move()
+void CarSmallWheel_1::Move()
 {
 	m_x_pos += m_velocity * m_dir;
 	if (m_dir == PLUS && m_x_pos > 0.55)
@@ -414,19 +414,19 @@ void tagCarWheel_1_small::Move()
 		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_1_small::Update()
+void CarSmallWheel_1::Update()
 {
 	Move();
 }
 
-void tagCarWheel_1_small::initVertex(const GLfloat rec_array[36 * 6])
+void CarSmallWheel_1::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagCarWheel_1_small::initColor()
+void CarSmallWheel_1::initColor()
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.f; // 0.5294f;
@@ -435,7 +435,7 @@ void tagCarWheel_1_small::initColor()
 	}
 }
 
-void tagCarWheel_1_small::InitBuffer()
+void CarSmallWheel_1::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -460,7 +460,7 @@ void tagCarWheel_1_small::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagCarWheel_1_small::DrawObject()
+void CarSmallWheel_1::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -482,7 +482,7 @@ void tagCarWheel_1_small::DrawObject()
 
 }
 
-void tagCarWheel_1_small::InitMatrix4()
+void CarSmallWheel_1::InitMatrix4()
 {
 	m_x_scale = 0.0075f;
 	m_y_scale = 0.0075f;
@@ -495,7 +495,7 @@ void tagCarWheel_1_small::InitMatrix4()
 
 //===========================================================================================
 
-void tagCarWheel_2::Move()
+void CarWheel_2::Move()
 {
 	m_x_pos += m_velocity * m_dir;
 	if (m_dir == PLUS && m_x_pos > 0.55)
@@ -504,19 +504,19 @@ void tagCarWheel_2::Move()
 		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_2::Update()
+void CarWheel_2::Update()
 {
 	Move();
 }
 
-void tagCarWheel_2::initVertex(const GLfloat rec_array[36 * 6])
+void CarWheel_2::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagCarWheel_2::initColor()
+void CarWheel_2::initColor()
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.f; // 0.5294f;
@@ -525,7 +525,7 @@ void tagCarWheel_2::initColor()
 	}
 }
 
-void tagCarWheel_2::InitBuffer()
+void CarWheel_2::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -550,7 +550,7 @@ void tagCarWheel_2::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagCarWheel_2::DrawObject()
+void CarWheel_2::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -572,7 +572,7 @@ void tagCarWheel_2::DrawObject()
 
 }
 
-void tagCarWheel_2::InitMatrix4()
+void CarWheel_2::InitMatrix4()
 {
 	m_x_scale = 0.015f;
 	m_y_scale = 0.015f;
@@ -585,7 +585,7 @@ void tagCarWheel_2::InitMatrix4()
 
 //===========================================================================================
 
-void tagCarWheel_2_small::Move()
+void CarSmallWheel_2::Move()
 {
 	m_x_pos += m_velocity * m_dir;
 	if (m_dir == PLUS && m_x_pos > 0.55)
@@ -594,19 +594,19 @@ void tagCarWheel_2_small::Move()
 		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_2_small::Update()
+void CarSmallWheel_2::Update()
 {
 	Move();
 }
 
-void tagCarWheel_2_small::initVertex(const GLfloat rec_array[36 * 6])
+void CarSmallWheel_2::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagCarWheel_2_small::initColor()
+void CarSmallWheel_2::initColor()
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.f; // 0.5294f;
@@ -615,7 +615,7 @@ void tagCarWheel_2_small::initColor()
 	}
 }
 
-void tagCarWheel_2_small::InitBuffer()
+void CarSmallWheel_2::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -640,7 +640,7 @@ void tagCarWheel_2_small::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagCarWheel_2_small::DrawObject()
+void CarSmallWheel_2::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -662,7 +662,7 @@ void tagCarWheel_2_small::DrawObject()
 
 }
 
-void tagCarWheel_2_small::InitMatrix4()
+void CarSmallWheel_2::InitMatrix4()
 {
 	m_x_scale = 0.0075f;
 	m_y_scale = 0.0075f;
@@ -675,7 +675,7 @@ void tagCarWheel_2_small::InitMatrix4()
 
 //===========================================================================================
 
-void tagCarWheel_3::Move()
+void CarWheel_3::Move()
 {
 	m_x_pos += m_velocity * m_dir;
 	if (m_dir == PLUS && m_x_pos > 0.55)
@@ -684,19 +684,19 @@ void tagCarWheel_3::Move()
 		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_3::Update()
+void CarWheel_3::Update()
 {
 	Move();
 }
 
-void tagCarWheel_3::initVertex(const GLfloat rec_array[36 * 6])
+void CarWheel_3::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagCarWheel_3::initColor()
+void CarWheel_3::initColor()
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.f; // 0.5294f;
@@ -705,7 +705,7 @@ void tagCarWheel_3::initColor()
 	}
 }
 
-void tagCarWheel_3::InitBuffer()
+void CarWheel_3::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -730,7 +730,7 @@ void tagCarWheel_3::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagCarWheel_3::DrawObject()
+void CarWheel_3::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -752,7 +752,7 @@ void tagCarWheel_3::DrawObject()
 
 }
 
-void tagCarWheel_3::InitMatrix4()
+void CarWheel_3::InitMatrix4()
 {
 	m_x_scale = 0.015f;
 	m_y_scale = 0.015f;
@@ -765,7 +765,7 @@ void tagCarWheel_3::InitMatrix4()
 
 //===========================================================================================
 
-void tagCarWheel_3_small::Move()
+void CarSmallWheel_3::Move()
 {
 	m_x_pos += m_velocity * m_dir;
 	if (m_dir == PLUS && m_x_pos > 0.55)
@@ -774,19 +774,19 @@ void tagCarWheel_3_small::Move()
 		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_3_small::Update()
+void CarSmallWheel_3::Update()
 {
 	Move();
 }
 
-void tagCarWheel_3_small::initVertex(const GLfloat rec_array[36 * 6])
+void CarSmallWheel_3::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagCarWheel_3_small::initColor()
+void CarSmallWheel_3::initColor()
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.f; // 0.5294f;
@@ -795,7 +795,7 @@ void tagCarWheel_3_small::initColor()
 	}
 }
 
-void tagCarWheel_3_small::InitBuffer()
+void CarSmallWheel_3::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -820,7 +820,7 @@ void tagCarWheel_3_small::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagCarWheel_3_small::DrawObject()
+void CarSmallWheel_3::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -842,7 +842,7 @@ void tagCarWheel_3_small::DrawObject()
 
 }
 
-void tagCarWheel_3_small::InitMatrix4()
+void CarSmallWheel_3::InitMatrix4()
 {
 	m_x_scale = 0.0075f;
 	m_y_scale = 0.0075f;
@@ -855,7 +855,7 @@ void tagCarWheel_3_small::InitMatrix4()
 
 //===========================================================================================
 
-void tagCarWheel_4::Move()
+void CarWheel_4::Move()
 {
 	m_x_pos += m_velocity * m_dir;
 	if (m_dir == PLUS && m_x_pos > 0.55)
@@ -864,19 +864,19 @@ void tagCarWheel_4::Move()
 		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_4::Update()
+void CarWheel_4::Update()
 {
 	Move();
 }
 
-void tagCarWheel_4::initVertex(const GLfloat rec_array[36 * 6])
+void CarWheel_4::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagCarWheel_4::initColor()
+void CarWheel_4::initColor()
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 0.f; // 0.5294f;
@@ -885,7 +885,7 @@ void tagCarWheel_4::initColor()
 	}
 }
 
-void tagCarWheel_4::InitBuffer()
+void CarWheel_4::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -910,7 +910,7 @@ void tagCarWheel_4::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagCarWheel_4::DrawObject()
+void CarWheel_4::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -932,7 +932,7 @@ void tagCarWheel_4::DrawObject()
 
 }
 
-void tagCarWheel_4::InitMatrix4()
+void CarWheel_4::InitMatrix4()
 {
 	m_x_scale = 0.015f;
 	m_y_scale = 0.015f;
@@ -945,7 +945,7 @@ void tagCarWheel_4::InitMatrix4()
 
 //===========================================================================================
 
-void tagCarWheel_4_small::Move()
+void CarSmallWheel_4::Move()
 {
 	m_x_pos += m_velocity * m_dir;
 	if (m_dir == PLUS && m_x_pos > 0.55)
@@ -954,19 +954,19 @@ void tagCarWheel_4_small::Move()
 		m_x_pos = 0.55f;
 }
 
-void tagCarWheel_4_small::Update()
+void CarSmallWheel_4::Update()
 {
 	Move();
 }
 
-void tagCarWheel_4_small::initVertex(const GLfloat rec_array[36 * 6])
+void CarSmallWheel_4::initVertex(const GLfloat rec_array[36 * 6])
 {
 	for (int i = 0; i < 36 * 6; ++i) {
 		this->m_vertex[i] = rec_array[i];
 	}
 }
 
-void tagCarWheel_4_small::initColor()
+void CarSmallWheel_4::initColor()
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
 		m_color[i] = 1.f; // 0.5294f;
@@ -975,7 +975,7 @@ void tagCarWheel_4_small::initColor()
 	}
 }
 
-void tagCarWheel_4_small::InitBuffer()
+void CarSmallWheel_4::InitBuffer()
 {
 	glGenVertexArrays(1, &this->m_vao);
 	glBindVertexArray(this->m_vao);
@@ -1000,7 +1000,7 @@ void tagCarWheel_4_small::InitBuffer()
 	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
-void tagCarWheel_4_small::DrawObject()
+void CarSmallWheel_4::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
@@ -1022,7 +1022,7 @@ void tagCarWheel_4_small::DrawObject()
 
 }
 
-void tagCarWheel_4_small::InitMatrix4()
+void CarSmallWheel_4::InitMatrix4()
 {
 	m_x_scale = 0.0075f;
 	m_y_scale = 0.0075f;
