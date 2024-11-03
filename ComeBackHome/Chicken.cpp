@@ -100,31 +100,6 @@ void ChickenBody::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-//void ChickenBody::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
-
 void ChickenBody::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -133,13 +108,6 @@ void ChickenBody::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.7;
 	}
 }
-
-//void ChickenBody::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
 
 void ChickenBody::InitMatrix4()
 {
@@ -419,13 +387,6 @@ void ChickenBody::initModelLocation()
 
 //===========================================================================================
 
-//void ChickenHead::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void ChickenHead::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -434,31 +395,6 @@ void ChickenHead::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 1.0f;
 	}
 }
-
-//void ChickenHead::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void ChickenHead::DrawObject()
 {
@@ -582,13 +518,6 @@ void ChickenHead::initModelLocation()
 
 //===========================================================================================
 
-//void ChickenMouse::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void ChickenMouse::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -597,32 +526,6 @@ void ChickenMouse::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.29803921568f;
 	}
 }
-
-//void ChickenMouse::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//
-//}
 
 void ChickenMouse::DrawObject()
 {
@@ -769,13 +672,6 @@ void ChickenMouse::initModelLocation()
 
 //===========================================================================================
 
-//void ChickenEyes::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void ChickenEyes::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -784,32 +680,6 @@ void ChickenEyes::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.;
 	}
 }
-
-//void ChickenEyes::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//
-//}
 
 void ChickenEyes::DrawObject()
 {
@@ -950,13 +820,6 @@ void ChickenEyes::initModelLocation()
 
 //===========================================================================================
 
-//void ChickenLeftArm::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void ChickenLeftArm::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -965,31 +828,6 @@ void ChickenLeftArm::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.9f;
 	}
 }
-
-//void ChickenLeftArm::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void ChickenLeftArm::DrawObject()
 {
@@ -1178,13 +1016,6 @@ void ChickenRightArm::handling()
 	hand_degree += hand_velo * sign;
 }
 
-//void ChickenRightArm::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void ChickenRightArm::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -1193,32 +1024,6 @@ void ChickenRightArm::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.9f;
 	}
 }
-
-//void ChickenRightArm::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//
-//}
 
 void ChickenRightArm::DrawObject()
 {
@@ -1379,13 +1184,6 @@ void ChickenRightArm::initModelLocation()
 
 //===========================================================================================
 
-//void ChickenLeftLeg::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void ChickenLeftLeg::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -1394,31 +1192,6 @@ void ChickenLeftLeg::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.34509803921f;
 	}
 }
-
-//void ChickenLeftLeg::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void ChickenLeftLeg::DrawObject()
 {
@@ -1586,13 +1359,6 @@ void ChickenLeftLeg::initModelLocation()
 
 //===========================================================================================
 
-//void ChickenRightLeg::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void ChickenRightLeg::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -1601,31 +1367,6 @@ void ChickenRightLeg::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.34509803921f;
 	}
 }
-
-//void ChickenRightLeg::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void ChickenRightLeg::DrawObject()
 {

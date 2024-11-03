@@ -33,31 +33,6 @@ void MotherBody::DrawObject()
 	glDisableVertexAttribArray(NormalLocation);
 }
 
-//void MotherBody::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
-
 void MotherBody::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -66,13 +41,6 @@ void MotherBody::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 1.;
 	}
 }
-
-//void MotherBody::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
 
 void MotherBody::InitMatrix4()
 {
@@ -112,13 +80,6 @@ void MotherBody::initModelLocation()
 
 //===========================================================================================
 
-//void MotherHead::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void MotherHead::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -127,31 +88,6 @@ void MotherHead::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 1.0f;
 	}
 }
-
-//void MotherHead::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void MotherHead::DrawObject()
 {
@@ -213,13 +149,6 @@ void MotherHead::initModelLocation()
 
 //===========================================================================================
 
-//void MotherMouse::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void MotherMouse::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -228,32 +157,6 @@ void MotherMouse::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.29803921568f;
 	}
 }
-
-//void MotherMouse::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//
-//}
 
 void MotherMouse::DrawObject()
 {
@@ -325,13 +228,6 @@ void MotherMouse::initModelLocation()
 
 //===========================================================================================
 
-//void MotherEyes::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void MotherEyes::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -340,32 +236,6 @@ void MotherEyes::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.;
 	}
 }
-
-//void MotherEyes::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//
-//}
 
 void MotherEyes::DrawObject()
 {
@@ -432,13 +302,6 @@ void MotherEyes::initModelLocation()
 
 //===========================================================================================
 
-//void MotherLeftArm::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void MotherLeftArm::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -447,31 +310,6 @@ void MotherLeftArm::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.9f;
 	}
 }
-
-//void MotherLeftArm::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void MotherLeftArm::DrawObject()
 {
@@ -562,13 +400,6 @@ void MotherLeftArm::initModelLocation()
 
 //===========================================================================================
 
-//void MotherRightArm::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void MotherRightArm::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -577,32 +408,6 @@ void MotherRightArm::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.9f;
 	}
 }
-
-//void MotherRightArm::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//
-//}
 
 void MotherRightArm::DrawObject()
 {
@@ -691,13 +496,6 @@ void MotherRightArm::initModelLocation()
 
 //===========================================================================================
 
-//void MotherLeftLeg::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void MotherLeftLeg::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -706,31 +504,6 @@ void MotherLeftLeg::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.34509803921f;
 	}
 }
-
-//void MotherLeftLeg::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void MotherLeftLeg::DrawObject()
 {
@@ -819,13 +592,6 @@ void MotherLeftLeg::initModelLocation()
 
 //===========================================================================================
 
-//void MotherRightLeg::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void MotherRightLeg::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -834,31 +600,6 @@ void MotherRightLeg::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.34509803921f;
 	}
 }
-
-//void MotherRightLeg::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void MotherRightLeg::DrawObject()
 {

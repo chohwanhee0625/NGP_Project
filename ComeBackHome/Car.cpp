@@ -26,13 +26,6 @@ void Car::Update()
 	Move();
 }
 
-//void Car::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void Car::InitColor(const GLfloat color_array[36 * 3])
 {
 	float R = grandomcolor(gRandomEngine);
@@ -45,31 +38,6 @@ void Car::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = B;
 	}
 }
-
-//void Car::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void Car::DrawObject()
 {
@@ -156,45 +124,6 @@ void CarMiddle::Update()
 	Move();
 }
 
-//void CarMiddle::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
-//void CarMiddle::InitColor(const GLfloat color_array[36 * 3])
-//{
-//	for (int i = 0; i < 36 * 3; ++i) {
-//		m_color[i] = color_array[i];
-//	}
-//}
-
-//void CarMiddle::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
-
 void CarMiddle::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
@@ -245,13 +174,6 @@ void CarWindow::Update()
 	Move();
 }
 
-//void CarWindow::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void CarWindow::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -260,31 +182,6 @@ void CarWindow::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.9216;
 	}
 }
-
-//void CarWindow::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void CarWindow::DrawObject()
 {
@@ -336,13 +233,6 @@ void CarWheel_1::Update()
 	Move();
 }
 
-//void CarWheel_1::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void CarWheel_1::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -351,31 +241,6 @@ void CarWheel_1::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.f;
 	}
 }
-
-//void CarWheel_1::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void CarWheel_1::DrawObject()
 {
@@ -426,13 +291,6 @@ void CarSmallWheel_1::Update()
 	Move();
 }
 
-//void CarSmallWheel_1::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void CarSmallWheel_1::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -441,31 +299,6 @@ void CarSmallWheel_1::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 1.f;
 	}
 }
-
-//void CarSmallWheel_1::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void CarSmallWheel_1::DrawObject()
 {
@@ -516,13 +349,6 @@ void CarWheel_2::Update()
 	Move();
 }
 
-//void CarWheel_2::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void CarWheel_2::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -531,31 +357,6 @@ void CarWheel_2::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.f;
 	}
 }
-
-//void CarWheel_2::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void CarWheel_2::DrawObject()
 {
@@ -606,13 +407,6 @@ void CarSmallWheel_2::Update()
 	Move();
 }
 
-//void CarSmallWheel_2::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void CarSmallWheel_2::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -621,31 +415,6 @@ void CarSmallWheel_2::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 1.f;
 	}
 }
-
-//void CarSmallWheel_2::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void CarSmallWheel_2::DrawObject()
 {
@@ -696,13 +465,6 @@ void CarWheel_3::Update()
 	Move();
 }
 
-//void CarWheel_3::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void CarWheel_3::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -711,31 +473,6 @@ void CarWheel_3::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.f;
 	}
 }
-
-//void CarWheel_3::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void CarWheel_3::DrawObject()
 {
@@ -786,13 +523,6 @@ void CarSmallWheel_3::Update()
 	Move();
 }
 
-//void CarSmallWheel_3::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void CarSmallWheel_3::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -801,31 +531,6 @@ void CarSmallWheel_3::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 1.f;
 	}
 }
-
-//void CarSmallWheel_3::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void CarSmallWheel_3::DrawObject()
 {
@@ -876,13 +581,6 @@ void CarWheel_4::Update()
 	Move();
 }
 
-//void CarWheel_4::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void CarWheel_4::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -891,31 +589,6 @@ void CarWheel_4::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 0.f;
 	}
 }
-
-//void CarWheel_4::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void CarWheel_4::DrawObject()
 {
@@ -966,13 +639,6 @@ void CarSmallWheel_4::Update()
 	Move();
 }
 
-//void CarSmallWheel_4::InitVertex(const GLfloat rec_array[36 * 6])
-//{
-//	for (int i = 0; i < 36 * 6; ++i) {
-//		this->m_vertex[i] = rec_array[i];
-//	}
-//}
-
 void CarSmallWheel_4::InitColor(const GLfloat color_array[36 * 3])
 {
 	for (int i = 0; i < 36 * 3 - 2; i += 3) {
@@ -981,31 +647,6 @@ void CarSmallWheel_4::InitColor(const GLfloat color_array[36 * 3])
 		m_color[i + 2] = 1.f;
 	}
 }
-
-//void CarSmallWheel_4::InitBuffer()
-//{
-//	glGenVertexArrays(1, &this->m_vao);
-//	glBindVertexArray(this->m_vao);
-//
-//	glGenBuffers(1, &this->m_pos_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_pos_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_vertex), this->m_vertex, GL_STATIC_DRAW);
-//
-//	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");
-//	glVertexAttribPointer(PosLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-//	glEnableVertexAttribArray(PosLocation);
-//
-//	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
-//	glVertexAttribPointer(NormalLocation, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-//	glEnableVertexAttribArray(NormalLocation);
-//
-//	glGenBuffers(1, &this->m_color_vbo);
-//	glBindBuffer(GL_ARRAY_BUFFER, this->m_color_vbo);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(this->m_color), this->m_color, GL_STATIC_DRAW);
-//
-//	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
-//	glVertexAttribPointer(ColorLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
-//}
 
 void CarSmallWheel_4::DrawObject()
 {

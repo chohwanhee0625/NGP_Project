@@ -10,7 +10,7 @@ protected:
 	GLuint  m_color_vbo;
 
 	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	GLfloat m_color[36 * 3];  // 108
 
 	glm::mat4 m_total_world;
 

@@ -9,9 +9,6 @@ class BasisComponent;
 class ChickenBody : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Dir face;
 	GLfloat  walk_velo;
 	GLfloat  face_degree;
@@ -38,9 +35,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -77,9 +72,6 @@ public:
 class ChickenHead : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Dir face;
 	GLfloat  walk_velo;
 	GLfloat  face_degree;
@@ -100,9 +92,7 @@ public:
 
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -126,9 +116,6 @@ public:
 class ChickenMouse : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Dir face;
 	GLfloat  walk_velo;
 	GLfloat  face_degree;
@@ -158,9 +145,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -186,9 +171,6 @@ public:
 class ChickenEyes : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Dir face;
 	GLfloat  walk_velo;
 	GLfloat  face_degree;
@@ -217,9 +199,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -243,9 +223,6 @@ public:
 class ChickenLeftArm : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Dir face;
 	GLfloat  walk_velo;
 	GLfloat  face_degree;
@@ -283,9 +260,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -309,9 +284,6 @@ public:
 class ChickenRightArm : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Sign sign;
 	float hand_degree;
 	float hand_velo;
@@ -349,9 +321,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();;
 	void InitMatrix4();
 	void WorldMatrix();
@@ -375,9 +345,6 @@ public:
 class ChickenLeftLeg : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Sign sign;
 	float hand_degree;
 	float hand_velo;
@@ -414,9 +381,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -440,9 +405,6 @@ public:
 class ChickenRightLeg : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Sign sign;
 	float hand_degree;
 	float hand_velo;
@@ -481,9 +443,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void WorldMatrix();
 	void InitMatrix4();

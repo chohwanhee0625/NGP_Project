@@ -5,9 +5,6 @@
 class Road : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	GLint	m_index;
 	int     m_car_spawn_dir;
 
@@ -25,9 +22,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void Update() override;
@@ -44,8 +39,6 @@ public:
 class RoadLane : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
 	GLint	m_x_idx;
 	GLint   m_z_idx;
 
@@ -61,9 +54,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void InitMatrix4();
 	void DrawObject();
 

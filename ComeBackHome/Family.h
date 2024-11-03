@@ -5,11 +5,9 @@ class BasisComponent;
 // 몸
 class MotherBody : public BasisComponent
 {
-private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-	
+private:	
 	int idx;
+
 public:
 
 	MotherBody(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int i)
@@ -23,9 +21,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -39,9 +35,8 @@ public:
 class MotherHead : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
 	int idx;
+
 public:
 
 	MotherHead(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3],int i)
@@ -56,9 +51,7 @@ public:
 
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -71,14 +64,12 @@ public:
 class MotherMouse : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	GLfloat m_far_x;
 	GLfloat m_far_y;
 	GLfloat m_far_z;
 	GLfloat m_far_value{ 0.002 };
 	int idx;
+
 public:
 
 	MotherMouse(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3],int i)
@@ -92,9 +83,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -108,15 +97,13 @@ public:
 class MotherEyes : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	GLfloat m_far_x;
 	GLfloat m_far_y;
 	GLfloat m_far_z;
 	GLfloat m_far_value{ 0.00 };
 
 	int idx;
+
 public:
 
 	MotherEyes(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3],int i)
@@ -130,9 +117,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -146,9 +131,6 @@ public:
 class MotherLeftArm : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Sign sign;
 	float hand_degree;
 	float hand_max_degree;
@@ -159,6 +141,7 @@ private:
 	GLfloat m_far_y;
 	GLfloat m_far_z;
 	int idx;
+
 public:
 
 	MotherLeftArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int i)
@@ -180,9 +163,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -196,9 +177,6 @@ public:
 class MotherRightArm : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Sign sign;
 	float hand_degree;
 	float hand_velo;
@@ -210,6 +188,7 @@ private:
 	GLfloat m_far_value{ 0.005 };
 
 	int idx;
+
 public:
 
 	MotherRightArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3],int i)
@@ -230,9 +209,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();;
 	void InitMatrix4();
 	void WorldMatrix();
@@ -246,9 +223,6 @@ public:
 class MotherLeftLeg : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Sign sign;
 	float hand_degree;
 	float hand_velo;
@@ -259,6 +233,7 @@ private:
 	GLfloat m_far_z;
 	GLfloat m_far_value{ 0.0025 };
 	int idx;
+
 public:
 
 	MotherLeftLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int i)
@@ -279,9 +254,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 	void WorldMatrix();
@@ -295,9 +268,6 @@ public:
 class MotherRightLeg : public BasisComponent
 {
 private:
-	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	//GLfloat m_color[36 * 3]; // 108
-
 	Sign sign;
 	float hand_degree;
 	float hand_velo;
@@ -309,6 +279,7 @@ private:
 	GLfloat m_far_value{ 0.0025 };
 
 	int idx;
+
 public:
 
 	MotherRightLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int i)
@@ -329,9 +300,7 @@ public:
 		InitBuffer();
 	}
 
-//	void InitVertex(const GLfloat rec_array[36 * 6]);
 	void InitColor(const GLfloat color_array[36 * 3]) override;
-//	void InitBuffer();
 	void DrawObject();
 	void WorldMatrix();
 	void InitMatrix4();
