@@ -9,6 +9,7 @@
 
 #include <thread>
 #include <mutex>
+#include <queue>
 
 #include <WinSock2.h>
 #include <WS2tcpip.h>

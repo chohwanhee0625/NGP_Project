@@ -28,14 +28,14 @@ public:
 	SessionManager() {}
 	~SessionManager() {}
 
-	void StartGame(SOCKET client_sock_1, SOCKET client_sock_2);
-	void InitWorldData();
-	void SendWorldData(SOCKET client_sock);
+	void			StartGame(SOCKET client_sock_1, SOCKET client_sock_2);
+	void			InitWorldData();
+	void			SendWorldData(SOCKET client_sock);
 
-	DWORD WINAPI UpdateWorld(SOCKET client_sock, int my_id);
-	void RecvMyPlayerData(int my_id, SOCKET client_sock);
-	void SendOtherPlayerData(int other_id, SOCKET client_sock);
-	void EndGame();
+	DWORD WINAPI	UpdateWorld(SOCKET client_sock, int my_id);
+	void			RecvMyPlayerData(int my_id, SOCKET client_sock);
+	void			SendOtherPlayerData(int other_id, SOCKET client_sock);
+	void			EndGame(SOCKET client_sock);
 
 private:
 	std::vector<std::thread> m_threads;
