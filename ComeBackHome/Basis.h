@@ -9,6 +9,9 @@ protected:
 	GLuint  m_pos_vbo;
 	GLuint  m_color_vbo;
 
+	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	GLfloat m_color[36 * 3]; // 108
+
 	glm::mat4 m_total_world;
 
 	GLfloat m_x_degree;   // 
@@ -67,18 +70,23 @@ public:
 	void SetYpos(float _f) { m_y_pos = _f; }
 	void SetXpos(float _f) { m_x_pos = _f; }
 
+	// BasisComponent
+	void WorldMatrix();
+	//virtual void WorldMatrix();
+
 public:
 	// 순수 가상 함수: 모든 클래스가 함수를 재정의 하도록 강제하는 역할 (코드의 명확성이 올라가지만 유연성이 떨어짐)
 
-	virtual void DrawObject() = 0;
 	virtual void InitMatrix4() = 0;
+	virtual void DrawObject() = 0;
 	virtual void Update() = 0;
 
 public:
 	// 일반 가상 함수: 함수의 재정의가 필수가 아님 (상위 클래스의 함수 기능을 사용하거나, 자신 클래스에서 함수 재정의 가능성 열고자 할 때)
 
-	// BasisComponent
-	virtual void WorldMatrix();
+	virtual void InitVertex(const GLfloat rec_array[36 * 6]);
+	virtual void InitColor(const GLfloat color_array[36 * 3]);
+	virtual void InitBuffer();
 
 	// Car
 	virtual void CreateCar() {}

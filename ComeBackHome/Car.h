@@ -5,12 +5,12 @@
 class Car : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	//GLfloat m_color[36 * 3]; // 108
 
-	int m_dir;
+	int     m_dir;
 	GLfloat m_velocity;
-	int m_idx;
+	int     m_idx;
 
 public:
 	Car()
@@ -20,18 +20,16 @@ public:
 		m_velocity{ 0.001f} // 속도 변경 가능 
 		, m_idx{idx}, m_dir{dir}
 	{
-	//	initDir(gBoolUniform(gRandomEngine));
-	//	cout << "차 index: " << m_idx << '\n';
-		initVertex(cube_array);
-		initColor(color_array);
+		InitVertex(cube_array);
+		InitColor(color_array);
 		InitMatrix4();
 		InitBuffer();
 		CreateCar();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor(const GLfloat color_array[36 * 3]);
-	void InitBuffer();
+//	void InitVertex(const GLfloat rec_array[36 * 6]);
+	void InitColor(const GLfloat color_array[36 * 3]) override;
+//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 
@@ -45,8 +43,8 @@ public:
 class CarMiddle : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	//GLfloat m_color[36 * 3]; // 108
 	int m_dir;
 	GLfloat m_velocity;
 	int m_idx;
@@ -59,15 +57,15 @@ public:
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
 	{
-		initVertex(cube_array);
-		initColor(color_array);
+		InitVertex(cube_array);
+		InitColor(color_array);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor(const GLfloat color_array[36 * 3]);
-	void InitBuffer();
+//	void InitVertex(const GLfloat rec_array[36 * 6]);
+//	void InitColor(const GLfloat color_array[36 * 3]) override;
+//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 
@@ -81,8 +79,8 @@ public:
 class CarWindow : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	//GLfloat m_color[36 * 3]; // 108
 	int m_dir;
 	GLfloat m_velocity;
 	int m_idx;
@@ -95,15 +93,15 @@ public:
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
 	{
-		initVertex(cube_array);
-		initColor();
+		InitVertex(cube_array);
+		InitColor(m_color);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor();
-	void InitBuffer();
+//	void InitVertex(const GLfloat rec_array[36 * 6]);
+	void InitColor(const GLfloat color_array[36 * 3]) override;
+//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 
@@ -117,8 +115,8 @@ public:
 class CarWheel_1 : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	//GLfloat m_color[36 * 3]; // 108
 	int m_dir;
 	GLfloat m_velocity;
 	int m_idx;
@@ -131,15 +129,15 @@ public:
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
 	{
-		initVertex(cube_array);
-		initColor();
+		InitVertex(cube_array);
+		InitColor(m_color);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor();
-	void InitBuffer();
+//	void InitVertex(const GLfloat rec_array[36 * 6]);
+	void InitColor(const GLfloat color_array[36 * 3]) override;
+//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 
@@ -153,8 +151,8 @@ public:
 class CarSmallWheel_1 : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	//GLfloat m_color[36 * 3]; // 108
 	int m_dir;
 	GLfloat m_velocity;
 	int m_idx;
@@ -167,15 +165,15 @@ public:
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
 	{
-		initVertex(cube_array);
-		initColor();
+		InitVertex(cube_array);
+		InitColor(m_color);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor();
-	void InitBuffer();
+//	void InitVertex(const GLfloat rec_array[36 * 6]);
+	void InitColor(const GLfloat color_array[36 * 3]) override;
+//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 
@@ -189,8 +187,8 @@ public:
 class CarWheel_2 : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	//GLfloat m_color[36 * 3]; // 108
 	int m_dir;
 	GLfloat m_velocity;
 	int m_idx;
@@ -203,15 +201,15 @@ public:
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
 	{
-		initVertex(cube_array);
-		initColor();
+		InitVertex(cube_array);
+		InitColor(m_color);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor();
-	void InitBuffer();
+//	void InitVertex(const GLfloat rec_array[36 * 6]);
+	void InitColor(const GLfloat color_array[36 * 3]) override;
+//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 
@@ -225,8 +223,8 @@ public:
 class CarSmallWheel_2 : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	//GLfloat m_color[36 * 3]; // 108
 	int m_dir;
 	GLfloat m_velocity;
 	int m_idx;
@@ -239,15 +237,15 @@ public:
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
 	{
-		initVertex(cube_array);
-		initColor();
+		InitVertex(cube_array);
+		InitColor(m_color);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor();
-	void InitBuffer();
+//	void InitVertex(const GLfloat rec_array[36 * 6]);
+	void InitColor(const GLfloat color_array[36 * 3]) override;
+//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 
@@ -261,8 +259,8 @@ public:
 class CarWheel_3 : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	//GLfloat m_color[36 * 3]; // 108
 	int m_dir;
 	GLfloat m_velocity;
 	int m_idx;
@@ -275,15 +273,15 @@ public:
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
 	{
-		initVertex(cube_array);
-		initColor();
+		InitVertex(cube_array);
+		InitColor(m_color);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor();
-	void InitBuffer();
+//	void InitVertex(const GLfloat rec_array[36 * 6]);
+	void InitColor(const GLfloat color_array[36 * 3]) override;
+//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 
@@ -297,8 +295,8 @@ public:
 class CarSmallWheel_3 : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	//GLfloat m_color[36 * 3]; // 108
 	int m_dir;
 	GLfloat m_velocity;
 	int m_idx;
@@ -311,15 +309,15 @@ public:
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
 	{
-		initVertex(cube_array);
-		initColor();
+		InitVertex(cube_array);
+		InitColor(m_color);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor();
-	void InitBuffer();
+//	void InitVertex(const GLfloat rec_array[36 * 6]);
+	void InitColor(const GLfloat color_array[36 * 3]) override;
+//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 
@@ -333,8 +331,8 @@ public:
 class CarWheel_4 : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	//GLfloat m_color[36 * 3]; // 108
 	int m_dir;
 	GLfloat m_velocity;
 	int m_idx;
@@ -347,15 +345,15 @@ public:
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
 	{
-		initVertex(cube_array);
-		initColor();
+		InitVertex(cube_array);
+		InitColor(m_color);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor();
-	void InitBuffer();
+//	void InitVertex(const GLfloat rec_array[36 * 6]);
+	void InitColor(const GLfloat color_array[36 * 3]) override;
+//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 
@@ -369,8 +367,8 @@ public:
 class CarSmallWheel_4 : public BasisComponent
 {
 private:
-	GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
-	GLfloat m_color[36 * 3]; // 108
+	//GLfloat m_vertex[36 * 6]; // Element로 그릴거면 4개, 아니면 6개 
+	//GLfloat m_color[36 * 3]; // 108
 	int m_dir;
 	GLfloat m_velocity;
 	int m_idx;
@@ -383,15 +381,15 @@ public:
 		m_velocity{ velo } // 속도 변경 가능 
 		, m_idx{ idx }, m_dir{ dir }
 	{
-		initVertex(cube_array);
-		initColor();
+		InitVertex(cube_array);
+		InitColor(m_color);
 		InitMatrix4();
 		InitBuffer();
 	}
 
-	void initVertex(const GLfloat rec_array[36 * 6]);
-	void initColor();
-	void InitBuffer();
+//	void InitVertex(const GLfloat rec_array[36 * 6]);
+	void InitColor(const GLfloat color_array[36 * 3]) override;
+//	void InitBuffer();
 	void DrawObject();
 	void InitMatrix4();
 
