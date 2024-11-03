@@ -9,21 +9,19 @@ protected:
 	GLuint  m_pos_vbo;
 	GLuint  m_color_vbo;
 
-	glm::mat4 m_Total_world;
+	glm::mat4 m_total_world;
 
 	GLfloat m_x_degree;   // 
 	GLfloat m_y_degree;   // 기본 각도
 	GLfloat m_z_degree;   // 
 
-	GLfloat m_x_distance; // 
-	GLfloat m_y_distance; // 기본 위치 
-	GLfloat m_z_distance; // 
+	GLfloat m_x_pos; // 
+	GLfloat m_y_pos; // 기본 위치 
+	GLfloat m_z_pos; // 
 
 	GLfloat m_x_scale;  //
 	GLfloat	m_y_scale;  // 기본 스케일 
 	GLfloat	m_z_scale;  //
-
-	// --------------------------------------------------
 
 public:
 	BasisComponent() :
@@ -31,59 +29,74 @@ public:
 		m_pos_vbo{},
 		m_color_vbo{},
 
-		m_Total_world{ 1.0f },
+		m_total_world{ 1.0f },
 
 		m_x_degree{ 0.f },
 		m_y_degree{ 0.f },
 		m_z_degree{ 0.f },
 
-		m_x_distance{ 0.f },
-		m_y_distance{ 0.f },
-		m_z_distance{ 0.f },
+		m_x_pos{ 0.f },
+		m_y_pos{ 0.f },
+		m_z_pos{ 0.f },
 
 		m_x_scale{ 1.f },
 		m_y_scale{ 1.f },
 		m_z_scale{ 1.f }
-
-		// ---- 기본  ---------------------------------------------
 	{}
 
+	virtual ~BasisComponent() {}
+
+	void InitTotalworld() { m_total_world = glm::mat4{ 1.0f }; }
+
+	// 최대, 최소 경계 반환 함수
+	float GetXmaxBoundary() { return m_x_pos + m_x_scale / 2; }
+	float GetXminBoundary() { return m_x_pos - m_x_scale / 2; }
+
+	float GetYmaxBoundary() { return m_y_pos + m_y_scale / 2; }
+	float GetYminBoundary() { return m_y_pos - m_y_scale / 2; }
+
+	float GetZmaxBoundary() { return m_z_pos + m_z_scale / 2; }
+	float GetZminBoundary() { return m_z_pos - m_z_scale / 2; }
+
+	// Getter, Setter Position
+	float GetZpos() { return m_z_pos; }
+	float GetXpos() { return m_x_pos; }
+	float GetYpos() { return m_y_pos; }
+
+	void SetZpos(float _f) { m_z_pos = _f; }
+	void SetYpos(float _f) { m_y_pos = _f; }
+	void SetXpos(float _f) { m_x_pos = _f; }
+
 public:
+	// 순수 가상 함수: 모든 클래스가 함수를 재정의 하도록 강제하는 역할 (코드의 명확성이 올라가지만 유연성이 떨어짐)
+
 	virtual void DrawObject() = 0;
 	virtual void InitMatrix4() = 0;
-	virtual ~BasisComponent() {}
+	virtual void Update() = 0;
+
+public:
+	// 일반 가상 함수: 함수의 재정의가 필수가 아님 (상위 클래스의 함수 기능을 사용하거나, 자신 클래스에서 함수 재정의 가능성 열고자 할 때)
+
+	// BasisComponent
 	virtual void WorldMatrix();
-	void initTotalworld() { m_Total_world = glm::mat4{ 1.0f }; }
-	virtual void make_car() = 0;
-	virtual void update() = 0;
 
-	float getXmax() { return m_x_distance + m_x_scale / 2; }
-	float getXmin() { return m_x_distance - m_x_scale / 2; }
+	// Car
+	virtual void CreateCar() {}
 
-	float getYmax() { return m_y_distance + m_y_scale / 2; }
-	float getYmin() { return m_y_distance - m_y_scale / 2; }
+	// Chicken
+	virtual void ChickenJump() {}
+	virtual void SetChickenRunSpeed() {}
+	virtual void SetChickenWalkSpeed() {}
+	virtual void SetChickenFaceDir(unsigned char key) {}
+	virtual Dir GetChickenDir() { return STOP; }
+	virtual void SwitchCollisionState() {} // 충돌 검사 on/off
 
-	float getZmax() { return m_z_distance + m_z_scale / 2; }
-	float getZmin() { return m_z_distance - m_z_scale / 2; }
+	// Road, Grass 
+	virtual int GetZindex() { return 0; }
 
-	float getZdistance() { return m_z_distance; }
-	float getXdistance() { return m_x_distance; }
-	float GetYdistance() { return m_y_distance; }
+	// Grass
+	virtual bool IsFinalGrass() { return false; }
 
-	void SetZdistance(float _f) { m_z_distance = _f; }
-	void SetYdistance(float _f) { m_y_distance = _f; }
-	void SetXdistance(float _f) { m_x_distance = _f; }
-
-	virtual void jump() { ;}
-	virtual void update_yPos() { ; }
-	virtual void setFaceDir(unsigned char key) { ; }
-	virtual Dir Get_dir() { return STOP; }
-	virtual int Get_zidx() { return 0; }
-	virtual bool Is_final() { return false; }
-	virtual void make_line() {};
-	virtual void changeboll() {};
-
-	virtual void upvelo() {};
-	virtual void downvelo() {};
-
+	// Road
+	virtual void CreateLane() {}
 }; 
