@@ -3,17 +3,17 @@
   <ItemGroup>
     <ClCompile Include="include.cpp" />
     <ClCompile Include="PacketClass.cpp">
-      <Filter>PacketClass</Filter>
+      <Filter>Packet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h" />
     <ClInclude Include="PacketClass.h">
-      <Filter>PacketClass</Filter>
+      <Filter>Packet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="PacketClass">
+    <Filter Include="Packet">
       <UniqueIdentifier>{6ba7b3da-4e2f-4aec-a4f8-54b5e7a4c2b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

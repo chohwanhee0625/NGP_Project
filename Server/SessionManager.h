@@ -20,6 +20,14 @@ public:
 		// TODO: Player Face Dir 
 		_datalock.unlock();
 	}
+	void operator=(UPDATE_DATA& rhs)
+	{
+		_datalock.lock();
+		//player_pos_x = rhs.Other_Player_Pos_x;
+		//player_pos_y = rhs.Other_Player_Pos_y;
+		//player_pos_z = rhs.Other_Player_Pos_z;
+		_datalock.unlock();
+	}
 };
 
 class SessionManager
