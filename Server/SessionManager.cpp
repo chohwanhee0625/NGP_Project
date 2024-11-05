@@ -2,6 +2,8 @@
 
 void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 {
+	SendStartFlag(client_sock_1);
+	SendStartFlag(client_sock_2);
 	InitWorldData();
 	SendWorldData(client_sock_1);
 	SendWorldData(client_sock_2);
@@ -18,15 +20,7 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 		th.join();
 }
 
-void SessionManager::InitWorldData()
-{
-}
-
-void SessionManager::SendWorldData(SOCKET client_sock)
-{
-}
-
-DWORD __stdcall SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
+DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 {
 	int other_id = 1 - my_id;
 
@@ -49,6 +43,42 @@ DWORD __stdcall SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 	return 0;
 }
 
+void SessionManager::EndGame(SOCKET client_sock)
+{
+	SendGameOverFlag(client_sock);
+
+}
+
+void SessionManager::SendStartFlag(SOCKET client_sock)
+{
+	// send Start flag Packet
+
+}
+
+void SessionManager::InitWorldData()
+{
+	// Init Player Data
+
+	// Init Roads Data
+
+	// Init Cars Data
+
+	// Init Woods Data
+
+}
+
+void SessionManager::SendWorldData(SOCKET client_sock)
+{
+	// send Player Data
+
+	// send Roads Data
+
+	// send Cars Data
+
+	// send Woods Data
+
+}
+
 void SessionManager::RecvMyPlayerData(int my_id, SOCKET client_sock)
 {
 
@@ -58,6 +88,8 @@ void SessionManager::SendOtherPlayerData(int other_id, SOCKET client_sock)
 {
 }
 
-void SessionManager::EndGame(SOCKET client_sock)
+void SessionManager::SendGameOverFlag(SOCKET client_sock)
 {
+
 }
+
