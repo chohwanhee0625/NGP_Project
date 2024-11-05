@@ -1,6 +1,36 @@
 #pragma once
 #include "include.h"
 
+class S_GAME_READY
+{
+private:
+	bool			Ready_Flag;
+
+public:
+	std::string		to_json();
+	void			from_json(std::string& j_str);
+};
+
+class S_GAME_OVER
+{
+private:
+	bool				End_Flag;
+	std::array<bool, 2> Winner_ID;
+
+public:
+	std::string		to_json();
+	void			from_json(std::string& j_str);
+};
+
+class S_GAME_END
+{
+private:
+public:
+	std::string		to_json();
+	void			from_json(std::string& j_str);
+};
+
+
 
 class INIT_DATA_P
 {
@@ -54,7 +84,7 @@ class INIT_DATA_W
 {
 private:
 
-	std::vector<bool> Woods_Flags;
+	std::vector<std::array<bool, 20>> Woods_Flags;		// 한 줄에 나무 최대 몇개? 임시로 20
 
 public:
 	std::string to_json();

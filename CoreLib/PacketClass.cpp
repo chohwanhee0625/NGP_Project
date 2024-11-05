@@ -1,5 +1,6 @@
 #include "PacketClass.h"
 
+//----------------INIT_DATA_P--------------------
 std::string INIT_DATA_P::to_json()
 {
 	json jObject;
@@ -11,8 +12,6 @@ std::string INIT_DATA_P::to_json()
 	std::string j_str = jObject.dump(4);
 
 	return j_str;
-
-
 }
 
 void INIT_DATA_P::from_json(std::string& j_str)
@@ -27,6 +26,7 @@ void INIT_DATA_P::from_json(std::string& j_str)
 
 }
 
+//----------------INIT_DATA_R--------------------
 std::string INIT_DATA_R::to_json()
 {
 	json jObject;
@@ -46,13 +46,12 @@ void INIT_DATA_R::from_json(std::string& j_str)
 	Dir_Flags = jObject.at("Dir").get<std::vector<bool>>();
 }
 
+//----------------INIT_DATA_C--------------------
 std::string INIT_DATA_C::to_json()
 {
 	json jObject;
 	jObject["Velocity"] = Cars_Velocity;
 	jObject["RGB"] = Cars_Color_RGB;
-
-
 
 	std::string j_str = jObject.dump(4);
 
@@ -69,6 +68,7 @@ void INIT_DATA_C::from_json(std::string& j_str)
 
 }
 
+//----------------INIT_DATA_W--------------------
 std::string INIT_DATA_W::to_json()
 {
 	json jObject;
@@ -83,10 +83,11 @@ void INIT_DATA_W::from_json(std::string& j_str)
 {
 	auto jObject = json::parse(j_str);
 
-	Woods_Flags = jObject.at("Wood").get<std::vector<bool>>();
+	Woods_Flags = jObject.at("Wood").get<std::vector<std::array<bool, 20>>>();	// 일단 임시로 20
 
 }
 
+//----------------UPDATE_DATA--------------------
 std::string UPDATE_DATA::to_json()
 {
 	json jObject;
@@ -112,4 +113,49 @@ void UPDATE_DATA::from_json(std::string& j_str)
 	Other_Player_Face = jObject.at("OtherFace").get<char>();
 	GameOver_Flag = jObject.at("Over").get<bool>();
 
+}
+
+//----------------S_GAME_READY--------------------
+std::string S_GAME_READY::to_json()
+{
+	json jObject;
+	jObject["Ready"] = Ready_Flag;
+	std::string j_str = jObject.dump(4);
+
+	return j_str;
+}
+
+void S_GAME_READY::from_json(std::string& j_str)
+{
+	auto jObject = json::parse(j_str);
+
+	Ready_Flag = jObject.at("Ready").get<bool>();
+}
+
+//----------------S_GAME_OVER--------------------
+std::string S_GAME_OVER::to_json()
+{
+	json jObject;
+	jObject["End"] = End_Flag;
+	jObject["WinnerID"] = Winner_ID;
+	std::string j_str = jObject.dump(4);
+
+	return j_str;
+}
+
+void S_GAME_OVER::from_json(std::string& j_str)
+{
+	auto jObject = json::parse(j_str);
+	End_Flag = jObject.at("End").get<bool>();
+	Winner_ID = jObject.at("WinnerID").get<std::array<bool, 2>>();
+}
+
+//----------------S_GAME_END--------------------
+std::string S_GAME_END::to_json()
+{
+	return std::string();
+}
+
+void S_GAME_END::from_json(std::string& j_str)
+{
 }

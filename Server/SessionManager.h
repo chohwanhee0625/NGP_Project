@@ -20,6 +20,14 @@ public:
 		// TODO: Player Face Dir 
 		_datalock.unlock();
 	}
+	void operator=(UPDATE_DATA& rhs)
+	{
+		_datalock.lock();
+		//player_pos_x = rhs.Other_Player_Pos_x;
+		//player_pos_y = rhs.Other_Player_Pos_y;
+		//player_pos_z = rhs.Other_Player_Pos_z;
+		_datalock.unlock();
+	}
 };
 
 class SessionManager
@@ -28,14 +36,16 @@ public:
 	SessionManager() {}
 	~SessionManager() {}
 
-	void StartGame(SOCKET client_sock_1, SOCKET client_sock_2);
-	void InitWorldData();
-	void SendWorldData(SOCKET client_sock);
+	void			StartGame(SOCKET client_sock_1, SOCKET client_sock_2);
+	DWORD WINAPI	UpdateWorld(SOCKET client_sock, int my_id);
+	void			EndGame(SOCKET client_sock);
 
-	DWORD WINAPI UpdateWorld(SOCKET client_sock, int my_id);
-	void RecvMyPlayerData(int my_id, SOCKET client_sock);
-	void SendOtherPlayerData(int other_id, SOCKET client_sock);
-	void EndGame();
+	void			SendStartFlag(SOCKET client_sock);
+	void			InitWorldData();
+	void			SendWorldData(SOCKET client_sock);
+	void			RecvMyPlayerData(int my_id, SOCKET client_sock);
+	void			SendOtherPlayerData(int other_id, SOCKET client_sock);
+	void			SendGameOverFlag(SOCKET client_sock);
 
 private:
 	std::vector<std::thread> m_threads;
