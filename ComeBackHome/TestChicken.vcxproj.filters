@@ -31,6 +31,9 @@
     <Filter Include="Class\Object\obstacle">
       <UniqueIdentifier>{762149f1-cf2c-4cf6-a9ff-8e5c8edb7c68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class\Timer">
+      <UniqueIdentifier>{a12320ce-1593-4a18-a0ed-4c04d1256e14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">
@@ -82,6 +85,9 @@
     <ClCompile Include="Family.cpp">
       <Filter>Class\Object\Player</Filter>
     </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Class\Timer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extern.h">
@@ -124,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="Family.h">
       <Filter>Class\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Class\Timer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

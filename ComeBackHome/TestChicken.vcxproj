@@ -172,6 +172,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Road.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="소스.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="grass.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Road.h" />
+    <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="usingInclude.h" />
     <ClInclude Include="Wall.h" />
