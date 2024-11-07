@@ -34,6 +34,9 @@
     <Filter Include="Class\Timer">
       <UniqueIdentifier>{a12320ce-1593-4a18-a0ed-4c04d1256e14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class\Object\UI">
+      <UniqueIdentifier>{d40f4a10-bbbd-4ee8-a799-99b2aa7affe2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">
@@ -88,6 +91,12 @@
     <ClCompile Include="TimeManager.cpp">
       <Filter>Class\Timer</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Class\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>Class\Object\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extern.h">
@@ -133,6 +142,15 @@
     </ClInclude>
     <ClInclude Include="TimeManager.h">
       <Filter>Class\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Class\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Class\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools.h">
+      <Filter>Class\Object\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

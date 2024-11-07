@@ -173,7 +173,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Road.cpp" />
     <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="Tools.cpp" />
     <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="소스.cpp" />
   </ItemGroup>
@@ -188,8 +190,11 @@
     <ClInclude Include="grass.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Road.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="TimeManager.h" />
+    <ClInclude Include="Tools.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="usingInclude.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="소스.h" />
