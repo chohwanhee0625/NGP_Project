@@ -41,7 +41,7 @@ public:
 	void			EndGame(SOCKET client_sock);
 
 	void			SendStartFlag(SOCKET client_sock);
-	void			InitWorldData();
+	void			InitWorldData(bool p_id[2]);
 	void			SendWorldData(SOCKET client_sock);
 	void			RecvMyPlayerData(int my_id, SOCKET client_sock);
 	void			SendOtherPlayerData(int other_id, SOCKET client_sock);
