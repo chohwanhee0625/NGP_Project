@@ -42,11 +42,18 @@ private:
 	float	Player_Pos_z;
 
 public:	
+	INIT_DATA_P() 
+	{}
+	INIT_DATA_P(bool id, float x, float y, float z) 
+		: Player_ID{id}, 
+		  Player_Pos_x{x},
+		  Player_Pos_y{y},
+		  Player_Pos_z{z} 
+	{}
 
+public:
 	std::string to_json();
-
 	void from_json(std::string& j_str);
-	
 };
 
 
