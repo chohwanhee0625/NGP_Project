@@ -48,7 +48,7 @@ void Road::InitMatrix4()
 	m_z_pos = -(m_index * m_z_scale);
 }
 
-void Road::Update()
+void Road::Update(float deltatime)
 {
 }
 

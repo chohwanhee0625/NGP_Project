@@ -49,6 +49,6 @@ void Grass::InitMatrix4()
 
 }
 
-void Grass::Update()
+void Grass::Update(float deltatime)
 {
 }

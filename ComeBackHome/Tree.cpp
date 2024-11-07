@@ -46,7 +46,7 @@ void Wood::InitMatrix4()
 	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void Wood::Update()
+void Wood::Update(float deltatime)
 {
 }
 
@@ -93,7 +93,7 @@ void WoodLeaf_1::InitMatrix4()
 	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void WoodLeaf_1::Update()
+void WoodLeaf_1::Update(float deltatime)
 {
 	m_y_degree += 0.2;
 }
@@ -153,7 +153,7 @@ void WoodLeaf_2::InitMatrix4()
 	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void WoodLeaf_2::Update()
+void WoodLeaf_2::Update(float deltatime)
 {
 	m_y_degree += 0.2;
 }
@@ -213,7 +213,7 @@ void WoodLeaf_3::InitMatrix4()
 	m_z_pos = -(m_z_idx * 0.1);
 }
 
-void WoodLeaf_3::Update()
+void WoodLeaf_3::Update(float deltatime)
 {
 	m_y_degree += 0.2;
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "소스.h"
+#include "TimeManager.h"
 
 extern GLchar* gVertexSource; //--- 소스코드 저장 변수
 extern GLchar* gFragmentSource;
@@ -18,10 +19,12 @@ extern bool gToggle[(int)Toggle::END];
 extern Camera gCamera;
 extern Light* gLight;
 extern Border* gBorder;
+extern TimeManager gTimer;
 
 extern bool gIsMovingChicken;
 extern bool gChickenDir[4];
 extern bool gIsReach;
+
 
 //===========================================================================================
 extern const GLfloat cube_vertex_array[36 * 3];

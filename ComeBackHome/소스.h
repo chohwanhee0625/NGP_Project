@@ -2,6 +2,7 @@
 #pragma once
 #include "Basis.h"
 
+
 //===========================================================================================
 
 void make_shaderProgram();
@@ -27,7 +28,7 @@ void InitBorder();
 
 void gVecClear();
 void gVecDraw();
-void gVecUpdate();
+void gVecUpdate(float deltatime);
 
 void SetgVec();
 void SetChicken();
@@ -51,7 +52,7 @@ void SetChickenFaceDir(unsigned char key);
 void SetOffGlobalDir();
 
 void ChickenHandling();
-void ChickenMove();
+void ChickenMove(float deltatime);
 
 void ChickenRun();
 void ChickenWalk();

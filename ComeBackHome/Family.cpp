@@ -65,7 +65,7 @@ void MotherBody::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void MotherBody::Update()
+void MotherBody::Update(float deltatime)
 {
 	if (gIsReach)
 	{
@@ -134,7 +134,7 @@ void MotherHead::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void MotherHead::Update()
+void MotherHead::Update(float deltatime)
 {
 	if (gIsReach)
 	{
@@ -208,7 +208,7 @@ void MotherMouse::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void MotherMouse::Update()
+void MotherMouse::Update(float deltatime)
 {
 	if (gIsReach)
 	{
@@ -282,7 +282,7 @@ void MotherEyes::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void MotherEyes::Update()
+void MotherEyes::Update(float deltatime)
 {
 	if (gIsReach)
 	{
@@ -366,7 +366,7 @@ void MotherLeftArm::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void MotherLeftArm::Update()
+void MotherLeftArm::Update(float deltatime)
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -462,7 +462,7 @@ void MotherRightArm::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void MotherRightArm::Update()
+void MotherRightArm::Update(float deltatime)
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -557,7 +557,7 @@ void MotherLeftLeg::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void MotherLeftLeg::Update()
+void MotherLeftLeg::Update(float deltatime)
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;
@@ -654,7 +654,7 @@ void MotherRightLeg::WorldMatrix()
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
-void MotherRightLeg::Update()
+void MotherRightLeg::Update(float deltatime)
 {
 	if (sign == PLUS && hand_degree >= hand_max_degree) {
 		sign = MINUS;

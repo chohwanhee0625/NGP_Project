@@ -3,6 +3,8 @@
  
 class BasisComponent;
 
+const GLfloat WALK_V = .2f;
+const GLfloat RUN_V = .4f;
 
 //========================================================================
 // ¸ö
@@ -22,9 +24,9 @@ public:
 	ChickenBody(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		face{ STOP },
-		walk_velo{ 0.002f },
+		walk_velo{ WALK_V },
 		face_degree{ 0.f },
-		m_fgravity{0.00015f},
+		m_fgravity{0.005f},
 		m_fyvelo{0},
 		m_coll{true}
 	{
@@ -42,20 +44,20 @@ public:
 
 	void initModelLocation();
 	void SetChickenFaceDir(unsigned char key);
-	void Walk();
+	void Walk(float deltatime);
 	void setWalkVelo(float speed) { walk_velo += speed; }
 
-	void Update() override;
+	void Update(float deltatime) override;
 	void Collision();
 
 	void update_yvelo();
 	void Set_yvelo_zero();
 
-	void UpdateChickenYpos();
+	void UpdateChickenYpos(float deltatime);
 	void ChickenJump();
 
-	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
-	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void SetChickenRunSpeed()override { walk_velo = RUN_V; };
+	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 
 	Dir GetChickenDir()override { return face; }
 
@@ -81,7 +83,7 @@ public:
 	ChickenHead(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		face{ STOP },
-		walk_velo{ 0.002f },
+		walk_velo{ WALK_V },
 		face_degree{ 0.f }
 	{
 		initModelLocation();
@@ -99,15 +101,15 @@ public:
 
 	void initModelLocation();
 	void SetChickenFaceDir(unsigned char key);
-	void Walk();
+	void Walk(float deltatime);
 	void setWalkVelo(float speed) {
 		walk_velo += speed;
 	}
-	void Update() override;
+	void Update(float deltatime) override;
 
 	void UpdateChickenYpos();
-	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
-	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void SetChickenRunSpeed()override { walk_velo = RUN_V; };
+	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	Dir GetChickenDir()override { return face; }
 };
 
@@ -132,7 +134,7 @@ public:
 	ChickenMouse(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		face{ STOP },
-		walk_velo{ 0.002f },
+		walk_velo{ WALK_V },
 		face_degree{ 0.f },
 		m_far_x{ 0.0 },
 		m_far_y{ 0.0 },
@@ -153,15 +155,15 @@ public:
 	void initModelLocation();
 
 	void SetChickenFaceDir(unsigned char key);
-	void Walk();
+	void Walk(float deltatime);
 	void setWalkVelo(float speed) {
 		walk_velo += speed;
 	}
-	void Update() override;
+	void Update(float deltatime) override;
 
 	float Get_yvelo() { return m_fyvelo; }
-	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
-	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void SetChickenRunSpeed()override { walk_velo = RUN_V; };
+	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
 	Dir GetChickenDir()override { return face; }
 };
@@ -186,7 +188,7 @@ public:
 	ChickenEyes(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
 		: BasisComponent(),
 		face{ STOP },
-		walk_velo{ 0.002f },
+		walk_velo{ WALK_V },
 		face_degree{ 0.f },
 		m_far_x{ 0.0 },
 		m_far_y{ 0.0 },
@@ -206,14 +208,14 @@ public:
 
 	void initModelLocation();
 	void SetChickenFaceDir(unsigned char key);
-	void Walk();
+	void Walk(float deltatime);
 	void setWalkVelo(float speed) {
 		walk_velo += speed;
 	}
-	void Update() override;
+	void Update(float deltatime) override;
 
-	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
-	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void SetChickenRunSpeed()override { walk_velo = RUN_V; };
+	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
 	Dir GetChickenDir()override { return face; }
 };
@@ -246,7 +248,7 @@ public:
 		hand_velo{ 0.8f },
 		hand_max_degree{ 45.f },
 		face{ STOP },
-		walk_velo{ 0.002f },
+		walk_velo{ WALK_V },
 		face_degree{180.f },
 		m_far_value{0.005},
 		m_far_x{ -m_far_value },
@@ -268,13 +270,13 @@ public:
 	void initModelLocation();
 	void handling();
 	void SetChickenFaceDir(unsigned char key);
-	void Walk();
+	void Walk(float deltatime);
 	void setWalkVelo(float speed) { walk_velo += speed; }
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void Update() override;
+	void Update(float deltatime) override;
 
-	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
-	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void SetChickenRunSpeed()override { walk_velo = RUN_V; };
+	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
 	Dir GetChickenDir()override { return face; }
 };
@@ -308,7 +310,7 @@ public:
 		hand_velo{ 0.8f },
 		hand_max_degree{ 45.f },
 		face{ STOP },
-		walk_velo{ 0.002f },
+		walk_velo{ WALK_V },
 		face_degree{ 0.f },
 		m_far_x{ m_far_value },
 		m_far_y{ 0.0 },
@@ -329,13 +331,13 @@ public:
 	void initModelLocation();
 	void handling();
 	void SetChickenFaceDir(unsigned char key);
-	void Walk();
+	void Walk(float deltatime);
 	void setWalkVelo(float speed) { walk_velo += speed; }
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void Update() override;
+	void Update(float deltatime) override;
 
-	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
-	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void SetChickenRunSpeed()override { walk_velo = RUN_V; };
+	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
 	Dir GetChickenDir()override { return face; }
 };
@@ -368,7 +370,7 @@ public:
 		hand_velo{ 0.8f },
 		hand_max_degree{ 20.f },
 		face{ STOP },
-		walk_velo{ 0.002f },
+		walk_velo{ WALK_V },
 		face_degree{ 0.f },
 		m_far_x{ -m_far_value },
 		m_far_y{ 0.0 },
@@ -389,13 +391,13 @@ public:
 	void initModelLocation();
 	void handling();
 	void SetChickenFaceDir(unsigned char key);
-	void Walk();
+	void Walk(float deltatime);
 	void setWalkVelo(float speed) { walk_velo += speed; }
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void Update() override;
+	void Update(float deltatime) override;
 
-	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
-	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void SetChickenRunSpeed()override { walk_velo = RUN_V; };
+	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
 	Dir GetChickenDir()override { return face; }
 };
@@ -430,7 +432,7 @@ public:
 		hand_velo{ 0.8f },
 		hand_max_degree{ 20.f },
 		face{ STOP },
-		walk_velo{ 0.002f },
+		walk_velo{ WALK_V },
 		face_degree{ 0.f },
 		m_far_x{ m_far_value },
 		m_far_y{ 0.0 },
@@ -451,13 +453,13 @@ public:
 	void initModelLocation();
 	void handling();
 	void SetChickenFaceDir(unsigned char key);
-	void Walk();
+	void Walk(float deltatime);
 	void setWalkVelo(float speed) { walk_velo += speed; }
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void Update() override;
+	void Update(float deltatime) override;
 
-	void SetChickenRunSpeed()override { walk_velo = 0.01f; };
-	void SetChickenWalkSpeed()override { walk_velo = 0.002f; };
+	void SetChickenRunSpeed()override { walk_velo = RUN_V; };
+	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
 	Dir GetChickenDir()override { return face; }
 };

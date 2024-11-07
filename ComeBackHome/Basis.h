@@ -79,7 +79,7 @@ public:
 
 	virtual void InitMatrix4() = 0;
 	virtual void DrawObject() = 0;
-	virtual void Update() = 0;
+	virtual void Update(float value) = 0;
 
 public:
 	// 일반 가상 함수: 함수의 재정의가 필수가 아님 (상위 클래스의 함수 기능을 사용하거나, 자신 클래스에서 함수 재정의 가능성 열고자 할 때)

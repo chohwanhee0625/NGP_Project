@@ -11,10 +11,10 @@
 #include "Camera.h"
 #include "Car.h"
 #include "Light.h"
+#include "TimeManager.h"
 #include "Border.h"
 #include "Tree.h"
 #include "Family.h"
-
 
 //===========================================================================================
 
@@ -181,8 +181,11 @@ GLvoid Reshape(int w, int h)
 void TimerFunction(int value)
 {
 	gCamera.Move();
+	gTimer.update();
+	float deltatime = gTimer.getDeltaTime();
 
-	gVecUpdate();
+
+	gVecUpdate(deltatime);
 	glutPostRedisplay();				//화면 재출력
 	glutTimerFunc(10, TimerFunction, 1); // 다시 호출 
 }
@@ -517,10 +520,10 @@ void gVecDraw()
 	}
 }
 
-void gVecUpdate()
+void gVecUpdate(float deltatime)
 {
 	for (auto& obj : gVec) {
-		obj->Update();
+		obj->Update(deltatime);
 	}
 }
 
