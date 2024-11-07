@@ -30,12 +30,11 @@ public:
 	void			from_json(std::string& j_str);
 };
 
-
+//===============================================================================================
 
 class INIT_DATA_P
 {
-private:
-
+public:
 	bool	Player_ID;
 	float	Player_Pos_x;
 	float	Player_Pos_y;
@@ -56,50 +55,45 @@ public:
 	void from_json(std::string& j_str);
 };
 
-
-
 class INIT_DATA_R
 {
-private:
+public:
+	// 0: Road
+	// 1: Grass 
 	std::vector<bool> Roads_Flags;
+	// 
+	// 0 : LEFT  -> PLUS  -> 왼쪽에서 태어나서 오른쪽으로 이동
+	// 1 : RIGHT -> MINUS -> 오른쪽에서 태어나서 왼쪽으로 이동
 	std::vector<bool> Dir_Flags;
 
 public:
 	std::string to_json();
-
 	void from_json(std::string& j_str);
-
 };
-
 
 class INIT_DATA_C
 {
-private:
+public:
 	std::vector<float>	Cars_Velocity;
 	std::vector<std::array<float, 3>> Cars_Color_RGB;
 
 
 public:
 	std::string to_json();
-
 	void from_json(std::string& j_str);
-
 };
-
 
 class INIT_DATA_W
 {
-private:
-
+public:
 	std::vector<std::array<bool, 20>> Woods_Flags;		// 한 줄에 나무 최대 몇개? 임시로 20
 
 public:
 	std::string to_json();
-
 	void from_json(std::string& j_str);
-
 };
 
+//===============================================================================================
 
 class UPDATE_DATA
 {

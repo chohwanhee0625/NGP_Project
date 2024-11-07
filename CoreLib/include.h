@@ -27,3 +27,18 @@ using namespace nlohmann;
 
 
 class Test;
+
+enum CustomEnum
+{
+	OFF = 0,
+	ON = 1,
+
+	MINUS = -1,
+	PLUS = 1,
+
+	LEFT = 0,
+	RIGHT = 1,
+
+	ROAD = 0,
+	GRASS = 1,
+};
