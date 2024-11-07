@@ -74,37 +74,37 @@ void SessionManager::InitWorldData(bool p_id[2])
 	//		( ChickenBody::InitMatrix4() )  
 	const float x_offset = 0.5f;
 
-	m_playerData[p_id[0]].player_pos_x = 0.0f + p_id[0] * x_offset; 
-	m_playerData[p_id[0]].player_pos_y = 0.0f; 
+	m_playerData[p_id[0]].player_pos_x = 0.0f + p_id[0] * x_offset;
+	m_playerData[p_id[0]].player_pos_y = 0.0f;
 	m_playerData[p_id[0]].player_pos_z = 0.0f;
-	
-	m_playerData[p_id[1]].player_pos_x = 0.0f + p_id[1] * x_offset; 
-	m_playerData[p_id[1]].player_pos_y = 0.0f; 
+
+	m_playerData[p_id[1]].player_pos_x = 0.0f + p_id[1] * x_offset;
+	m_playerData[p_id[1]].player_pos_y = 0.0f;
 	m_playerData[p_id[1]].player_pos_z = 0.0f;
 
-	// send 함수에서 호출해서 사용
-	INIT_DATA_P player_1 { p_id[0], m_playerData[p_id[0]].player_pos_x,m_playerData[p_id[0]].player_pos_y, m_playerData[p_id[0]].player_pos_z };
-	INIT_DATA_P player_2 { p_id[1], m_playerData[p_id[1]].player_pos_x,m_playerData[p_id[1]].player_pos_y, m_playerData[p_id[1]].player_pos_z };
+	// # send 함수에서 호출해서 사용
+	INIT_DATA_P player_1{ p_id[0], m_playerData[p_id[0]].player_pos_x,m_playerData[p_id[0]].player_pos_y, m_playerData[p_id[0]].player_pos_z };
+	INIT_DATA_P player_2{ p_id[1], m_playerData[p_id[1]].player_pos_x,m_playerData[p_id[1]].player_pos_y, m_playerData[p_id[1]].player_pos_z };
 
 	//-----------------------------------------------------------------------------------------
 	// Init Roads Data 
 	//		# 수정할 것 
 	//		( SetGround )
 	//		( Road::Road(), Road::InitCarSpawnDir )  
-	
+
 	// 잔디 + 도로 인덱스 개수 ( 맵 크기 )
 	const int max_tiles{ 150 };
 	int index{ 0 };
 
 	// 메모리 미리 확보, size = 0, capacity = maxTiles
-	// 맨 처음 땅 Grass
+	// 시작 Grass
 	m_roadData.Roads_Flags.reserve(max_tiles);
-	m_roadData.Roads_Flags.emplace_back(GRASS); 
-	++index; 
-	
-	while( index < max_tiles) {
+	m_roadData.Roads_Flags.emplace_back(GRASS);
+	++index;
+
+	while (index < max_tiles) {
 		int roads_build_count{ gRoadSet(gRandomEngine) };
-		
+
 		// index가 max_tiles를 초과하지 않도록 roads_build_count를 제한
 		if (index + roads_build_count > max_tiles) {
 			roads_build_count = max_tiles - index; // 남은 공간만큼만 도로를 추가
@@ -113,7 +113,7 @@ void SessionManager::InitWorldData(bool p_id[2])
 		// 도로를 생성하고, 차 스폰 포인트 설정
 		for (int j = 0; j < roads_build_count; ++j) {
 			m_roadData.Roads_Flags.emplace_back(ROAD);
-			
+
 			bool car_spawn_point{ (bool)gBoolUniform(gRandomEngine) };
 
 			if (car_spawn_point == LEFT) {
@@ -140,14 +140,33 @@ void SessionManager::InitWorldData(bool p_id[2])
 	m_carData;
 	// vector<bool> Roads_Flags;
 	// vector<bool> Dir_Flags;
-	
-	
+
+
 	//-----------------------------------------------------------------------------------------
 	// Init Woods Data
-	m_woodData;
-	// vector<std::array<bool, 20>> Woods_Flags;	
-	// // 한 줄에 나무 최대 몇개? 임시로 20
+	//		# 수정할 것 
+	//		( SetWoods )
 
+	const int max_wood = 10;
+	// int max_wood = m_woodData.Woods_Flags[0].size(); 
+	// 최대 나무 개수
+
+	for (int i = 0; i < m_roadData.Roads_Flags.size(); ++i) {
+		if (m_roadData.Roads_Flags[i] == GRASS) { 
+
+			std::array<bool, 10> wood_line{};  
+			// 한 줄에 나무 배치 여부를 담을 배열 
+
+			for (int j = 0; j < max_wood; ++j) {
+				bool should_plan_wood{ (bool)gBoolUniform(gRandomEngine) };
+
+				// 나무를 심을 경우 1, 아니면 0으로 설정
+				wood_line[j] = should_plan_wood; 
+			}
+
+			m_woodData.Woods_Flags.emplace_back(wood_line);  // 한 줄의 나무 배열을 Woods_Flags에 추가
+		}
+	}
 
 	//-----------------------------------------------------------------------------------------
 }
