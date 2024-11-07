@@ -26,7 +26,7 @@ public:
 		face{ STOP },
 		walk_velo{ WALK_V },
 		face_degree{ 0.f },
-		m_fgravity{0.00015f},
+		m_fgravity{0.005f},
 		m_fyvelo{0},
 		m_coll{true}
 	{
@@ -53,7 +53,7 @@ public:
 	void update_yvelo();
 	void Set_yvelo_zero();
 
-	void UpdateChickenYpos();
+	void UpdateChickenYpos(float deltatime);
 	void ChickenJump();
 
 	void SetChickenRunSpeed()override { walk_velo = RUN_V; };
