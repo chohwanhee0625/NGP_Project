@@ -54,25 +54,25 @@ void ChickenHandling()
 	Rleg->handling();
 }
 
-void ChickenMove()
+void ChickenMove(float deltatime)
 {
 	ChickenBody* body = dynamic_cast<ChickenBody*>(gVec[0]);
-	body->Walk();
+	body->Walk(deltatime);
 	ChickenHead* head = dynamic_cast<ChickenHead*>(gVec[1]);
-	head->Walk();
+	head->Walk(deltatime);
 	ChickenMouse* mouse = dynamic_cast<ChickenMouse*>(gVec[2]);
-	mouse->Walk();
+	mouse->Walk(deltatime);
 	ChickenEyes* eyes = dynamic_cast<ChickenEyes*>(gVec[3]);
-	eyes->Walk();
+	eyes->Walk(deltatime);
 
 	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
-	Larm->Walk();
+	Larm->Walk(deltatime);
 	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
-	Rarm->Walk();
+	Rarm->Walk(deltatime);
 	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
-	Lleg->Walk();
+	Lleg->Walk(deltatime);
 	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
-	Rleg->Walk();
+	Rleg->Walk(deltatime);
 
 }
 
@@ -162,7 +162,7 @@ void ChickenBody::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void ChickenBody::Walk()
+void ChickenBody::Walk(float deltatime)
 {
 	
 		switch (face)
@@ -171,30 +171,30 @@ void ChickenBody::Walk()
 			break;
 
 		case South:
-			m_z_pos += walk_velo;
+			m_z_pos += walk_velo * deltatime;
 			break;
 
 		case West:
-			m_x_pos -= walk_velo;
+			m_x_pos -= walk_velo * deltatime;
 			break;
 
 		case East:
-			m_x_pos += walk_velo;
+			m_x_pos += walk_velo * deltatime;
 			break;
 
 		case North:
-			m_z_pos -= walk_velo;
+			m_z_pos -= walk_velo * deltatime;
 			break;
 		}
 	
 
 }
 
-void ChickenBody::Update()
+void ChickenBody::Update(float deltatime)
 {
 	if (m_z_pos > -(g_max_z) * 0.1 && !gIsReach) {
 		Collision();
-		Walk();
+		Walk(deltatime);
 		UpdateChickenYpos();
 		
 	}
@@ -381,7 +381,6 @@ void ChickenBody::ChickenJump()
 void ChickenBody::initModelLocation()
 {
 	face = STOP;
-	walk_velo = 0.002f;
 	face_degree = 0.f;
 }
 
@@ -471,7 +470,7 @@ void ChickenHead::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void ChickenHead::Walk()
+void ChickenHead::Walk(float deltatime)
 {
 	switch (face)
 	{
@@ -479,28 +478,28 @@ void ChickenHead::Walk()
 		break;
 
 	case South:
-		m_z_pos += walk_velo;
+		m_z_pos += walk_velo * deltatime;
 		break;
 
 	case West:
-		m_x_pos -= walk_velo;
+		m_x_pos -= walk_velo * deltatime;
 		break;
 
 	case East:
-		m_x_pos += walk_velo;
+		m_x_pos += walk_velo * deltatime;
 		break;
 
 	case North:
-		m_z_pos -= walk_velo;
+		m_z_pos -= walk_velo * deltatime;
 		break;
 	}
 }
 
-void ChickenHead::Update()
+void ChickenHead::Update(float deltatime)
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
-		Walk();
+		Walk(deltatime);
 	}
 }
 
@@ -512,7 +511,6 @@ void ChickenHead::UpdateChickenYpos()
 void ChickenHead::initModelLocation()
 {
 	face = STOP;
-	walk_velo = 0.002f;
 	face_degree = 0.f;
 }
 
@@ -619,7 +617,7 @@ void ChickenMouse::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void ChickenMouse::Walk()
+void ChickenMouse::Walk(float deltatime)
 {
 	switch (face)
 	{
@@ -627,28 +625,28 @@ void ChickenMouse::Walk()
 		break;
 
 	case South:
-		m_z_pos += walk_velo;
+		m_z_pos += walk_velo * deltatime;
 		break;
 
 	case West:
-		m_x_pos -= walk_velo;
+		m_x_pos -= walk_velo * deltatime;
 		break;
 
 	case East:
-		m_x_pos += walk_velo;
+		m_x_pos += walk_velo * deltatime;
 		break;
 
 	case North:
-		m_z_pos -= walk_velo;
+		m_z_pos -= walk_velo * deltatime;
 		break;
 	}
 }
 
-void ChickenMouse::Update()
+void ChickenMouse::Update(float deltatime)
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
-		Walk();
+		Walk(deltatime);
 	}
 	
 }
@@ -661,7 +659,7 @@ void ChickenMouse::UpdateChickenYpos()
 void ChickenMouse::initModelLocation()
 {
 	face = STOP;
-	walk_velo = 0.002f;
+
 	face_degree = 180.f;
 	m_far_value = 0.002;
 
@@ -768,7 +766,7 @@ void ChickenEyes::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void ChickenEyes::Walk()
+void ChickenEyes::Walk(float deltatime)
 {
 	switch (face)
 	{
@@ -776,28 +774,28 @@ void ChickenEyes::Walk()
 		break;
 
 	case South:
-		m_z_pos += walk_velo;
+		m_z_pos += walk_velo * deltatime;
 		break;
 
 	case West:
-		m_x_pos -= walk_velo;
+		m_x_pos -= walk_velo * deltatime;
 		break;
 
 	case East:
-		m_x_pos += walk_velo;
+		m_x_pos += walk_velo * deltatime;
 		break;
 
 	case North:
-		m_z_pos -= walk_velo;
+		m_z_pos -= walk_velo * deltatime;
 		break;
 	}
 }
 
-void ChickenEyes::Update()
+void ChickenEyes::Update(float deltatime)
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
-		Walk();
+		Walk(deltatime);
 	}
 }
 
@@ -809,7 +807,7 @@ void ChickenEyes::UpdateChickenYpos()
 void ChickenEyes::initModelLocation()
 {
 	face = STOP;
-	walk_velo = 0.002f;
+
 	face_degree = 0.f;
 	m_far_value = 0.0;
 
@@ -937,7 +935,7 @@ void ChickenLeftArm::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void ChickenLeftArm::Walk()
+void ChickenLeftArm::Walk(float deltatime)
 {
 	switch (face)
 	{
@@ -945,28 +943,28 @@ void ChickenLeftArm::Walk()
 		break;
 
 	case South:
-		m_z_pos += walk_velo;
+		m_z_pos += walk_velo * deltatime;
 		break;
 
 	case West:
-		m_x_pos -= walk_velo;
+		m_x_pos -= walk_velo * deltatime;
 		break;
 
 	case East:
-		m_x_pos += walk_velo;
+		m_x_pos += walk_velo * deltatime;
 		break;
 
 	case North:
-		m_z_pos -= walk_velo;
+		m_z_pos -= walk_velo* deltatime;
 		break;
 	}
 }
 
-void ChickenLeftArm::Update()
+void ChickenLeftArm::Update(float deltatime)
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
-		Walk();
+		Walk(deltatime);
 		
 	}
 	else
@@ -993,7 +991,7 @@ void ChickenLeftArm::initModelLocation()
 	hand_max_degree = 45.f;
 
 	face = STOP;
-	walk_velo = 0.002f;
+
 	face_degree = 180.f;
 	m_far_value = 0.005;
 
@@ -1119,7 +1117,7 @@ void ChickenRightArm::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void ChickenRightArm::Walk()
+void ChickenRightArm::Walk(float deltatime)
 {
 	switch (face)
 	{
@@ -1127,28 +1125,28 @@ void ChickenRightArm::Walk()
 		break;
 
 	case South:
-		m_z_pos += walk_velo;
+		m_z_pos += walk_velo * deltatime;
 		break;
 
 	case West:
-		m_x_pos -= walk_velo;
+		m_x_pos -= walk_velo * deltatime;
 		break;
 
 	case East:
-		m_x_pos += walk_velo;
+		m_x_pos += walk_velo * deltatime;
 		break;
 
 	case North:
-		m_z_pos -= walk_velo;
+		m_z_pos -= walk_velo * deltatime;
 		break;
 	}
 }
 
-void ChickenRightArm::Update()
+void ChickenRightArm::Update(float deltatime)
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
-		Walk();
+		Walk(deltatime);
 	}
 	else
 	{
@@ -1173,7 +1171,7 @@ void ChickenRightArm::initModelLocation()
 	hand_max_degree = 45.f;
 
 	face = STOP;
-	walk_velo = 0.002f;
+
 	face_degree = 180.f;
 	m_far_value = 0.005;
 
@@ -1301,7 +1299,7 @@ void ChickenLeftLeg::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void ChickenLeftLeg::Walk()
+void ChickenLeftLeg::Walk(float deltatime)
 {
 	switch (face)
 	{
@@ -1309,28 +1307,28 @@ void ChickenLeftLeg::Walk()
 		break;
 
 	case South:
-		m_z_pos += walk_velo;
+		m_z_pos += walk_velo * deltatime;
 		break;
 
 	case West:
-		m_x_pos -= walk_velo;
+		m_x_pos -= walk_velo * deltatime;
 		break;
 
 	case East:
-		m_x_pos += walk_velo;
+		m_x_pos += walk_velo * deltatime;
 		break;
 
 	case North:
-		m_z_pos -= walk_velo;
+		m_z_pos -= walk_velo * deltatime;
 		break;
 	}
 }
 
-void ChickenLeftLeg::Update()
+void ChickenLeftLeg::Update(float deltatime)
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
-		Walk();
+		Walk(deltatime);
 	}
 	handling();
 }
@@ -1348,7 +1346,7 @@ void ChickenLeftLeg::initModelLocation()
 	hand_max_degree = 20.f;
 
 	face = STOP;
-	walk_velo = 0.002f;
+
 	face_degree = 180.f;
 	m_far_value = 0.0025;
 
@@ -1476,36 +1474,37 @@ void ChickenRightLeg::SetChickenFaceDir(unsigned char key)
 	}
 }
 
-void ChickenRightLeg::Walk()
+void ChickenRightLeg::Walk(float deltatime)
 {
+
 	switch (face)
 	{
 	case STOP:
 		break;
 
 	case South:
-		m_z_pos += walk_velo;
+		m_z_pos += walk_velo * deltatime;
 		break;
 
 	case West:
-		m_x_pos -= walk_velo;
+		m_x_pos -= walk_velo * deltatime;
 		break;
 
 	case East:
-		m_x_pos += walk_velo;
+		m_x_pos += walk_velo * deltatime;
 		break;
 
 	case North:
-		m_z_pos -= walk_velo;
+		m_z_pos -= walk_velo * deltatime;
 		break;
 	}
 }
 
-void ChickenRightLeg::Update()
+void ChickenRightLeg::Update(float deltatime)
 {
 	if (!gIsReach) {
 		UpdateChickenYpos();
-		Walk();
+		Walk(deltatime);
 
 	}
 	handling();
@@ -1524,7 +1523,7 @@ void ChickenRightLeg::initModelLocation()
 	hand_max_degree = 20.f;
 
 	face = STOP;
-	walk_velo = 0.002f;
+
 	face_degree = 180.f;
 	m_far_value = 0.0025;
 

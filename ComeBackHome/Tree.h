@@ -23,7 +23,7 @@ public:
 	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
-	void Update() override;
+	void Update(float deltatime) override;
 };
 
 //===========================================================================================
@@ -49,7 +49,7 @@ public:
 	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
-	void Update() override;
+	void Update(float deltatime) override;
 
 	void WorldMatrix();
 };
@@ -77,7 +77,7 @@ public:
 	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
-	void Update() override;
+	void Update(float deltatime) override;
 
 	void WorldMatrix();
 };
@@ -105,7 +105,7 @@ public:
 	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
-	void Update() override;
+	void Update(float deltatime) override;
 
 	void WorldMatrix();
 };

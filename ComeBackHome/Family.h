@@ -27,7 +27,7 @@ public:
 	void WorldMatrix();
 	void initModelLocation();
 
-	void Update() override;
+	void Update(float deltatime) override;
 };
 
 //========================================================================
@@ -56,7 +56,7 @@ public:
 	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
-	void Update() override;
+	void Update(float deltatime) override;
 };
 
 //========================================================================
@@ -89,7 +89,7 @@ public:
 	void WorldMatrix();
 
 	void initModelLocation();
-	void Update() override;
+	void Update(float deltatime) override;
 };
 
 //========================================================================
@@ -122,7 +122,7 @@ public:
 	void InitMatrix4();
 	void WorldMatrix();
 	void initModelLocation();
-	void Update() override;
+	void Update(float deltatime) override;
 
 };
 
@@ -169,7 +169,7 @@ public:
 	void WorldMatrix();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void Update() override;
+	void Update(float deltatime) override;
 };
 
 //========================================================================
@@ -215,7 +215,7 @@ public:
 	void WorldMatrix();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void Update() override;
+	void Update(float deltatime) override;
 };
 
 //========================================================================
@@ -260,7 +260,7 @@ public:
 	void WorldMatrix();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void Update() override;
+	void Update(float deltatime) override;
 };
 
 //======================================================================
@@ -306,6 +306,6 @@ public:
 	void InitMatrix4();
 	void initModelLocation();
 	void setHandDegree(float degree) { hand_max_degree += degree; }
-	void Update() override;
+	void Update(float deltatime) override;
 };
 

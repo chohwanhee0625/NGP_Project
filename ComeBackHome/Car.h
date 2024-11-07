@@ -1,4 +1,5 @@
 #pragma once
+const GLfloat CAR_SPEED = 0.1;
 
 //===========================================================================================
 // 차 몸체 
@@ -14,7 +15,7 @@ public:
 	{}
 	Car(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int dir, int idx) 
 		: BasisComponent(),
-		m_velocity{ 0.001f} // 속도 변경 가능 
+		m_velocity{ CAR_SPEED } // 속도 변경 가능 
 		, m_idx{idx}, m_dir{dir}
 	{
 		InitVertex(cube_array);
@@ -28,9 +29,9 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	virtual void Move();
+	virtual void Move(float deltatime);
 	virtual void CreateCar();
-	void Update()override;
+	void Update(float deltatime)override;
 };
 
 //===========================================================================================
@@ -59,9 +60,9 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	virtual void Move();
+	virtual void Move(float deltatime);
 
-	void Update()override;
+	void Update(float deltatime)override;
 };
 
 //===========================================================================================
@@ -91,9 +92,9 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	virtual void Move();
+	virtual void Move(float deltatime);
 
-	void Update()override;
+	void Update(float deltatime)override;
 };
 
 //===========================================================================================
@@ -123,9 +124,9 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	virtual void Move();
+	virtual void Move(float deltatime);
 
-	void Update()override;
+	void Update(float deltatime)override;
 };
 
 //===========================================================================================
@@ -155,9 +156,9 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	virtual void Move();
+	virtual void Move(float deltatime);
 
-	void Update()override;
+	void Update(float deltatime)override;
 };
 
 //===========================================================================================
@@ -187,9 +188,9 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	virtual void Move();
+	virtual void Move(float deltatime);
 
-	void Update()override;
+	void Update(float deltatime)override;
 };
 
 //===========================================================================================
@@ -219,9 +220,9 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	virtual void Move();
+	virtual void Move(float deltatime);
 
-	void Update()override;
+	void Update(float deltatime)override;
 };
 
 //===========================================================================================
@@ -251,9 +252,9 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	virtual void Move();
+	virtual void Move(float deltatime);
 
-	void Update()override;
+	void Update(float deltatime)override;
 };
 
 //===========================================================================================
@@ -283,9 +284,9 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	virtual void Move();
+	virtual void Move(float deltatime);
 
-	void Update()override;
+	void Update(float deltatime)override;
 };
 
 //===========================================================================================
@@ -315,9 +316,9 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	virtual void Move();
+	virtual void Move(float deltatime);
 
-	void Update()override;
+	void Update(float deltatime)override;
 };
 
 //===========================================================================================
@@ -347,7 +348,7 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	virtual void Move();
+	virtual void Move(float deltatime);
 
-	void Update()override;
+	void Update(float deltatime)override;
 };
