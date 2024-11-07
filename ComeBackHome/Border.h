@@ -19,5 +19,5 @@ public:
 	void DrawObject();
 	void InitMatrix4();
 
-	void Update()override;
+	void Update(float deltatime)override;
 };

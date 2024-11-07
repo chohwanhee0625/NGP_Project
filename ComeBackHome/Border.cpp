@@ -49,6 +49,6 @@ void Border::InitMatrix4()
 
 }
 
-void Border::Update()
+void Border::Update(float deltatime)
 {
 }

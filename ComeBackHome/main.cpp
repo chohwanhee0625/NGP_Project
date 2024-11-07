@@ -4,6 +4,7 @@
 #include "Basis.h"
 #include "Camera.h"
 #include "Light.h"
+#include "TimeManager.h"
 #include "Border.h"
 
 //===========================================================================================
@@ -26,6 +27,7 @@ bool gToggle[(int)Toggle::END]; // 명령어 토글
 Camera gCamera; // 카메라 클래스 
 Light* gLight; // 조명 클래스 
 Border* gBorder; // 화면 우측 상단 핑크색 경계 클래스
+TimeManager gTimer{};
 
 bool gIsMovingChicken{ OFF };
 bool gChickenDir[4]{};

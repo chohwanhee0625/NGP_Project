@@ -47,6 +47,6 @@ void Wall::InitMatrix4()
 	m_z_scale = 15.0;
 }
 
-void Wall::Update()
+void Wall::Update(float deltatime)
 {
 }

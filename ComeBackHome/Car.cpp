@@ -5,7 +5,7 @@
 
 //===========================================================================================
 
-void Car::Move()
+void Car::Move(float deltatime)
 {
 	// 0 : LEFT  -> PLUS -> 왼쪽에서 태어나서 오른쪽으로 이동
 	// 1 : RIGHT -> MINUS -> 오른쪽에서 태어나서 왼쪽으로 이동
@@ -13,7 +13,7 @@ void Car::Move()
 	// Plus [+1] : 왼쪽에서 생성    -> 이동방향 + 오른쪽
 	// Minus[-1] : 오른쪽에서 생성  -> 이동방향 - 왼쪽
 
-	m_x_pos += m_velocity * m_dir;
+	m_x_pos += m_velocity * m_dir * deltatime;
 
 	if (m_dir == PLUS  && m_x_pos > 0.55 )
 		m_x_pos = -0.55f;
@@ -21,9 +21,9 @@ void Car::Move()
 		m_x_pos = 0.55f;
 }
 
-void Car::Update()
+void Car::Update(float deltatime)
 {
-	Move();
+	Move(deltatime);
 }
 
 void Car::InitColor(const GLfloat color_array[36 * 3])
@@ -72,7 +72,7 @@ void Car::InitMatrix4()
 	m_z_pos = -0.1 * m_idx; //(0.1f + (0.1 * (float)m_idx)); //* m_idx;
 //	m_z_distance = -0.5f * m_idx;
 
-	m_velocity = m_velocity + (m_idx * 0.000015 * gCarspeed(gRandomEngine));
+	m_velocity = m_velocity + (m_idx * 0.002 * gCarspeed(gRandomEngine));
 }
 
 void Car::CreateCar()
@@ -110,18 +110,18 @@ void Car::CreateCar()
 
 //===========================================================================================
 
-void CarMiddle::Move()
+void CarMiddle::Move(float deltatime)
 {
-	m_x_pos += m_velocity * m_dir;
+	m_x_pos += m_velocity * m_dir * deltatime;
 	if (m_dir == PLUS && m_x_pos > 0.55)
 		m_x_pos = -0.55f;
 	else if (m_dir == MINUS && m_x_pos < -0.55)
 		m_x_pos = 0.55f;
 }
 
-void CarMiddle::Update()
+void CarMiddle::Update(float deltatime)
 {
-	Move();
+	Move(deltatime);
 }
 
 void CarMiddle::DrawObject()
@@ -160,18 +160,18 @@ void CarMiddle::InitMatrix4()
 
 //===========================================================================================
 
-void CarWindow::Move()
+void CarWindow::Move(float deltatime)
 {
-	m_x_pos += m_velocity * m_dir;
+	m_x_pos += m_velocity * m_dir * deltatime;
 	if (m_dir == PLUS && m_x_pos > 0.55)
 		m_x_pos = -0.55f;
 	else if (m_dir == MINUS && m_x_pos < -0.55)
 		m_x_pos = 0.55f;
 }
 
-void CarWindow::Update()
+void CarWindow::Update(float deltatime)
 {
-	Move();
+	Move(deltatime);
 }
 
 void CarWindow::InitColor(const GLfloat color_array[36 * 3])
@@ -219,18 +219,18 @@ void CarWindow::InitMatrix4()
 
 //===========================================================================================
 
-void CarWheel_1::Move()
+void CarWheel_1::Move(float deltatime)
 {
-	m_x_pos += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_pos > 0.55)
-		m_x_pos = -0.55f;
-	else if (m_dir == MINUS && m_x_pos < -0.55)
-		m_x_pos = 0.55f;
+	m_x_pos += m_velocity * m_dir * deltatime;
+	if (m_dir == PLUS && m_x_pos > 0.53)
+		m_x_pos = -0.57f;
+	else if (m_dir == MINUS && m_x_pos < -0.57)
+		m_x_pos = 0.53f;
 }
 
-void CarWheel_1::Update()
+void CarWheel_1::Update(float deltatime)
 {
-	Move();
+	Move(deltatime);
 }
 
 void CarWheel_1::InitColor(const GLfloat color_array[36 * 3])
@@ -277,18 +277,19 @@ void CarWheel_1::InitMatrix4()
 
 //===========================================================================================
 
-void CarSmallWheel_1::Move()
+void CarSmallWheel_1::Move(float deltatime)
 {
-	m_x_pos += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_pos > 0.55)
-		m_x_pos = -0.55f;
-	else if (m_dir == MINUS && m_x_pos < -0.55)
-		m_x_pos = 0.55f;
+	m_x_pos += m_velocity * m_dir * deltatime;
+	
+	if (m_dir == PLUS && m_x_pos > 0.53)
+		m_x_pos = -0.57f;
+	else if (m_dir == MINUS && m_x_pos < -0.57)
+		m_x_pos = 0.53f;
 }
 
-void CarSmallWheel_1::Update()
+void CarSmallWheel_1::Update(float deltatime)
 {
-	Move();
+	Move(deltatime);
 }
 
 void CarSmallWheel_1::InitColor(const GLfloat color_array[36 * 3])
@@ -335,18 +336,18 @@ void CarSmallWheel_1::InitMatrix4()
 
 //===========================================================================================
 
-void CarWheel_2::Move()
+void CarWheel_2::Move(float deltatime)
 {
-	m_x_pos += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_pos > 0.55)
-		m_x_pos = -0.55f;
-	else if (m_dir == MINUS && m_x_pos < -0.55)
-		m_x_pos = 0.55f;
+	m_x_pos += m_velocity * m_dir * deltatime;
+	if (m_dir == PLUS && m_x_pos > 0.53)
+		m_x_pos = -0.57f;
+	else if (m_dir == MINUS && m_x_pos < -0.57)
+		m_x_pos = 0.53f;
 }
 
-void CarWheel_2::Update()
+void CarWheel_2::Update(float deltatime)
 {
-	Move();
+	Move(deltatime);
 }
 
 void CarWheel_2::InitColor(const GLfloat color_array[36 * 3])
@@ -393,18 +394,18 @@ void CarWheel_2::InitMatrix4()
 
 //===========================================================================================
 
-void CarSmallWheel_2::Move()
+void CarSmallWheel_2::Move(float deltatime)
 {
-	m_x_pos += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_pos > 0.55)
-		m_x_pos = -0.55f;
-	else if (m_dir == MINUS && m_x_pos < -0.55)
-		m_x_pos = 0.55f;
+	m_x_pos += m_velocity * m_dir * deltatime;
+	if (m_dir == PLUS && m_x_pos > 0.53)
+		m_x_pos = -0.57f;
+	else if (m_dir == MINUS && m_x_pos < -0.57)
+		m_x_pos = 0.53f;
 }
 
-void CarSmallWheel_2::Update()
+void CarSmallWheel_2::Update(float deltatime)
 {
-	Move();
+	Move(deltatime);
 }
 
 void CarSmallWheel_2::InitColor(const GLfloat color_array[36 * 3])
@@ -451,18 +452,18 @@ void CarSmallWheel_2::InitMatrix4()
 
 //===========================================================================================
 
-void CarWheel_3::Move()
+void CarWheel_3::Move(float deltatime)
 {
-	m_x_pos += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_pos > 0.55)
-		m_x_pos = -0.55f;
-	else if (m_dir == MINUS && m_x_pos < -0.55)
-		m_x_pos = 0.55f;
+	m_x_pos += m_velocity * m_dir * deltatime;
+	if (m_dir == PLUS && m_x_pos > 0.57)
+		m_x_pos = -0.53f;
+	else if (m_dir == MINUS && m_x_pos < -0.53)
+		m_x_pos = 0.57f;
 }
 
-void CarWheel_3::Update()
+void CarWheel_3::Update(float deltatime)
 {
-	Move();
+	Move(deltatime);
 }
 
 void CarWheel_3::InitColor(const GLfloat color_array[36 * 3])
@@ -509,18 +510,18 @@ void CarWheel_3::InitMatrix4()
 
 //===========================================================================================
 
-void CarSmallWheel_3::Move()
+void CarSmallWheel_3::Move(float deltatime)
 {
-	m_x_pos += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_pos > 0.55)
-		m_x_pos = -0.55f;
-	else if (m_dir == MINUS && m_x_pos < -0.55)
-		m_x_pos = 0.55f;
+	m_x_pos += m_velocity * m_dir * deltatime;
+	if (m_dir == PLUS && m_x_pos > 0.57)
+		m_x_pos = -0.53f;
+	else if (m_dir == MINUS && m_x_pos < -0.53)
+		m_x_pos = 0.57f;
 }
 
-void CarSmallWheel_3::Update()
+void CarSmallWheel_3::Update(float deltatime)
 {
-	Move();
+	Move(deltatime);
 }
 
 void CarSmallWheel_3::InitColor(const GLfloat color_array[36 * 3])
@@ -567,18 +568,18 @@ void CarSmallWheel_3::InitMatrix4()
 
 //===========================================================================================
 
-void CarWheel_4::Move()
+void CarWheel_4::Move(float deltatime)
 {
-	m_x_pos += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_pos > 0.55)
-		m_x_pos = -0.55f;
-	else if (m_dir == MINUS && m_x_pos < -0.55)
-		m_x_pos = 0.55f;
+	m_x_pos += m_velocity * m_dir * deltatime;
+	if (m_dir == PLUS && m_x_pos > 0.57)
+		m_x_pos = -0.53f;
+	else if (m_dir == MINUS && m_x_pos < -0.53)
+		m_x_pos = 0.57f;
 }
 
-void CarWheel_4::Update()
+void CarWheel_4::Update(float deltatime)
 {
-	Move();
+	Move(deltatime);
 }
 
 void CarWheel_4::InitColor(const GLfloat color_array[36 * 3])
@@ -625,18 +626,18 @@ void CarWheel_4::InitMatrix4()
 
 //===========================================================================================
 
-void CarSmallWheel_4::Move()
+void CarSmallWheel_4::Move(float deltatime)
 {
-	m_x_pos += m_velocity * m_dir;
-	if (m_dir == PLUS && m_x_pos > 0.55)
-		m_x_pos = -0.55f;
-	else if (m_dir == MINUS && m_x_pos < -0.55)
-		m_x_pos = 0.55f;
+	m_x_pos += m_velocity * m_dir * deltatime;
+	if (m_dir == PLUS && m_x_pos > 0.57)
+		m_x_pos = -0.53f;
+	else if (m_dir == MINUS && m_x_pos < -0.53)
+		m_x_pos = 0.57f;
 }
 
-void CarSmallWheel_4::Update()
+void CarSmallWheel_4::Update(float deltatime)
 {
-	Move();
+	Move(deltatime);
 }
 
 void CarSmallWheel_4::InitColor(const GLfloat color_array[36 * 3])
