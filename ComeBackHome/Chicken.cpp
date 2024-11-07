@@ -195,7 +195,7 @@ void ChickenBody::Update(float deltatime)
 	if (m_z_pos > -(g_max_z) * 0.1 && !gIsReach) {
 		Collision();
 		Walk(deltatime);
-		UpdateChickenYpos();
+		UpdateChickenYpos(deltatime);
 		
 	}
 	else
@@ -362,10 +362,10 @@ void ChickenBody::Set_yvelo_zero()
 	m_fyvelo = 0.0;
 }
 
-void ChickenBody::UpdateChickenYpos()
+void ChickenBody::UpdateChickenYpos(float deltatime)
 {
 	update_yvelo();
-	m_y_pos += m_fyvelo;
+	m_y_pos += m_fyvelo * deltatime;
 
 }
 
@@ -374,7 +374,7 @@ void ChickenBody::ChickenJump()
 	if (GetYpos() <= 0) {
 		PlaySound(L"jump_2.wav", NULL, SND_ASYNC);
 		m_y_pos += 0.01;
-		m_fyvelo = 0.005;
+		m_fyvelo = 0.2;
 	}
 }
 
