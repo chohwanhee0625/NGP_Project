@@ -344,10 +344,10 @@ void ChickenBody::Collision()
 	}
 }
 
-void ChickenBody::update_yvelo()
+void ChickenBody::update_yvelo(float deltatime)
 {
 	if (m_y_pos > 0.0) {
-		m_fyvelo -= m_fgravity;
+		m_fyvelo -= m_fgravity * deltatime;
 	}
 	else
 	{
@@ -364,7 +364,7 @@ void ChickenBody::Set_yvelo_zero()
 
 void ChickenBody::UpdateChickenYpos(float deltatime)
 {
-	update_yvelo();
+	update_yvelo(deltatime);
 	m_y_pos += m_fyvelo * deltatime;
 
 }
