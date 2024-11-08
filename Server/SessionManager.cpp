@@ -33,6 +33,7 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 
 DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 {
+	using namespace std::chrono;
 	int other_id = 1 - my_id;
 
 	while (true)
@@ -47,6 +48,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 		if (m_winner[my_id] || m_winner[other_id])
 			break;
+		std::this_thread::sleep_for(1000ms / PACKET_FREQ);
 	}
 
 	EndGame(client_sock);

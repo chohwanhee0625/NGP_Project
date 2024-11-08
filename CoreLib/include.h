@@ -28,6 +28,8 @@
 using namespace nlohmann;
 
 
+#define PACKET_FREQ 50
+
 class Test;
 
 enum class Toggle
