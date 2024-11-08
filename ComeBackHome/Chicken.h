@@ -26,7 +26,7 @@ public:
 		face{ STOP },
 		walk_velo{ WALK_V },
 		face_degree{ 0.f },
-		m_fgravity{0.005f},
+		m_fgravity{0.25f},
 		m_fyvelo{0},
 		m_coll{true}
 	{
@@ -50,7 +50,7 @@ public:
 	void Update(float deltatime) override;
 	void Collision();
 
-	void update_yvelo();
+	void update_yvelo(float deltatime);
 	void Set_yvelo_zero();
 
 	void UpdateChickenYpos(float deltatime);
