@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{94685f0e-eb27-469a-b21d-2a5b381b0bf0}</ProjectGuid>
-    <RootNamespace>TestChicken</RootNamespace>
+    <ProjectGuid>{fbbdd0f3-1b77-4465-9b8a-69cd5ab34b3f}</ProjectGuid>
+    <RootNamespace>ClientTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Comeback Home</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -72,24 +71,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)Binary\$(Configuration)\</OutDir>
-    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)CoreLib\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)Binary\$(Configuration)\</OutDir>
-    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)CoreLib\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Binary\$(Configuration)\</OutDir>
-    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)CoreLib\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Binary\$(Configuration)\</OutDir>
-    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)CoreLib\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -102,7 +97,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalOptions>glew32.lib freeglut.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -120,7 +114,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalOptions>glew32.lib freeglut.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,7 +127,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalOptions>glew32.lib freeglut.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -152,53 +144,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalOptions>glew32.lib freeglut.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="fragment.glsl" />
-    <None Include="fragment2.glsl" />
-    <None Include="vertex.glsl" />
-    <None Include="vertex2.glsl" />
+    <ClCompile Include="ClientMain.cpp" />
+    <ClCompile Include="GameManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Basis.cpp" />
-    <ClCompile Include="Border.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Car.cpp" />
-    <ClCompile Include="Chicken.cpp" />
-    <ClCompile Include="Family.cpp" />
-    <ClCompile Include="grass.cpp" />
-    <ClCompile Include="Light.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Road.cpp" />
-    <ClCompile Include="TimeManager.cpp" />
-    <ClCompile Include="Tools.cpp" />
-    <ClCompile Include="Tree.cpp" />
-    <ClCompile Include="UI.cpp" />
-    <ClCompile Include="Wall.cpp" />
-    <ClCompile Include="소스.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Basis.h" />
-    <ClInclude Include="Border.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Car.h" />
-    <ClInclude Include="Chicken.h" />
-    <ClInclude Include="extern.h" />
-    <ClInclude Include="Family.h" />
-    <ClInclude Include="grass.h" />
-    <ClInclude Include="Light.h" />
-    <ClInclude Include="Road.h" />
-    <ClInclude Include="stb_image.h" />
-    <ClInclude Include="TimeManager.h" />
-    <ClInclude Include="Tools.h" />
-    <ClInclude Include="Tree.h" />
-    <ClInclude Include="UI.h" />
-    <ClInclude Include="usingInclude.h" />
-    <ClInclude Include="Wall.h" />
-    <ClInclude Include="소스.h" />
-    <ClInclude Include="소스1.h" />
+    <ClInclude Include="GameManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
