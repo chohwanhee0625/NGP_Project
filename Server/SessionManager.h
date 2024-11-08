@@ -5,9 +5,9 @@
 class PlayerData
 {
 public:
-	int player_pos_x;
-	int player_pos_y;
-	int player_pos_z;
+	float player_pos_x;
+	float player_pos_y;
+	float player_pos_z;
 	// TODO: Player Face Dir 
 
 	std::mutex _datalock;

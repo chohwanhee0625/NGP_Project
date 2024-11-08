@@ -1,7 +1,8 @@
 #include "SessionManager.h"
 
-std::random_device gRandDevice; // 진짜 난수 발생기 -> 이 값을 시드값으로
-std::mt19937 gRandomEngine(gRandDevice); // 알고리즘 + 진짜 난수 시드 :: 진짜진짜 난수 생성
+
+// std::random_device gRandDevice; // 진짜 난수 발생기 -> 이 값을 시드값으로
+std::mt19937 gRandomEngine; // 알고리즘 + 진짜 난수 시드 :: 진짜진짜 난수 생성
 
 std::uniform_int_distribution<int> gBoolUniform{ 0,1 };
 std::uniform_int_distribution<int> gRoadSet{ 5, 10 };
@@ -90,7 +91,7 @@ void SessionManager::InitWorldData(bool p_id[2])
 	// Init Roads Data 
 	//		# 수정할 것 
 	//		( SetGround )
-	//		( Road::Road(), Road::InitCarSpawnDir )  
+	//		( Road::InitCarSpawnDir )  
 
 	// 잔디 + 도로 인덱스 개수 ( 맵 크기 )
 	const int max_tiles{ 150 };
@@ -112,27 +113,27 @@ void SessionManager::InitWorldData(bool p_id[2])
 
 		// 도로를 생성하고, 차 스폰 포인트 설정
 		for (int j = 0; j < roads_build_count; ++j) {
-			m_roadData.Roads_Flags.emplace_back(ROAD);
+			m_roadData.Roads_Flags.emplace_back(ROAD); 
 
 			bool car_spawn_point{ (bool)gBoolUniform(gRandomEngine) };
 
-			if (car_spawn_point == LEFT) {
-				m_roadData.Dir_Flags.emplace_back(LEFT);
+			if (car_spawn_point == LEFT) { 
+				m_roadData.Dir_Flags.emplace_back(LEFT);  
 			}
 			else if (car_spawn_point == RIGHT) {
-				m_roadData.Dir_Flags.emplace_back(RIGHT);
+				m_roadData.Dir_Flags.emplace_back(RIGHT); 
 			}
 		}
 
 		index += roads_build_count;
 
-		m_roadData.Roads_Flags.emplace_back(GRASS);
+		m_roadData.Roads_Flags.emplace_back(GRASS); 
 		++index;
 	}
 
 	// 장외 Grass - 엄마 닭 땅
 	for (int i = 0; i < 10; ++i) {
-		m_roadData.Roads_Flags.emplace_back(GRASS);
+		m_roadData.Roads_Flags.emplace_back(GRASS); 
 	}
 
 	//-----------------------------------------------------------------------------------------
@@ -152,7 +153,7 @@ void SessionManager::InitWorldData(bool p_id[2])
 	// 최대 나무 개수
 
 	for (int i = 0; i < m_roadData.Roads_Flags.size(); ++i) {
-		if (m_roadData.Roads_Flags[i] == GRASS) { 
+		if (m_roadData.Roads_Flags[i] == GRASS) {
 
 			std::array<bool, 10> wood_line{};  
 			// 한 줄에 나무 배치 여부를 담을 배열 
