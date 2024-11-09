@@ -22,6 +22,8 @@ int g_max_z{};
 
 bool gIsReach{};
 vector<BasisComponent*> gVec; // --> 모든 객체를 Basis 부모 클래스 포인터로 다형성을 사용해 관리하기 위한 변수
+vector<BasisComponent*> genemyVec; // 상대 플레이어 렌더링할 벡터
+
 bool gToggle[(int)Toggle::END]; // 명령어 토글 
 
 Camera gCamera; // 카메라 클래스 
@@ -93,6 +95,7 @@ void main(int argc, char** argv)
 
 	InitBorder(); // 우측 상단 핑크색 경계 만들기 
 	SetgVec(); // 초기 객체 만들기 
+	SetgenemyVec();
 
 	glEnable(GL_DEPTH_TEST);
 	glFrontFace(GL_CCW);

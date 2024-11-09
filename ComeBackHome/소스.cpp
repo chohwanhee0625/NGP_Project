@@ -125,6 +125,7 @@ void main_viewport()
 	gLight->Update();
 
 	gVecDraw();
+	genemyVecDraw();
 }
 
 void chicken_viewport()
@@ -186,6 +187,8 @@ void TimerFunction(int value)
 
 
 	gVecUpdate(deltatime);
+
+
 	glutPostRedisplay();				//È­¸é ÀçÃâ·Â
 	glutTimerFunc(10, TimerFunction, 1); // ´Ù½Ã È£Ãâ 
 }
@@ -335,6 +338,28 @@ void SetgVec() // À°¸éÃ¼, »ç¸éÃ¼ Ã³À½ À§Ä¡ - ¸é ÃÑ 10°³
 	
 	//tagWall* pWall = new tagWall{ cube_vertex_array_normal, floor_color}; // 9
 	//gVec.push_back(pWall);
+}
+
+void SetgenemyVec()
+{
+	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color }; // 0 - ¸ö
+	genemyVec.push_back(body);
+	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color }; // 1 - ¸Ó¸®
+	genemyVec.push_back(head);
+	ChickenMouse* mouse = new ChickenMouse{ cube_vertex_array_normal, cube_color }; // 2 - ÁÖµÕÀÌ
+	genemyVec.push_back(mouse);
+	ChickenEyes* eyes = new ChickenEyes{ cube_vertex_array_normal, cube_color }; // 3 - ´«
+	genemyVec.push_back(eyes);
+
+	ChickenLeftArm* Larm = new ChickenLeftArm{ cube_vertex_array_normal, cube_color }; // 4 - ¿ÞÆÈ
+	genemyVec.push_back(Larm);
+	ChickenRightArm* Rarm = new ChickenRightArm{ cube_vertex_array_normal, cube_color }; // 5 - ¿À¸¥ÆÈ
+	genemyVec.push_back(Rarm);
+
+	ChickenLeftLeg* Lleg = new ChickenLeftLeg{ cube_vertex_array_normal, cube_color }; // 6 - ¿Þ´Ù¸®
+	genemyVec.push_back(Lleg);
+	ChickenRightLeg* Rleg = new ChickenRightLeg{ cube_vertex_array_normal, cube_color }; // 7 - ¿À¸¥´Ù¸®
+	genemyVec.push_back(Rleg);
 }
 
 void SetChicken()
@@ -516,6 +541,13 @@ void gVecClear()
 void gVecDraw()
 {
 	for (auto& obj : gVec) {
+		obj->DrawObject();
+	}
+}
+
+void genemyVecDraw()
+{
+	for (auto& obj : genemyVec) {
 		obj->DrawObject();
 	}
 }
