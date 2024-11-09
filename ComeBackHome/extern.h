@@ -14,6 +14,7 @@ extern int gHeight;
 extern int g_max_z;
 
 extern vector<BasisComponent*> gVec;
+extern vector<BasisComponent*> genemyVec;
 
 extern bool gToggle[(int)Toggle::END];
 extern Camera gCamera;
