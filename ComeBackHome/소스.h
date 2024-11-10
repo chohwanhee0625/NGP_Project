@@ -28,9 +28,13 @@ void InitBorder();
 
 void gVecClear();
 void gVecDraw();
+void genemyVecDraw();
+
 void gVecUpdate(float deltatime);
 
 void SetgVec();
+void SetgenemyVec();
+
 void SetChicken();
 void SetGround();
 void SetWoods();
