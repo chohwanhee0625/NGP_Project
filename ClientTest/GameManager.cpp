@@ -1,12 +1,14 @@
 #include "GameManager.h"
 
+char* SERVERIP = (char*)"127.0.0.1";
+
 void GameManager::WaitForOtherPlayer()
 {
 	// connect
 	int retval;
 
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (sock == INVALID_SOCKET) return 1;
+	if (sock == INVALID_SOCKET) return;
 
 	// connect()
 	struct sockaddr_in serveraddr;
@@ -18,7 +20,10 @@ void GameManager::WaitForOtherPlayer()
 	if (retval == SOCKET_ERROR) return;
 
 	// recv Start Flag
+	std::string start_flag(512, 0);
+	recv(sock, (char*)start_flag.c_str(), sizeof(start_flag), MSG_WAITALL);
 
+	std::cout << "게임 시작 가능?" << std::endl;
 
 	std::thread networkThread(&GameManager::UpdateWorld, this, sock);
 

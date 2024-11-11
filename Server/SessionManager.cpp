@@ -65,7 +65,10 @@ void SessionManager::EndGame(SOCKET client_sock)
 void SessionManager::SendStartFlag(SOCKET client_sock)
 {
 	// send Start flag Packet
-
+	S_GAME_READY start_flag;
+	start_flag.Ready_Flag = true;
+	std::string start_flag_str = start_flag.to_json();
+	send(client_sock, (char*)start_flag_str.c_str(), start_flag_str.size(), 0);
 }
 
 void SessionManager::InitWorldData(bool p_id[2])

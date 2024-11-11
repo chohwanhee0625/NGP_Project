@@ -27,7 +27,6 @@
 //using namespace std;
 using namespace nlohmann;
 
-char*	SERVERIP = (char*)"127.0.0.1";
 #define SERVERPORT 9000
 #define PACKET_FREQ 50
 

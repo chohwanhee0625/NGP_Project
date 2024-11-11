@@ -3,10 +3,9 @@
 
 class S_GAME_READY
 {
-private:
+public:
 	bool			Ready_Flag;
 
-public:
 	std::string		to_json();
 	void			from_json(std::string& j_str);
 };
