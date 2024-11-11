@@ -2,8 +2,6 @@
 #include "PacketClass.h"
 #include "SessionManager.h"
 
-#define SERVERPORT 9000
-
 int main()
 {
 	using namespace std;
