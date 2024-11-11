@@ -28,12 +28,13 @@ void InitBorder();
 
 void gVecClear();
 void gVecDraw();
-void genemyVecDraw();
+void gEnemyVecDraw();
 
 void gVecUpdate(float deltatime);
+void gEnemyVecUpdate(float deltatime);
 
 void SetgVec();
-void SetgenemyVec();
+void SetgEnemyVec();
 
 void SetChicken();
 void SetGround();
@@ -55,7 +56,8 @@ void SetNearFarCameraToggle(); // 가까운 3인칭 카메라 토글
 void SetChickenFaceDir(unsigned char key);
 void SetOffGlobalDir();
 
-void ChickenHandling();
+void ChickenHandling(float deltatime);
+void EnemyChickenHandling(float deltatime);
 void ChickenMove(float deltatime);
 
 void ChickenRun();

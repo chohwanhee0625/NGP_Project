@@ -39,7 +39,7 @@ void SetChickenFaceDir(unsigned char key)
 
 }
 
-void ChickenHandling()
+void ChickenHandling(float deltatime)
 {
 	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
 	Larm->handling();
@@ -74,6 +74,21 @@ void ChickenMove(float deltatime)
 	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
 	Rleg->Walk(deltatime);
 
+}
+
+void EnemyChickenHandling(float deltatime)
+{
+	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gEnemyVec[4]);
+	Larm->handling();
+
+	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gEnemyVec[5]);
+	Rarm->handling();
+
+	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gEnemyVec[6]);
+	Lleg->handling();
+
+	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gEnemyVec[7]);
+	Rleg->handling();
 }
 
 //===========================================================================================

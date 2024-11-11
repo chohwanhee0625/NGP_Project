@@ -125,7 +125,7 @@ void main_viewport()
 	gLight->Update();
 
 	gVecDraw();
-	genemyVecDraw();
+	gEnemyVecDraw();
 }
 
 void chicken_viewport()
@@ -141,6 +141,7 @@ void chicken_viewport()
 	gLight->Update();
 
 	gVecDraw();
+	gEnemyVecDraw();
 }
 
 void border_viewport()
@@ -185,9 +186,8 @@ void TimerFunction(int value)
 	gTimer.update();
 	float deltatime = gTimer.getDeltaTime();
 
-
 	gVecUpdate(deltatime);
-
+	gEnemyVecUpdate(deltatime);
 
 	glutPostRedisplay();				//È­¸é ÀçÃâ·Â
 	glutTimerFunc(10, TimerFunction, 1); // ´Ù½Ã È£Ãâ 
@@ -340,26 +340,26 @@ void SetgVec() // À°¸éÃ¼, »ç¸éÃ¼ Ã³À½ À§Ä¡ - ¸é ÃÑ 10°³
 	//gVec.push_back(pWall);
 }
 
-void SetgenemyVec()
+void SetgEnemyVec()
 {
 	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color }; // 0 - ¸ö
-	genemyVec.push_back(body);
+	gEnemyVec.push_back(body);
 	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color }; // 1 - ¸Ó¸®
-	genemyVec.push_back(head);
+	gEnemyVec.push_back(head);
 	ChickenMouse* mouse = new ChickenMouse{ cube_vertex_array_normal, cube_color }; // 2 - ÁÖµÕÀÌ
-	genemyVec.push_back(mouse);
+	gEnemyVec.push_back(mouse);
 	ChickenEyes* eyes = new ChickenEyes{ cube_vertex_array_normal, cube_color }; // 3 - ´«
-	genemyVec.push_back(eyes);
+	gEnemyVec.push_back(eyes);
 
 	ChickenLeftArm* Larm = new ChickenLeftArm{ cube_vertex_array_normal, cube_color }; // 4 - ¿ÞÆÈ
-	genemyVec.push_back(Larm);
+	gEnemyVec.push_back(Larm);
 	ChickenRightArm* Rarm = new ChickenRightArm{ cube_vertex_array_normal, cube_color }; // 5 - ¿À¸¥ÆÈ
-	genemyVec.push_back(Rarm);
+	gEnemyVec.push_back(Rarm);
 
 	ChickenLeftLeg* Lleg = new ChickenLeftLeg{ cube_vertex_array_normal, cube_color }; // 6 - ¿Þ´Ù¸®
-	genemyVec.push_back(Lleg);
+	gEnemyVec.push_back(Lleg);
 	ChickenRightLeg* Rleg = new ChickenRightLeg{ cube_vertex_array_normal, cube_color }; // 7 - ¿À¸¥´Ù¸®
-	genemyVec.push_back(Rleg);
+	gEnemyVec.push_back(Rleg);
 }
 
 void SetChicken()
@@ -545,9 +545,9 @@ void gVecDraw()
 	}
 }
 
-void genemyVecDraw()
+void gEnemyVecDraw()
 {
-	for (auto& obj : genemyVec) {
+	for (auto& obj : gEnemyVec) {
 		obj->DrawObject();
 	}
 }
@@ -557,6 +557,15 @@ void gVecUpdate(float deltatime)
 	for (auto& obj : gVec) {
 		obj->Update(deltatime);
 	}
+}
+
+void gEnemyVecUpdate(float deltatime)
+{
+	//for (auto& obj : gEnemyVec) {
+	//	obj->Update(deltatime);
+	//}
+
+	EnemyChickenHandling(deltatime);
 }
 
 //===========================================================================================
