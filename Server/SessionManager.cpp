@@ -141,7 +141,23 @@ void SessionManager::InitWorldData(bool p_id[2])
 	m_carData;
 	// vector<bool> Roads_Flags;
 	// vector<bool> Dir_Flags;
-
+	
+	// 만들어진 땅만큼 돌림
+	for (int i = 0; i < m_roadData.Roads_Flags.size(); ++i)
+	{
+		// 땅이 도로면 차데이터 만듬
+		if (ROAD == m_roadData.Roads_Flags[i])
+		{
+			// 인덱스에 편차줘서 속도 설정
+			m_carData.Cars_Velocity.emplace_back(i * 0.002 * gCarspeed(gRandomEngine));
+			
+			// 넘길 차 색상 값 선언 초기화
+			float tempRGB[static_cast<int>(RGB::END)]{ gRandomColor(gRandomEngine),gRandomColor(gRandomEngine),gRandomColor(gRandomEngine)};
+			
+			// 추가
+			m_carData.Cars_Color_RGB.emplace_back(tempRGB);
+		}
+	}
 
 	//-----------------------------------------------------------------------------------------
 	// Init Woods Data
