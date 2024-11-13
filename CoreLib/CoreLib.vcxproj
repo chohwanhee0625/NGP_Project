@@ -150,7 +150,6 @@
   <ItemGroup>
     <ClCompile Include="include.cpp" />
     <ClCompile Include="PacketClass.cpp" />
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h" />

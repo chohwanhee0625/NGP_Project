@@ -5,7 +5,6 @@
     <ClCompile Include="PacketClass.cpp">
       <Filter>Packet</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h" />
