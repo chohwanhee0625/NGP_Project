@@ -8,6 +8,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h" />
+    <ClInclude Include="nlohmann\json.hpp">
+      <Filter>Packet</Filter>
+    </ClInclude>
     <ClInclude Include="PacketClass.h">
       <Filter>Packet</Filter>
     </ClInclude>

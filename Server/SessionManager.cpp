@@ -1,5 +1,5 @@
 #include "SessionManager.h"
-
+#include "PacketClass.h"
 
 // std::random_device gRandDevice; // 진짜 난수 발생기 -> 이 값을 시드값으로
 std::mt19937 gRandomEngine; // 알고리즘 + 진짜 난수 시드 :: 진짜진짜 난수 생성
@@ -33,6 +33,7 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 
 DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 {
+	using namespace std::chrono;
 	int other_id = 1 - my_id;
 
 	while (true)
@@ -47,6 +48,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 		if (m_winner[my_id] || m_winner[other_id])
 			break;
+		std::this_thread::sleep_for(1000ms / PACKET_FREQ);
 	}
 
 	EndGame(client_sock);
@@ -63,7 +65,10 @@ void SessionManager::EndGame(SOCKET client_sock)
 void SessionManager::SendStartFlag(SOCKET client_sock)
 {
 	// send Start flag Packet
-
+	S_GAME_READY start_flag;
+	start_flag.Ready_Flag = true;
+	std::string start_flag_str = start_flag.to_json();
+	send(client_sock, (char*)start_flag_str.c_str(), start_flag_str.size(), 0);
 }
 
 void SessionManager::InitWorldData(bool p_id[2])

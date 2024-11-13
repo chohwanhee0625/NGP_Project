@@ -27,8 +27,9 @@
 //using namespace std;
 using namespace nlohmann;
 
+#define SERVERPORT 9000
+#define PACKET_FREQ 50
 
-class Test;
 
 enum class Toggle
 {
