@@ -75,5 +75,6 @@ enum class RGB
 {
 	R,
 	G,
-	B
+	B,
+	END
 };
