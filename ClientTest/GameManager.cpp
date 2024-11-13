@@ -45,7 +45,7 @@ void GameManager::UpdateWorld(SOCKET sock)
 		if (/* GameEndFlag == true */true)
 			break;
 
-		std::this_thread::sleep_for(1000ms / PACKET_FREQ);
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
 
 	// end Game Event

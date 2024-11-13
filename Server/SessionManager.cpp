@@ -48,7 +48,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 		if (m_winner[my_id] || m_winner[other_id])
 			break;
-		std::this_thread::sleep_for(1000ms / PACKET_FREQ);
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
 
 	EndGame(client_sock);
