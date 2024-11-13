@@ -17,8 +17,8 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 	SendStartFlag(client_sock_1);
 	SendStartFlag(client_sock_2);
 	InitWorldData(th_id);
-	SendWorldData(client_sock_1);
-	SendWorldData(client_sock_2);
+	SendWorldData(client_sock_1, (int)th_id[0]));
+	SendWorldData(client_sock_2, (int)th_id[1]));
 
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_1, (int)th_id[0]));
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_2, (int)th_id[1]));
@@ -84,8 +84,9 @@ void SessionManager::InitWorldData(bool p_id[2])
 	m_playerData[p_id[1]].player_pos_z = 0.0f;
 
 	// # send 함수에서 호출해서 사용
-	INIT_DATA_P player_1{ p_id[0], m_playerData[p_id[0]].player_pos_x,m_playerData[p_id[0]].player_pos_y, m_playerData[p_id[0]].player_pos_z };
-	INIT_DATA_P player_2{ p_id[1], m_playerData[p_id[1]].player_pos_x,m_playerData[p_id[1]].player_pos_y, m_playerData[p_id[1]].player_pos_z };
+	m_InitPlayerData[0] = {0, m_playerData[p_id[0]].player_pos_x,m_playerData[p_id[0]].player_pos_y, m_playerData[p_id[0]].player_pos_z };
+	m_InitPlayerData[1] = {1, m_playerData[p_id[1]].player_pos_x,m_playerData[p_id[1]].player_pos_y, m_playerData[p_id[1]].player_pos_z };
+
 
 	//-----------------------------------------------------------------------------------------
 	// Init Roads Data 
@@ -188,16 +189,18 @@ void SessionManager::InitWorldData(bool p_id[2])
 	//-----------------------------------------------------------------------------------------
 }
 
-void SessionManager::SendWorldData(SOCKET client_sock)
+void SessionManager::SendWorldData(SOCKET client_sock, int id)
 {
 	// send Player Data
-
+	send(client_sock, m_InitPlayerData[id].to_json().c_str(), sizeof(m_roadData.to_json()), 0);
 	// send Roads Data
+	send(client_sock, m_roadData.to_json().c_str(), sizeof(m_roadData.to_json()), 0);
 
 	// send Cars Data
+	send(client_sock, m_carData.to_json().c_str(), sizeof(m_carData.to_json()), 0);
 
 	// send Woods Data
-
+	send(client_sock,m_woodData.to_json().c_str(), sizeof(m_woodData.to_json()), 0);
 }
 
 void SessionManager::RecvMyPlayerData(int my_id, SOCKET client_sock)
