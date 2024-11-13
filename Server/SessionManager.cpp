@@ -17,8 +17,8 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 	SendStartFlag(client_sock_1);
 	SendStartFlag(client_sock_2);
 	InitWorldData(th_id);
-	SendWorldData(client_sock_1, (int)th_id[0]));
-	SendWorldData(client_sock_2, (int)th_id[1]));
+	SendWorldData(client_sock_1, (int)th_id[0]);
+	SendWorldData(client_sock_2, (int)th_id[1]);
 
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_1, (int)th_id[0]));
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_2, (int)th_id[1]));
