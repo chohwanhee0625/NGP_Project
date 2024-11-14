@@ -7,7 +7,12 @@ class GameManager
 public:
 	GameManager() {}
 
-	void WaitForOtherPlayer();
+	SOCKET WaitForOtherPlayer();
 	void UpdateWorld(SOCKET sock);
+
+	void RecvWorldData();
+	void SetWorldData();
+	void RecvOtherPlayerData();
+	void SendMyPlayerData();
 };
 

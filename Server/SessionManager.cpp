@@ -39,16 +39,16 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 	while (true)
 	{
-		RecvMyPlayerData(my_id, client_sock);
-		if (m_playerData[my_id].player_pos_z >= 150.f)		// TODO: goal line z pos
-			m_winner[my_id] = true;
+		//RecvMyPlayerData(my_id, client_sock);
+		//if (m_playerData[my_id].player_pos_z >= 150.f)		// TODO: goal line z pos
+		//	m_winner[my_id] = true;
 
-		SendOtherPlayerData(other_id, client_sock);
-		if (m_playerData[other_id].player_pos_z >= 150.f)	// goal line z pos
-			m_winner[other_id] = true;
+		//SendOtherPlayerData(other_id, client_sock);
+		//if (m_playerData[other_id].player_pos_z >= 150.f)	// goal line z pos
+		//	m_winner[other_id] = true;
 
-		if (m_winner[my_id] || m_winner[other_id])
-			break;
+		//if (m_winner[my_id] || m_winner[other_id])
+		//	break;
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
 
@@ -68,7 +68,7 @@ void SessionManager::SendStartFlag(SOCKET client_sock)
 	// send Start flag Packet
 	S_GAME_READY start_flag;
 	start_flag.Ready_Flag = true;
-	//Send(client_sock, start_flag.to_json());
+	Send(client_sock, start_flag.to_json());
 }
 
 void SessionManager::InitWorldData(bool p_id[2])
@@ -161,7 +161,7 @@ void SessionManager::InitWorldData(bool p_id[2])
 			float tempRGB[static_cast<int>(RGB::END)]{ gRandomColor(gRandomEngine),gRandomColor(gRandomEngine),gRandomColor(gRandomEngine)};
 			
 			// Ãß°¡
-			m_carData.Cars_Color_RGB.emplace_back(tempRGB);
+			//m_carData.Cars_Color_RGB.emplace_back(tempRGB);
 		}
 	}
 
