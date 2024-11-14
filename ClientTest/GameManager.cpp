@@ -56,7 +56,27 @@ void GameManager::UpdateWorld(SOCKET sock)
 
 void GameManager::RecvWorldData(SOCKET sock)
 {
+	// recv Player Data
+	INIT_DATA_P m_InitPlayerData[2];
+	std::string j_str = Recv(sock);
+	m_InitPlayerData[0].from_json(j_str);		// MY Player Data
+	j_str = Recv(sock);
+	m_InitPlayerData[1].from_json(j_str);		// Other Player Data
 
+	// recv Roads Data
+	INIT_DATA_R m_roadData;
+	j_str = Recv(sock);
+	m_roadData.from_json(j_str);
+
+	// recv Cars Data
+	INIT_DATA_C m_carData;
+	j_str = Recv(sock);
+	m_carData.from_json(j_str);
+
+	// recv Woods Data
+	INIT_DATA_W m_woodData;
+	j_str = Recv(sock);
+	m_woodData.from_json(j_str);
 }
 
 void GameManager::SetWorldData(SOCKET sock)

@@ -15,22 +15,14 @@
 #include "Border.h"
 #include "Tree.h"
 #include "Family.h"
-//#include "UI.h"
+#include "UI.h"
+
+UI gPlaybutton;
 
 //===========================================================================================
 
 void make_shaderProgram()
 {
-	make_vertexShaders("vertex3.glsl");
-	make_fragmentShaders("fragment3.glsl");
-	gShaderProgramID = glCreateProgram();
-	glAttachShader(gUIShaderProgramID, gVertexShader);
-	glAttachShader(gUIShaderProgramID, gFragmentShader);
-	glLinkProgram(gUIShaderProgramID);
-	glDeleteShader(gVertexShader);
-	glDeleteShader(gFragmentShader);
-	glUseProgram(gUIShaderProgramID);
-
 	make_vertexShaders("vertex2.glsl");
 	make_fragmentShaders("fragment2.glsl");
 	gShaderProgramID = glCreateProgram();
@@ -40,6 +32,16 @@ void make_shaderProgram()
 	glDeleteShader(gVertexShader);
 	glDeleteShader(gFragmentShader);
 	glUseProgram(gShaderProgramID);
+
+	make_vertexShaders("vertex3.glsl");
+	make_fragmentShaders("fragment3.glsl");
+	gShaderProgramID = glCreateProgram();
+	glAttachShader(gUIShaderProgramID, gVertexShader);
+	glAttachShader(gUIShaderProgramID, gFragmentShader);
+	glLinkProgram(gUIShaderProgramID);
+	glDeleteShader(gVertexShader);
+	glDeleteShader(gFragmentShader);
+	glUseProgram(gUIShaderProgramID);
 }
 
 void make_vertexShaders(const char* vertex_path)
@@ -176,10 +178,10 @@ GLvoid DrawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 깊이 버퍼 클리어
 
 	main_viewport();
-	border_viewport();
-	chicken_viewport();
+	//border_viewport();
+	//chicken_viewport();
 
-	//gPlaybutton.Render();
+	gPlaybutton.Render();
 
 
 	glutSwapBuffers();
@@ -199,6 +201,7 @@ void TimerFunction(int value)
 
 	gVecUpdate(deltatime);
 	gEnemyVecUpdate(deltatime);
+	gPlaybutton.Render();
 
 	glutPostRedisplay();				//화면 재출력
 	glutTimerFunc(10, TimerFunction, 1); // 다시 호출 

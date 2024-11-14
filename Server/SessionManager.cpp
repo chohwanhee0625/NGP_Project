@@ -197,15 +197,18 @@ void SessionManager::InitWorldData(bool p_id[2])
 void SessionManager::SendWorldData(SOCKET client_sock, int id)
 {
 	// send Player Data
-	send(client_sock, m_InitPlayerData[id].to_json().c_str(), sizeof(m_roadData.to_json()), 0);
+	int other = 1 - id;
+	Send(client_sock, m_InitPlayerData[id].to_json());
+	Send(client_sock, m_InitPlayerData[other].to_json());
+	
 	// send Roads Data
-	send(client_sock, m_roadData.to_json().c_str(), sizeof(m_roadData.to_json()), 0);
+	Send(client_sock, m_roadData.to_json());
 
 	// send Cars Data
-	send(client_sock, m_carData.to_json().c_str(), sizeof(m_carData.to_json()), 0);
+	Send(client_sock, m_carData.to_json());
 
 	// send Woods Data
-	send(client_sock,m_woodData.to_json().c_str(), sizeof(m_woodData.to_json()), 0);
+	Send(client_sock, m_woodData.to_json());
 }
 
 void SessionManager::RecvMyPlayerData(int my_id, SOCKET client_sock)

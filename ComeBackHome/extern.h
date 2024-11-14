@@ -18,8 +18,6 @@ extern int g_max_z;
 extern vector<BasisComponent*> gVec;
 extern vector<BasisComponent*> gEnemyVec;
 
-//extern UI gPlaybutton;
-
 extern bool gToggle[(int)Toggle::END];
 extern Camera gCamera;
 extern Light* gLight;

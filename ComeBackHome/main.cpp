@@ -6,7 +6,7 @@
 #include "Light.h"
 #include "TimeManager.h"
 #include "Border.h"
-//#include "UI.h"
+#include "UI.h"
 
 //===========================================================================================
 
@@ -26,7 +26,7 @@ bool gIsReach{};
 vector<BasisComponent*> gVec; // --> 모든 객체를 Basis 부모 클래스 포인터로 다형성을 사용해 관리하기 위한 변수
 vector<BasisComponent*> gEnemyVec; // 상대 플레이어 렌더링할 벡터
 
-//UI gPlaybutton;
+extern UI gPlaybutton;
 
 bool gToggle[(int)Toggle::END]; // 명령어 토글 
 
@@ -97,10 +97,10 @@ void main(int argc, char** argv)
 
 	//while (ConnectScene() == false);
 
-	//UI::InitBuffer();
-	//gPlaybutton.LoadTexture("play_button.png");
-	//gPlaybutton.resize(0.5, 0.1, 1);
-	//gPlaybutton.move(0, -0.25, -0.001);
+	gPlaybutton.InitBuffer();
+	gPlaybutton.LoadTexture("play_button.png");
+	gPlaybutton.resize(0.5, 0.1, 1);
+	gPlaybutton.move(0, -0.25, -0.001);
 
 	InitBorder(); // 우측 상단 핑크색 경계 만들기 
 	SetgVec(); // 초기 객체 만들기 
