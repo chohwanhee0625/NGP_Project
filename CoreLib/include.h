@@ -27,6 +27,18 @@
 //using namespace std;
 using namespace nlohmann;
 
+struct F3Vector {
+	float pos_x;
+	float pos_y;
+	float pos_z;
+
+public:
+	F3Vector(float x, float y, float z)
+		: pos_x(x), pos_y(y), pos_z(z)
+	{}
+};
+
+
 
 class Test;
 
