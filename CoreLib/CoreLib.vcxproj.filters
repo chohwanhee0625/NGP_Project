@@ -5,9 +5,15 @@
     <ClCompile Include="PacketClass.cpp">
       <Filter>Packet</Filter>
     </ClCompile>
+    <ClCompile Include="PacketIO.cpp">
+      <Filter>Packet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h" />
+    <ClInclude Include="nlohmann\json.hpp">
+      <Filter>Packet</Filter>
+    </ClInclude>
     <ClInclude Include="PacketClass.h">
       <Filter>Packet</Filter>
     </ClInclude>

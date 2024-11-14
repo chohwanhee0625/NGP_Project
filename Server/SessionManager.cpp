@@ -1,5 +1,5 @@
 #include "SessionManager.h"
-
+#include "PacketClass.h"
 
 // std::random_device gRandDevice; // 진짜 난수 발생기 -> 이 값을 시드값으로
 std::mt19937 gRandomEngine; // 알고리즘 + 진짜 난수 시드 :: 진짜진짜 난수 생성
@@ -17,8 +17,8 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 	SendStartFlag(client_sock_1);
 	SendStartFlag(client_sock_2);
 	InitWorldData(th_id);
-	SendWorldData(client_sock_1);
-	SendWorldData(client_sock_2);
+	SendWorldData(client_sock_1, (int)th_id[0]);
+	SendWorldData(client_sock_2, (int)th_id[1]);
 
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_1, (int)th_id[0]));
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_2, (int)th_id[1]));
@@ -33,6 +33,7 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 
 DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 {
+	using namespace std::chrono;
 	int other_id = 1 - my_id;
 
 	while (true)
@@ -47,6 +48,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 		if (m_winner[my_id] || m_winner[other_id])
 			break;
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
 
 	EndGame(client_sock);
@@ -63,7 +65,10 @@ void SessionManager::EndGame(SOCKET client_sock)
 void SessionManager::SendStartFlag(SOCKET client_sock)
 {
 	// send Start flag Packet
-
+	S_GAME_READY start_flag;
+	start_flag.Ready_Flag = true;
+	std::string start_flag_str = start_flag.to_json();
+	send(client_sock, (char*)start_flag_str.c_str(), start_flag_str.size(), 0);
 }
 
 void SessionManager::InitWorldData(bool p_id[2])
@@ -84,8 +89,9 @@ void SessionManager::InitWorldData(bool p_id[2])
 	m_playerData[p_id[1]].player_pos_z = 0.0f;
 
 	// # send 함수에서 호출해서 사용
-	INIT_DATA_P player_1{ p_id[0], m_playerData[p_id[0]].player_pos_x,m_playerData[p_id[0]].player_pos_y, m_playerData[p_id[0]].player_pos_z };
-	INIT_DATA_P player_2{ p_id[1], m_playerData[p_id[1]].player_pos_x,m_playerData[p_id[1]].player_pos_y, m_playerData[p_id[1]].player_pos_z };
+	m_InitPlayerData[0] = {0, m_playerData[p_id[0]].player_pos_x,m_playerData[p_id[0]].player_pos_y, m_playerData[p_id[0]].player_pos_z };
+	m_InitPlayerData[1] = {1, m_playerData[p_id[1]].player_pos_x,m_playerData[p_id[1]].player_pos_y, m_playerData[p_id[1]].player_pos_z };
+
 
 	//-----------------------------------------------------------------------------------------
 	// Init Roads Data 
@@ -141,7 +147,23 @@ void SessionManager::InitWorldData(bool p_id[2])
 	m_carData;
 	// vector<bool> Roads_Flags;
 	// vector<bool> Dir_Flags;
-
+	
+	// 만들어진 땅만큼 돌림
+	for (int i = 0; i < m_roadData.Roads_Flags.size(); ++i)
+	{
+		// 땅이 도로면 차데이터 만듬
+		if (ROAD == m_roadData.Roads_Flags[i])
+		{
+			// 인덱스에 편차줘서 속도 설정
+			m_carData.Cars_Velocity.emplace_back(i * 0.002 * gCarspeed(gRandomEngine));
+			
+			// 넘길 차 색상 값 선언 초기화
+			float tempRGB[static_cast<int>(RGB::END)]{ gRandomColor(gRandomEngine),gRandomColor(gRandomEngine),gRandomColor(gRandomEngine)};
+			
+			// 추가
+			m_carData.Cars_Color_RGB.emplace_back(tempRGB);
+		}
+	}
 
 	//-----------------------------------------------------------------------------------------
 	// Init Woods Data
@@ -172,16 +194,18 @@ void SessionManager::InitWorldData(bool p_id[2])
 	//-----------------------------------------------------------------------------------------
 }
 
-void SessionManager::SendWorldData(SOCKET client_sock)
+void SessionManager::SendWorldData(SOCKET client_sock, int id)
 {
 	// send Player Data
-
+	send(client_sock, m_InitPlayerData[id].to_json().c_str(), sizeof(m_roadData.to_json()), 0);
 	// send Roads Data
+	send(client_sock, m_roadData.to_json().c_str(), sizeof(m_roadData.to_json()), 0);
 
 	// send Cars Data
+	send(client_sock, m_carData.to_json().c_str(), sizeof(m_carData.to_json()), 0);
 
 	// send Woods Data
-
+	send(client_sock,m_woodData.to_json().c_str(), sizeof(m_woodData.to_json()), 0);
 }
 
 void SessionManager::RecvMyPlayerData(int my_id, SOCKET client_sock)

@@ -47,6 +47,27 @@ public:
 		m_z_scale{ 1.f }
 	{}
 
+	BasisComponent(float _x, float _y, float _z) :
+		m_vao{},
+		m_pos_vbo{},
+		m_color_vbo{},
+
+		m_total_world{ 1.0f },
+
+		m_x_degree{ 0.f },
+		m_y_degree{ 0.f },
+		m_z_degree{ 0.f },
+
+		m_x_pos{ _x },
+		m_y_pos{ _y },
+		m_z_pos{ _z },
+
+		m_x_scale{ 1.f },
+		m_y_scale{ 1.f },
+		m_z_scale{ 1.f }
+	{}
+
+
 	virtual ~BasisComponent() {}
 
 	void InitTotalworld() { m_total_world = glm::mat4{ 1.0f }; }
