@@ -5,7 +5,7 @@
     <ClCompile Include="PacketClass.cpp">
       <Filter>Packet</Filter>
     </ClCompile>
-    <ClCompile Include="PacketIO.cpp">
+    <ClCompile Include="PacketIO.h">
       <Filter>Packet</Filter>
     </ClCompile>
   </ItemGroup>
