@@ -15,13 +15,24 @@
 #include "Border.h"
 #include "Tree.h"
 #include "Family.h"
+//#include "UI.h"
 
 //===========================================================================================
 
 void make_shaderProgram()
 {
-	make_vertexShaders();
-	make_fragmentShaders();
+	make_vertexShaders("vertex3.glsl");
+	make_fragmentShaders("fragment3.glsl");
+	gShaderProgramID = glCreateProgram();
+	glAttachShader(gUIShaderProgramID, gVertexShader);
+	glAttachShader(gUIShaderProgramID, gFragmentShader);
+	glLinkProgram(gUIShaderProgramID);
+	glDeleteShader(gVertexShader);
+	glDeleteShader(gFragmentShader);
+	glUseProgram(gUIShaderProgramID);
+
+	make_vertexShaders("vertex2.glsl");
+	make_fragmentShaders("fragment2.glsl");
 	gShaderProgramID = glCreateProgram();
 	glAttachShader(gShaderProgramID, gVertexShader);
 	glAttachShader(gShaderProgramID, gFragmentShader);
@@ -31,9 +42,9 @@ void make_shaderProgram()
 	glUseProgram(gShaderProgramID);
 }
 
-void make_vertexShaders()
+void make_vertexShaders(const char* vertex_path)
 {
-	gVertexSource = filetobuf("vertex2.glsl");
+	gVertexSource = filetobuf(vertex_path);
 	gVertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(gVertexShader, 1, (const GLchar**)&gVertexSource, 0);
 	glCompileShader(gVertexShader);
@@ -48,9 +59,9 @@ void make_vertexShaders()
 	}
 }
 
-void make_fragmentShaders()
+void make_fragmentShaders(const char* fragment_path)
 {
-	gFragmentSource = filetobuf("fragment2.glsl");
+	gFragmentSource = filetobuf(fragment_path);
 	gFragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(gFragmentShader, 1, (const GLchar**)&gFragmentSource, 0);
 	glCompileShader(gFragmentShader);
@@ -164,12 +175,12 @@ GLvoid DrawScene()
 	glClearColor(0.5294f, 0.8078f, 0.9804f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 깊이 버퍼 클리어
 
-	// TODO: 여기서 서버와 send/recv, 일단 매 프레임마다 보내기로, 아니면 1초에 30번정도?
-	// 일단 보류 : 전역으로 TickCount 설정해서 TickCount % 30 == 0 했을 때 send/recv
-
 	main_viewport();
 	border_viewport();
 	chicken_viewport();
+
+	//gPlaybutton.Render();
+
 
 	glutSwapBuffers();
 	glutPostRedisplay();

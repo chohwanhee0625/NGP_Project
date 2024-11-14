@@ -51,6 +51,12 @@
     <None Include="fragment2.glsl">
       <Filter>Shader</Filter>
     </None>
+    <None Include="fragment3.glsl">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="vertex3.glsl">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

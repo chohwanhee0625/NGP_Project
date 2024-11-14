@@ -36,7 +36,7 @@ void GameManager::UpdateWorld(SOCKET sock)
 	std::cout << "UpdateWorld" << std::endl;
 
 	// recv world Data
-
+	RecvWorldData(sock);
 
 	while (true)
 	{
@@ -45,7 +45,7 @@ void GameManager::UpdateWorld(SOCKET sock)
 
 		// recv otherplayer data
 
-		//if (/* GameEndFlag == true */true)
+		//if (/* GameEndFlag == true */)
 		//	break;
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
@@ -54,19 +54,20 @@ void GameManager::UpdateWorld(SOCKET sock)
 	// end Game Event
 }
 
-void GameManager::RecvWorldData()
+void GameManager::RecvWorldData(SOCKET sock)
 {
 
 }
 
-void GameManager::SetWorldData()
+void GameManager::SetWorldData(SOCKET sock)
+{
+
+}
+
+void GameManager::RecvOtherPlayerData(SOCKET sock)
 {
 }
 
-void GameManager::RecvOtherPlayerData()
-{
-}
-
-void GameManager::SendMyPlayerData()
+void GameManager::SendMyPlayerData(SOCKET sock)
 {
 }

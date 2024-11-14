@@ -10,9 +10,9 @@ public:
 	SOCKET WaitForOtherPlayer();
 	void UpdateWorld(SOCKET sock);
 
-	void RecvWorldData();
-	void SetWorldData();
-	void RecvOtherPlayerData();
-	void SendMyPlayerData();
+	void RecvWorldData(SOCKET sock);
+	void SetWorldData(SOCKET sock);
+	void RecvOtherPlayerData(SOCKET sock);
+	void SendMyPlayerData(SOCKET sock);
 };
 
