@@ -1,5 +1,6 @@
 #include "SessionManager.h"
 #include "PacketClass.h"
+#include "PacketIO.h"
 
 // std::random_device gRandDevice; // 진짜 난수 발생기 -> 이 값을 시드값으로
 std::mt19937 gRandomEngine; // 알고리즘 + 진짜 난수 시드 :: 진짜진짜 난수 생성
@@ -67,8 +68,7 @@ void SessionManager::SendStartFlag(SOCKET client_sock)
 	// send Start flag Packet
 	S_GAME_READY start_flag;
 	start_flag.Ready_Flag = true;
-	std::string start_flag_str = start_flag.to_json();
-	send(client_sock, (char*)start_flag_str.c_str(), start_flag_str.size(), 0);
+	//Send(client_sock, start_flag.to_json());
 }
 
 void SessionManager::InitWorldData(bool p_id[2])
