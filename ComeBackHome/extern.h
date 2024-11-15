@@ -1,12 +1,14 @@
 #pragma once
 #include "소스.h"
 #include "TimeManager.h"
+//#include "UI.h"
 
 extern GLchar* gVertexSource; //--- 소스코드 저장 변수
 extern GLchar* gFragmentSource;
 extern GLuint gVertexShader;
 extern GLuint gFragmentShader; //--- 세이더 객체
 extern GLuint gShaderProgramID; //--- 셰이더 프로그램
+extern GLuint gUIShaderProgramID;  // UI 셰이더 프로그램
 
 extern int gWidth;
 extern int gHeight;

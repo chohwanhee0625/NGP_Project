@@ -158,8 +158,10 @@
   <ItemGroup>
     <None Include="fragment.glsl" />
     <None Include="fragment2.glsl" />
+    <None Include="fragment3.glsl" />
     <None Include="vertex.glsl" />
     <None Include="vertex2.glsl" />
+    <None Include="vertex3.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Basis.cpp" />
