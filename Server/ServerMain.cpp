@@ -4,35 +4,9 @@
 
 using namespace nlohmann;
 
-struct Test
-{
-	int a;
-	int b;
-	int c;
-
-	std::string to_json()
-	{
-		json jObject;
-		jObject["a"] = a;
-		jObject["b"] = b;
-		jObject["c"] = c;
-		
-		std::string j_str = jObject.dump(4);
-		return j_str;
-	}
-};
 
 int main()
 {
-	Test test;
-	test.a = 1;
-	test.b = 2;
-	test.c = 3;
-
-	std::string str = test.to_json();
-
-	std::cout << str << std::endl;
-
 	using namespace std;
 	int retval;
 
@@ -69,6 +43,7 @@ int main()
 		addrlen = sizeof(clientaddr);
 		client_sock = accept(listen_sock, (struct sockaddr*)&clientaddr, &addrlen);
 		if (client_sock == INVALID_SOCKET) continue;
+		cout << "Client Connected" << endl;
 		client_queue.push(client_sock);
 		if (client_queue.size() >= 2)
 		{

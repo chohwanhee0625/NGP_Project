@@ -6,11 +6,6 @@
 
 int main()
 {
-	S_GAME_READY s_flag;
-	s_flag.Ready_Flag = true;
-	std::string str = s_flag.to_json();
-	std::cout << str << std::endl;
-
 	// 윈속 초기화
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
@@ -19,10 +14,13 @@ int main()
 
 	// GameStart UI
 
-	GM.WaitForOtherPlayer();
+	SOCKET sock = GM.WaitForOtherPlayer();
+
+	std::thread networkThread(&GameManager::UpdateWorld, &GM, sock);
 
 	while (true)
 	{
 
 	}
+	networkThread.join();
 }
