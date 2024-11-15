@@ -6,6 +6,7 @@ char* SERVERIP = (char*)"127.0.0.1";
 SOCKET GameManager::WaitForOtherPlayer()
 {
 	using namespace std;
+
 	// connect
 	int retval;
 
@@ -23,7 +24,10 @@ SOCKET GameManager::WaitForOtherPlayer()
 	cout << "Server Connected" << endl;
 
 	// recv Start Flag
-	std::string start_falg = Recv(sock);
+	std::string start_flag = Recv(sock);
+
+	// recv world Data
+	RecvWorldData(sock);
 
 	std::cout << "게임 시작 가능?" << std::endl;
 	return sock;
@@ -35,12 +39,9 @@ void GameManager::UpdateWorld(SOCKET sock)
 
 	std::cout << "UpdateWorld" << std::endl;
 
-	// recv world Data
-	RecvWorldData(sock);
-
 	while (true)
 	{
-		std::cout << "akakak" << std::endl;
+		//std::cout << "akakak" << std::endl;
 		// send myplayer data
 
 		// recv otherplayer data
@@ -56,27 +57,33 @@ void GameManager::UpdateWorld(SOCKET sock)
 
 void GameManager::RecvWorldData(SOCKET sock)
 {
+	using namespace std;
+
 	// recv Player Data
 	INIT_DATA_P m_InitPlayerData[2];
 	std::string j_str = Recv(sock);
 	m_InitPlayerData[0].from_json(j_str);		// MY Player Data
 	j_str = Recv(sock);
 	m_InitPlayerData[1].from_json(j_str);		// Other Player Data
+	cout << j_str << endl;
 
 	// recv Roads Data
 	INIT_DATA_R m_roadData;
 	j_str = Recv(sock);
 	m_roadData.from_json(j_str);
+	cout << j_str << endl;
 
 	// recv Cars Data
 	INIT_DATA_C m_carData;
 	j_str = Recv(sock);
 	m_carData.from_json(j_str);
+	cout << j_str << endl;
 
 	// recv Woods Data
 	INIT_DATA_W m_woodData;
 	j_str = Recv(sock);
 	m_woodData.from_json(j_str);
+	cout << j_str << endl;
 }
 
 void GameManager::SetWorldData(SOCKET sock)

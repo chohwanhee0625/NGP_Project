@@ -21,4 +21,6 @@ std::string Recv(SOCKET sock)
 	std::string j_str;
 	j_str.resize(packet_size);
 	recv(sock, (char*)j_str.c_str(), packet_size, MSG_WAITALL);
+
+	return j_str;
 }

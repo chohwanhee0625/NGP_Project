@@ -18,6 +18,7 @@
 #include "UI.h"
 
 UI gPlaybutton;
+bool GAME_START = false;
 
 //===========================================================================================
 
@@ -31,11 +32,10 @@ void make_shaderProgram()
 	glLinkProgram(gShaderProgramID);
 	glDeleteShader(gVertexShader);
 	glDeleteShader(gFragmentShader);
-	glUseProgram(gShaderProgramID);
 
 	make_vertexShaders("vertex3.glsl");
 	make_fragmentShaders("fragment3.glsl");
-	gShaderProgramID = glCreateProgram();
+	gUIShaderProgramID = glCreateProgram();
 	glAttachShader(gUIShaderProgramID, gVertexShader);
 	glAttachShader(gUIShaderProgramID, gFragmentShader);
 	glLinkProgram(gUIShaderProgramID);
@@ -178,10 +178,10 @@ GLvoid DrawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 깊이 버퍼 클리어
 
 	main_viewport();
-	//border_viewport();
-	//chicken_viewport();
+	border_viewport();
+	chicken_viewport();
 
-	gPlaybutton.Render();
+	//gPlaybutton.Render();
 
 
 	glutSwapBuffers();
@@ -201,7 +201,6 @@ void TimerFunction(int value)
 
 	gVecUpdate(deltatime);
 	gEnemyVecUpdate(deltatime);
-	gPlaybutton.Render();
 
 	glutPostRedisplay();				//화면 재출력
 	glutTimerFunc(10, TimerFunction, 1); // 다시 호출 
@@ -211,7 +210,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
-	case 'w':
+	case 'w':case 'W':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
@@ -220,7 +219,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		}
 		break;
 
-	case 's':
+	case 's':case 'S':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
@@ -229,7 +228,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		}
 		break;
 
-	case 'a':
+	case 'a':case 'A':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
@@ -238,14 +237,23 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		}
 		break;
 
-	case 'd':
+	case 'd':case 'D':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
 			gCamera.SetCameraFaceDir(STOP);
 			SetOffGlobalDir();
 		}
-
+		break;
+	default:
+		if (GAME_START == false) {
+			GAME_START = true;
+			glUseProgram(gShaderProgramID);
+			SetOffAllofToggle();
+			SetInitToggle();
+			gCamera.InitCamera();
+			gLight->InitLight();
+		}
 		break;
 	}
 }
@@ -307,7 +315,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	case 'q': case 'Q':
 		glutLeaveMainLoop();
 		break;
-	case 'j':
+	case 'j': case 'J':
 		ChickenJump();
 		break;
 	case 'p': case'P':
