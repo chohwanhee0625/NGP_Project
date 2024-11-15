@@ -158,7 +158,8 @@ void SessionManager::InitWorldData(bool p_id[2])
 			m_carData.Cars_Velocity.emplace_back(i * 0.002 * gCarspeed(gRandomEngine));
 			
 			// 넘길 차 색상 값 선언 초기화
-			float tempRGB[static_cast<int>(RGB::END)]{ gRandomColor(gRandomEngine),gRandomColor(gRandomEngine),gRandomColor(gRandomEngine)};
+			// float tempRGB[static_cast<int>(RGB::END)]{ gRandomColor(gRandomEngine),gRandomColor(gRandomEngine),gRandomColor(gRandomEngine)};
+			std::array<float, static_cast<int>(RGB::END)> tempRGB{ gRandomColor(gRandomEngine),gRandomColor(gRandomEngine),gRandomColor(gRandomEngine) };
 			
 			// 추가
 			//m_carData.Cars_Color_RGB.emplace_back(tempRGB);
