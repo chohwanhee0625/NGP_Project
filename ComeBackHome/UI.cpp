@@ -28,6 +28,16 @@ UI::~UI()
 
 void UI::InitBuffer()
 {
+    vector<Vector3> v{ {-1,1,0.99},{-1,-1,0.99},{1,-1,0.99},{1,1,0.99} };
+    vector<Vector3> n{ {0,0,-1},{0,0,-1} ,{0,0,-1} ,{0,0,-1} };
+    vector<Vector2> t{ {0,0},{0,1},{1,1},{1,0} };
+    vector<int> i{ 0,1,2,2,3,0 };
+
+    vertices = v;
+    normals = n;
+    textures = t;
+    indeices = i;
+
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
     glGenBuffers(1, &VBO);

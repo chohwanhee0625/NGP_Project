@@ -15,6 +15,9 @@ GLchar* gFragmentSource; //--- 소스코드 저장 변수
 GLuint gVertexShader;
 GLuint gFragmentShader; //--- 세이더 객체
 GLuint gShaderProgramID; //--- 셰이더 프로그램
+
+GLuint gUIVertexShader;
+GLuint gUIFragmentShader; //--- 세이더 객체
 GLuint gUIShaderProgramID;  // UI 셰이더 프로그램
 
 int gWidth{ 800 };
@@ -50,27 +53,13 @@ std::uniform_real_distribution<float> grandomcolor{0.f,1.f};
 
 //===========================================================================================
 
-//bool ConnectScene()
-//{
-//	// 플레이 버튼 UI 그림
-//
-//	if (play_button->Isin(x, y))
-//		// 플레이 버튼 UI 삭제
-//		while (true)
-//		{
-//			// 로딩중 UI 그림
-//			// 서버로부터 상대 클라이언트 접속 recv
-//			if (other_connect == true)
-//				return true;
-//		}
-//	// 
-//
-//
-//}
-//
-
 void main(int argc, char** argv)
 {
+	// 윈속 초기화
+	WSADATA wsa;
+	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+		return;
+
 	// gwangsin [11/02 : 7:22]
 	glutInit(&argc, argv);						  // GLUT 초기화 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); // [깊이검사 depth test 추가]디스플레이 모드 설정

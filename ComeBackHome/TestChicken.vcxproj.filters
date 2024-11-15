@@ -37,6 +37,9 @@
     <Filter Include="Class\Object\UI">
       <UniqueIdentifier>{d40f4a10-bbbd-4ee8-a799-99b2aa7affe2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{fa0ee8a1-1da2-4851-9375-390b575c3d4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">
@@ -103,6 +106,9 @@
     <ClCompile Include="Tools.cpp">
       <Filter>Class\Object\UI</Filter>
     </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extern.h">
@@ -157,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="Tools.h">
       <Filter>Class\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

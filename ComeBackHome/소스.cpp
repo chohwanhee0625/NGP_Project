@@ -36,11 +36,11 @@ void make_shaderProgram()
 	make_vertexShaders("vertex3.glsl");
 	make_fragmentShaders("fragment3.glsl");
 	gUIShaderProgramID = glCreateProgram();
-	glAttachShader(gUIShaderProgramID, gVertexShader);
-	glAttachShader(gUIShaderProgramID, gFragmentShader);
+	glAttachShader(gUIShaderProgramID, gUIVertexShader);
+	glAttachShader(gUIShaderProgramID, gUIFragmentShader);
 	glLinkProgram(gUIShaderProgramID);
-	glDeleteShader(gVertexShader);
-	glDeleteShader(gFragmentShader);
+	glDeleteShader(gUIVertexShader);
+	glDeleteShader(gUIFragmentShader);
 	glUseProgram(gUIShaderProgramID);
 }
 
