@@ -33,7 +33,7 @@ using namespace nlohmann;
 
 enum class Toggle
 {
-	Perpective = 0, // ╫ца║
+	Perpective = 0, // О©╫О©╫О©╫О©╫
 	Light = 1,
 	NearFar = 2,
 	END = 10,
