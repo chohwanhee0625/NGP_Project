@@ -7,6 +7,8 @@
 void make_shaderProgram();
 void make_vertexShaders(const char* vertex_path);
 void make_fragmentShaders(const char* fragment_path);
+void make_vertexShaders_1(const char* vertex_path);
+void make_fragmentShaders_1(const char* fragment_path);
 char* filetobuf(const char*);
 
 GLvoid DrawScene();

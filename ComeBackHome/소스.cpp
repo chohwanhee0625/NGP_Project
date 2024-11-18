@@ -16,8 +16,10 @@
 #include "Tree.h"
 #include "Family.h"
 #include "UI.h"
+#include "GameManager.h"
 
 UI gPlaybutton;
+GameManager GM;
 bool GAME_START = false;
 
 //===========================================================================================
@@ -33,8 +35,8 @@ void make_shaderProgram()
 	glDeleteShader(gVertexShader);
 	glDeleteShader(gFragmentShader);
 
-	make_vertexShaders("vertex3.glsl");
-	make_fragmentShaders("fragment3.glsl");
+	make_vertexShaders_1("vertex3.glsl");
+	make_fragmentShaders_1("fragment3.glsl");
 	gUIShaderProgramID = glCreateProgram();
 	glAttachShader(gUIShaderProgramID, gUIVertexShader);
 	glAttachShader(gUIShaderProgramID, gUIFragmentShader);
@@ -61,6 +63,24 @@ void make_vertexShaders(const char* vertex_path)
 	}
 }
 
+void make_vertexShaders_1(const char* vertex_path)
+{
+	gVertexSource = filetobuf(vertex_path);
+	gUIVertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(gUIVertexShader, 1, (const GLchar**)&gVertexSource, 0);
+	glCompileShader(gUIVertexShader);
+	GLint result;
+	GLchar errorLog[512];
+	glGetShaderiv(gUIVertexShader, GL_COMPILE_STATUS, &result);
+	if (!result)
+	{
+		glGetShaderInfoLog(gUIVertexShader, 512, NULL, errorLog);
+		std::cout << "ERROR: vertex shader 컴파일 실패\n" << errorLog << std::endl;
+		return;
+	}
+}
+
+
 void make_fragmentShaders(const char* fragment_path)
 {
 	gFragmentSource = filetobuf(fragment_path);
@@ -73,6 +93,23 @@ void make_fragmentShaders(const char* fragment_path)
 	if (!result)
 	{
 		glGetShaderInfoLog(gFragmentShader, 512, NULL, errorLog);
+		std::cout << "ERROR: fragment shader 컴파일 실패\n" << errorLog << std::endl;
+		return;
+	}
+}
+
+void make_fragmentShaders_1(const char* fragment_path)
+{
+	gFragmentSource = filetobuf(fragment_path);
+	gUIFragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(gUIFragmentShader, 1, (const GLchar**)&gFragmentSource, 0);
+	glCompileShader(gUIFragmentShader);
+	GLint result;
+	GLchar errorLog[512];
+	glGetShaderiv(gUIFragmentShader, GL_COMPILE_STATUS, &result);
+	if (!result)
+	{
+		glGetShaderInfoLog(gUIFragmentShader, 512, NULL, errorLog);
 		std::cout << "ERROR: fragment shader 컴파일 실패\n" << errorLog << std::endl;
 		return;
 	}
@@ -177,12 +214,13 @@ GLvoid DrawScene()
 	glClearColor(0.5294f, 0.8078f, 0.9804f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 깊이 버퍼 클리어
 
-	main_viewport();
-	border_viewport();
-	chicken_viewport();
-
-	//gPlaybutton.Render();
-
+	if (GAME_START == false)
+		gPlaybutton.Render();
+	else {
+		main_viewport();
+		border_viewport();
+		chicken_viewport();
+	}
 
 	glutSwapBuffers();
 	glutPostRedisplay();
@@ -247,12 +285,17 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		break;
 	default:
 		if (GAME_START == false) {
+			//gPlaybutton.change_img("game_loading.png");
+			gPlaybutton.resize(0.5, 0.2, 1.0);
+
+			GM.WaitForOtherPlayer();
+
 			GAME_START = true;
-			glUseProgram(gShaderProgramID);
-			SetOffAllofToggle();
-			SetInitToggle();
-			gCamera.InitCamera();
-			gLight->InitLight();
+			//glUseProgram(gShaderProgramID);
+			//SetOffAllofToggle();
+			//SetInitToggle();
+			//gCamera.InitCamera();
+			//gLight->InitLight();
 		}
 		break;
 	}
@@ -386,7 +429,7 @@ void SetgEnemyVec()
 
 void SetChicken()
 {
-	// 플레이할 주인공 닭 만들기  
+	// 플레이할 주인공 닭 만들기
 	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color }; // 0 - 몸
 	gVec.push_back(body);
 	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color }; // 1 - 머리

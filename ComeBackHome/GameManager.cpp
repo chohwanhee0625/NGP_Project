@@ -23,10 +23,6 @@ SOCKET GameManager::WaitForOtherPlayer()
 	if (retval == SOCKET_ERROR) exit(1);
 	cout << "Server Connected" << endl;
 
-	// UI ±³Ã¼
-	// gPlaybutton.change_iamge("aljsdf.png");
-	// gPlaybutton.Render();
-
 	// recv Start Flag
 	std::string start_flag = Recv(sock);
 
@@ -69,6 +65,8 @@ void GameManager::RecvWorldData(SOCKET sock)
 	j_str = Recv(sock);
 	m_InitPlayerData[1].from_json(j_str);		// Other Player Data
 	cout << j_str << endl;
+
+
 
 	// recv Roads Data
 	INIT_DATA_R m_roadData;

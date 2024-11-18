@@ -7,6 +7,7 @@
 #include "TimeManager.h"
 #include "Border.h"
 #include "UI.h"
+#include "GameManager.h"
 
 //===========================================================================================
 
@@ -30,6 +31,7 @@ vector<BasisComponent*> gVec; // --> 모든 객체를 Basis 부모 클래스 포인터로 다형
 vector<BasisComponent*> gEnemyVec; // 상대 플레이어 렌더링할 벡터
 
 extern UI gPlaybutton;
+extern GameManager GM;
 
 bool gToggle[(int)Toggle::END]; // 명령어 토글 
 
@@ -84,11 +86,10 @@ void main(int argc, char** argv)
 	SetInitToggle(); // 토글 초기화 
 	InitLight(); // 조명 초기 세팅
 
-	//while (ConnectScene() == false);
 
 	gPlaybutton.InitBuffer();
-	gPlaybutton.LoadTexture("play_button.png");
-	gPlaybutton.resize(0.5, 0.1, 1);
+	gPlaybutton.LoadTexture("chick.jpg");
+	gPlaybutton.resize(0.5, 0.5, 1.0);
 	gPlaybutton.move(0, -0.25, -0.001);
 
 	InitBorder(); // 우측 상단 핑크색 경계 만들기 

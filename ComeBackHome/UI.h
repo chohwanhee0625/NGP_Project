@@ -33,7 +33,7 @@ public:
     void LoadTexture(const string& img_name);
     void Render();
 
-    void load_obj(const char* filePath);
+    void change_img(const string& new_img_name);
     void resize(float sx, float sy, float sz);
     void move(float dx, float dy, float dz);
     bool isIn(float x, float y);
