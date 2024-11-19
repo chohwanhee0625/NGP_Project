@@ -457,73 +457,73 @@ void SetGround(INIT_DATA_R road_data)
 {
 	// 땅 만들기 ( 잔디, 도로 )
 
-	//Road* pRoad{};
-	//RoadLane* pLine{};
-	//Grass* pFloor{};
-
-	//int map_size = road_data.Roads_Flags.size();
-	//int idx = 0;
-	//while (idx < map_size)
-	//{
-	//	bool isGrass = road_data.Roads_Flags[idx];
-	//	bool carDir = road_data.Dir_Flags[idx];
-
-	//	if (isGrass == GRASS) {
-	//		//bool finalGrass = (idx >= map_size - 11);
-	//		pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx, false }; // 잔디 1칸 설치
-	//		gVec.push_back(pFloor);
-	//	}
-	//	else if (isGrass == ROAD) {
-	//		pRoad = new Road{ cube_vertex_array_normal, floor_color, idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ), 차 방향 인수로 전달
-	//		gVec.push_back(pRoad);
-
-	//		pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 , idx }; // 도로 흰색 라인 
-	//		gVec.push_back(pLine);
-	//	}
-
-	//	++idx;
-	//}
-
-	int count{};
 	Road* pRoad{};
 	RoadLane* pLine{};
 	Grass* pFloor{};
-	int idx{ 0 };
-	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,false };
-	gVec.push_back(pFloor);
-	++idx;
 
-	while(idx < 150) {
-		// 랜덤 개수만큼 도로를 연속으로 만들고 잔디 한칸 만들고 다시 랜덤 개수로 도로 만들기 ( 도로 3칸 -> 잔디 1칸 -> 도로 5칸 -> 잔디 1칸 .. )
-		int cnt{ gRoadSet(gRandomEngine) };
+	int map_size = road_data.Roads_Flags.size();
+	int idx = 0;
+	while (idx < map_size)
+	{
+		bool isGrass = road_data.Roads_Flags[idx];
+		bool carDir = road_data.Dir_Flags[idx];
 
-		for (int j = 0; j < cnt; ++j) {
-			count++;
-			
-			bool carDir = gBoolUniform(gRandomEngine);
-			pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
-			gVec.push_back(pRoad);
-			
-			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
-			gVec.push_back(pLine); 
+		if (isGrass == GRASS) {
+			//bool finalGrass = (idx >= map_size - 11);
+			pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx, false }; // 잔디 1칸 설치
+			gVec.push_back(pFloor);
 		}
-		idx += cnt; // 도로 개수만큼 idx 증가
+		else if (isGrass == ROAD) {
+			pRoad = new Road{ cube_vertex_array_normal, floor_color, idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ), 차 방향 인수로 전달
+			gVec.push_back(pRoad);
 
-		pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx,false }; // 잔디 1칸 설치
-		gVec.push_back(pFloor);
+			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 , idx }; // 도로 흰색 라인 
+			gVec.push_back(pLine);
+		}
+
 		++idx;
 	}
 
-	// true: 마지막 잔디 땅 표시 -> 나무 설치X, 엄마 위치( 1칸 아님 )
-	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,true};
-	gVec.push_back(pFloor);
-	
-	for (int i{}; i < 10; ++i)
-	{
-		pFloor = new Grass{ cube_vertex_array_normal, floor_color, i+idx ,true };
-		gVec.push_back(pFloor);
-	}
-	// 도착 지점 잔디 설치
+	//int count{};
+	//Road* pRoad{};
+	//RoadLane* pLine{};
+	//Grass* pFloor{};
+	//int idx{ 0 };
+	//pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,false };
+	//gVec.push_back(pFloor);
+	//++idx;
+
+	//while(idx < 150) {
+	//	// 랜덤 개수만큼 도로를 연속으로 만들고 잔디 한칸 만들고 다시 랜덤 개수로 도로 만들기 ( 도로 3칸 -> 잔디 1칸 -> 도로 5칸 -> 잔디 1칸 .. )
+	//	int cnt{ gRoadSet(gRandomEngine) };
+
+	//	for (int j = 0; j < cnt; ++j) {
+	//		count++;
+	//		
+	//		bool carDir = gBoolUniform(gRandomEngine);
+	//		pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
+	//		gVec.push_back(pRoad);
+	//		
+	//		pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
+	//		gVec.push_back(pLine); 
+	//	}
+	//	idx += cnt; // 도로 개수만큼 idx 증가
+
+	//	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx,false }; // 잔디 1칸 설치
+	//	gVec.push_back(pFloor);
+	//	++idx;
+	//}
+
+	//// true: 마지막 잔디 땅 표시 -> 나무 설치X, 엄마 위치( 1칸 아님 )
+	//pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,true};
+	//gVec.push_back(pFloor);
+	//
+	//for (int i{}; i < 10; ++i)
+	//{
+	//	pFloor = new Grass{ cube_vertex_array_normal, floor_color, i+idx ,true };
+	//	gVec.push_back(pFloor);
+	//}
+	//// 도착 지점 잔디 설치
 }
 
 void SetCars(/*INIT_DATA_C car_data*/)
@@ -544,7 +544,7 @@ void SetCars(/*INIT_DATA_C car_data*/)
 void SetWoods(INIT_DATA_W wood_data)
 {
 	int cnt{};
-	int size{ int(gVec.size()) };
+	int size{ wood_data.Woods_Flags.size() };
 
 
 	for (int i{}; i < size; ++i)
