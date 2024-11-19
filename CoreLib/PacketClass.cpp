@@ -83,7 +83,7 @@ void INIT_DATA_W::from_json(std::string& j_str)
 {
 	auto jObject = json::parse(j_str);
 
-	Woods_Flags = jObject.at("Wood").get<std::vector<std::array<bool, 10>>>();	// 일단 임시로 10
+	Woods_Flags = jObject.at("Wood").get<std::vector<std::array<bool, 12>>>();	// 일단 임시로 10
 
 }
 

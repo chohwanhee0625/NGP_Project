@@ -288,14 +288,16 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			//gPlaybutton.change_img("game_loading.png");
 			gPlaybutton.resize(0.5, 0.2, 1.0);
 
-			GM.WaitForOtherPlayer();
+			SOCKET sock = GM.WaitForOtherPlayer();
+			std::thread networkThread(&GameManager::UpdateWorld, &GM, sock);
+			networkThread.detach();
 
 			GAME_START = true;
-			//glUseProgram(gShaderProgramID);
-			//SetOffAllofToggle();
-			//SetInitToggle();
-			//gCamera.InitCamera();
-			//gLight->InitLight();
+			glUseProgram(gShaderProgramID);
+			SetOffAllofToggle();
+			SetInitToggle();
+			gCamera.InitCamera();
+			gLight->InitLight();
 		}
 		break;
 	}
@@ -397,7 +399,7 @@ void SetgVec() // 육면체, 사면체 처음 위치 - 면 총 10개
 	SetChicken(); 
 	SetGround(); // 도로 + 잔디 만들기
 	SetCars(); // 차 만들기
-	SetWoods(); // 나무 만들기
+	//SetWoods(); // 나무 만들기
 	SetRoadLane(); // 도로 흰색 라인 만들기
 	SetMother(); // 도착지점 엄마 닭 만들기
 	
@@ -450,7 +452,7 @@ void SetChicken()
 	gVec.push_back(Rleg);
 }
 
-void SetGround()
+void SetGround(/*INIT_DATA_R road_data*/)
 {
 	// 땅 만들기 ( 잔디, 도로 )
 
@@ -495,7 +497,7 @@ void SetGround()
 	// 도착 지점 잔디 설치
 }
 
-void SetCars()
+void SetCars(/*INIT_DATA_C car_data*/)
 {
 	int cnt{};
 	int size{ int(gVec.size()) };
@@ -510,11 +512,10 @@ void SetCars()
 	cout << "차 개수: " << cnt << '\n';
 }
 
-void SetWoods()
+void SetWoods(INIT_DATA_W wood_data)
 {
 	int cnt{};
 	int size{ int(gVec.size()) };
-
 
 
 	for (int i{}; i < size; ++i)
@@ -522,7 +523,7 @@ void SetWoods()
 		if (dynamic_cast<Grass*>(gVec[i]) != nullptr && !gVec.at(i)->IsFinalGrass())
 		{
 			for (int j = 1; j < 13; ++j) {
-				bool TF{ (bool)gBoolUniform(gRandomEngine) };
+				bool TF = wood_data.Woods_Flags[i][j-1];
 
 				if (TF) {
 					Wood* pWood = new Wood{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };

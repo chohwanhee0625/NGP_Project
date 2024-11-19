@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "PacketIO.h"
+#include "소스.h"
 
 char* SERVERIP = (char*)"127.0.0.1";
 
@@ -62,29 +63,35 @@ void GameManager::RecvWorldData(SOCKET sock)
 	INIT_DATA_P m_InitPlayerData[2];
 	std::string j_str = Recv(sock);
 	m_InitPlayerData[0].from_json(j_str);		// MY Player Data
+	//SetChicken(m_InitPlayerData[0]);
 	j_str = Recv(sock);
 	m_InitPlayerData[1].from_json(j_str);		// Other Player Data
-	cout << j_str << endl;
-
-
+	//SetgEnemyVec(m_InitPlayerData[1]);
+	cout << "Set Chicken" << endl;
 
 	// recv Roads Data
 	INIT_DATA_R m_roadData;
 	j_str = Recv(sock);
 	m_roadData.from_json(j_str);
-	cout << j_str << endl;
+	//SetGround(m_roadData);
+	cout << "Set Roads" << endl;
 
 	// recv Cars Data
 	INIT_DATA_C m_carData;
 	j_str = Recv(sock);
 	m_carData.from_json(j_str);
-	cout << j_str << endl;
+	//SetCars(m_carData);
+	cout << "Set Cars" << endl;
 
 	// recv Woods Data
 	INIT_DATA_W m_woodData;
 	j_str = Recv(sock);
 	m_woodData.from_json(j_str);
-	cout << j_str << endl;
+	SetWoods(m_woodData);
+	cout << "Set Woods" << endl;
+
+	//SetRoadLane(); // 도로 흰색 라인 만들기
+	//SetMother(); // 도착지점 엄마 닭 만들기
 }
 
 void GameManager::SetWorldData()

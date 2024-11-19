@@ -162,7 +162,7 @@ void SessionManager::InitWorldData(bool p_id[2])
 			std::array<float, static_cast<int>(RGB::END)> tempRGB{ gRandomColor(gRandomEngine),gRandomColor(gRandomEngine),gRandomColor(gRandomEngine) };
 			
 			// 추가
-			//m_carData.Cars_Color_RGB.emplace_back(tempRGB);
+			m_carData.Cars_Color_RGB.emplace_back(tempRGB);
 		}
 	}
 
@@ -171,14 +171,14 @@ void SessionManager::InitWorldData(bool p_id[2])
 	//		# 수정할 것 
 	//		( SetWoods )
 
-	const int max_wood = 10;
+	const int max_wood = 12;
 	// int max_wood = m_woodData.Woods_Flags[0].size(); 
 	// 최대 나무 개수
 
 	for (int i = 0; i < m_roadData.Roads_Flags.size(); ++i) {
 		if (m_roadData.Roads_Flags[i] == GRASS) {
 
-			std::array<bool, 10> wood_line{};  
+			std::array<bool, 12> wood_line{};  
 			// 한 줄에 나무 배치 여부를 담을 배열 
 
 			for (int j = 0; j < max_wood; ++j) {

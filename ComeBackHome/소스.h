@@ -38,9 +38,9 @@ void SetgVec();
 void SetgEnemyVec();
 
 void SetChicken();
-void SetGround();
-void SetWoods();
-void SetCars();
+void SetGround(/*INIT_DATA_R road_data*/);
+void SetWoods(INIT_DATA_W wood_data);
+void SetCars(/*INIT_DATA_C car_data*/);
 void SetRoadLane();
 void SetMother();
 
