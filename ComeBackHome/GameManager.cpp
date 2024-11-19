@@ -73,7 +73,7 @@ void GameManager::RecvWorldData(SOCKET sock)
 	INIT_DATA_R m_roadData;
 	j_str = Recv(sock);
 	m_roadData.from_json(j_str);
-	//SetGround(m_roadData);
+	SetGround(m_roadData);
 	cout << "Set Roads" << endl;
 
 	// recv Cars Data
@@ -81,6 +81,7 @@ void GameManager::RecvWorldData(SOCKET sock)
 	j_str = Recv(sock);
 	m_carData.from_json(j_str);
 	//SetCars(m_carData);
+	SetCars();
 	cout << "Set Cars" << endl;
 
 	// recv Woods Data
@@ -90,8 +91,8 @@ void GameManager::RecvWorldData(SOCKET sock)
 	SetWoods(m_woodData);
 	cout << "Set Woods" << endl;
 
-	//SetRoadLane(); // 도로 흰색 라인 만들기
-	//SetMother(); // 도착지점 엄마 닭 만들기
+	SetRoadLane(); // 도로 흰색 라인 만들기
+	SetMother(); // 도착지점 엄마 닭 만들기
 }
 
 void GameManager::SetWorldData()

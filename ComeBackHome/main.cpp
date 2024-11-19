@@ -88,8 +88,8 @@ void main(int argc, char** argv)
 
 
 	gPlaybutton.InitBuffer();
-	gPlaybutton.LoadTexture("chick.jpg");
-	gPlaybutton.resize(0.5, 0.5, 1.0);
+	gPlaybutton.LoadTexture("play_button.png");
+	gPlaybutton.resize(0.5, 0.1, 1.0);
 	gPlaybutton.move(0, -0.25, -0.001);
 
 	InitBorder(); // 우측 상단 핑크색 경계 만들기 

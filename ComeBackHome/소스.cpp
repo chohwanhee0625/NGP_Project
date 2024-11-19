@@ -285,8 +285,9 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		break;
 	default:
 		if (GAME_START == false) {
-			//gPlaybutton.change_img("game_loading.png");
-			gPlaybutton.resize(0.5, 0.2, 1.0);
+			gPlaybutton.change_img("chick.jpg");
+			gPlaybutton.resize(0.5, 0.5, 1.0);
+			gPlaybutton.Render();
 
 			SOCKET sock = GM.WaitForOtherPlayer();
 			std::thread networkThread(&GameManager::UpdateWorld, &GM, sock);
@@ -396,12 +397,12 @@ void InitBorder()
 
 void SetgVec() // 육면체, 사면체 처음 위치 - 면 총 10개
 {
-	SetChicken(); 
-	SetGround(); // 도로 + 잔디 만들기
-	SetCars(); // 차 만들기
+	SetChicken();
+	//SetGround(); // 도로 + 잔디 만들기
+	//SetCars(); // 차 만들기
 	//SetWoods(); // 나무 만들기
-	SetRoadLane(); // 도로 흰색 라인 만들기
-	SetMother(); // 도착지점 엄마 닭 만들기
+	//SetRoadLane(); // 도로 흰색 라인 만들기
+	//SetMother(); // 도착지점 엄마 닭 만들기
 	
 	//tagWall* pWall = new tagWall{ cube_vertex_array_normal, floor_color}; // 9
 	//gVec.push_back(pWall);
@@ -452,9 +453,36 @@ void SetChicken()
 	gVec.push_back(Rleg);
 }
 
-void SetGround(/*INIT_DATA_R road_data*/)
+void SetGround(INIT_DATA_R road_data)
 {
 	// 땅 만들기 ( 잔디, 도로 )
+
+	//Road* pRoad{};
+	//RoadLane* pLine{};
+	//Grass* pFloor{};
+
+	//int map_size = road_data.Roads_Flags.size();
+	//int idx = 0;
+	//while (idx < map_size)
+	//{
+	//	bool isGrass = road_data.Roads_Flags[idx];
+	//	bool carDir = road_data.Dir_Flags[idx];
+
+	//	if (isGrass == GRASS) {
+	//		//bool finalGrass = (idx >= map_size - 11);
+	//		pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx, false }; // 잔디 1칸 설치
+	//		gVec.push_back(pFloor);
+	//	}
+	//	else if (isGrass == ROAD) {
+	//		pRoad = new Road{ cube_vertex_array_normal, floor_color, idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ), 차 방향 인수로 전달
+	//		gVec.push_back(pRoad);
+
+	//		pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 , idx }; // 도로 흰색 라인 
+	//		gVec.push_back(pLine);
+	//	}
+
+	//	++idx;
+	//}
 
 	int count{};
 	Road* pRoad{};
@@ -472,7 +500,8 @@ void SetGround(/*INIT_DATA_R road_data*/)
 		for (int j = 0; j < cnt; ++j) {
 			count++;
 			
-			pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx}; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
+			bool carDir = gBoolUniform(gRandomEngine);
+			pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
 			gVec.push_back(pRoad);
 			
 			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
