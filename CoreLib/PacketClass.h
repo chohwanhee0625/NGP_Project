@@ -86,7 +86,7 @@ class INIT_DATA_W
 {
 public:
 	// 나무를 심을 경우 1, 아니면 0으로 설정
-	std::vector<std::array<bool, 10>> Woods_Flags;		// 한 줄에 나무 최대 몇개? 임시로 10
+	std::vector<std::array<bool, 12>> Woods_Flags;		// 한 줄에 나무 최대 몇개? 임시로 10
 
 public:
 	std::string to_json();

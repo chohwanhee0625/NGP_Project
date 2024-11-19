@@ -170,6 +170,7 @@
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="Family.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="grass.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Chicken.h" />
     <ClInclude Include="extern.h" />
     <ClInclude Include="Family.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="grass.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Road.h" />

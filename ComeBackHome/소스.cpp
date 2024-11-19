@@ -16,8 +16,11 @@
 #include "Tree.h"
 #include "Family.h"
 #include "UI.h"
+#include "GameManager.h"
 
 UI gPlaybutton;
+GameManager GM;
+bool GAME_START = false;
 
 //===========================================================================================
 
@@ -31,16 +34,15 @@ void make_shaderProgram()
 	glLinkProgram(gShaderProgramID);
 	glDeleteShader(gVertexShader);
 	glDeleteShader(gFragmentShader);
-	glUseProgram(gShaderProgramID);
 
-	make_vertexShaders("vertex3.glsl");
-	make_fragmentShaders("fragment3.glsl");
-	gShaderProgramID = glCreateProgram();
-	glAttachShader(gUIShaderProgramID, gVertexShader);
-	glAttachShader(gUIShaderProgramID, gFragmentShader);
+	make_vertexShaders_1("vertex3.glsl");
+	make_fragmentShaders_1("fragment3.glsl");
+	gUIShaderProgramID = glCreateProgram();
+	glAttachShader(gUIShaderProgramID, gUIVertexShader);
+	glAttachShader(gUIShaderProgramID, gUIFragmentShader);
 	glLinkProgram(gUIShaderProgramID);
-	glDeleteShader(gVertexShader);
-	glDeleteShader(gFragmentShader);
+	glDeleteShader(gUIVertexShader);
+	glDeleteShader(gUIFragmentShader);
 	glUseProgram(gUIShaderProgramID);
 }
 
@@ -61,6 +63,24 @@ void make_vertexShaders(const char* vertex_path)
 	}
 }
 
+void make_vertexShaders_1(const char* vertex_path)
+{
+	gVertexSource = filetobuf(vertex_path);
+	gUIVertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(gUIVertexShader, 1, (const GLchar**)&gVertexSource, 0);
+	glCompileShader(gUIVertexShader);
+	GLint result;
+	GLchar errorLog[512];
+	glGetShaderiv(gUIVertexShader, GL_COMPILE_STATUS, &result);
+	if (!result)
+	{
+		glGetShaderInfoLog(gUIVertexShader, 512, NULL, errorLog);
+		std::cout << "ERROR: vertex shader 컴파일 실패\n" << errorLog << std::endl;
+		return;
+	}
+}
+
+
 void make_fragmentShaders(const char* fragment_path)
 {
 	gFragmentSource = filetobuf(fragment_path);
@@ -73,6 +93,23 @@ void make_fragmentShaders(const char* fragment_path)
 	if (!result)
 	{
 		glGetShaderInfoLog(gFragmentShader, 512, NULL, errorLog);
+		std::cout << "ERROR: fragment shader 컴파일 실패\n" << errorLog << std::endl;
+		return;
+	}
+}
+
+void make_fragmentShaders_1(const char* fragment_path)
+{
+	gFragmentSource = filetobuf(fragment_path);
+	gUIFragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(gUIFragmentShader, 1, (const GLchar**)&gFragmentSource, 0);
+	glCompileShader(gUIFragmentShader);
+	GLint result;
+	GLchar errorLog[512];
+	glGetShaderiv(gUIFragmentShader, GL_COMPILE_STATUS, &result);
+	if (!result)
+	{
+		glGetShaderInfoLog(gUIFragmentShader, 512, NULL, errorLog);
 		std::cout << "ERROR: fragment shader 컴파일 실패\n" << errorLog << std::endl;
 		return;
 	}
@@ -177,12 +214,13 @@ GLvoid DrawScene()
 	glClearColor(0.5294f, 0.8078f, 0.9804f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 깊이 버퍼 클리어
 
-	main_viewport();
-	//border_viewport();
-	//chicken_viewport();
-
-	gPlaybutton.Render();
-
+	if (GAME_START == false)
+		gPlaybutton.Render();
+	else {
+		main_viewport();
+		border_viewport();
+		chicken_viewport();
+	}
 
 	glutSwapBuffers();
 	glutPostRedisplay();
@@ -201,7 +239,6 @@ void TimerFunction(int value)
 
 	gVecUpdate(deltatime);
 	gEnemyVecUpdate(deltatime);
-	gPlaybutton.Render();
 
 	glutPostRedisplay();				//화면 재출력
 	glutTimerFunc(10, TimerFunction, 1); // 다시 호출 
@@ -211,7 +248,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
-	case 'w':
+	case 'w':case 'W':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
@@ -220,7 +257,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		}
 		break;
 
-	case 's':
+	case 's':case 'S':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
@@ -229,7 +266,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		}
 		break;
 
-	case 'a':
+	case 'a':case 'A':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
@@ -238,14 +275,31 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		}
 		break;
 
-	case 'd':
+	case 'd':case 'D':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
 			SetChickenFaceDir(STOP);
 			gCamera.SetCameraFaceDir(STOP);
 			SetOffGlobalDir();
 		}
+		break;
+	default:
+		if (GAME_START == false) {
+			gPlaybutton.change_img("chick.jpg");
+			gPlaybutton.resize(0.5, 0.5, 1.0);
+			gPlaybutton.Render();
 
+			SOCKET sock = GM.WaitForOtherPlayer();
+			std::thread networkThread(&GameManager::UpdateWorld, &GM, sock);
+			networkThread.detach();
+
+			GAME_START = true;
+			glUseProgram(gShaderProgramID);
+			SetOffAllofToggle();
+			SetInitToggle();
+			gCamera.InitCamera();
+			gLight->InitLight();
+		}
 		break;
 	}
 }
@@ -307,7 +361,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	case 'q': case 'Q':
 		glutLeaveMainLoop();
 		break;
-	case 'j':
+	case 'j': case 'J':
 		ChickenJump();
 		break;
 	case 'p': case'P':
@@ -343,12 +397,12 @@ void InitBorder()
 
 void SetgVec() // 육면체, 사면체 처음 위치 - 면 총 10개
 {
-	SetChicken(); 
-	SetGround(); // 도로 + 잔디 만들기
-	SetCars(); // 차 만들기
-	SetWoods(); // 나무 만들기
-	SetRoadLane(); // 도로 흰색 라인 만들기
-	SetMother(); // 도착지점 엄마 닭 만들기
+	SetChicken();
+	//SetGround(); // 도로 + 잔디 만들기
+	//SetCars(); // 차 만들기
+	//SetWoods(); // 나무 만들기
+	//SetRoadLane(); // 도로 흰색 라인 만들기
+	//SetMother(); // 도착지점 엄마 닭 만들기
 	
 	//tagWall* pWall = new tagWall{ cube_vertex_array_normal, floor_color}; // 9
 	//gVec.push_back(pWall);
@@ -378,7 +432,7 @@ void SetgEnemyVec()
 
 void SetChicken()
 {
-	// 플레이할 주인공 닭 만들기  
+	// 플레이할 주인공 닭 만들기
 	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color }; // 0 - 몸
 	gVec.push_back(body);
 	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color }; // 1 - 머리
@@ -399,52 +453,80 @@ void SetChicken()
 	gVec.push_back(Rleg);
 }
 
-void SetGround()
+void SetGround(INIT_DATA_R road_data)
 {
 	// 땅 만들기 ( 잔디, 도로 )
 
-	int count{};
 	Road* pRoad{};
 	RoadLane* pLine{};
 	Grass* pFloor{};
-	int idx{ 0 };
-	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,false };
-	gVec.push_back(pFloor);
-	++idx;
 
-	while(idx < 150) {
-		// 랜덤 개수만큼 도로를 연속으로 만들고 잔디 한칸 만들고 다시 랜덤 개수로 도로 만들기 ( 도로 3칸 -> 잔디 1칸 -> 도로 5칸 -> 잔디 1칸 .. )
-		int cnt{ gRoadSet(gRandomEngine) };
+	int map_size = road_data.Roads_Flags.size();
+	int idx = 0;
+	while (idx < map_size)
+	{
+		bool isGrass = road_data.Roads_Flags[idx];
+		bool carDir = road_data.Dir_Flags[idx];
 
-		for (int j = 0; j < cnt; ++j) {
-			count++;
-			
-			pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx}; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
-			gVec.push_back(pRoad);
-			
-			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
-			gVec.push_back(pLine); 
+		if (isGrass == GRASS) {
+			//bool finalGrass = (idx >= map_size - 11);
+			pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx, false }; // 잔디 1칸 설치
+			gVec.push_back(pFloor);
 		}
-		idx += cnt; // 도로 개수만큼 idx 증가
+		else if (isGrass == ROAD) {
+			pRoad = new Road{ cube_vertex_array_normal, floor_color, idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ), 차 방향 인수로 전달
+			gVec.push_back(pRoad);
 
-		pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx,false }; // 잔디 1칸 설치
-		gVec.push_back(pFloor);
+			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 , idx }; // 도로 흰색 라인 
+			gVec.push_back(pLine);
+		}
+
 		++idx;
 	}
 
-	// true: 마지막 잔디 땅 표시 -> 나무 설치X, 엄마 위치( 1칸 아님 )
-	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,true};
-	gVec.push_back(pFloor);
-	
-	for (int i{}; i < 10; ++i)
-	{
-		pFloor = new Grass{ cube_vertex_array_normal, floor_color, i+idx ,true };
-		gVec.push_back(pFloor);
-	}
-	// 도착 지점 잔디 설치
+	//int count{};
+	//Road* pRoad{};
+	//RoadLane* pLine{};
+	//Grass* pFloor{};
+	//int idx{ 0 };
+	//pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,false };
+	//gVec.push_back(pFloor);
+	//++idx;
+
+	//while(idx < 150) {
+	//	// 랜덤 개수만큼 도로를 연속으로 만들고 잔디 한칸 만들고 다시 랜덤 개수로 도로 만들기 ( 도로 3칸 -> 잔디 1칸 -> 도로 5칸 -> 잔디 1칸 .. )
+	//	int cnt{ gRoadSet(gRandomEngine) };
+
+	//	for (int j = 0; j < cnt; ++j) {
+	//		count++;
+	//		
+	//		bool carDir = gBoolUniform(gRandomEngine);
+	//		pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
+	//		gVec.push_back(pRoad);
+	//		
+	//		pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
+	//		gVec.push_back(pLine); 
+	//	}
+	//	idx += cnt; // 도로 개수만큼 idx 증가
+
+	//	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx,false }; // 잔디 1칸 설치
+	//	gVec.push_back(pFloor);
+	//	++idx;
+	//}
+
+	//// true: 마지막 잔디 땅 표시 -> 나무 설치X, 엄마 위치( 1칸 아님 )
+	//pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,true};
+	//gVec.push_back(pFloor);
+	//
+	//for (int i{}; i < 10; ++i)
+	//{
+	//	pFloor = new Grass{ cube_vertex_array_normal, floor_color, i+idx ,true };
+	//	gVec.push_back(pFloor);
+	//}
+	//// 도착 지점 잔디 설치
 }
 
-void SetCars()
+void SetCars(/*INIT_DATA_C car_data*/)
 {
 	int cnt{};
 	int size{ int(gVec.size()) };
@@ -459,11 +541,10 @@ void SetCars()
 	cout << "차 개수: " << cnt << '\n';
 }
 
-void SetWoods()
+void SetWoods(INIT_DATA_W wood_data)
 {
 	int cnt{};
-	int size{ int(gVec.size()) };
-
+	int size{ wood_data.Woods_Flags.size() };
 
 
 	for (int i{}; i < size; ++i)
@@ -471,7 +552,7 @@ void SetWoods()
 		if (dynamic_cast<Grass*>(gVec[i]) != nullptr && !gVec.at(i)->IsFinalGrass())
 		{
 			for (int j = 1; j < 13; ++j) {
-				bool TF{ (bool)gBoolUniform(gRandomEngine) };
+				bool TF = wood_data.Woods_Flags[i][j-1];
 
 				if (TF) {
 					Wood* pWood = new Wood{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };

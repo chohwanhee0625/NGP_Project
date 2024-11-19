@@ -7,6 +7,7 @@
 #include "TimeManager.h"
 #include "Border.h"
 #include "UI.h"
+#include "GameManager.h"
 
 //===========================================================================================
 
@@ -15,6 +16,9 @@ GLchar* gFragmentSource; //--- 소스코드 저장 변수
 GLuint gVertexShader;
 GLuint gFragmentShader; //--- 세이더 객체
 GLuint gShaderProgramID; //--- 셰이더 프로그램
+
+GLuint gUIVertexShader;
+GLuint gUIFragmentShader; //--- 세이더 객체
 GLuint gUIShaderProgramID;  // UI 셰이더 프로그램
 
 int gWidth{ 800 };
@@ -27,6 +31,7 @@ vector<BasisComponent*> gVec; // --> 모든 객체를 Basis 부모 클래스 포인터로 다형
 vector<BasisComponent*> gEnemyVec; // 상대 플레이어 렌더링할 벡터
 
 extern UI gPlaybutton;
+extern GameManager GM;
 
 bool gToggle[(int)Toggle::END]; // 명령어 토글 
 
@@ -50,27 +55,13 @@ std::uniform_real_distribution<float> grandomcolor{0.f,1.f};
 
 //===========================================================================================
 
-//bool ConnectScene()
-//{
-//	// 플레이 버튼 UI 그림
-//
-//	if (play_button->Isin(x, y))
-//		// 플레이 버튼 UI 삭제
-//		while (true)
-//		{
-//			// 로딩중 UI 그림
-//			// 서버로부터 상대 클라이언트 접속 recv
-//			if (other_connect == true)
-//				return true;
-//		}
-//	// 
-//
-//
-//}
-//
-
 void main(int argc, char** argv)
 {
+	// 윈속 초기화
+	WSADATA wsa;
+	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+		return;
+
 	// gwangsin [11/02 : 7:22]
 	glutInit(&argc, argv);						  // GLUT 초기화 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); // [깊이검사 depth test 추가]디스플레이 모드 설정
@@ -95,11 +86,10 @@ void main(int argc, char** argv)
 	SetInitToggle(); // 토글 초기화 
 	InitLight(); // 조명 초기 세팅
 
-	//while (ConnectScene() == false);
 
 	gPlaybutton.InitBuffer();
 	gPlaybutton.LoadTexture("play_button.png");
-	gPlaybutton.resize(0.5, 0.1, 1);
+	gPlaybutton.resize(0.5, 0.1, 1.0);
 	gPlaybutton.move(0, -0.25, -0.001);
 
 	InitBorder(); // 우측 상단 핑크색 경계 만들기 

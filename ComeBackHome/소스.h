@@ -7,6 +7,8 @@
 void make_shaderProgram();
 void make_vertexShaders(const char* vertex_path);
 void make_fragmentShaders(const char* fragment_path);
+void make_vertexShaders_1(const char* vertex_path);
+void make_fragmentShaders_1(const char* fragment_path);
 char* filetobuf(const char*);
 
 GLvoid DrawScene();
@@ -36,9 +38,9 @@ void SetgVec();
 void SetgEnemyVec();
 
 void SetChicken();
-void SetGround();
-void SetWoods();
-void SetCars();
+void SetGround(INIT_DATA_R road_data);
+void SetWoods(INIT_DATA_W wood_data);
+void SetCars(/*INIT_DATA_C car_data*/);
 void SetRoadLane();
 void SetMother();
 

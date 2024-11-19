@@ -28,6 +28,16 @@ UI::~UI()
 
 void UI::InitBuffer()
 {
+    vector<Vector3> v{ {-1,1,0.99},{-1,-1,0.99},{1,-1,0.99},{1,1,0.99} };
+    vector<Vector3> n{ {0,0,-1},{0,0,-1} ,{0,0,-1} ,{0,0,-1} };
+    vector<Vector2> t{ {0,0},{0,1},{1,1},{1,0} };
+    vector<int> i{ 0,1,2,2,3,0 };
+
+    vertices = v;
+    normals = n;
+    textures = t;
+    indeices = i;
+
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
     glGenBuffers(1, &VBO);
@@ -91,79 +101,25 @@ void UI::Render()
     glDrawElements(GL_TRIANGLES, indeices.size(), GL_UNSIGNED_INT, 0);
 }
 
-void UI::load_obj(const char* filePath) {
-    ifstream file(filePath);
-    if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << filePath << std::endl;
-        return;
+void UI::change_img(const string& new_img_name) {
+    int widthImg, heightImg, numberOfChannel;
+    unsigned char* data = my_load_image(new_img_name.c_str(), &widthImg, &heightImg, &numberOfChannel);
+
+    if (data != NULL) {
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        if (numberOfChannel == 4) {
+            glTexImage2D(GL_TEXTURE_2D, 0, numberOfChannel, widthImg, heightImg, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        }
+        else if (numberOfChannel == 3) {
+            glTexImage2D(GL_TEXTURE_2D, 0, numberOfChannel, widthImg, heightImg, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        }
+        my_image_free(data);
     }
-
-    string line;
-    map<string, int> tempMap;
-    map<int, string> inverseTempMap;
-    vector<Vector3> tempV, tempN;
-    vector<Vector2> tempT;
-    while (std::getline(file, line)) {
-        istringstream iss(line);
-        string token;
-        iss >> token;
-
-        if (token == "v") {
-            // 정점 데이터
-            Vector3 vertex;
-            iss >> vertex.x >> vertex.y >> vertex.z;
-            tempV.push_back(vertex);
-        }
-        else if (token == "vn") {
-            // 노말 데이터
-            Vector3 normal;
-            iss >> normal.x >> normal.y >> normal.z;
-            tempN.push_back(normal);
-        }
-        else if (token == "vt") {
-            // 텍스쳐 좌표
-            Vector2 texture;
-            iss >> texture.x >> texture.y;
-            tempT.emplace_back(texture);
-        }
-        else if (token == "f") {
-            // 인덱스 데이터
-            string faceData;
-            getline(iss, faceData);
-            istringstream faceIss(faceData);
-            string space;
-            getline(faceIss, space, ' ');
-            for (int i = 0; i < 3; ++i) {
-                string vertexIndexStr, texCoordIndexStr, normalIndexStr;
-
-                getline(faceIss, vertexIndexStr, '/');
-                getline(faceIss, texCoordIndexStr, '/');
-                getline(faceIss, normalIndexStr, ' ');
-
-                string key = vertexIndexStr + '/' + texCoordIndexStr + '/' + normalIndexStr + ' ';
-                tempMap.emplace(key, tempMap.size());
-                inverseTempMap.emplace(tempMap[key], key);
-                indeices.push_back(tempMap[key]);
-            }
-        }
+    else {
+        cout << "fail to load image" << endl;
     }
-
-    for (const auto& p : inverseTempMap) {
-        istringstream iss(p.second);
-        string vertexIndexStr, texCoordIndexStr, normalIndexStr;
-        getline(iss, vertexIndexStr, '/');
-        getline(iss, texCoordIndexStr, '/');
-        getline(iss, normalIndexStr, ' ');
-        vertices.emplace_back(tempV[stoi(vertexIndexStr) - 1]);
-
-        textures.emplace_back(tempT[stoi(texCoordIndexStr) - 1]);
-
-        normals.emplace_back(tempN[stoi(normalIndexStr) - 1]);
-    }
-
-    file.close();
 }
-
 
 void UI::resize(float sx, float sy, float sz) {
     world = world * glm::scale(glm::mat4(1), glm::vec3(sx, sy, sz));

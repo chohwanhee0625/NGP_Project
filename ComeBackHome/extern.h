@@ -8,7 +8,10 @@ extern GLchar* gFragmentSource;
 extern GLuint gVertexShader;
 extern GLuint gFragmentShader; //--- ¼¼ÀÌ´õ °´Ã¼
 extern GLuint gShaderProgramID; //--- ¼ÎÀÌ´õ ÇÁ·Î±×·¥
+
 extern GLuint gUIShaderProgramID;  // UI ¼ÎÀÌ´õ ÇÁ·Î±×·¥
+extern GLuint gUIVertexShader;
+extern GLuint gUIFragmentShader; //--- ¼¼ÀÌ´õ °´Ã¼
 
 extern int gWidth;
 extern int gHeight;

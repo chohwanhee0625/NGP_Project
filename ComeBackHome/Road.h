@@ -11,11 +11,11 @@ private:
 public:
 	Road()
 	{}
-	Road(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint idx)
+	Road(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], GLint idx, bool carDir)
 		: BasisComponent()
 		, m_index{idx}
 	{
-		InitCarSpawnDir(); 
+		InitCarSpawnDir(carDir); 
 		InitVertex(cube_array);
 		InitColor(color_array);
 		InitMatrix4();
@@ -27,7 +27,7 @@ public:
 	void InitMatrix4();
 	void Update(float deltatime) override;
 
-	void InitCarSpawnDir();
+	void InitCarSpawnDir(bool carDir);
 	void CreateCar() override;
 	void CreateLane()override;
 

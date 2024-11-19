@@ -52,11 +52,11 @@ void Road::Update(float deltatime)
 {
 }
 
-void Road::InitCarSpawnDir()
+void Road::InitCarSpawnDir(bool carDir)
 {
 	// 0 : LEFT  -> +1 -> 왼쪽에서 태어나서 오른쪽으로 이동
 	// 1 : RIGHT -> -1 -> 오른쪽에서 태어나서 왼쪽으로 이동
-	GLboolean bLeftOrRight{ (bool)gBoolUniform(gRandomEngine) };
+	GLboolean bLeftOrRight{ carDir };
 
 	if (bLeftOrRight == LEFT)
 		m_car_spawn_dir = PLUS;
