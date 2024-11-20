@@ -19,7 +19,7 @@
 #include "GameManager.h"
 
 UI gPlaybutton;
-GameManager GM;
+GameManager gGameManager;
 bool GAME_START = false;
 
 //===========================================================================================
@@ -79,7 +79,6 @@ void make_vertexShaders_1(const char* vertex_path)
 		return;
 	}
 }
-
 
 void make_fragmentShaders(const char* fragment_path)
 {
@@ -233,6 +232,8 @@ GLvoid Reshape(int w, int h)
 
 void TimerFunction(int value)
 {
+	//if (false == GAME_START) return;
+
 	gCamera.Move();
 	gTimer.update();
 	float deltatime = gTimer.getDeltaTime();
@@ -289,8 +290,8 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			gPlaybutton.resize(0.5, 0.5, 1.0);
 			gPlaybutton.Render();
 
-			SOCKET sock = GM.WaitForOtherPlayer();
-			std::thread networkThread(&GameManager::UpdateWorld, &GM, sock);
+			SOCKET sock = gGameManager.WaitForOtherPlayer();
+			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
 			networkThread.detach();
 
 			GAME_START = true;
@@ -461,12 +462,11 @@ void SetGround(INIT_DATA_R road_data)
 	RoadLane* pLine{};
 	Grass* pFloor{};
 
-	int map_size = road_data.Roads_Flags.size();
+	int map_size = road_data.Roads_Flags.size() - 10;
 	int idx = 0;
 	while (idx < map_size)
 	{
 		bool isGrass = road_data.Roads_Flags[idx];
-		bool carDir = road_data.Dir_Flags[idx];
 
 		if (isGrass == GRASS) {
 			//bool finalGrass = (idx >= map_size - 11);
@@ -474,6 +474,8 @@ void SetGround(INIT_DATA_R road_data)
 			gVec.push_back(pFloor);
 		}
 		else if (isGrass == ROAD) {
+			bool carDir = road_data.Dir_Flags[idx];
+
 			pRoad = new Road{ cube_vertex_array_normal, floor_color, idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ), 차 방향 인수로 전달
 			gVec.push_back(pRoad);
 
@@ -484,46 +486,54 @@ void SetGround(INIT_DATA_R road_data)
 		++idx;
 	}
 
-	//int count{};
-	//Road* pRoad{};
-	//RoadLane* pLine{};
-	//Grass* pFloor{};
-	//int idx{ 0 };
-	//pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,false };
-	//gVec.push_back(pFloor);
-	//++idx;
+	for (int i{}; i < 10; ++i) 
+	{
+		pFloor = new Grass{ cube_vertex_array_normal, floor_color, i + idx ,true }; 
+		gVec.push_back(pFloor); 
+	}
 
-	//while(idx < 150) {
-	//	// 랜덤 개수만큼 도로를 연속으로 만들고 잔디 한칸 만들고 다시 랜덤 개수로 도로 만들기 ( 도로 3칸 -> 잔디 1칸 -> 도로 5칸 -> 잔디 1칸 .. )
-	//	int cnt{ gRoadSet(gRandomEngine) };
+#if 0
+	int count{};
+	Road* pRoad{};
+	RoadLane* pLine{};
+	Grass* pFloor{};
+	int idx{ 0 };
+	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,false };
+	gVec.push_back(pFloor);
+	++idx;
 
-	//	for (int j = 0; j < cnt; ++j) {
-	//		count++;
-	//		
-	//		bool carDir = gBoolUniform(gRandomEngine);
-	//		pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
-	//		gVec.push_back(pRoad);
-	//		
-	//		pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
-	//		gVec.push_back(pLine); 
-	//	}
-	//	idx += cnt; // 도로 개수만큼 idx 증가
+	while(idx < 150) {
+		// 랜덤 개수만큼 도로를 연속으로 만들고 잔디 한칸 만들고 다시 랜덤 개수로 도로 만들기 ( 도로 3칸 -> 잔디 1칸 -> 도로 5칸 -> 잔디 1칸 .. )
+		int cnt{ gRoadSet(gRandomEngine) };
 
-	//	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx,false }; // 잔디 1칸 설치
-	//	gVec.push_back(pFloor);
-	//	++idx;
-	//}
+		for (int j = 0; j < cnt; ++j) {
+			count++;
+			
+			bool carDir = gBoolUniform(gRandomEngine);
+			pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
+			gVec.push_back(pRoad);
+			
+			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
+			gVec.push_back(pLine); 
+		}
+		idx += cnt; // 도로 개수만큼 idx 증가
 
-	//// true: 마지막 잔디 땅 표시 -> 나무 설치X, 엄마 위치( 1칸 아님 )
-	//pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,true};
-	//gVec.push_back(pFloor);
-	//
-	//for (int i{}; i < 10; ++i)
-	//{
-	//	pFloor = new Grass{ cube_vertex_array_normal, floor_color, i+idx ,true };
-	//	gVec.push_back(pFloor);
-	//}
+		pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx,false }; // 잔디 1칸 설치
+		gVec.push_back(pFloor);
+		++idx;
+	}
+
+	// true: 마지막 잔디 땅 표시 -> 나무 설치X, 엄마 위치( 1칸 아님 )
+	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,true};
+	gVec.push_back(pFloor);
+	
+	for (int i{}; i < 10; ++i)
+	{
+		pFloor = new Grass{ cube_vertex_array_normal, floor_color, i+idx ,true };
+		gVec.push_back(pFloor);
+	}
 	//// 도착 지점 잔디 설치
+#endif
 }
 
 void SetCars(/*INIT_DATA_C car_data*/)
@@ -543,18 +553,16 @@ void SetCars(/*INIT_DATA_C car_data*/)
 
 void SetWoods(INIT_DATA_W wood_data)
 {
-	int cnt{};
-	int size{ wood_data.Woods_Flags.size() };
+	int grass_cnt{};
 
-
-	for (int i{}; i < size; ++i)
+	for (int i{}; i < gVec.size(); ++i) 
 	{
 		if (dynamic_cast<Grass*>(gVec[i]) != nullptr && !gVec.at(i)->IsFinalGrass())
 		{
 			for (int j = 1; j < 13; ++j) {
-				bool TF = wood_data.Woods_Flags[i][j-1];
+				bool should_place_wood = wood_data.Woods_Flags[grass_cnt][j-1];
 
-				if (TF) {
+				if (should_place_wood) {
 					Wood* pWood = new Wood{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
 					WoodLeaf_1* pGrass1 = new WoodLeaf_1{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
 					WoodLeaf_2* pGrass2 = new WoodLeaf_2{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
@@ -564,11 +572,9 @@ void SetWoods(INIT_DATA_W wood_data)
 					gVec.push_back(pGrass1);
 					gVec.push_back(pGrass2);
 					gVec.push_back(pGrass3);
-
-					cnt++;
 				}
 			}
-
+			grass_cnt++;
 		}
 	}
 }
