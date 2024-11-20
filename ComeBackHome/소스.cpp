@@ -233,15 +233,17 @@ GLvoid Reshape(int w, int h)
 
 void TimerFunction(int value)
 {
-	gCamera.Move();
-	gTimer.update();
-	float deltatime = gTimer.getDeltaTime();
+	if (GAME_START) {
+		gCamera.Move();
+		gTimer.update();
+		float deltatime = gTimer.getDeltaTime();
+		
+		gVecUpdate(deltatime);
+		gEnemyVecUpdate(deltatime);
 
-	gVecUpdate(deltatime);
-	gEnemyVecUpdate(deltatime);
-
-	glutPostRedisplay();				//화면 재출력
-	glutTimerFunc(10, TimerFunction, 1); // 다시 호출 
+		glutPostRedisplay();				//화면 재출력
+		glutTimerFunc(10, TimerFunction, 1); // 다시 호출 
+	}
 }
 
 GLvoid KeyUpboard(unsigned char key, int x, int y)
@@ -299,6 +301,8 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			SetInitToggle();
 			gCamera.InitCamera();
 			gLight->InitLight();
+
+			glutTimerFunc(10, TimerFunction, 1);
 		}
 		break;
 	}
@@ -526,25 +530,34 @@ void SetGround(INIT_DATA_R road_data)
 	//// 도착 지점 잔디 설치
 }
 
-void SetCars(/*INIT_DATA_C car_data*/)
+void SetCars(INIT_DATA_C car_data)
 {
 	int cnt{};
 	int size{ int(gVec.size()) };
+	
+	
 	for (int i{}; i < size; ++i)
 	{
 		if (dynamic_cast<Road*>(gVec[i]) != nullptr)
 		{
+			float speed = car_data.Cars_Velocity[cnt];
+			float R = car_data.Cars_Color_RGB[cnt][(int)RGB::R];
+			float G = car_data.Cars_Color_RGB[cnt][(int)RGB::G];
+			float B = car_data.Cars_Color_RGB[cnt][(int)RGB::B];
+			
 			cnt++;
-			gVec.at(i)->CreateCar();
+			gVec.at(i)->CreateCar(speed,R,G,B);
+
 		}
 	}
+	
 	cout << "차 개수: " << cnt << '\n';
 }
 
 void SetWoods(INIT_DATA_W wood_data)
 {
 	int cnt{};
-	int size{ wood_data.Woods_Flags.size() };
+	size_t size{ wood_data.Woods_Flags.size() };
 
 
 	for (int i{}; i < size; ++i)
