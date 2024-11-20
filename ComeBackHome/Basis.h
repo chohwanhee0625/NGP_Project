@@ -110,8 +110,8 @@ public:
 	virtual void InitBuffer();
 
 	// Car
-	virtual void CreateCar() {}
-
+	virtual void CreateCar(float speed, float R,float G, float B) {}
+	
 	// Chicken
 	virtual void ChickenJump() {}
 	virtual void SetChickenRunSpeed() {}
