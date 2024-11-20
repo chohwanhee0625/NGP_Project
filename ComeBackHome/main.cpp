@@ -23,7 +23,7 @@ GLuint gUIShaderProgramID;  // UI 셰이더 프로그램
 
 int gWidth{ 800 };
 int gHeight{ 600 }; 
-int g_max_z{};
+int g_max_z{ 1000 };
 // 윈도우 크기
 
 bool gIsReach{};
@@ -31,7 +31,7 @@ vector<BasisComponent*> gVec; // --> 모든 객체를 Basis 부모 클래스 포인터로 다형
 vector<BasisComponent*> gEnemyVec; // 상대 플레이어 렌더링할 벡터
 
 extern UI gPlaybutton;
-extern GameManager GM;
+extern GameManager gGameManager;
 
 bool gToggle[(int)Toggle::END]; // 명령어 토글 
 
