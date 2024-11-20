@@ -244,7 +244,7 @@ void TimerFunction(int value)
 		glutPostRedisplay();				//화면 재출력
 		glutTimerFunc(10, TimerFunction, 1); // 다시 호출 
 	}
-
+}
 GLvoid KeyUpboard(unsigned char key, int x, int y)
 {
 	switch (key)
