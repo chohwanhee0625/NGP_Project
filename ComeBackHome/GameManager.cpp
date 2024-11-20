@@ -1,6 +1,6 @@
 #include "GameManager.h"
 #include "PacketIO.h"
-#include "소스.h"
+#include "Souce.h"
 
 char* SERVERIP = (char*)"127.0.0.1";
 
@@ -64,22 +64,16 @@ void GameManager::RecvWorldData(SOCKET sock)
 
 	//=============================================================
 	// recv Player Data
-	INIT_DATA_P m_InitPlayerData[2]; 
+	INIT_DATA_P m_InitPlayerData; 
 
 	std::string j_str = Recv(sock);
-	m_InitPlayerData[0].from_json(j_str);		// MY Player Data
-	float x = m_InitPlayerData[0].Player_Pos_x;
-	float y = m_InitPlayerData[0].Player_Pos_y;
-	float z = m_InitPlayerData[0].Player_Pos_z;
-	//SetChicken(m_InitPlayerData[0]);
+	m_InitPlayerData.from_json(j_str);		// MY Player Data
+	
+	SetChicken(m_InitPlayerData.Player_ID);
 
+	//m_InitPlayerData.from_json(j_str);		// Other Player Data
 
-	j_str = Recv(sock);
-	m_InitPlayerData[1].from_json(j_str);		// Other Player Data
-	x = m_InitPlayerData[1].Player_Pos_x;
-	y = m_InitPlayerData[1].Player_Pos_y;
-	z = m_InitPlayerData[1].Player_Pos_z;
-	//SetgEnemyVec(m_InitPlayerData[1]);
+	SetgEnemyVec(m_InitPlayerData.Player_ID);
 	cout << "Set Chicken" << endl;
 	//=============================================================
 	// recv Roads Data
@@ -112,7 +106,6 @@ void GameManager::RecvWorldData(SOCKET sock)
 	std::vector<float>	Cars_Velocity = m_carData.Cars_Velocity;
 	std::vector<std::array<float, 3>> Cars_Color_RGB = m_carData.Cars_Color_RGB;
 	
-	SetCars();
 
 	cout << "Set Cars" << endl;
 

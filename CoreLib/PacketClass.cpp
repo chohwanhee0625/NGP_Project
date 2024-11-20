@@ -5,12 +5,7 @@ std::string INIT_DATA_P::to_json()
 {
 	json jObject;
 	jObject["ID"] = Player_ID;
-	jObject["Pos_x"] = Player_Pos_x;
-	jObject["Pos_y"] = Player_Pos_y;
-	jObject["Pos_z"] = Player_Pos_z;
-
 	std::string j_str = jObject.dump(4);
-
 	return j_str;
 }
 
@@ -19,11 +14,6 @@ void INIT_DATA_P::from_json(std::string& j_str)
 	auto jObject = json::parse(j_str);
 
 	Player_ID = jObject.at("ID").get<bool>();
-
-	Player_Pos_x = jObject.at("Pos_x").get<float>();
-	Player_Pos_y = jObject.at("Pos_y").get<float>();
-	Player_Pos_z = jObject.at("Pos_z").get<float>();
-
 }
 
 //----------------INIT_DATA_R--------------------

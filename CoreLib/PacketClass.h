@@ -35,18 +35,13 @@ class INIT_DATA_P
 {
 public:
 	bool	Player_ID;
-	float	Player_Pos_x;
-	float	Player_Pos_y;
-	float	Player_Pos_z;
+
 
 public:	
 	INIT_DATA_P() 
 	{}
-	INIT_DATA_P(bool id, float x, float y, float z) 
-		: Player_ID{id}, 
-		  Player_Pos_x{x},
-		  Player_Pos_y{y},
-		  Player_Pos_z{z} 
+	INIT_DATA_P(bool id) 
+		: Player_ID{id} 
 	{}
 
 public:

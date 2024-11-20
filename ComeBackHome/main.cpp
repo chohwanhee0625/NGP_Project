@@ -1,6 +1,6 @@
 #if 1
 #include "usingInclude.h"
-#include "소스.h"
+#include "Souce.h"
 #include "Basis.h"
 #include "Camera.h"
 #include "Light.h"
@@ -94,7 +94,7 @@ void main(int argc, char** argv)
 
 	InitBorder(); // 우측 상단 핑크색 경계 만들기 
 	SetgVec(); // 초기 객체 만들기 
-	SetgEnemyVec();
+	//SetgEnemyVec();
 
 	glEnable(GL_DEPTH_TEST);
 	glFrontFace(GL_CCW);
