@@ -35,9 +35,9 @@ void gVecUpdate(float deltatime);
 void gEnemyVecUpdate(float deltatime);
 
 void SetgVec();
-void SetgEnemyVec();
+void SetgEnemyVec(bool b);
 
-void SetChicken();
+void SetChicken(bool b);
 void SetGround(INIT_DATA_R road_data);
 void SetWoods(INIT_DATA_W wood_data);
 void SetCars(INIT_DATA_C car_data);

@@ -11,6 +11,9 @@
 
 const float v{ 0.002 };
 
+// 간격
+const float offset_x{ 0.07 };
+
 void SetChickenFaceDir(unsigned char key)
 {
 	ChickenBody* body = dynamic_cast<ChickenBody*>(gVec[0]);
@@ -126,13 +129,25 @@ void ChickenBody::InitColor(const GLfloat color_array[36 * 3])
 
 void ChickenBody::InitMatrix4()
 {
-	m_x_pos = 0.f;
-	m_y_pos = 0.0f;
-	m_z_pos = 0.f;
-
 	m_x_scale = 0.01f;
 	m_y_scale = 0.01f;
 	m_z_scale = 0.01f;
+}
+
+void ChickenBody::InitMatrix4(bool player_id)
+{
+	// 0번 플레이어면
+	if (!player_id) {
+		m_x_pos = 0.f;
+		m_y_pos = 0.0f;
+		m_z_pos = 0.f;
+	}
+	else
+	{
+		m_x_pos = 0.f + offset_x;
+		m_y_pos = 0.0f;
+		m_z_pos = 0.f;
+	}
 }
 
 void ChickenBody::WorldMatrix()
@@ -437,10 +452,22 @@ void ChickenHead::InitMatrix4()
 	m_x_scale = 0.01f;
 	m_y_scale = 0.01f;
 	m_z_scale = 0.01f;
+}
 
-	m_x_pos = 0.f;
-	m_y_pos = 0.01;
-	m_z_pos = 0.f;
+void ChickenHead::InitMatrix4(bool player_id)
+{
+	if (!player_id) {
+
+		m_x_pos = 0.f;
+		m_y_pos = 0.01;
+		m_z_pos = 0.f;
+	}
+	else
+	{
+		m_x_pos = 0.f + offset_x;
+		m_y_pos = 0.01;
+		m_z_pos = 0.f;
+	}
 }
 
 void ChickenHead::WorldMatrix()
@@ -567,10 +594,14 @@ void ChickenMouse::InitMatrix4()
 	m_x_scale = 0.01f / 4;
 	m_y_scale = 0.01f / 3;
 	m_z_scale = 0.0125f;
+}
 
+void ChickenMouse::InitMatrix4(bool player_id)
+{
 	m_x_pos = 0.0f;
 	m_y_pos = 0.01f;
 	m_z_pos = 0.0f;
+	if (player_id) m_x_pos += offset_x;
 }
 
 void ChickenMouse::WorldMatrix()
@@ -721,10 +752,14 @@ void ChickenEyes::InitMatrix4()
 	m_x_scale = 0.011f;
 	m_y_scale = 0.01f / 5;
 	m_z_scale = 0.01f / 5;
+}
 
+void ChickenEyes::InitMatrix4(bool player_id)
+{
 	m_x_pos = 0.f;
 	m_y_pos = 0.0105;
 	m_z_pos = 0.f;
+	if (player_id) m_x_pos += offset_x;
 }
 
 void ChickenEyes::WorldMatrix()
@@ -866,13 +901,18 @@ void ChickenLeftArm::DrawObject()
 
 void ChickenLeftArm::InitMatrix4()
 {
+	m_x_scale = 0.00125f;
+	m_y_scale = 0.005f;
+	m_z_scale = 0.005f;
+}
+
+void ChickenLeftArm::InitMatrix4(bool player_id)
+{
 	m_x_pos = 0.0;
 	m_y_pos = -0.0005f;
 	m_z_pos = 0.f;
 
-	m_x_scale = 0.00125f;
-	m_y_scale = 0.005f;
-	m_z_scale = 0.005f;
+	if (player_id) m_x_pos += offset_x;
 }
 
 void ChickenLeftArm::handling()
@@ -1062,13 +1102,18 @@ void ChickenRightArm::DrawObject()
 
 void ChickenRightArm::InitMatrix4()
 {
+	m_x_scale = 0.00125f;
+	m_y_scale = 0.005f;
+	m_z_scale = 0.005f;
+}
+
+void ChickenRightArm::InitMatrix4(bool player_id)
+{
 	m_x_pos = 0.0;
 	m_y_pos = 0.0005f;
 	m_z_pos = 0.f;
 
-	m_x_scale = 0.00125f;
-	m_y_scale = 0.005f;
-	m_z_scale = 0.005f;
+	if (player_id) m_x_pos += offset_x;
 }
 
 void ChickenRightArm::WorldMatrix()
@@ -1233,10 +1278,15 @@ void ChickenLeftLeg::InitMatrix4()
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.0125f;
 	m_z_scale = 0.00125f;
+}
 
+void ChickenLeftLeg::InitMatrix4(bool player_id)
+{
 	m_x_pos = 0.f;
 	m_y_pos = -0.005f;
 	m_z_pos = 0.f;
+
+	if (player_id) m_x_pos += offset_x;
 }
 
 void ChickenLeftLeg::WorldMatrix()
@@ -1407,10 +1457,15 @@ void ChickenRightLeg::InitMatrix4()
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.0125f;
 	m_z_scale = 0.00125f;
+}
 
+void ChickenRightLeg::InitMatrix4(bool player_id)
+{
 	m_x_pos = 0.f;
 	m_y_pos = -0.005f;
 	m_z_pos = 0.f;
+
+	if (player_id) m_x_pos += offset_x;
 }
 
 void ChickenRightLeg::handling()

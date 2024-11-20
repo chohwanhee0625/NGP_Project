@@ -78,19 +78,19 @@ void SessionManager::InitWorldData(bool p_id[2])
 	//		# 수정할 것 
 	//		( SetChicken )
 	//		( ChickenBody::InitMatrix4() )  
-	const float x_offset = 0.5f;
+	//const float x_offset = 0.5f;
 
-	m_playerData[p_id[0]].player_pos_x = 0.0f + p_id[0] * x_offset;
+	m_playerData[p_id[0]].player_pos_x = 0.0f;
 	m_playerData[p_id[0]].player_pos_y = 0.0f;
 	m_playerData[p_id[0]].player_pos_z = 0.0f;
 
-	m_playerData[p_id[1]].player_pos_x = 0.0f + p_id[1] * x_offset;
+	m_playerData[p_id[1]].player_pos_x = 0.0f;
 	m_playerData[p_id[1]].player_pos_y = 0.0f;
 	m_playerData[p_id[1]].player_pos_z = 0.0f;
 
 	// # send 함수에서 호출해서 사용
-	m_InitPlayerData[0] = {0, m_playerData[p_id[0]].player_pos_x,m_playerData[p_id[0]].player_pos_y, m_playerData[p_id[0]].player_pos_z };
-	m_InitPlayerData[1] = {1, m_playerData[p_id[1]].player_pos_x,m_playerData[p_id[1]].player_pos_y, m_playerData[p_id[1]].player_pos_z };
+	m_InitPlayerData[0] = { 0 };
+	m_InitPlayerData[1] = { 1 };
 
 
 	//-----------------------------------------------------------------------------------------
@@ -200,7 +200,7 @@ void SessionManager::SendWorldData(SOCKET client_sock, int id)
 	// send Player Data
 	int other = 1 - id;
 	Send(client_sock, m_InitPlayerData[id].to_json());
-	Send(client_sock, m_InitPlayerData[other].to_json());
+	//Send(client_sock, m_InitPlayerData[other].to_json());
 	
 	// send Roads Data
 	Send(client_sock, m_roadData.to_json());

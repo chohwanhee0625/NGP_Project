@@ -21,7 +21,7 @@ private:
 	bool	m_coll;
 public:
 
-	ChickenBody(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenBody(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], bool id)
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ WALK_V },
@@ -34,12 +34,14 @@ public:
 		InitVertex(cube_array);
 		InitColor(color_array);
 		InitMatrix4();
+		InitMatrix4(id);
 		InitBuffer();
 	}
 
 	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
+	void InitMatrix4(bool player_id);
 	void WorldMatrix();
 
 	void initModelLocation();
@@ -80,7 +82,7 @@ private:
 
 public:
 
-	ChickenHead(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenHead(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], bool id)
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ WALK_V },
@@ -90,6 +92,7 @@ public:
 		InitVertex(cube_array);
 		InitColor(color_array);
 		InitMatrix4();
+		InitMatrix4(id);
 		InitBuffer();
 
 	}
@@ -97,6 +100,7 @@ public:
 	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
+	void InitMatrix4(bool player_id);
 	void WorldMatrix();
 
 	void initModelLocation();
@@ -131,7 +135,7 @@ private:
 	GLfloat  m_fyvelo;
 public:
 
-	ChickenMouse(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenMouse(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], bool id)
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ WALK_V },
@@ -144,12 +148,15 @@ public:
 		InitVertex(cube_array);
 		InitColor(color_array);
 		InitMatrix4();
+		InitMatrix4(id);
 		InitBuffer();
 	}
 
 	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
+	void InitMatrix4(bool player_id);
+
 	void WorldMatrix();
 
 	void initModelLocation();
@@ -185,7 +192,7 @@ private:
 
 public:
 
-	ChickenEyes(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenEyes(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], bool id)
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ WALK_V },
@@ -198,12 +205,15 @@ public:
 		InitVertex(cube_array);
 		InitColor(color_array);
 		InitMatrix4();
+		InitMatrix4(id);
 		InitBuffer();
 	}
 
 	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
+	void InitMatrix4(bool player_id);
+
 	void WorldMatrix();
 
 	void initModelLocation();
@@ -241,7 +251,7 @@ private:
 
 public:
 
-	ChickenLeftArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenLeftArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], bool id)
 		: BasisComponent(),
 		sign{ MINUS },
 		hand_degree{ 0.f },
@@ -259,12 +269,15 @@ public:
 		InitVertex(cube_array);
 		InitColor(color_array);
 		InitMatrix4();
+		InitMatrix4(id);
 		InitBuffer();
 	}
 
 	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
+	void InitMatrix4(bool player_id);
+
 	void WorldMatrix();
 
 	void initModelLocation();
@@ -303,7 +316,7 @@ private:
 
 public:
 
-	ChickenRightArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenRightArm(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], bool id)
 		: BasisComponent(),
 		sign{ PLUS },
 		hand_degree{ 0.f },
@@ -320,12 +333,15 @@ public:
 		InitVertex(cube_array);
 		InitColor(color_array);
 		InitMatrix4();
+		InitMatrix4(id);
 		InitBuffer();
 	}
 
 	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();;
 	void InitMatrix4();
+	void InitMatrix4(bool player_id);
+
 	void WorldMatrix();
 
 	void initModelLocation();
@@ -363,7 +379,7 @@ private:
 
 public:
 
-	ChickenLeftLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenLeftLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], bool id)
 		: BasisComponent(),
 		sign{ PLUS },
 		hand_degree{ 0.f },
@@ -380,12 +396,15 @@ public:
 		InitVertex(cube_array);
 		InitColor(color_array);
 		InitMatrix4();
+		InitMatrix4(id);
 		InitBuffer();
 	}
 
 	void InitColor(const GLfloat color_array[36 * 3]) override;
 	void DrawObject();
 	void InitMatrix4();
+	void InitMatrix4(bool player_id);
+
 	void WorldMatrix();
 
 	void initModelLocation();
@@ -425,7 +444,7 @@ private:
 	GLfloat  m_fyvelo;
 public:
 
-	ChickenRightLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3])
+	ChickenRightLeg(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], bool id)
 		: BasisComponent(),
 		sign{ MINUS },
 		hand_degree{ 0.f },
@@ -442,6 +461,7 @@ public:
 		InitVertex(cube_array);
 		InitColor(color_array);
 		InitMatrix4();
+		InitMatrix4(id);
 		InitBuffer();
 	}
 
@@ -449,6 +469,7 @@ public:
 	void DrawObject();
 	void WorldMatrix();
 	void InitMatrix4();
+	void InitMatrix4(bool player_id);
 
 	void initModelLocation();
 	void handling();
