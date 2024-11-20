@@ -1,7 +1,7 @@
 #if 1
 #include "usingInclude.h"
-#include "¼Ò½º.h"
-#include "¼Ò½º1.h"
+#include "ì†ŒìŠ¤.h"
+#include "ì†ŒìŠ¤1.h"
 #include "Basis.h"
 #include "Chicken.h"
 #include "grass.h"
@@ -19,7 +19,7 @@
 #include "GameManager.h"
 
 UI gPlaybutton;
-GameManager GM;
+GameManager gGameManager;
 bool GAME_START = false;
 
 //===========================================================================================
@@ -58,7 +58,7 @@ void make_vertexShaders(const char* vertex_path)
 	if (!result)
 	{
 		glGetShaderInfoLog(gVertexShader, 512, NULL, errorLog);
-		std::cout << "ERROR: vertex shader ÄÄÆÄÀÏ ½ÇÆĞ\n" << errorLog << std::endl;
+		std::cout << "ERROR: vertex shader ì»´íŒŒì¼ ì‹¤íŒ¨\n" << errorLog << std::endl;
 		return;
 	}
 }
@@ -75,11 +75,10 @@ void make_vertexShaders_1(const char* vertex_path)
 	if (!result)
 	{
 		glGetShaderInfoLog(gUIVertexShader, 512, NULL, errorLog);
-		std::cout << "ERROR: vertex shader ÄÄÆÄÀÏ ½ÇÆĞ\n" << errorLog << std::endl;
+		std::cout << "ERROR: vertex shader ì»´íŒŒì¼ ì‹¤íŒ¨\n" << errorLog << std::endl;
 		return;
 	}
 }
-
 
 void make_fragmentShaders(const char* fragment_path)
 {
@@ -93,7 +92,7 @@ void make_fragmentShaders(const char* fragment_path)
 	if (!result)
 	{
 		glGetShaderInfoLog(gFragmentShader, 512, NULL, errorLog);
-		std::cout << "ERROR: fragment shader ÄÄÆÄÀÏ ½ÇÆĞ\n" << errorLog << std::endl;
+		std::cout << "ERROR: fragment shader ì»´íŒŒì¼ ì‹¤íŒ¨\n" << errorLog << std::endl;
 		return;
 	}
 }
@@ -110,7 +109,7 @@ void make_fragmentShaders_1(const char* fragment_path)
 	if (!result)
 	{
 		glGetShaderInfoLog(gUIFragmentShader, 512, NULL, errorLog);
-		std::cout << "ERROR: fragment shader ÄÄÆÄÀÏ ½ÇÆĞ\n" << errorLog << std::endl;
+		std::cout << "ERROR: fragment shader ì»´íŒŒì¼ ì‹¤íŒ¨\n" << errorLog << std::endl;
 		return;
 	}
 }
@@ -137,17 +136,17 @@ void ShowMenu()
 {
 	cout << "=================================\n";
 
-	cout << "w/a/s/d: ´ßÀÌ °È´Â´Ù.\n";
-	cout << "t/T: Á¶¸í ²ô°í ÄÑ±â\n";
-	cout << "Shift : ´ß ¼Óµµ°¡ »¡¶óÁø´Ù.\n";
-	cout << "j/J : Á¡ÇÁÇÑ´Ù. Â÷¸¦ ³Ñ¾î°¥ ¼ö ÀÖ´Ù. \n";
-	cout << "p/P : 3ÀÎÄª/1ÀÎÄª Ä«¸Ş¶ó º¯È¯\n";
-	cout << "o/O : ±ÙÁ¢ 3ÀÎÄª Ä«¸Ş¶ó º¯È¯\n";
-	cout << "m/M : Ãæµ¹ ¹«½Ã Åä±Û\n";
-	cout << "u/U : ´ß ÀÌµ¿¼Óµµ ´ëÆø »ó½Â\n";
-	cout << "i/I : ´ß ÀÌµ¿¼Óµµ ´ëÆø ÇÏ¶ô\n";
+	cout << "w/a/s/d: ë‹­ì´ ê±·ëŠ”ë‹¤.\n";
+	cout << "t/T: ì¡°ëª… ë„ê³  ì¼œê¸°\n";
+	cout << "Shift : ë‹­ ì†ë„ê°€ ë¹¨ë¼ì§„ë‹¤.\n";
+	cout << "j/J : ì í”„í•œë‹¤. ì°¨ë¥¼ ë„˜ì–´ê°ˆ ìˆ˜ ìˆë‹¤. \n";
+	cout << "p/P : 3ì¸ì¹­/1ì¸ì¹­ ì¹´ë©”ë¼ ë³€í™˜\n";
+	cout << "o/O : ê·¼ì ‘ 3ì¸ì¹­ ì¹´ë©”ë¼ ë³€í™˜\n";
+	cout << "m/M : ì¶©ëŒ ë¬´ì‹œ í† ê¸€\n";
+	cout << "u/U : ë‹­ ì´ë™ì†ë„ ëŒ€í­ ìƒìŠ¹\n";
+	cout << "i/I : ë‹­ ì´ë™ì†ë„ ëŒ€í­ í•˜ë½\n";
 
-	cout << "q/Q : ÇÁ·Î±×·¥ Á¾·á\n";
+	cout << "q/Q : í”„ë¡œê·¸ë¨ ì¢…ë£Œ\n";
 
 	cout << "=================================\n";
 }
@@ -164,11 +163,11 @@ void main_viewport()
 	gCamera.PerspectiveProjection();
 	
 	if (gToggle[(int)Toggle::Perpective] == Third) {
-		// 3ÀÎÄª
+		// 3ì¸ì¹­
 		gCamera.SetViewTransform_ThirdPersonViewport();
 	}
 	else if (gToggle[(int)Toggle::Perpective] == One) {
-		// 1ÀÎÄª
+		// 1ì¸ì¹­
 		gCamera.SetViewTransform_FirstPersonViewport();
 	}
 
@@ -186,7 +185,7 @@ void chicken_viewport()
 	glViewport(gWidth - 150, gHeight - 130, 140, 120);
 
 	gCamera.PerspectiveProjection();
-	// Ä¡Å² °íÁ¤ Ä«¸Ş¶ó
+	// ì¹˜í‚¨ ê³ ì • ì¹´ë©”ë¼
 	gCamera.SetViewTransform_ChickenViewport();
 	gLight->Update();
 
@@ -200,7 +199,7 @@ void border_viewport()
 	int g_window_h = gHeight;
 
 	gCamera.PerspectiveProjection();
-	// Border Ä«¸Ş¶ó
+	// Border ì¹´ë©”ë¼
 	gCamera.SetViewTransform_BorderViewport();
 	gLight->InitLight();
 
@@ -212,7 +211,7 @@ void border_viewport()
 GLvoid DrawScene()
 {
 	glClearColor(0.5294f, 0.8078f, 0.9804f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // ±íÀÌ ¹öÆÛ Å¬¸®¾î
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // ê¹Šì´ ë²„í¼ í´ë¦¬ì–´
 
 	if (GAME_START == false)
 		gPlaybutton.Render();
@@ -233,6 +232,7 @@ GLvoid Reshape(int w, int h)
 
 void TimerFunction(int value)
 {
+
 	if (GAME_START) {
 		gCamera.Move();
 		gTimer.update();
@@ -241,10 +241,9 @@ void TimerFunction(int value)
 		gVecUpdate(deltatime);
 		gEnemyVecUpdate(deltatime);
 
-		glutPostRedisplay();				//È­¸é ÀçÃâ·Â
-		glutTimerFunc(10, TimerFunction, 1); // ´Ù½Ã È£Ãâ 
+		glutPostRedisplay();				//í™”ë©´ ì¬ì¶œë ¥
+		glutTimerFunc(10, TimerFunction, 1); // ë‹¤ì‹œ í˜¸ì¶œ 
 	}
-}
 
 GLvoid KeyUpboard(unsigned char key, int x, int y)
 {
@@ -291,8 +290,8 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			gPlaybutton.resize(0.5, 0.5, 1.0);
 			gPlaybutton.Render();
 
-			SOCKET sock = GM.WaitForOtherPlayer();
-			std::thread networkThread(&GameManager::UpdateWorld, &GM, sock);
+			SOCKET sock = gGameManager.WaitForOtherPlayer();
+			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
 			networkThread.detach();
 
 			GAME_START = true;
@@ -361,7 +360,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	case 'o': case'O':
 		SetNearFarCameraToggle();
 		break;
-		// ÇÁ·Î±×·¥ Á¾·á
+		// í”„ë¡œê·¸ë¨ ì¢…ë£Œ
 	case 'q': case 'Q':
 		glutLeaveMainLoop();
 		break;
@@ -373,7 +372,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		break;
 	
 
-		// ---------- ¸®¼Â  ----------
+		// ---------- ë¦¬ì…‹  ----------
 	case 'r': case'R':
 		SetOffAllofToggle(); 
 		SetInitToggle();
@@ -399,14 +398,14 @@ void InitBorder()
 	gBorder = new Border{ cube_vertex_array_normal, cube_color };
 }
 
-void SetgVec() // À°¸éÃ¼, »ç¸éÃ¼ Ã³À½ À§Ä¡ - ¸é ÃÑ 10°³
+void SetgVec() // ìœ¡ë©´ì²´, ì‚¬ë©´ì²´ ì²˜ìŒ ìœ„ì¹˜ - ë©´ ì´ 10ê°œ
 {
 	SetChicken();
-	//SetGround(); // µµ·Î + ÀÜµğ ¸¸µé±â
-	//SetCars(); // Â÷ ¸¸µé±â
-	//SetWoods(); // ³ª¹« ¸¸µé±â
-	//SetRoadLane(); // µµ·Î Èò»ö ¶óÀÎ ¸¸µé±â
-	//SetMother(); // µµÂøÁöÁ¡ ¾ö¸¶ ´ß ¸¸µé±â
+	//SetGround(); // ë„ë¡œ + ì”ë”” ë§Œë“¤ê¸°
+	//SetCars(); // ì°¨ ë§Œë“¤ê¸°
+	//SetWoods(); // ë‚˜ë¬´ ë§Œë“¤ê¸°
+	//SetRoadLane(); // ë„ë¡œ í°ìƒ‰ ë¼ì¸ ë§Œë“¤ê¸°
+	//SetMother(); // ë„ì°©ì§€ì  ì—„ë§ˆ ë‹­ ë§Œë“¤ê¸°
 	
 	//tagWall* pWall = new tagWall{ cube_vertex_array_normal, floor_color}; // 9
 	//gVec.push_back(pWall);
@@ -414,120 +413,129 @@ void SetgVec() // À°¸éÃ¼, »ç¸éÃ¼ Ã³À½ À§Ä¡ - ¸é ÃÑ 10°³
 
 void SetgEnemyVec()
 {
-	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color }; // 0 - ¸ö
+	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color }; // 0 - ëª¸
 	gEnemyVec.push_back(body);
-	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color }; // 1 - ¸Ó¸®
+	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color }; // 1 - ë¨¸ë¦¬
 	gEnemyVec.push_back(head);
-	ChickenMouse* mouse = new ChickenMouse{ cube_vertex_array_normal, cube_color }; // 2 - ÁÖµÕÀÌ
+	ChickenMouse* mouse = new ChickenMouse{ cube_vertex_array_normal, cube_color }; // 2 - ì£¼ë‘¥ì´
 	gEnemyVec.push_back(mouse);
-	ChickenEyes* eyes = new ChickenEyes{ cube_vertex_array_normal, cube_color }; // 3 - ´«
+	ChickenEyes* eyes = new ChickenEyes{ cube_vertex_array_normal, cube_color }; // 3 - ëˆˆ
 	gEnemyVec.push_back(eyes);
 
-	ChickenLeftArm* Larm = new ChickenLeftArm{ cube_vertex_array_normal, cube_color }; // 4 - ¿ŞÆÈ
+	ChickenLeftArm* Larm = new ChickenLeftArm{ cube_vertex_array_normal, cube_color }; // 4 - ì™¼íŒ”
 	gEnemyVec.push_back(Larm);
-	ChickenRightArm* Rarm = new ChickenRightArm{ cube_vertex_array_normal, cube_color }; // 5 - ¿À¸¥ÆÈ
+	ChickenRightArm* Rarm = new ChickenRightArm{ cube_vertex_array_normal, cube_color }; // 5 - ì˜¤ë¥¸íŒ”
 	gEnemyVec.push_back(Rarm);
 
-	ChickenLeftLeg* Lleg = new ChickenLeftLeg{ cube_vertex_array_normal, cube_color }; // 6 - ¿Ş´Ù¸®
+	ChickenLeftLeg* Lleg = new ChickenLeftLeg{ cube_vertex_array_normal, cube_color }; // 6 - ì™¼ë‹¤ë¦¬
 	gEnemyVec.push_back(Lleg);
-	ChickenRightLeg* Rleg = new ChickenRightLeg{ cube_vertex_array_normal, cube_color }; // 7 - ¿À¸¥´Ù¸®
+	ChickenRightLeg* Rleg = new ChickenRightLeg{ cube_vertex_array_normal, cube_color }; // 7 - ì˜¤ë¥¸ë‹¤ë¦¬
 	gEnemyVec.push_back(Rleg);
 }
 
 void SetChicken()
 {
-	// ÇÃ·¹ÀÌÇÒ ÁÖÀÎ°ø ´ß ¸¸µé±â
-	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color }; // 0 - ¸ö
+	// í”Œë ˆì´í•  ì£¼ì¸ê³µ ë‹­ ë§Œë“¤ê¸°
+	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color }; // 0 - ëª¸
 	gVec.push_back(body);
-	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color }; // 1 - ¸Ó¸®
+	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color }; // 1 - ë¨¸ë¦¬
 	gVec.push_back(head);
-	ChickenMouse* mouse = new ChickenMouse{ cube_vertex_array_normal, cube_color }; // 2 - ÁÖµÕÀÌ
+	ChickenMouse* mouse = new ChickenMouse{ cube_vertex_array_normal, cube_color }; // 2 - ì£¼ë‘¥ì´
 	gVec.push_back(mouse);
-	ChickenEyes* eyes = new ChickenEyes{ cube_vertex_array_normal, cube_color }; // 3 - ´«
+	ChickenEyes* eyes = new ChickenEyes{ cube_vertex_array_normal, cube_color }; // 3 - ëˆˆ
 	gVec.push_back(eyes);
 
-	ChickenLeftArm* Larm = new ChickenLeftArm{ cube_vertex_array_normal, cube_color }; // 4 - ¿ŞÆÈ
+	ChickenLeftArm* Larm = new ChickenLeftArm{ cube_vertex_array_normal, cube_color }; // 4 - ì™¼íŒ”
 	gVec.push_back(Larm);
-	ChickenRightArm* Rarm = new ChickenRightArm{ cube_vertex_array_normal, cube_color }; // 5 - ¿À¸¥ÆÈ
+	ChickenRightArm* Rarm = new ChickenRightArm{ cube_vertex_array_normal, cube_color }; // 5 - ì˜¤ë¥¸íŒ”
 	gVec.push_back(Rarm);
 
-	ChickenLeftLeg* Lleg = new ChickenLeftLeg{ cube_vertex_array_normal, cube_color }; // 6 - ¿Ş´Ù¸®
+	ChickenLeftLeg* Lleg = new ChickenLeftLeg{ cube_vertex_array_normal, cube_color }; // 6 - ì™¼ë‹¤ë¦¬
 	gVec.push_back(Lleg);
-	ChickenRightLeg* Rleg = new ChickenRightLeg{ cube_vertex_array_normal, cube_color }; // 7 - ¿À¸¥´Ù¸®
+	ChickenRightLeg* Rleg = new ChickenRightLeg{ cube_vertex_array_normal, cube_color }; // 7 - ì˜¤ë¥¸ë‹¤ë¦¬
 	gVec.push_back(Rleg);
 }
 
 void SetGround(INIT_DATA_R road_data)
 {
-	// ¶¥ ¸¸µé±â ( ÀÜµğ, µµ·Î )
+	// ë•… ë§Œë“¤ê¸° ( ì”ë””, ë„ë¡œ )
 
 	Road* pRoad{};
 	RoadLane* pLine{};
 	Grass* pFloor{};
 
-	int map_size = road_data.Roads_Flags.size();
+	int map_size = road_data.Roads_Flags.size() - 10;
 	int idx = 0;
 	while (idx < map_size)
 	{
 		bool isGrass = road_data.Roads_Flags[idx];
-		bool carDir = road_data.Dir_Flags[idx];
 
 		if (isGrass == GRASS) {
 			//bool finalGrass = (idx >= map_size - 11);
-			pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx, false }; // ÀÜµğ 1Ä­ ¼³Ä¡
+			pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx, false }; // ì”ë”” 1ì¹¸ ì„¤ì¹˜
 			gVec.push_back(pFloor);
 		}
 		else if (isGrass == ROAD) {
-			pRoad = new Road{ cube_vertex_array_normal, floor_color, idx, carDir }; // Á¤Á¡, »ö, ÁöÇü ÀÎµ¦½º( ¸î ¹øÂ° µµ·ÎÀÎÁö ), Â÷ ¹æÇâ ÀÎ¼ö·Î Àü´Ş
+			bool carDir = road_data.Dir_Flags[idx];
+
+			pRoad = new Road{ cube_vertex_array_normal, floor_color, idx, carDir }; // ì •ì , ìƒ‰, ì§€í˜• ì¸ë±ìŠ¤( ëª‡ ë²ˆì§¸ ë„ë¡œì¸ì§€ ), ì°¨ ë°©í–¥ ì¸ìˆ˜ë¡œ ì „ë‹¬
 			gVec.push_back(pRoad);
 
-			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 , idx }; // µµ·Î Èò»ö ¶óÀÎ 
+			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 , idx }; // ë„ë¡œ í°ìƒ‰ ë¼ì¸ 
 			gVec.push_back(pLine);
 		}
 
 		++idx;
 	}
 
-	//int count{};
-	//Road* pRoad{};
-	//RoadLane* pLine{};
-	//Grass* pFloor{};
-	//int idx{ 0 };
-	//pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,false };
-	//gVec.push_back(pFloor);
-	//++idx;
+	for (int i{}; i < 10; ++i) 
+	{
+		pFloor = new Grass{ cube_vertex_array_normal, floor_color, i + idx ,true }; 
+		gVec.push_back(pFloor); 
+	}
 
-	//while(idx < 150) {
-	//	// ·£´ı °³¼ö¸¸Å­ µµ·Î¸¦ ¿¬¼ÓÀ¸·Î ¸¸µé°í ÀÜµğ ÇÑÄ­ ¸¸µé°í ´Ù½Ã ·£´ı °³¼ö·Î µµ·Î ¸¸µé±â ( µµ·Î 3Ä­ -> ÀÜµğ 1Ä­ -> µµ·Î 5Ä­ -> ÀÜµğ 1Ä­ .. )
-	//	int cnt{ gRoadSet(gRandomEngine) };
+#if 0
+	int count{};
+	Road* pRoad{};
+	RoadLane* pLine{};
+	Grass* pFloor{};
+	int idx{ 0 };
+	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,false };
+	gVec.push_back(pFloor);
+	++idx;
 
-	//	for (int j = 0; j < cnt; ++j) {
-	//		count++;
-	//		
-	//		bool carDir = gBoolUniform(gRandomEngine);
-	//		pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx, carDir }; // Á¤Á¡, »ö, ÁöÇü ÀÎµ¦½º( ¸î ¹øÂ° µµ·ÎÀÎÁö ) ÀÎ¼ö·Î Àü´Ş
-	//		gVec.push_back(pRoad);
-	//		
-	//		pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // µµ·Î Èò»ö ¶óÀÎ 
-	//		gVec.push_back(pLine); 
-	//	}
-	//	idx += cnt; // µµ·Î °³¼ö¸¸Å­ idx Áõ°¡
+	while(idx < 150) {
+		// ëœë¤ ê°œìˆ˜ë§Œí¼ ë„ë¡œë¥¼ ì—°ì†ìœ¼ë¡œ ë§Œë“¤ê³  ì”ë”” í•œì¹¸ ë§Œë“¤ê³  ë‹¤ì‹œ ëœë¤ ê°œìˆ˜ë¡œ ë„ë¡œ ë§Œë“¤ê¸° ( ë„ë¡œ 3ì¹¸ -> ì”ë”” 1ì¹¸ -> ë„ë¡œ 5ì¹¸ -> ì”ë”” 1ì¹¸ .. )
+		int cnt{ gRoadSet(gRandomEngine) };
 
-	//	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx,false }; // ÀÜµğ 1Ä­ ¼³Ä¡
-	//	gVec.push_back(pFloor);
-	//	++idx;
-	//}
+		for (int j = 0; j < cnt; ++j) {
+			count++;
+			
+			bool carDir = gBoolUniform(gRandomEngine);
+			pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx, carDir }; // ì •ì , ìƒ‰, ì§€í˜• ì¸ë±ìŠ¤( ëª‡ ë²ˆì§¸ ë„ë¡œì¸ì§€ ) ì¸ìˆ˜ë¡œ ì „ë‹¬
+			gVec.push_back(pRoad);
+			
+			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // ë„ë¡œ í°ìƒ‰ ë¼ì¸ 
+			gVec.push_back(pLine); 
+		}
+		idx += cnt; // ë„ë¡œ ê°œìˆ˜ë§Œí¼ idx ì¦ê°€
 
-	//// true: ¸¶Áö¸· ÀÜµğ ¶¥ Ç¥½Ã -> ³ª¹« ¼³Ä¡X, ¾ö¸¶ À§Ä¡( 1Ä­ ¾Æ´Ô )
-	//pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,true};
-	//gVec.push_back(pFloor);
-	//
-	//for (int i{}; i < 10; ++i)
-	//{
-	//	pFloor = new Grass{ cube_vertex_array_normal, floor_color, i+idx ,true };
-	//	gVec.push_back(pFloor);
-	//}
-	//// µµÂø ÁöÁ¡ ÀÜµğ ¼³Ä¡
+		pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx,false }; // ì”ë”” 1ì¹¸ ì„¤ì¹˜
+		gVec.push_back(pFloor);
+		++idx;
+	}
+
+	// true: ë§ˆì§€ë§‰ ì”ë”” ë•… í‘œì‹œ -> ë‚˜ë¬´ ì„¤ì¹˜X, ì—„ë§ˆ ìœ„ì¹˜( 1ì¹¸ ì•„ë‹˜ )
+	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,true};
+	gVec.push_back(pFloor);
+	
+	for (int i{}; i < 10; ++i)
+	{
+		pFloor = new Grass{ cube_vertex_array_normal, floor_color, i+idx ,true };
+		gVec.push_back(pFloor);
+	}
+	//// ë„ì°© ì§€ì  ì”ë”” ì„¤ì¹˜
+#endif
 }
 
 void SetCars(INIT_DATA_C car_data)
@@ -551,37 +559,35 @@ void SetCars(INIT_DATA_C car_data)
 		}
 	}
 	
-	cout << "Â÷ °³¼ö: " << cnt << '\n';
+	cout << "ì°¨ ê°œìˆ˜: " << cnt << '\n';
 }
 
 void SetWoods(INIT_DATA_W wood_data)
 {
-	int cnt{};
-	size_t size{ wood_data.Woods_Flags.size() };
+
+	int grass_cnt{};
 
 
-	for (int i{}; i < size; ++i)
+	for (int i{}; i < gVec.size(); ++i) 
 	{
 		if (dynamic_cast<Grass*>(gVec[i]) != nullptr && !gVec.at(i)->IsFinalGrass())
 		{
 			for (int j = 1; j < 13; ++j) {
-				bool TF = wood_data.Woods_Flags[i][j-1];
+				bool should_place_wood = wood_data.Woods_Flags[grass_cnt][j-1];
 
-				if (TF) {
+				if (should_place_wood) {
 					Wood* pWood = new Wood{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
 					WoodLeaf_1* pGrass1 = new WoodLeaf_1{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
 					WoodLeaf_2* pGrass2 = new WoodLeaf_2{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() };
-					WoodLeaf_3* pGrass3 = new WoodLeaf_3{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() }; // grassÀÇ inumÇÊ¿ä 
+					WoodLeaf_3* pGrass3 = new WoodLeaf_3{ cube_vertex_array_normal, floor_color, j , gVec[i]->GetZindex() }; // grassì˜ inumí•„ìš” 
 
 					gVec.push_back(pWood);
 					gVec.push_back(pGrass1);
 					gVec.push_back(pGrass2);
 					gVec.push_back(pGrass3);
-
-					cnt++;
 				}
 			}
-
+			grass_cnt++;
 		}
 	}
 }
@@ -598,7 +604,7 @@ void SetRoadLane()
 			gVec.at(i)->CreateLane();
 		}
 	}
-	cout << "Â÷¼± °³¼ö: " << cnt << '\n';
+	cout << "ì°¨ì„  ê°œìˆ˜: " << cnt << '\n';
 }
 
 void SetMother()
@@ -609,7 +615,7 @@ void SetMother()
 	{
 		if (dynamic_cast<Grass*>(gVec[i]) != nullptr && !gVec.at(i)->IsFinalGrass()) 
 		{ 
-			g_max_z = gVec[i]->GetZindex(); // ¸Ç ¸¶Áö¸· ÀÜµğÀÇ ÀÎµ¦½º¸¦ ¾ò±â -> ¾ö¸¶´ßÀÇ À§Ä¡ ÃÊ±âÈ­¸¦ À§ÇÔ
+			g_max_z = gVec[i]->GetZindex(); // ë§¨ ë§ˆì§€ë§‰ ì”ë””ì˜ ì¸ë±ìŠ¤ë¥¼ ì–»ê¸° -> ì—„ë§ˆë‹­ì˜ ìœ„ì¹˜ ì´ˆê¸°í™”ë¥¼ ìœ„í•¨
 		}
 	}
 
@@ -639,7 +645,7 @@ void SetMother()
 
 void gVecClear()
 {
-	// »õ·Î ½ÃÀÛÇÏ±â À§ÇØ °´Ã¼ Áö¿ì±â
+	// ìƒˆë¡œ ì‹œì‘í•˜ê¸° ìœ„í•´ ê°ì²´ ì§€ìš°ê¸°
 	for (auto& obj : gVec) {
 		delete obj;
 	}
@@ -700,7 +706,7 @@ void SetInitToggle()
 
 void SetLightToggle()
 {
-	unsigned int light_on = glGetUniformLocation(gShaderProgramID, "u_lightOn"); //--- ¹öÅØ½º ¼¼ÀÌ´õ¿¡¼­ ¸ğµ¨¸µ º¯È¯ À§Ä¡ °¡Á®¿À±â
+	unsigned int light_on = glGetUniformLocation(gShaderProgramID, "u_lightOn"); //--- ë²„í…ìŠ¤ ì„¸ì´ë”ì—ì„œ ëª¨ë¸ë§ ë³€í™˜ ìœ„ì¹˜ ê°€ì ¸ì˜¤ê¸°
 
 	if (gToggle[(int)Toggle::Light] == OFF) {
 		gToggle[(int)Toggle::Light] = ON;
@@ -718,11 +724,11 @@ void SetPerspectiveToggle()
 {
 	if (gToggle[(int)Toggle::Perpective] == Third) {
 		gToggle[(int)Toggle::Perpective] = One;
-		cout << "1ÀÎÄª Ä«¸Ş¶ó : ON\n";
+		cout << "1ì¸ì¹­ ì¹´ë©”ë¼ : ON\n";
 	}
 	else if (gToggle[(int)Toggle::Perpective] == One) {
 		gToggle[(int)Toggle::Perpective] = Third;
-		cout << "3ÀÎÄª Ä«¸Ş¶ó : ON\n";
+		cout << "3ì¸ì¹­ ì¹´ë©”ë¼ : ON\n";
 	}
 }
 
@@ -730,11 +736,11 @@ void SetNearFarCameraToggle()
 {
 	if (gToggle[(int)Toggle::NearFar] == Near) {
 		gToggle[(int)Toggle::NearFar] = Far;
-		cout << "¸Õ 3ÀÎÄª Ä«¸Ş¶ó : ON\n";
+		cout << "ë¨¼ 3ì¸ì¹­ ì¹´ë©”ë¼ : ON\n";
 	}
 	else if (gToggle[(int)Toggle::NearFar] == Far) {
 		gToggle[(int)Toggle::NearFar] = Near;
-		cout << "°¡±î¿î 3ÀÎÄª Ä«¸Ş¶ó : ON\n";
+		cout << "ê°€ê¹Œìš´ 3ì¸ì¹­ ì¹´ë©”ë¼ : ON\n";
 	}
 }
 

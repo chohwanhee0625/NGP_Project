@@ -1,6 +1,6 @@
 #include "GameManager.h"
 #include "PacketIO.h"
-#include "¼Ò½º.h"
+#include "ì†ŒìŠ¤.h"
 
 char* SERVERIP = (char*)"127.0.0.1";
 
@@ -26,11 +26,14 @@ SOCKET GameManager::WaitForOtherPlayer()
 
 	// recv Start Flag
 	std::string start_flag = Recv(sock);
+	S_GAME_READY GameR{};
+	GameR.from_json(start_flag);
 
 	// recv world Data
 	RecvWorldData(sock);
 
-	std::cout << "°ÔÀÓ ½ÃÀÛ °¡´É?" << std::endl;
+
+	std::cout << "ê²Œì„ ì‹œì‘ ê°€ëŠ¥?" << std::endl;
 	return sock;
 }
 
@@ -59,31 +62,62 @@ void GameManager::RecvWorldData(SOCKET sock)
 {
 	using namespace std;
 
+	//=============================================================
 	// recv Player Data
-	INIT_DATA_P m_InitPlayerData[2];
+	INIT_DATA_P m_InitPlayerData[2]; 
+
 	std::string j_str = Recv(sock);
 	m_InitPlayerData[0].from_json(j_str);		// MY Player Data
+	float x = m_InitPlayerData[0].Player_Pos_x;
+	float y = m_InitPlayerData[0].Player_Pos_y;
+	float z = m_InitPlayerData[0].Player_Pos_z;
 	//SetChicken(m_InitPlayerData[0]);
+
+
 	j_str = Recv(sock);
 	m_InitPlayerData[1].from_json(j_str);		// Other Player Data
+	x = m_InitPlayerData[1].Player_Pos_x;
+	y = m_InitPlayerData[1].Player_Pos_y;
+	z = m_InitPlayerData[1].Player_Pos_z;
 	//SetgEnemyVec(m_InitPlayerData[1]);
 	cout << "Set Chicken" << endl;
-
+	//=============================================================
 	// recv Roads Data
 	INIT_DATA_R m_roadData;
+
 	j_str = Recv(sock);
 	m_roadData.from_json(j_str);
+
+	std::vector<bool> Roads_Flags = m_roadData.Roads_Flags;
+	std::vector<bool> Dir_Flags = m_roadData.Dir_Flags;
+	// 0: Road
+	// 1: Grass 
+	// 0 : LEFT  -> PLUS  -> ì™¼ìª½ì—ì„œ íƒœì–´ë‚˜ì„œ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì´ë™
+	// 1 : RIGHT -> MINUS -> ì˜¤ë¥¸ìª½ì—ì„œ íƒœì–´ë‚˜ì„œ ì™¼ìª½ìœ¼ë¡œ ì´ë™
+
 	SetGround(m_roadData);
 	cout << "Set Roads" << endl;
 
+
+	//=============================================================
 	// recv Cars Data
 	INIT_DATA_C m_carData;
 	j_str = Recv(sock);
 	m_carData.from_json(j_str);
 	//SetCars(m_carData);
+
 	SetCars(m_carData);
+
+
+	std::vector<float>	Cars_Velocity = m_carData.Cars_Velocity;
+	std::vector<std::array<float, 3>> Cars_Color_RGB = m_carData.Cars_Color_RGB;
+	
+	SetCars();
+
 	cout << "Set Cars" << endl;
 
+
+	//=============================================================
 	// recv Woods Data
 	INIT_DATA_W m_woodData;
 	j_str = Recv(sock);
@@ -91,8 +125,11 @@ void GameManager::RecvWorldData(SOCKET sock)
 	SetWoods(m_woodData);
 	cout << "Set Woods" << endl;
 
-	SetRoadLane(); // µµ·Î Èò»ö ¶óÀÎ ¸¸µé±â
-	SetMother(); // µµÂøÁöÁ¡ ¾ö¸¶ ´ß ¸¸µé±â
+
+	//=============================================================
+
+	SetRoadLane(); // ë„ë¡œ í°ìƒ‰ ë¼ì¸ ë§Œë“¤ê¸°
+	SetMother(); // ë„ì°©ì§€ì  ì—„ë§ˆ ë‹­ ë§Œë“¤ê¸°
 }
 
 void GameManager::SetWorldData()
