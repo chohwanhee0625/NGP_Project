@@ -117,8 +117,8 @@
     <ClInclude Include="usingInclude.h">
       <Filter>Default</Filter>
     </ClInclude>
-    <ClInclude Include="소스1.h" />
-    <ClInclude Include="소스.h" />
+    <ClInclude Include="Souce1.h" />
+    <ClInclude Include="Souce.h" />
     <ClInclude Include="grass.h">
       <Filter>Class\Object\Ground</Filter>
     </ClInclude>

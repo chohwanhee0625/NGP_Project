@@ -1,6 +1,6 @@
 #include "GameManager.h"
 #include "PacketIO.h"
-#include "소스.h"
+#include "Souce.h"
 
 char* SERVERIP = (char*)"127.0.0.1";
 
@@ -112,7 +112,6 @@ void GameManager::RecvWorldData(SOCKET sock)
 	std::vector<float>	Cars_Velocity = m_carData.Cars_Velocity;
 	std::vector<std::array<float, 3>> Cars_Color_RGB = m_carData.Cars_Color_RGB;
 	
-	SetCars();
 
 	cout << "Set Cars" << endl;
 

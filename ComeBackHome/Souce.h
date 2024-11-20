@@ -1,4 +1,4 @@
-#if 1
+ï»¿#if 1
 #pragma once
 #include "Basis.h"
 
@@ -47,10 +47,10 @@ void SetMother();
 //===========================================================================================
 
 void SetInitToggle();
-void SetOffAllofToggle(); // ¾È¾¸
+void SetOffAllofToggle(); // ì•ˆì”€
 void SetLightToggle();
 void SetPerspectiveToggle();
-void SetNearFarCameraToggle(); // °¡±î¿î 3ÀÎÄª Ä«¸Ş¶ó Åä±Û
+void SetNearFarCameraToggle(); // ê°€ê¹Œìš´ 3ì¸ì¹­ ì¹´ë©”ë¼ í† ê¸€
 
 //===========================================================================================
 
