@@ -13,22 +13,36 @@ private:
 public:
 	Car()
 	{}
-	Car(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int dir, int idx) 
+	Car(const GLfloat cube_array[36 * 6], const GLfloat color_array[36 * 3], int dir, int idx,float speed,float R,float G,float B) 
 		: BasisComponent(),
-		m_velocity{ CAR_SPEED } // 속도 변경 가능 
+		m_velocity{ speed } // 속도 변경 가능 
 		, m_idx{idx}, m_dir{dir}
 	{
 		InitVertex(cube_array);
-		InitColor(color_array);
+		//InitColor(color_array);
+		setcolor(R, G, B);
 		InitMatrix4();
 		InitBuffer();
 		CreateCar();
 	}
 
 	void InitColor(const GLfloat color_array[36 * 3]) override;
+	
+	void setcolor(float R, float G, float B) {
+		cout << "R: " << R << endl;
+		cout << "G: " << G << endl;
+		cout << "B: " << B << endl;
+
+		for (int i = 0; i < 36 * 3; i += 3) {
+			m_color[i + 0] = R;
+			m_color[i + 1] = G;
+			m_color[i + 2] = B;
+		}
+	};
+	
 	void DrawObject();
 	void InitMatrix4();
-
+	void Set_m_velocity(GLfloat f) { m_velocity = f; };
 	virtual void Move(float deltatime);
 	virtual void CreateCar();
 	void Update(float deltatime)override;

@@ -21,6 +21,8 @@ void Car::Move(float deltatime)
 		m_x_pos = 0.55f;
 }
 
+
+
 void Car::Update(float deltatime)
 {
 	Move(deltatime);
@@ -74,6 +76,8 @@ void Car::InitMatrix4()
 
 	m_velocity = m_velocity + (m_idx * 0.002 * gCarspeed(gRandomEngine));
 }
+
+
 
 void Car::CreateCar()
 {

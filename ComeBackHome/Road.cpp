@@ -64,9 +64,10 @@ void Road::InitCarSpawnDir(bool carDir)
 		m_car_spawn_dir = MINUS;
 }
 
-void Road::CreateCar()
+void Road::CreateCar(float speed, float R, float G, float B)
 {
-	Car* car = new Car(m_vertex, m_color, m_car_spawn_dir, m_index);
+	Car* car = new Car(m_vertex, m_color, m_car_spawn_dir, m_index, speed,R,G,B);
+
 	gVec.push_back(car);
 }
 

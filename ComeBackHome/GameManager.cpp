@@ -1,6 +1,6 @@
 #include "GameManager.h"
 #include "PacketIO.h"
-#include "¼Ò½º.h"
+#include "ì†ŒìŠ¤.h"
 
 char* SERVERIP = (char*)"127.0.0.1";
 
@@ -33,7 +33,7 @@ SOCKET GameManager::WaitForOtherPlayer()
 	RecvWorldData(sock);
 
 
-	std::cout << "°ÔÀÓ ½ÃÀÛ °¡´É?" << std::endl;
+	std::cout << "ê²Œì„ ì‹œì‘ ê°€ëŠ¥?" << std::endl;
 	return sock;
 }
 
@@ -92,8 +92,8 @@ void GameManager::RecvWorldData(SOCKET sock)
 	std::vector<bool> Dir_Flags = m_roadData.Dir_Flags;
 	// 0: Road
 	// 1: Grass 
-	// 0 : LEFT  -> PLUS  -> ¿ŞÂÊ¿¡¼­ ÅÂ¾î³ª¼­ ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿
-	// 1 : RIGHT -> MINUS -> ¿À¸¥ÂÊ¿¡¼­ ÅÂ¾î³ª¼­ ¿ŞÂÊÀ¸·Î ÀÌµ¿
+	// 0 : LEFT  -> PLUS  -> ì™¼ìª½ì—ì„œ íƒœì–´ë‚˜ì„œ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì´ë™
+	// 1 : RIGHT -> MINUS -> ì˜¤ë¥¸ìª½ì—ì„œ íƒœì–´ë‚˜ì„œ ì™¼ìª½ìœ¼ë¡œ ì´ë™
 
 	SetGround(m_roadData);
 	cout << "Set Roads" << endl;
@@ -106,10 +106,14 @@ void GameManager::RecvWorldData(SOCKET sock)
 	m_carData.from_json(j_str);
 	//SetCars(m_carData);
 
+	SetCars(m_carData);
+
+
 	std::vector<float>	Cars_Velocity = m_carData.Cars_Velocity;
 	std::vector<std::array<float, 3>> Cars_Color_RGB = m_carData.Cars_Color_RGB;
 	
 	SetCars();
+
 	cout << "Set Cars" << endl;
 
 
@@ -124,8 +128,8 @@ void GameManager::RecvWorldData(SOCKET sock)
 
 	//=============================================================
 
-	SetRoadLane(); // µµ·Î Èò»ö ¶óÀÎ ¸¸µé±â
-	SetMother(); // µµÂøÁöÁ¡ ¾ö¸¶ ´ß ¸¸µé±â
+	SetRoadLane(); // ë„ë¡œ í°ìƒ‰ ë¼ì¸ ë§Œë“¤ê¸°
+	SetMother(); // ë„ì°©ì§€ì  ì—„ë§ˆ ë‹­ ë§Œë“¤ê¸°
 }
 
 void GameManager::SetWorldData()

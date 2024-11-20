@@ -155,7 +155,7 @@ void SessionManager::InitWorldData(bool p_id[2])
 		if (ROAD == m_roadData.Roads_Flags[i])
 		{
 			// 인덱스에 편차줘서 속도 설정
-			m_carData.Cars_Velocity.emplace_back(i * 0.002 * gCarspeed(gRandomEngine));
+			m_carData.Cars_Velocity.emplace_back(0.1 + i * 0.002 * gCarspeed(gRandomEngine));
 			
 			// 넘길 차 색상 값 선언 초기화
 			// float tempRGB[static_cast<int>(RGB::END)]{ gRandomColor(gRandomEngine),gRandomColor(gRandomEngine),gRandomColor(gRandomEngine)};
