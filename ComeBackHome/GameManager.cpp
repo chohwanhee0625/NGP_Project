@@ -81,7 +81,7 @@ void GameManager::RecvWorldData(SOCKET sock)
 	j_str = Recv(sock);
 	m_carData.from_json(j_str);
 	//SetCars(m_carData);
-	SetCars();
+	SetCars(m_carData);
 	cout << "Set Cars" << endl;
 
 	// recv Woods Data

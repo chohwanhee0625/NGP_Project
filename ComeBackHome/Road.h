@@ -28,7 +28,7 @@ public:
 	void Update(float deltatime) override;
 
 	void InitCarSpawnDir(bool carDir);
-	void CreateCar() override;
+	virtual void CreateCar(float speed, float R, float G, float B)override;
 	void CreateLane()override;
 
 	int GetZindex()override { return m_index; }
