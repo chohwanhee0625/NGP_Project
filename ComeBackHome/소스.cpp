@@ -232,7 +232,6 @@ GLvoid Reshape(int w, int h)
 
 void TimerFunction(int value)
 {
-
 	if (GAME_START) {
 		gCamera.Move();
 		gTimer.update();
@@ -245,6 +244,7 @@ void TimerFunction(int value)
 		glutTimerFunc(10, TimerFunction, 1); // 다시 호출 
 	}
 }
+
 GLvoid KeyUpboard(unsigned char key, int x, int y)
 {
 	switch (key)
@@ -411,51 +411,50 @@ void SetgVec() // 육면체, 사면체 처음 위치 - 면 총 10개
 	//gVec.push_back(pWall);
 }
 
-void SetgEnemyVec(bool b)
+void SetgEnemyVec(bool my_id)
 {
-	b = !b;
+	bool other_id = !my_id;
 
-	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color,b }; // 0 - 몸
+	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color, other_id }; // 0 - 몸
 	gEnemyVec.push_back(body);
-	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color,b }; // 1 - 머리
+	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color, other_id }; // 1 - 머리
 	gEnemyVec.push_back(head);
-	ChickenMouse* mouse = new ChickenMouse{ cube_vertex_array_normal, cube_color,b }; // 2 - 주둥이
+	ChickenMouse* mouse = new ChickenMouse{ cube_vertex_array_normal, cube_color, other_id }; // 2 - 주둥이
 	gEnemyVec.push_back(mouse);
-	ChickenEyes* eyes = new ChickenEyes{ cube_vertex_array_normal, cube_color,b }; // 3 - 눈
+	ChickenEyes* eyes = new ChickenEyes{ cube_vertex_array_normal, cube_color, other_id }; // 3 - 눈 
 	gEnemyVec.push_back(eyes);
 
-	ChickenLeftArm* Larm = new ChickenLeftArm{ cube_vertex_array_normal, cube_color,b }; // 4 - 왼팔
+	ChickenLeftArm* Larm = new ChickenLeftArm{ cube_vertex_array_normal, cube_color, other_id }; // 4 - 왼팔 
 	gEnemyVec.push_back(Larm);
-	ChickenRightArm* Rarm = new ChickenRightArm{ cube_vertex_array_normal, cube_color,b }; // 5 - 오른팔
+	ChickenRightArm* Rarm = new ChickenRightArm{ cube_vertex_array_normal, cube_color,other_id }; // 5 - 오른팔 
 	gEnemyVec.push_back(Rarm);
 
-	ChickenLeftLeg* Lleg = new ChickenLeftLeg{ cube_vertex_array_normal, cube_color,b }; // 6 - 왼다리
-	gEnemyVec.push_back(Lleg);
-	ChickenRightLeg* Rleg = new ChickenRightLeg{ cube_vertex_array_normal, cube_color,b }; // 7 - 오른다리
+	ChickenLeftLeg* Lleg = new ChickenLeftLeg{ cube_vertex_array_normal, cube_color, other_id }; // 6 - 왼다리 
+	gEnemyVec.push_back(Lleg); 
+	ChickenRightLeg* Rleg = new ChickenRightLeg{ cube_vertex_array_normal, cube_color,other_id }; // 7 - 오른다리 
 	gEnemyVec.push_back(Rleg);
 }
 
-void SetChicken(bool b)
+void SetChicken(bool my_id)
 {
-
 	// 플레이할 주인공 닭 만들기
-	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color,b }; // 0 - 몸
+	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color, my_id }; // 0 - 몸 
 	gVec.push_back(body);
-	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color,b }; // 1 - 머리
+	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color, my_id }; // 1 - 머리
 	gVec.push_back(head);
-	ChickenMouse* mouse = new ChickenMouse{ cube_vertex_array_normal, cube_color,b }; // 2 - 주둥이
+	ChickenMouse* mouse = new ChickenMouse{ cube_vertex_array_normal, cube_color,my_id }; // 2 - 주둥이
 	gVec.push_back(mouse);
-	ChickenEyes* eyes = new ChickenEyes{ cube_vertex_array_normal, cube_color ,b }; // 3 - 눈
+	ChickenEyes* eyes = new ChickenEyes{ cube_vertex_array_normal, cube_color, my_id }; // 3 - 눈
 	gVec.push_back(eyes);
 
-	ChickenLeftArm* Larm = new ChickenLeftArm{ cube_vertex_array_normal, cube_color ,b }; // 4 - 왼팔
+	ChickenLeftArm* Larm = new ChickenLeftArm{ cube_vertex_array_normal, cube_color, my_id }; // 4 - 왼팔
 	gVec.push_back(Larm);
-	ChickenRightArm* Rarm = new ChickenRightArm{ cube_vertex_array_normal, cube_color ,b }; // 5 - 오른팔
+	ChickenRightArm* Rarm = new ChickenRightArm{ cube_vertex_array_normal, cube_color, my_id }; // 5 - 오른팔
 	gVec.push_back(Rarm);
 
-	ChickenLeftLeg* Lleg = new ChickenLeftLeg{ cube_vertex_array_normal, cube_color,b }; // 6 - 왼다리
+	ChickenLeftLeg* Lleg = new ChickenLeftLeg{ cube_vertex_array_normal, cube_color, my_id }; // 6 - 왼다리
 	gVec.push_back(Lleg);
-	ChickenRightLeg* Rleg = new ChickenRightLeg{ cube_vertex_array_normal, cube_color ,b }; // 7 - 오른다리
+	ChickenRightLeg* Rleg = new ChickenRightLeg{ cube_vertex_array_normal, cube_color,my_id }; // 7 - 오른다리
 	gVec.push_back(Rleg);
 }
 
