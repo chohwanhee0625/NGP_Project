@@ -21,8 +21,6 @@ void Car::Move(float deltatime)
 		m_x_pos = 0.55f;
 }
 
-
-
 void Car::Update(float deltatime)
 {
 	Move(deltatime);
@@ -41,11 +39,8 @@ void Car::InitColor(const GLfloat color_array[36 * 3])
 	}
 }
 
-void Car::InitColor(float R, float G, float B) {
-	cout << "R: " << R << endl;
-	cout << "G: " << G << endl;
-	cout << "B: " << B << endl;
-
+void Car::InitColor(float R, float G, float B) 
+{
 	for (int i = 0; i < 36 * 3; i += 3) {
 		m_color[i + 0] = R;
 		m_color[i + 1] = G;
@@ -88,8 +83,6 @@ void Car::InitMatrix4()
 
 	m_velocity = m_velocity + (m_idx * 0.002 * gCarspeed(gRandomEngine));
 }
-
-
 
 void Car::CreateCar()
 {
