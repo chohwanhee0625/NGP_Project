@@ -97,7 +97,11 @@ void UI::Render()
     auto color_loc = glGetUniformLocation(gUIShaderProgramID, "color");
     glUniform4f(color_loc, 1, 1, 1, 1);
 
+    auto texture_location = glGetUniformLocation(gUIShaderProgramID, "outTexture");
+    glActiveTexture(GL_TEXTURE0);
+
     glBindTexture(GL_TEXTURE_2D, texture);
+    glUniform1i(texture_location, 0);
     glDrawElements(GL_TRIANGLES, indeices.size(), GL_UNSIGNED_INT, 0);
 }
 
