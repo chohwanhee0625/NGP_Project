@@ -81,7 +81,7 @@ void Car::InitMatrix4()
 	m_z_pos = -0.1 * m_idx; //(0.1f + (0.1 * (float)m_idx)); //* m_idx;
 //	m_z_distance = -0.5f * m_idx;
 
-	m_velocity = m_velocity + (m_idx * 0.002 * gCarspeed(gRandomEngine));
+	
 }
 
 void Car::CreateCar()
@@ -122,8 +122,10 @@ void Car::CreateCar()
 void CarMiddle::Move(float deltatime)
 {
 	m_x_pos += m_velocity * m_dir * deltatime;
+	
 	if (m_dir == PLUS && m_x_pos > 0.55)
 		m_x_pos = -0.55f;
+	
 	else if (m_dir == MINUS && m_x_pos < -0.55)
 		m_x_pos = 0.55f;
 }
