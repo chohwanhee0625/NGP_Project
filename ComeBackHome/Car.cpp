@@ -41,6 +41,18 @@ void Car::InitColor(const GLfloat color_array[36 * 3])
 	}
 }
 
+void Car::InitColor(float R, float G, float B) {
+	cout << "R: " << R << endl;
+	cout << "G: " << G << endl;
+	cout << "B: " << B << endl;
+
+	for (int i = 0; i < 36 * 3; i += 3) {
+		m_color[i + 0] = R;
+		m_color[i + 1] = G;
+		m_color[i + 2] = B;
+	}
+};
+
 void Car::DrawObject()
 {
 	int PosLocation = glGetAttribLocation(gShaderProgramID, "in_Position");

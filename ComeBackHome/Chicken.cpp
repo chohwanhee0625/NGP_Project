@@ -129,6 +129,10 @@ void ChickenBody::InitColor(const GLfloat color_array[36 * 3])
 
 void ChickenBody::InitMatrix4()
 {
+	m_x_pos = 0.f;
+	m_y_pos = 0.0f;
+	m_z_pos = 0.f;
+
 	m_x_scale = 0.01f;
 	m_y_scale = 0.01f;
 	m_z_scale = 0.01f;
@@ -367,10 +371,7 @@ void ChickenBody::Collision()
 					gVec.at(j)->SetChickenFaceDir(STOP);
 				}
 			}
-
-
 		}
-
 	}
 }
 
@@ -449,6 +450,10 @@ void ChickenHead::DrawObject()
 
 void ChickenHead::InitMatrix4()
 {
+	m_x_pos = 0.f;
+	m_y_pos = 0.01;
+	m_z_pos = 0.f;
+
 	m_x_scale = 0.01f;
 	m_y_scale = 0.01f;
 	m_z_scale = 0.01f;
@@ -591,6 +596,10 @@ void ChickenMouse::DrawObject()
 
 void ChickenMouse::InitMatrix4()
 {
+	m_x_pos = 0.0f;
+	m_y_pos = 0.01f;
+	m_z_pos = 0.0f;
+
 	m_x_scale = 0.01f / 4;
 	m_y_scale = 0.01f / 3;
 	m_z_scale = 0.0125f;
@@ -749,6 +758,10 @@ void ChickenEyes::DrawObject()
 
 void ChickenEyes::InitMatrix4()
 {
+	m_x_pos = 0.f;
+	m_y_pos = 0.0105;
+	m_z_pos = 0.f;
+
 	m_x_scale = 0.011f;
 	m_y_scale = 0.01f / 5;
 	m_z_scale = 0.01f / 5;
@@ -901,6 +914,10 @@ void ChickenLeftArm::DrawObject()
 
 void ChickenLeftArm::InitMatrix4()
 {
+	m_x_pos = 0.0;
+	m_y_pos = -0.0005f;
+	m_z_pos = 0.f;
+
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.005f;
 	m_z_scale = 0.005f;
@@ -1102,6 +1119,10 @@ void ChickenRightArm::DrawObject()
 
 void ChickenRightArm::InitMatrix4()
 {
+	m_x_pos = 0.0;
+	m_y_pos = 0.0005f;
+	m_z_pos = 0.f;
+
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.005f;
 	m_z_scale = 0.005f;
@@ -1275,6 +1296,10 @@ void ChickenLeftLeg::DrawObject()
 
 void ChickenLeftLeg::InitMatrix4()
 {
+	m_x_pos = 0.f;
+	m_y_pos = -0.005f;
+	m_z_pos = 0.f;
+
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.0125f;
 	m_z_scale = 0.00125f;
@@ -1454,6 +1479,10 @@ void ChickenRightLeg::DrawObject()
 
 void ChickenRightLeg::InitMatrix4()
 {
+	m_x_pos = 0.f;
+	m_y_pos = -0.005f;
+	m_z_pos = 0.f;
+
 	m_x_scale = 0.00125f;
 	m_y_scale = 0.0125f;
 	m_z_scale = 0.00125f;
