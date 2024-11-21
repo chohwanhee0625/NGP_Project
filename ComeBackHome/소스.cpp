@@ -239,14 +239,14 @@ void TimerFunction(int value)
 		gTimer.update();
 		float deltatime = gTimer.getDeltaTime();
 		
-		deltatime = std::min(deltatime, 0.1f);
+		deltatime = std::min(deltatime, 0.2f);
 		cout << deltatime << endl;
 
 		gVecUpdate(deltatime);
 		gEnemyVecUpdate(deltatime);
 
 		glutPostRedisplay();				//화면 재출력
-		glutTimerFunc(15, TimerFunction, 1); // 다시 호출 
+		glutTimerFunc(20, TimerFunction, 1); // 다시 호출 
 	}
 }
 
