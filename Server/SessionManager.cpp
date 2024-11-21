@@ -18,8 +18,6 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 	SendStartFlag(client_sock_1);
 	SendStartFlag(client_sock_2);
 	InitWorldData(th_id);
-	SendWorldData(client_sock_1, (int)th_id[0]);
-	SendWorldData(client_sock_2, (int)th_id[1]);
 
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_1, (int)th_id[0]));
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_2, (int)th_id[1]));
@@ -36,6 +34,17 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 {
 	using namespace std::chrono;
 	int other_id = 1 - my_id;
+	SendWorldData(client_sock, my_id);
+
+	RecvStartFlag(client_sock);
+	m_startflag[my_id] = true;
+	while (true) {
+		if (m_startflag[my_id] == m_startflag[other_id]) {
+			std::cout << "Client Settin done" << std::endl;
+			SendStartFlag(client_sock);
+			break;
+		}
+	}
 
 	while (true)
 	{
@@ -49,7 +58,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 		//if (m_winner[my_id] || m_winner[other_id])
 		//	break;
-		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
+		//std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
 
 	EndGame(client_sock);
@@ -61,14 +70,6 @@ void SessionManager::EndGame(SOCKET client_sock)
 {
 	SendGameOverFlag(client_sock);
 
-}
-
-void SessionManager::SendStartFlag(SOCKET client_sock)
-{
-	// send Start flag Packet
-	S_GAME_READY start_flag;
-	start_flag.Ready_Flag = true;
-	Send(client_sock, start_flag.to_json());
 }
 
 void SessionManager::InitWorldData(bool p_id[2])

@@ -1,6 +1,4 @@
 #include "GameManager.h"
-#include "PacketIO.h"
-#include "Souce.h"
 
 char* SERVERIP = (char*)"127.0.0.1";
 

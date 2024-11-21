@@ -17,6 +17,7 @@
 #include "Family.h"
 #include "UI.h"
 #include "GameManager.h"
+#include "PacketIO.h"
 
 UI gPlaybutton;
 GameManager gGameManager;
@@ -240,9 +241,9 @@ void TimerFunction(int value)
 		gVecUpdate(deltatime);
 		gEnemyVecUpdate(deltatime);
 
+		glutPostRedisplay();				//화면 재출력
+		glutTimerFunc(10, TimerFunction, 1); // 다시 호출 
 	}
-	glutPostRedisplay();				//화면 재출력
-	glutTimerFunc(10, TimerFunction, 1); // 다시 호출 
 }
 
 GLvoid KeyUpboard(unsigned char key, int x, int y)
@@ -294,12 +295,15 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
 			networkThread.detach();
 
-			GAME_START = true;
 			glUseProgram(gShaderProgramID);
 			SetOffAllofToggle();
 			SetInitToggle();
 			gCamera.InitCamera();
 			gLight->InitLight();
+			GAME_START = true;
+
+			SendStartFlag(sock);
+			RecvStartFlag(sock);
 
 			glutTimerFunc(10, TimerFunction, 1);
 		}

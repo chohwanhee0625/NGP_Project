@@ -40,7 +40,6 @@ public:
 	DWORD WINAPI	UpdateWorld(SOCKET client_sock, int my_id);
 	void			EndGame(SOCKET client_sock);
 
-	void			SendStartFlag(SOCKET client_sock);
 	void			InitWorldData(bool p_id[2]);
 	void			SendWorldData(SOCKET client_sock,int id);
 	void			RecvMyPlayerData(int my_id, SOCKET client_sock);
@@ -60,7 +59,8 @@ private:
 	INIT_DATA_C				m_carData;
 	INIT_DATA_W				m_woodData;
 
-	std::atomic<bool>		m_winner[2]{ false, false };
-	std::atomic<bool>		m_endflag[2]{ false, false };
+	volatile std::atomic<bool>		m_winner[2]{ false, false };
+	volatile std::atomic<bool>		m_endflag[2]{ false, false };
+	volatile std::atomic<bool>		m_startflag[2]{ false, false };
 };
 
