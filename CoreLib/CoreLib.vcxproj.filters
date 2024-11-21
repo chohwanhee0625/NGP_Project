@@ -8,6 +8,9 @@
     <ClCompile Include="PacketIO.h">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="PacketIO.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h" />

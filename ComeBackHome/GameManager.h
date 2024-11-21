@@ -1,6 +1,8 @@
 #pragma once
 #include "include.h"
 #include "PacketClass.h"
+#include "PacketIO.h"
+#include "Souce.h"
 
 class GameManager
 {
