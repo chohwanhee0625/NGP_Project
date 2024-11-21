@@ -15,7 +15,7 @@ public:
         // 시작 시간 초기화
         QueryPerformanceCounter(&lastFrameTime);
     }
-
+    void starttimer();
     // deltaTime 업데이트 함수
     void update();
 

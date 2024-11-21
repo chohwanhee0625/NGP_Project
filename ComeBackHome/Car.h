@@ -31,7 +31,6 @@ public:
 	
 	void DrawObject();
 	void InitMatrix4();
-	void Set_m_velocity(GLfloat f) { m_velocity = f; };
 	virtual void Move(float deltatime);
 	virtual void CreateCar();
 	void Update(float deltatime)override;

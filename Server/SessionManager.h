@@ -46,9 +46,13 @@ public:
 	void			SendOtherPlayerData(int other_id, SOCKET client_sock);
 	void			SendGameOverFlag(SOCKET client_sock);
 
+
+
+
 private:
 	std::vector<std::thread> m_threads;
 	
+
 	// Å×½ºÆ®
 	PlayerData				m_playerData[2];
 	
