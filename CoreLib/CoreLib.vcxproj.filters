@@ -6,7 +6,7 @@
       <Filter>Packet</Filter>
     </ClCompile>
     <ClCompile Include="PacketIO.h">
-      <Filter>Packet</Filter>
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -21,6 +21,9 @@
   <ItemGroup>
     <Filter Include="Packet">
       <UniqueIdentifier>{6ba7b3da-4e2f-4aec-a4f8-54b5e7a4c2b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{e0b2bc26-dbd5-461b-99a6-8425bef60441}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
