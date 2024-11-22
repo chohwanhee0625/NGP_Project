@@ -205,6 +205,7 @@ void SessionManager::SendWorldData(SOCKET client_sock, int id)
 	
 	// send Roads Data
 	Send(client_sock, m_roadData.to_json());
+	std::cout << m_roadData.to_json().size() << std::endl;
 
 	// send Cars Data
 	Send(client_sock, m_carData.to_json());
