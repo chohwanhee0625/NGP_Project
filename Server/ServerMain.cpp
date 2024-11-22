@@ -45,13 +45,16 @@ int main()
 		if (client_sock == INVALID_SOCKET) continue;
 		cout << "Client Connected" << endl;
 		client_queue.push(client_sock);
+		
 		if (client_queue.size() >= 2)
 		{
 			auto sock1 = client_queue.front();
+
 			client_queue.pop();
 			auto sock2 = client_queue.front();
 			client_queue.pop();
 			GM.StartGame(sock1, sock2);
+
 		}
 	}
 	// ╪рдо ╢щ╠Б

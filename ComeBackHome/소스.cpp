@@ -234,15 +234,19 @@ GLvoid Reshape(int w, int h)
 void TimerFunction(int value)
 {
 	if (GAME_START) {
+		
 		gCamera.Move();
 		gTimer.update();
 		float deltatime = gTimer.getDeltaTime();
 		
+		deltatime = std::min(deltatime, 0.2f);
+		cout << deltatime << endl;
+
 		gVecUpdate(deltatime);
 		gEnemyVecUpdate(deltatime);
 
 		glutPostRedisplay();				//화면 재출력
-		glutTimerFunc(10, TimerFunction, 1); // 다시 호출 
+		glutTimerFunc(20, TimerFunction, 1); // 다시 호출 
 	}
 }
 
@@ -303,9 +307,14 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			GAME_START = true;
 
 			SendStartFlag(sock);
+			std::cout << "send flag\n" << std::endl;
+			
 			RecvStartFlag(sock);
+			std::cout << "recv flag\n" << std::endl;
+				 
 
-			glutTimerFunc(10, TimerFunction, 1);
+			gTimer.starttimer();
+			glutTimerFunc(15, TimerFunction, 1);
 		}
 		break;
 	}

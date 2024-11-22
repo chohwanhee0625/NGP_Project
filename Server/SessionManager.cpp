@@ -3,7 +3,8 @@
 #include "PacketIO.h"
 
 // std::random_device gRandDevice; // 진짜 난수 발생기 -> 이 값을 시드값으로
-std::mt19937 gRandomEngine; // 알고리즘 + 진짜 난수 시드 :: 진짜진짜 난수 생성
+std::random_device rd;
+std::mt19937 gRandomEngine(rd()); // 알고리즘 + 진짜 난수 시드 :: 진짜진짜 난수 생성
 
 std::uniform_int_distribution<int> gBoolUniform{ 0,1 };
 std::uniform_int_distribution<int> gRoadSet{ 5, 10 };
@@ -18,6 +19,10 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 	SendStartFlag(client_sock_1);
 	SendStartFlag(client_sock_2);
 	InitWorldData(th_id);
+	
+	int flag = 1;
+	setsockopt(client_sock_1, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
+	setsockopt(client_sock_2, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
 
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_1, (int)th_id[0]));
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_2, (int)th_id[1]));
@@ -38,13 +43,19 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 	RecvStartFlag(client_sock);
 	m_startflag[my_id] = true;
+
+	HANDLE h_other = m_threads[other_id].native_handle();
+	
+	
 	while (true) {
-		if (m_startflag[my_id] == m_startflag[other_id]) {
-			std::cout << "Client Settin done" << std::endl;
-			SendStartFlag(client_sock);
+		
+		if (m_startflag[my_id] == m_startflag[other_id]) {	
+			SendStartFlag(client_sock);		
 			break;
 		}
 	}
+
+	SetThreadPriority(h_other, THREAD_PRIORITY_NORMAL);
 
 	while (true)
 	{
@@ -52,7 +63,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 		//if (m_playerData[my_id].player_pos_z >= 150.f)		// TODO: goal line z pos
 		//	m_winner[my_id] = true;
 
-		//SendOtherPlayerData(other_id, client_sock);
+		//SendOtherPlayerData(other_ id, client_sock);
 		//if (m_playerData[other_id].player_pos_z >= 150.f)	// goal line z pos
 		//	m_winner[other_id] = true;
 
