@@ -707,9 +707,14 @@ void gVecUpdate(float deltatime)
 
 void gEnemyVecUpdate(float deltatime)
 {
-	//for (auto& obj : gEnemyVec) {
-	//	obj->Update(deltatime);
-	//}
+	UPDATE_DATA other_player{};
+	other_player = gGameManager.m_playerData[1];
+
+	for (auto& obj : gEnemyVec) {
+		obj->SetXpos(other_player.Player_Pos_x);
+		obj->SetYpos(other_player.Player_Pos_y);
+		obj->SetZpos(other_player.Player_Pos_z);
+	}
 
 	EnemyChickenHandling(deltatime);
 }
