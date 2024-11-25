@@ -240,7 +240,7 @@ void TimerFunction(int value)
 		float deltatime = gTimer.getDeltaTime();
 		
 		deltatime = std::min(deltatime, 0.2f);
-		cout << deltatime << endl;
+		// cout << deltatime << endl;
 
 		gVecUpdate(deltatime);
 		gEnemyVecUpdate(deltatime);
