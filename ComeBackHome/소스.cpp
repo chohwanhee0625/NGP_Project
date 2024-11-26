@@ -222,6 +222,7 @@ GLvoid DrawScene()
 		chicken_viewport();
 	}
 
+
 	glutSwapBuffers();
 	glutPostRedisplay();
 }
@@ -308,7 +309,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 
 
 			gTimer.starttimer();
-			glutTimerFunc(15, TimerFunction, 1);
+			glutTimerFunc(1, TimerFunction, 1);
 		}
 		break;
 	}
