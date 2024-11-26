@@ -7,6 +7,9 @@
 class GameManager
 {
 public:
+	UPDATE_DATA m_playerData[2];
+
+public:
 	GameManager() {}
 
 	SOCKET WaitForOtherPlayer();

@@ -78,14 +78,28 @@ void INIT_DATA_W::from_json(std::string& j_str)
 }
 
 //----------------UPDATE_DATA--------------------
+//UPDATE_DATA& UPDATE_DATA::operator=(const UPDATE_DATA& rhs)
+//{
+//	if (this == &rhs) return *this;
+//
+//	Player_ID = rhs.Player_ID;
+//	Player_Pos_x = rhs.Player_Pos_x;
+//	Player_Pos_y = rhs.Player_Pos_y;
+//	Player_Pos_z = rhs.Player_Pos_z;
+//	Player_Face = rhs.Player_Face;
+//	GameOver_Flag = rhs.GameOver_Flag;
+//	return *this;
+//}
+
 std::string UPDATE_DATA::to_json()
 {
+	//std::lock_guard lock(m_lock);
 	json jObject;
 	jObject["ID"] = Player_ID;
-	jObject["OtherPos_x"] = Other_Player_Pos_x;
-	jObject["OtherPos_y"] = Other_Player_Pos_y;
-	jObject["OtherPos_z"] = Other_Player_Pos_z;
-	jObject["OtherFace"] = Other_Player_Face;
+	jObject["OtherPos_x"] = Player_Pos_x;
+	jObject["OtherPos_y"] = Player_Pos_y;
+	jObject["OtherPos_z"] = Player_Pos_z;
+	jObject["OtherFace"] = Player_Face;
 	jObject["Over"] = GameOver_Flag;
 	std::string j_str = jObject.dump(4);
 
@@ -94,13 +108,14 @@ std::string UPDATE_DATA::to_json()
 
 void UPDATE_DATA::from_json(std::string& j_str)
 {
+	//std::lock_guard lock(m_lock);
 	auto jObject = json::parse(j_str);
 
 	Player_ID = jObject.at("ID").get<bool>();
-	Other_Player_Pos_x = jObject.at("OtherPos_x").get<float>();
-	Other_Player_Pos_y = jObject.at("OtherPos_y").get<float>();
-	Other_Player_Pos_z = jObject.at("OtherPos_z").get<float>();
-	Other_Player_Face = jObject.at("OtherFace").get<char>();
+	Player_Pos_x = jObject.at("OtherPos_x").get<float>();
+	Player_Pos_y = jObject.at("OtherPos_y").get<float>();
+	Player_Pos_z = jObject.at("OtherPos_z").get<float>();
+	Player_Face = jObject.at("OtherFace").get<char>();
 	GameOver_Flag = jObject.at("Over").get<bool>();
 
 }
