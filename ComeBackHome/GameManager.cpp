@@ -44,8 +44,13 @@ void GameManager::UpdateWorld(SOCKET sock)
 	while (true)
 	{
 		// send myplayer data
+		std::string j_str;
+		j_str = m_playerData[0].to_json();
+		Send(sock, j_str);
 
 		// recv otherplayer data
+		j_str = Recv(sock);
+		m_playerData[1].from_json(j_str);
 
 		//if (/* GameEndFlag == true */)
 		//	break;

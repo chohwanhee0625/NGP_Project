@@ -1,5 +1,4 @@
 #include "SessionManager.h"
-#include "PacketClass.h"
 #include "PacketIO.h"
 
 // std::random_device gRandDevice; // 진짜 난수 발생기 -> 이 값을 시드값으로
@@ -44,8 +43,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 	RecvStartFlag(client_sock);
 	m_startflag[my_id] = true;
 
-	HANDLE h_other = m_threads[other_id].native_handle();
-	
+	//HANDLE h_other = m_threads[other_id].native_handle();
 	
 	while (true) {
 		
@@ -55,21 +53,32 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 		}
 	}
 
-	SetThreadPriority(h_other, THREAD_PRIORITY_NORMAL);
+	//SetThreadPriority(h_other, THREAD_PRIORITY_NORMAL);
 
+	std::string j_str;
 	while (true)
 	{
-		//RecvMyPlayerData(my_id, client_sock);
-		//if (m_playerData[my_id].player_pos_z >= 150.f)		// TODO: goal line z pos
+		//// recv my player data
+		//j_str = Recv(client_sock);
+		//m_updateData[my_id].from_json(j_str);
+
+		//// 우승자 검사
+		//if (m_updateData[my_id].Player_Pos_z >= 150.f) {		// TODO: 골라인 z위치 측정 후 반영
+		//	m_updateData[my_id].GameOver_Flag = true;
 		//	m_winner[my_id] = true;
-
-		//SendOtherPlayerData(other_ id, client_sock);
-		//if (m_playerData[other_id].player_pos_z >= 150.f)	// goal line z pos
+		//}
+		//else if (m_updateData[other_id].Player_Pos_z >= 150.f) {
+		//	m_updateData[other_id].GameOver_Flag = true;
 		//	m_winner[other_id] = true;
+		//}
 
-		//if (m_winner[my_id] || m_winner[other_id])
+		//// send other player data
+		//j_str = m_updateData[other_id].to_json();
+		//Send(client_sock, j_str);
+
+		//if (m_winner[my_id] or m_winner[other_id])
 		//	break;
-		//std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
 
 	EndGame(client_sock);
@@ -216,6 +225,7 @@ void SessionManager::SendWorldData(SOCKET client_sock, int id)
 	
 	// send Roads Data
 	Send(client_sock, m_roadData.to_json());
+	std::cout << m_roadData.to_json().size() << std::endl;
 
 	// send Cars Data
 	Send(client_sock, m_carData.to_json());

@@ -92,20 +92,22 @@ public:
 
 class UPDATE_DATA
 {
-private:
+public:
 	bool	Player_ID;
-	float	Other_Player_Pos_x;
-	float	Other_Player_Pos_y;
-	float	Other_Player_Pos_z;
-	char	Other_Player_Face;
+	float	Player_Pos_x;
+	float	Player_Pos_y;
+	float	Player_Pos_z;
+	char	Player_Face;
 	bool	GameOver_Flag;
 
-
+	//UPDATE_DATA& operator=(const UPDATE_DATA& rhs);
 public:
 	std::string to_json();
 
 	void from_json(std::string& j_str);
 	
+private:
+	//std::mutex m_lock;
 };
 
 
