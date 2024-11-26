@@ -95,6 +95,8 @@ public:
 	void WorldMatrix();
 	//virtual void WorldMatrix();
 
+
+
 public:
 	// 순수 가상 함수: 모든 클래스가 함수를 재정의 하도록 강제하는 역할 (코드의 명확성이 올라가지만 유연성이 떨어짐)
 

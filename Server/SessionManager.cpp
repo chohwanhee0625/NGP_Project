@@ -1,6 +1,8 @@
 #include "SessionManager.h"
 #include "PacketIO.h"
 
+
+
 // std::random_device gRandDevice; // 진짜 난수 발생기 -> 이 값을 시드값으로
 std::random_device rd;
 std::mt19937 gRandomEngine(rd()); // 알고리즘 + 진짜 난수 시드 :: 진짜진짜 난수 생성
@@ -9,6 +11,10 @@ std::uniform_int_distribution<int> gBoolUniform{ 0,1 };
 std::uniform_int_distribution<int> gRoadSet{ 5, 10 };
 std::uniform_int_distribution<int> gCarspeed{ 1,3 };
 std::uniform_real_distribution<float> gRandomColor{ 0.f,1.f };
+
+
+std::mutex mtx;
+
 
 //===============================================================================================
 
@@ -58,26 +64,32 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 	std::string j_str;
 	while (true)
 	{
+		{
 		//// recv my player data
-		//j_str = Recv(client_sock);
-		//m_updateData[my_id].from_json(j_str);
+		std::lock_guard<std::mutex> lock(mtx);
 
-		//// 우승자 검사
-		//if (m_updateData[my_id].Player_Pos_z >= 150.f) {		// TODO: 골라인 z위치 측정 후 반영
-		//	m_updateData[my_id].GameOver_Flag = true;
-		//	m_winner[my_id] = true;
-		//}
-		//else if (m_updateData[other_id].Player_Pos_z >= 150.f) {
-		//	m_updateData[other_id].GameOver_Flag = true;
-		//	m_winner[other_id] = true;
-		//}
+		j_str = Recv(client_sock);
+		m_updateData[my_id].from_json(j_str);
+
+		// 우승자 검사
+		if (m_updateData[my_id].Player_Pos_z >= 150.f) {		// TODO: 골라인 z위치 측정 후 반영
+			m_updateData[my_id].GameOver_Flag = true;
+			m_winner[my_id] = true;
+		}
+		else if (m_updateData[other_id].Player_Pos_z >= 150.f) {
+			m_updateData[other_id].GameOver_Flag = true;
+			m_winner[other_id] = true;
+		}
 
 		//// send other player data
-		//j_str = m_updateData[other_id].to_json();
-		//Send(client_sock, j_str);
 
-		//if (m_winner[my_id] or m_winner[other_id])
-		//	break;
+		j_str = m_updateData[other_id].to_json();
+		Send(client_sock, j_str);
+
+		if (m_winner[my_id] or m_winner[other_id])
+			break;
+		}
+
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
 
