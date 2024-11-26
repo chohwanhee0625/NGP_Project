@@ -35,21 +35,34 @@ SOCKET GameManager::WaitForOtherPlayer()
 	return sock;
 }
 
+
+
 void GameManager::UpdateWorld(SOCKET sock)
 {
 	using namespace std::chrono;
 	std::cout << "UpdateWorld" << std::endl;
 
+	SendStartFlag(sock);
+	std::cout << "send flag\n" << std::endl;
+
+	RecvStartFlag(sock);
+	std::cout << "recv flag\n" << std::endl;
+
+
+
 	while (true)
 	{
 		// send myplayer data
 		std::string j_str;
-		j_str = m_playerData[0].to_json();
+		j_str = m_playerData[(int)ID::ME].to_json();
 		Send(sock, j_str);
 
+		cout << j_str << endl;
+		
+		
 		// recv otherplayer data
 		j_str = Recv(sock);
-		m_playerData[1].from_json(j_str);
+		m_playerData[(int)ID::ENERMY].from_json(j_str);
 
 		//if (/* GameEndFlag == true */)
 		//	break;
