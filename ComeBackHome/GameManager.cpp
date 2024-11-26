@@ -38,7 +38,6 @@ SOCKET GameManager::WaitForOtherPlayer()
 void GameManager::UpdateWorld(SOCKET sock)
 {
 	using namespace std::chrono;
-
 	std::cout << "UpdateWorld" << std::endl;
 
 	while (true)
