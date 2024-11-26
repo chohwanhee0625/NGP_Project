@@ -78,3 +78,10 @@ enum class RGB
 	B,
 	END
 };
+
+enum class ID
+{
+	ME,
+	ENERMY
+
+};
