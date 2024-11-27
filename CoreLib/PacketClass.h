@@ -100,14 +100,14 @@ public:
 	int		Player_Face;
 	bool	GameOver_Flag;
 
-	//UPDATE_DATA& operator=(const UPDATE_DATA& rhs);
+	UPDATE_DATA& operator=(const UPDATE_DATA& rhs);
 public:
 	std::string to_json();
 
 	void from_json(std::string& j_str);
 	
 private:
-	//std::mutex m_lock;
+	std::mutex m_lock;
 };
 
 
