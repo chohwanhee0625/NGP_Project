@@ -22,6 +22,7 @@
 UI gPlaybutton;
 GameManager gGameManager;
 bool GAME_START = false;
+std::mutex g_lock;
 
 //===========================================================================================
 
@@ -241,7 +242,7 @@ void TimerFunction(int value)
 		float deltatime = gTimer.getDeltaTime();
 		
 		//deltatime = std::min(deltatime, 0.2f);
-		cout << deltatime << endl;
+		//cout << deltatime << endl;
 
 		gVecUpdate(deltatime);
 		gEnemyVecUpdate(deltatime);
@@ -297,16 +298,21 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			gPlaybutton.Render();
 
 			SOCKET sock = gGameManager.WaitForOtherPlayer();
-			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
-			networkThread.detach();
 
 			glUseProgram(gShaderProgramID);
 			SetOffAllofToggle();
 			SetInitToggle();
 			gCamera.InitCamera();
 			gLight->InitLight();
-			GAME_START = true;
 
+			SendStartFlag(sock);
+			std::cout << "send flag\n" << std::endl;
+			RecvStartFlag(sock);
+			std::cout << "recv flag\n" << std::endl;
+
+			GAME_START = true;
+			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
+			networkThread.detach();
 
 			gTimer.starttimer();
 			glutTimerFunc(1, TimerFunction, 1);
@@ -713,11 +719,12 @@ void gVecUpdate(float deltatime)
 		obj->Update(deltatime);
 	}
 
+	g_lock.lock();
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_x = gVec[0]->GetXpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_y = gVec[0]->GetYpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_z = gVec[0]->GetZpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Face =  gVec[0]->GetChickenDir();
-
+	g_lock.unlock();
 
 }
 

@@ -52,9 +52,8 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 	//HANDLE h_other = m_threads[other_id].native_handle();
 	
 	while (true) {
-		
 		if (m_startflag[my_id] == m_startflag[other_id]) {	
-			SendStartFlag(client_sock);		
+			SendStartFlag(client_sock);
 			break;
 		}
 	}
@@ -237,7 +236,6 @@ void SessionManager::SendWorldData(SOCKET client_sock, int id)
 	
 	// send Roads Data
 	Send(client_sock, m_roadData.to_json());
-	std::cout << m_roadData.to_json().size() << std::endl;
 
 	// send Cars Data
 	Send(client_sock, m_carData.to_json());
