@@ -251,6 +251,9 @@ void TimerFunction(int value)
 	}
 }
 
+volatile bool gConnectionEstablished = false;
+SOCKET gSocket;
+std::mutex gMutex;
 GLvoid KeyUpboard(unsigned char key, int x, int y)
 {
 	switch (key)
@@ -292,27 +295,51 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		break;
 	default:
 		if (GAME_START == false) {
+#ifdef 1
 			gPlaybutton.change_img("chick.jpg");
-			gPlaybutton.resize(0.5, 0.5, 1.0);
+			gPlaybutton.resize(2.0, 10.0, 1.0);
 			gPlaybutton.Render();
 
-			SOCKET sock = gGameManager.WaitForOtherPlayer();
+			std::thread connectionThread([&]() {
+				SOCKET sock = gGameManager.WaitForOtherPlayer();
+				gConnectionEstablished = true;
+				gSocket = sock;
+				});
+			connectionThread.detach();
+			// 접속을 기다리는 동안 UI를 계속 렌더링
+			glutPostRedisplay();
+
+			if (gConnectionEstablished) {
+				glUseProgram(gShaderProgramID);
+				SetOffAllofToggle();
+				SetInitToggle();
+				gCamera.InitCamera();
+				gLight->InitLight();
+				SendStartFlag(gSocket);
+				RecvStartFlag(gSocket);
+
+				GAME_START = true;
+				std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, gSocket);
+				networkThread.detach();
+
+				gTimer.starttimer();
+				glutTimerFunc(1, TimerFunction, 1);
+			}
+#else
+			gPlaybutton.change_img("chick.jpg");
+			gPlaybutton.resize(2.0, 10.0, 1.0);
+			gPlaybutton.Render();
 
 			glUseProgram(gShaderProgramID);
 			SetOffAllofToggle();
 			SetInitToggle();
 			gCamera.InitCamera();
 			gLight->InitLight();
-
-			// 준비 완료 플래그 서버에 보내기
-			SendStartFlag(sock);
-			std::cout << "send flag\n" << std::endl;
-			// 상대편까지 모두 준비 완료 플래그 -> 게임 시작 
-			RecvStartFlag(sock);
-			std::cout << "recv flag\n" << std::endl;
+			SendStartFlag(gSocket);
+			RecvStartFlag(gSocket);
 
 			GAME_START = true;
-			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
+			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, gSocket);
 			networkThread.detach();
 
 			gTimer.starttimer();
@@ -732,7 +759,7 @@ void gVecUpdate(float deltatime)
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_y = gVec[0]->GetYpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_z = gVec[0]->GetZpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Face =  (int)(gVec[0]->GetChickenDir());
-	cout << gGameManager.m_playerData[(int)ID::ME].Player_Face << endl;
+	//cout << gGameManager.m_playerData[(int)ID::ME].Player_Face << endl;
 	
 	g_lock.unlock();
 
