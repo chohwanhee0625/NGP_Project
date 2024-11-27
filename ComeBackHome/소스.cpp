@@ -223,7 +223,6 @@ GLvoid DrawScene()
 		chicken_viewport();
 	}
 
-
 	glutSwapBuffers();
 	glutPostRedisplay();
 }
@@ -305,8 +304,10 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			gCamera.InitCamera();
 			gLight->InitLight();
 
+			// 준비 완료 플래그 서버에 보내기
 			SendStartFlag(sock);
 			std::cout << "send flag\n" << std::endl;
+			// 상대편까지 모두 준비 완료 플래그 -> 게임 시작 
 			RecvStartFlag(sock);
 			std::cout << "recv flag\n" << std::endl;
 
@@ -425,26 +426,31 @@ void SetgVec() // 육면체, 사면체 처음 위치 - 면 총 10개
 	//gVec.push_back(pWall);
 }
 
-const float offset_x {0.07f};
+const float g_offset_x {0.07f};
 
 void SetgEnemyVec(bool my_id)
 {
 	bool other_id = !my_id;
+
+	// UPDATE_DATA : bool player id, float xyz, char player Face, bool overflag  
+
 	UPDATE_DATA other_player;
 	other_player.Player_ID = other_id;
-	
 	other_player.Player_Pos_x = 0.0f;
 	
-	// 상대가 1번 플레이어면
+	// 상대가 1번 플레이어면 == true면 -> 오프셋 적용( 0.07f )
 	if (!my_id)
-		other_player.Player_Pos_x += offset_x;
+		other_player.Player_Pos_x += g_offset_x;
 	
 	other_player.Player_Pos_y = 0.0f;
 	other_player.Player_Pos_z = 0.0f;
 	other_player.Player_Face = 3; // enum값 확인
 	other_player.GameOver_Flag = false;
+
+	// 클라이언트 게임 매니저에 데이터 저장
 	gGameManager.m_playerData[(int)ID::ENERMY] = other_player;
 
+	// Enemy Chicken 생성
 	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color, other_id }; // 0 - 몸
 	gEnemyVec.push_back(body);
 	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color, other_id }; // 1 - 머리
@@ -471,18 +477,19 @@ void SetChicken(bool my_id)
 	my_player.Player_ID = my_id;
 	my_player.Player_Pos_x = 0.0;
 
-	// 내가 1번 플레이어면
+	// 내가 1번 플레이어면 == true면 -> 오프셋 적용( 0.07f )
 	if (my_id)
-		my_player.Player_Pos_x += offset_x;
+		my_player.Player_Pos_x += g_offset_x;
 	
-
 	my_player.Player_Pos_y = 0.0f;
 	my_player.Player_Pos_z = 0.0f;
 	my_player.Player_Face = 3; // enum값 확인
 	my_player.GameOver_Flag = false;
+
+	// 클라이언트 게임 매니저에 데이터 저장
 	gGameManager.m_playerData[(int)ID::ME] = my_player;
 
-	// 플레이할 주인공 닭 만들기
+	// Player Chicken 생성
 	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color, my_id }; // 0 - 몸 
 	gVec.push_back(body);
 	ChickenHead* head = new ChickenHead{ cube_vertex_array_normal, cube_color, my_id }; // 1 - 머리
@@ -719,6 +726,7 @@ void gVecUpdate(float deltatime)
 		obj->Update(deltatime);
 	}
 
+	// Player의 위치, 방향을 업데이트 한다 -> GameManager에서 Json으로 묶어서 Send하게 된다
 	g_lock.lock();
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_x = gVec[0]->GetXpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_y = gVec[0]->GetYpos();
