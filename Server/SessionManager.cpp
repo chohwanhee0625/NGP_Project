@@ -21,6 +21,7 @@ std::mutex mtx;
 void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 {
 	bool th_id[2] { 0, 1 };
+	// 고광신이 지움 11/27 22:06
 //	SendStartFlag(client_sock_1);
 //	SendStartFlag(client_sock_2);
 	InitWorldData(th_id);
