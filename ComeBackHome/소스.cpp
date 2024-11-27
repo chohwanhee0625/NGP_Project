@@ -22,6 +22,7 @@
 UI gPlaybutton;
 GameManager gGameManager;
 bool GAME_START = false;
+std::mutex g_lock;
 
 //===========================================================================================
 
@@ -222,6 +223,7 @@ GLvoid DrawScene()
 		chicken_viewport();
 	}
 
+
 	glutSwapBuffers();
 	glutPostRedisplay();
 }
@@ -239,8 +241,8 @@ void TimerFunction(int value)
 		gTimer.update();
 		float deltatime = gTimer.getDeltaTime();
 		
-		deltatime = std::min(deltatime, 0.2f);
-		// cout << deltatime << endl;
+		//deltatime = std::min(deltatime, 0.2f);
+		//cout << deltatime << endl;
 
 		gVecUpdate(deltatime);
 		gEnemyVecUpdate(deltatime);
@@ -296,25 +298,24 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			gPlaybutton.Render();
 
 			SOCKET sock = gGameManager.WaitForOtherPlayer();
-			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
-			networkThread.detach();
 
 			glUseProgram(gShaderProgramID);
 			SetOffAllofToggle();
 			SetInitToggle();
 			gCamera.InitCamera();
 			gLight->InitLight();
-			GAME_START = true;
 
 			SendStartFlag(sock);
 			std::cout << "send flag\n" << std::endl;
-			
 			RecvStartFlag(sock);
 			std::cout << "recv flag\n" << std::endl;
-				 
+
+			GAME_START = true;
+			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
+			networkThread.detach();
 
 			gTimer.starttimer();
-			glutTimerFunc(15, TimerFunction, 1);
+			glutTimerFunc(1, TimerFunction, 1);
 		}
 		break;
 	}
@@ -424,17 +425,25 @@ void SetgVec() // 육면체, 사면체 처음 위치 - 면 총 10개
 	//gVec.push_back(pWall);
 }
 
+const float offset_x {0.07f};
+
 void SetgEnemyVec(bool my_id)
 {
 	bool other_id = !my_id;
 	UPDATE_DATA other_player;
 	other_player.Player_ID = other_id;
-	other_player.Player_Pos_x = 0.07f;
+	
+	other_player.Player_Pos_x = 0.0f;
+	
+	// 상대가 1번 플레이어면
+	if (!my_id)
+		other_player.Player_Pos_x += offset_x;
+	
 	other_player.Player_Pos_y = 0.0f;
 	other_player.Player_Pos_z = 0.0f;
-	other_player.Player_Face = 'w';
+	other_player.Player_Face = 3; // enum값 확인
 	other_player.GameOver_Flag = false;
-	gGameManager.m_playerData[1] = other_player;
+	gGameManager.m_playerData[(int)ID::ENERMY] = other_player;
 
 	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color, other_id }; // 0 - 몸
 	gEnemyVec.push_back(body);
@@ -460,12 +469,18 @@ void SetChicken(bool my_id)
 {
 	UPDATE_DATA my_player;
 	my_player.Player_ID = my_id;
-	my_player.Player_Pos_x = 0.0f;
+	my_player.Player_Pos_x = 0.0;
+
+	// 내가 1번 플레이어면
+	if (my_id)
+		my_player.Player_Pos_x += offset_x;
+	
+
 	my_player.Player_Pos_y = 0.0f;
 	my_player.Player_Pos_z = 0.0f;
-	my_player.Player_Face = 'w';
+	my_player.Player_Face = 3; // enum값 확인
 	my_player.GameOver_Flag = false;
-	gGameManager.m_playerData[0] = my_player;
+	gGameManager.m_playerData[(int)ID::ME] = my_player;
 
 	// 플레이할 주인공 닭 만들기
 	ChickenBody* body = new ChickenBody{ cube_vertex_array_normal, cube_color, my_id }; // 0 - 몸 
@@ -703,12 +718,20 @@ void gVecUpdate(float deltatime)
 	for (auto& obj : gVec) {
 		obj->Update(deltatime);
 	}
+
+	g_lock.lock();
+	gGameManager.m_playerData[(int)ID::ME].Player_Pos_x = gVec[0]->GetXpos();
+	gGameManager.m_playerData[(int)ID::ME].Player_Pos_y = gVec[0]->GetYpos();
+	gGameManager.m_playerData[(int)ID::ME].Player_Pos_z = gVec[0]->GetZpos();
+	gGameManager.m_playerData[(int)ID::ME].Player_Face =  gVec[0]->GetChickenDir();
+	g_lock.unlock();
+
 }
 
 void gEnemyVecUpdate(float deltatime)
 {
 	UPDATE_DATA other_player{};
-	other_player = gGameManager.m_playerData[1];
+	other_player = gGameManager.m_playerData[(int)ID::ENERMY];
 
 	for (auto& obj : gEnemyVec) {
 		obj->SetXpos(other_player.Player_Pos_x);

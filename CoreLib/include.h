@@ -28,7 +28,7 @@
 using namespace nlohmann;
 
 #define SERVERPORT 9000
-#define PACKET_FREQ 50
+#define PACKET_FREQ 100
 
 
 enum class Toggle
@@ -77,4 +77,11 @@ enum class RGB
 	G,
 	B,
 	END
+};
+
+enum class ID
+{
+	ME,
+	ENERMY
+
 };

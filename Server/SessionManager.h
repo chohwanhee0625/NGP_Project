@@ -1,6 +1,7 @@
 #pragma once
 #include "include.h"
 #include "PacketClass.h"
+#include "PacketIO.h"
 
 class PlayerData
 {

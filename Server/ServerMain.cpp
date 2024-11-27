@@ -12,11 +12,14 @@ int main()
 
 	// 扩加 檬扁拳
 	WSADATA wsa;
-	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) return 1;
+	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) return 999;
 
 	// listen 家南 积己
 	SOCKET listen_sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (listen_sock == INVALID_SOCKET) return 1;
+	if (listen_sock == INVALID_SOCKET) return 888;
+
+	int optval = 1;
+	setsockopt(listen_sock, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval));
 
 	// bind()
 	struct sockaddr_in serveraddr;
@@ -25,7 +28,7 @@ int main()
 	serveraddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	serveraddr.sin_port = htons(SERVERPORT);
 	retval = ::bind(listen_sock, (struct sockaddr*)&serveraddr, sizeof(serveraddr));
-	if (retval == SOCKET_ERROR) return 1;
+	if (retval == SOCKET_ERROR) return 222;
 	// listen()
 	retval = listen(listen_sock, SOMAXCONN);
 	if (retval == SOCKET_ERROR) return 1;
