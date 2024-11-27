@@ -732,7 +732,7 @@ void gVecUpdate(float deltatime)
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_y = gVec[0]->GetYpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_z = gVec[0]->GetZpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Face =  (int)(gVec[0]->GetChickenDir());
-	cout << gGameManager.m_playerData[(int)ID::ME].Player_Face << endl;
+	//cout << gGameManager.m_playerData[(int)ID::ME].Player_Face << endl;
 	
 	g_lock.unlock();
 
