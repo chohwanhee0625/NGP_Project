@@ -11,6 +11,8 @@ SOCKET GameManager::WaitForOtherPlayer()
 
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock == INVALID_SOCKET) exit(1);
+	int flag = 1;
+	setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
 
 	// connect()
 	struct sockaddr_in serveraddr;
@@ -42,14 +44,6 @@ void GameManager::UpdateWorld(SOCKET sock)
 	using namespace std::chrono;
 	std::cout << "UpdateWorld" << std::endl;
 
-	SendStartFlag(sock);
-	std::cout << "send flag\n" << std::endl;
-
-	RecvStartFlag(sock);
-	std::cout << "recv flag\n" << std::endl;
-
-
-
 	while (true)
 	{
 		// send myplayer data
@@ -57,7 +51,7 @@ void GameManager::UpdateWorld(SOCKET sock)
 		j_str = m_playerData[(int)ID::ME].to_json();
 		Send(sock, j_str);
 
-		cout << j_str << endl;
+		//cout << j_str << endl;
 		
 		
 		// recv otherplayer data
