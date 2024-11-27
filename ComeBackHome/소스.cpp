@@ -258,8 +258,8 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 	case 'w':case 'W':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
-			SetChickenFaceDir(STOP);
-			gCamera.SetCameraFaceDir(STOP);
+			SetChickenFaceDir((char)Dir::STOP);
+			gCamera.SetCameraFaceDir((char)Dir::STOP);
 			SetOffGlobalDir();
 		}
 		break;
@@ -267,8 +267,8 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 	case 's':case 'S':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
-			SetChickenFaceDir(STOP);
-			gCamera.SetCameraFaceDir(STOP);
+			SetChickenFaceDir((char)Dir::STOP);
+			gCamera.SetCameraFaceDir((char)Dir::STOP);
 			SetOffGlobalDir();
 		}
 		break;
@@ -276,8 +276,8 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 	case 'a':case 'A':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
-			SetChickenFaceDir(STOP);
-			gCamera.SetCameraFaceDir(STOP);
+			SetChickenFaceDir((char)Dir::STOP);
+			gCamera.SetCameraFaceDir((char)Dir::STOP);
 			SetOffGlobalDir();
 		}
 		break;
@@ -285,8 +285,8 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 	case 'd':case 'D':
 		if (gIsMovingChicken) {
 			gIsMovingChicken = OFF;
-			SetChickenFaceDir(STOP);
-			gCamera.SetCameraFaceDir(STOP);
+			SetChickenFaceDir((char)Dir::STOP);
+			gCamera.SetCameraFaceDir((char)Dir::STOP);
 			SetOffGlobalDir();
 		}
 		break;
@@ -444,7 +444,7 @@ void SetgEnemyVec(bool my_id)
 	
 	other_player.Player_Pos_y = 0.0f;
 	other_player.Player_Pos_z = 0.0f;
-	other_player.Player_Face = 3; // enum값 확인
+	other_player.Player_Face = (char)Dir::North; // enum값 확인
 	other_player.GameOver_Flag = false;
 
 	// 클라이언트 게임 매니저에 데이터 저장
@@ -483,7 +483,7 @@ void SetChicken(bool my_id)
 	
 	my_player.Player_Pos_y = 0.0f;
 	my_player.Player_Pos_z = 0.0f;
-	my_player.Player_Face = 3; // enum값 확인
+	my_player.Player_Face = (char)Dir::North; // enum값 확인
 	my_player.GameOver_Flag = false;
 
 	// 클라이언트 게임 매니저에 데이터 저장
@@ -731,7 +731,9 @@ void gVecUpdate(float deltatime)
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_x = gVec[0]->GetXpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_y = gVec[0]->GetYpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_z = gVec[0]->GetZpos();
-	gGameManager.m_playerData[(int)ID::ME].Player_Face =  gVec[0]->GetChickenDir();
+	gGameManager.m_playerData[(int)ID::ME].Player_Face =  (int)(gVec[0]->GetChickenDir());
+	cout << gGameManager.m_playerData[(int)ID::ME].Player_Face << endl;
+	
 	g_lock.unlock();
 
 }
@@ -739,6 +741,7 @@ void gVecUpdate(float deltatime)
 void gEnemyVecUpdate(float deltatime)
 {
 	EnemyChickenUpdatePos();
+
 	EnemyChickenHandling(deltatime);
 }
 
@@ -912,11 +915,11 @@ void EnemyChickenUpdatePos()
 	UPDATE_DATA other_player{};
 	other_player = gGameManager.m_playerData[(int)ID::ENERMY];
 
-	//for (auto& obj : gEnemyVec) {
-	//	obj->SetXpos(other_player.Player_Pos_x);
-	//	obj->SetYpos(other_player.Player_Pos_y);
-	//	obj->SetZpos(other_player.Player_Pos_z);
-	//}
+	int dir = other_player.Player_Face;
+
+	for (auto& obj : gEnemyVec) {
+		obj->SetEnemyFace((Dir)dir);
+	}
 
 	float enemy_body_x = other_player.Player_Pos_x;
 	float enemy_body_y = other_player.Player_Pos_y;

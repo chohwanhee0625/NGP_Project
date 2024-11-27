@@ -69,6 +69,13 @@ public:
 		if (m_coll) m_coll = false;
 		else m_coll = true;
 	}
+
+	void SetEnemyFace(Dir dir)override {
+		if (dir == North) face_degree = 180.f;
+		else if (dir == South) face_degree = 0.f;
+		else if (dir == West) face_degree = -90.f;
+		else if (dir == East) face_degree = 90.f;
+	}
 };
 
 //========================================================================
@@ -114,6 +121,14 @@ public:
 	void UpdateChickenYpos();
 	void SetChickenRunSpeed()override { walk_velo = RUN_V; };
 	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
+	
+	void SetEnemyFace(Dir dir)override {
+		if (dir == North) face_degree = 180.f;
+		else if (dir == South) face_degree = 0.f;
+		else if (dir == West) face_degree = -90.f;
+		else if (dir == East) face_degree = 90.f;
+	}
+
 	Dir GetChickenDir()override { return face; }
 };
 
@@ -172,7 +187,50 @@ public:
 	void SetChickenRunSpeed()override { walk_velo = RUN_V; };
 	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
-	Dir GetChickenDir()override { return face; }
+	Dir GetChickenDir()override { return face;}
+	
+	void SetEnemyFace(Dir dir)override {
+		
+		switch (dir)
+		{
+		case North:
+			face = North;
+			face_degree = 180.f;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = -m_far_value;
+			break;
+
+		case South:
+			face = South;
+			face_degree = 0.f;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = m_far_value;
+			break;
+
+		case West:
+			face = West;
+			face_degree = -90.;
+			m_far_x = -m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case East:
+			face = East;
+			face_degree = 90.f;
+			m_far_x = m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case STOP:
+			face = STOP;
+			break;
+		}
+
+	}
 };
 
 //========================================================================
@@ -228,6 +286,47 @@ public:
 	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
 	Dir GetChickenDir()override { return face; }
+	
+	void SetEnemyFace(Dir dir)override {
+		switch (dir)
+		{
+		case North:
+			face = North;
+			face_degree = 180.f;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = -m_far_value;
+			break;
+
+		case South:
+			face = South;
+			face_degree = 0.f;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = m_far_value;
+			break;
+
+		case West:
+			face = West;
+			face_degree = -90.;
+			m_far_x = -m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case East:
+			face = East;
+			face_degree = 90.f;
+			m_far_x = m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case STOP:
+			face = STOP;
+			break;
+		}
+	}
 };
 
 //========================================================================
@@ -292,6 +391,47 @@ public:
 	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
 	Dir GetChickenDir()override { return face; }
+	
+	void SetEnemyFace(Dir dir)override {
+		switch (dir)
+		{
+		case North:
+			face = North;
+			face_degree = 180.f;
+			m_far_x = -m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case South:
+			face = South;
+			face_degree = 0.f;
+			m_far_x = m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case West:
+			face = West;
+			face_degree = -90.;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = m_far_value;
+			break;
+
+		case East:
+			face = East;
+			face_degree = 90.f;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = -m_far_value;
+			break;
+
+		case STOP:
+			face = STOP;
+			break;
+		}
+	}
 };
 
 //========================================================================
@@ -356,6 +496,46 @@ public:
 	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
 	Dir GetChickenDir()override { return face; }
+	void SetEnemyFace(Dir dir)override {
+		switch (dir)
+		{
+		case North:
+			face = North;
+			face_degree = 180.f;
+			m_far_x = m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case South:
+			face = South;
+			face_degree = 0.f;
+			m_far_x = -m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case West:
+			face = West;
+			face_degree = -90.;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = -m_far_value;
+			break;
+
+		case East:
+			face = East;
+			face_degree = 90.f;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = m_far_value;
+			break;
+
+		case STOP:
+			face = STOP;
+			break;
+		}
+	}
 };
 
 //========================================================================
@@ -419,6 +599,46 @@ public:
 	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
 	Dir GetChickenDir()override { return face; }
+	void SetEnemyFace(Dir dir)override {
+		switch (dir)
+		{
+		case North:
+			face = North;
+			face_degree = 180.f;
+			m_far_x = -m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case South:
+			face = South;
+			face_degree = 0.f;
+			m_far_x = m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case West:
+			face = West;
+			face_degree = -90.;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = m_far_value;
+			break;
+
+		case East:
+			face = East;
+			face_degree = 90.f;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = -m_far_value;
+			break;
+
+		case STOP:
+			face = STOP;
+			break;
+		}
+	}
 };
 
 //========================================================================
@@ -483,5 +703,46 @@ public:
 	void SetChickenWalkSpeed()override { walk_velo = WALK_V; };
 	void UpdateChickenYpos();
 	Dir GetChickenDir()override { return face; }
+	
+	void SetEnemyFace(Dir dir)override {
+		switch (dir)
+		{
+		case North:
+			face = North;
+			face_degree = 180.f;
+			m_far_x = m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case South:
+			face = South;
+			face_degree = 0.f;
+			m_far_x = -m_far_value;
+			m_far_y = 0.f;
+			m_far_z = 0.f;
+			break;
+
+		case West:
+			face = West;
+			face_degree = -90.;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = -m_far_value;
+			break;
+
+		case East:
+			face = East;
+			face_degree = 90.f;
+			m_far_x = 0.f;
+			m_far_y = 0.f;
+			m_far_z = m_far_value;
+			break;
+
+		case STOP:
+			face = STOP;
+			break;
+		}
+	}
 };
 
