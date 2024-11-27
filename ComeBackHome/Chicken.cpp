@@ -12,7 +12,7 @@
 const float v{ 0.002 };
 
 // АЃАн
-const float offset_x{ 0.07 };
+const float g_offset_x{ 0.07 };
 
 void SetChickenFaceDir(unsigned char key)
 {
@@ -148,7 +148,7 @@ void ChickenBody::InitMatrix4(bool player_id)
 	}
 	else
 	{
-		m_x_pos = 0.f + offset_x;
+		m_x_pos = 0.f + g_offset_x;
 		m_y_pos = 0.0f;
 		m_z_pos = 0.f;
 	}
@@ -469,7 +469,7 @@ void ChickenHead::InitMatrix4(bool player_id)
 	}
 	else
 	{
-		m_x_pos = 0.f + offset_x;
+		m_x_pos = 0.f + g_offset_x;
 		m_y_pos = 0.01;
 		m_z_pos = 0.f;
 	}
@@ -610,7 +610,7 @@ void ChickenMouse::InitMatrix4(bool player_id)
 	m_x_pos = 0.0f;
 	m_y_pos = 0.01f;
 	m_z_pos = 0.0f;
-	if (player_id) m_x_pos += offset_x;
+	if (player_id) m_x_pos += g_offset_x;
 }
 
 void ChickenMouse::WorldMatrix()
@@ -772,7 +772,7 @@ void ChickenEyes::InitMatrix4(bool player_id)
 	m_x_pos = 0.f;
 	m_y_pos = 0.0105;
 	m_z_pos = 0.f;
-	if (player_id) m_x_pos += offset_x;
+	if (player_id) m_x_pos += g_offset_x;
 }
 
 void ChickenEyes::WorldMatrix()
@@ -929,7 +929,7 @@ void ChickenLeftArm::InitMatrix4(bool player_id)
 	m_y_pos = -0.0005f;
 	m_z_pos = 0.f;
 
-	if (player_id) m_x_pos += offset_x;
+	if (player_id) m_x_pos += g_offset_x;
 }
 
 void ChickenLeftArm::handling()
@@ -1134,7 +1134,7 @@ void ChickenRightArm::InitMatrix4(bool player_id)
 	m_y_pos = 0.0005f;
 	m_z_pos = 0.f;
 
-	if (player_id) m_x_pos += offset_x;
+	if (player_id) m_x_pos += g_offset_x;
 }
 
 void ChickenRightArm::WorldMatrix()
@@ -1311,7 +1311,7 @@ void ChickenLeftLeg::InitMatrix4(bool player_id)
 	m_y_pos = -0.005f;
 	m_z_pos = 0.f;
 
-	if (player_id) m_x_pos += offset_x;
+	if (player_id) m_x_pos += g_offset_x;
 }
 
 void ChickenLeftLeg::WorldMatrix()
@@ -1494,7 +1494,7 @@ void ChickenRightLeg::InitMatrix4(bool player_id)
 	m_y_pos = -0.005f;
 	m_z_pos = 0.f;
 
-	if (player_id) m_x_pos += offset_x;
+	if (player_id) m_x_pos += g_offset_x;
 }
 
 void ChickenRightLeg::handling()

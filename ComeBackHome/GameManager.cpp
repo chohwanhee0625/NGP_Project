@@ -25,9 +25,10 @@ SOCKET GameManager::WaitForOtherPlayer()
 	cout << "Server Connected" << endl;
 
 	// recv Start Flag
-	std::string start_flag = Recv(sock);
-	S_GAME_READY GameR{};
-	GameR.from_json(start_flag);
+		// 고광신이 지움 11/27 22:06
+	//std::string start_flag = Recv(sock); 
+	//S_GAME_READY GameR{}; 
+	//GameR.from_json(start_flag); 
 
 	// recv world Data
 	RecvWorldData(sock);
@@ -37,13 +38,11 @@ SOCKET GameManager::WaitForOtherPlayer()
 	return sock;
 }
 
-
-
 void GameManager::UpdateWorld(SOCKET sock)
 {
 	using namespace std::chrono;
 	std::cout << "UpdateWorld" << std::endl;
-
+	
 	while (true)
 	{
 		// send myplayer data
@@ -52,7 +51,6 @@ void GameManager::UpdateWorld(SOCKET sock)
 		Send(sock, j_str);
 
 		//cout << j_str << endl;
-		
 		
 		// recv otherplayer data
 		j_str = Recv(sock);
