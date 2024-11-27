@@ -738,15 +738,7 @@ void gVecUpdate(float deltatime)
 
 void gEnemyVecUpdate(float deltatime)
 {
-	UPDATE_DATA other_player{};
-	other_player = gGameManager.m_playerData[(int)ID::ENERMY];
-
-	for (auto& obj : gEnemyVec) {
-		obj->SetXpos(other_player.Player_Pos_x);
-		obj->SetYpos(other_player.Player_Pos_y);
-		obj->SetZpos(other_player.Player_Pos_z);
-	}
-
+	EnemyChickenUpdatePos();
 	EnemyChickenHandling(deltatime);
 }
 
@@ -835,8 +827,137 @@ void ChickenWalk()
 	}
 }
 
+void SetChickenFaceDir(unsigned char key)
+{
+	ChickenBody* body = dynamic_cast<ChickenBody*>(gVec[0]);
+	body->SetChickenFaceDir(key);
+	ChickenHead* head = dynamic_cast<ChickenHead*>(gVec[1]);
+	head->SetChickenFaceDir(key);
+	ChickenMouse* mouse = dynamic_cast<ChickenMouse*>(gVec[2]);
+	mouse->SetChickenFaceDir(key);
+	ChickenEyes* eyes = dynamic_cast<ChickenEyes*>(gVec[3]);
+	eyes->SetChickenFaceDir(key);
+
+	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
+	Larm->SetChickenFaceDir(key);
+
+	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
+	Rarm->SetChickenFaceDir(key);
+
+	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
+	Lleg->SetChickenFaceDir(key);
+
+	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
+	Rleg->SetChickenFaceDir(key);
+
+	gCamera.SetCameraFaceDir(key);
+}
+
+void ChickenHandling(float deltatime)
+{
+	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
+	Larm->handling();
+
+	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
+	Rarm->handling();
+
+	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
+	Lleg->handling();
+
+	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
+	Rleg->handling();
+}
+
+void ChickenMove(float deltatime)
+{
+	ChickenBody* body = dynamic_cast<ChickenBody*>(gVec[0]);
+	body->Walk(deltatime);
+	ChickenHead* head = dynamic_cast<ChickenHead*>(gVec[1]);
+	head->Walk(deltatime);
+	ChickenMouse* mouse = dynamic_cast<ChickenMouse*>(gVec[2]);
+	mouse->Walk(deltatime);
+	ChickenEyes* eyes = dynamic_cast<ChickenEyes*>(gVec[3]);
+	eyes->Walk(deltatime);
+
+	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
+	Larm->Walk(deltatime);
+	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
+	Rarm->Walk(deltatime);
+	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
+	Lleg->Walk(deltatime);
+	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
+	Rleg->Walk(deltatime);
+
+}
+
 //===========================================================================================
 
+void EnemyChickenHandling(float deltatime)  
+{
+	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gEnemyVec[4]);
+	Larm->handling();
+
+	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gEnemyVec[5]);
+	Rarm->handling();
+
+	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gEnemyVec[6]);
+	Lleg->handling();
+
+	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gEnemyVec[7]);
+	Rleg->handling();
+}
+
+void EnemyChickenUpdatePos()
+{
+	UPDATE_DATA other_player{};
+	other_player = gGameManager.m_playerData[(int)ID::ENERMY];
+
+	//for (auto& obj : gEnemyVec) {
+	//	obj->SetXpos(other_player.Player_Pos_x);
+	//	obj->SetYpos(other_player.Player_Pos_y);
+	//	obj->SetZpos(other_player.Player_Pos_z);
+	//}
+
+	float enemy_body_x = other_player.Player_Pos_x;
+	float enemy_body_y = other_player.Player_Pos_y;
+	float enemy_body_z = other_player.Player_Pos_z;
+
+	enum chicken_model { body = 0, head, mouse, eyes, leftarm, rightarm, leftleg, rightleg };
+
+	gEnemyVec[body]->SetXpos(enemy_body_x);
+	gEnemyVec[body]->SetYpos(enemy_body_y);
+	gEnemyVec[body]->SetZpos(enemy_body_z);
+
+	gEnemyVec[head]->SetXpos(enemy_body_x);
+	gEnemyVec[head]->SetYpos(enemy_body_y + 0.01);
+	gEnemyVec[head]->SetZpos(enemy_body_z);
+
+	gEnemyVec[mouse]->SetXpos(enemy_body_x);
+	gEnemyVec[mouse]->SetYpos(enemy_body_y + 0.01);
+	gEnemyVec[mouse]->SetZpos(enemy_body_z);
+
+	gEnemyVec[eyes]->SetXpos(enemy_body_x);
+	gEnemyVec[eyes]->SetYpos(enemy_body_y + 0.0105);
+	gEnemyVec[eyes]->SetZpos(enemy_body_z);
+
+	gEnemyVec[leftarm]->SetXpos(enemy_body_x);
+	gEnemyVec[leftarm]->SetYpos(enemy_body_y - 0.0005f);
+	gEnemyVec[leftarm]->SetZpos(enemy_body_z);
+
+	gEnemyVec[rightarm]->SetXpos(enemy_body_x);
+	gEnemyVec[rightarm]->SetYpos(enemy_body_y + 0.0005f);
+	gEnemyVec[rightarm]->SetZpos(enemy_body_z);
+
+	gEnemyVec[leftleg]->SetXpos(enemy_body_x);
+	gEnemyVec[leftleg]->SetYpos(enemy_body_y - 0.005f);
+	gEnemyVec[leftleg]->SetZpos(enemy_body_z);
+
+	gEnemyVec[rightleg]->SetXpos(enemy_body_x);
+	gEnemyVec[rightleg]->SetYpos(enemy_body_y - 0.005f);
+	gEnemyVec[rightleg]->SetZpos(enemy_body_z);
+}
+
+//===========================================================================================
 
 #endif
 

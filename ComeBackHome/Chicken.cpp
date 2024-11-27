@@ -9,90 +9,10 @@
 
 //===========================================================================================
 
-const float v{ 0.002 };
+const float ending_velocity{ 0.002 };
 
 // 간격
 const float g_offset_x{ 0.07 };
-
-void SetChickenFaceDir(unsigned char key)
-{
-	ChickenBody* body = dynamic_cast<ChickenBody*>(gVec[0]);
-	body->SetChickenFaceDir(key);
-	ChickenHead* head = dynamic_cast<ChickenHead*>(gVec[1]);
-	head->SetChickenFaceDir(key);
-	ChickenMouse* mouse = dynamic_cast<ChickenMouse*>(gVec[2]);
-	mouse->SetChickenFaceDir(key);
-	ChickenEyes* eyes = dynamic_cast<ChickenEyes*>(gVec[3]);
-	eyes->SetChickenFaceDir(key);
-
-	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
-	Larm->SetChickenFaceDir(key);
-
-	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
-	Rarm->SetChickenFaceDir(key);
-
-	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
-	Lleg->SetChickenFaceDir(key);
-
-	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
-	Rleg->SetChickenFaceDir(key);
-
-	gCamera.SetCameraFaceDir(key);
-
-
-}
-
-void ChickenHandling(float deltatime)
-{
-	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
-	Larm->handling();
-
-	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
-	Rarm->handling();
-
-	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
-	Lleg->handling();
-
-	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
-	Rleg->handling();
-}
-
-void ChickenMove(float deltatime)
-{
-	ChickenBody* body = dynamic_cast<ChickenBody*>(gVec[0]);
-	body->Walk(deltatime);
-	ChickenHead* head = dynamic_cast<ChickenHead*>(gVec[1]);
-	head->Walk(deltatime);
-	ChickenMouse* mouse = dynamic_cast<ChickenMouse*>(gVec[2]);
-	mouse->Walk(deltatime);
-	ChickenEyes* eyes = dynamic_cast<ChickenEyes*>(gVec[3]);
-	eyes->Walk(deltatime);
-
-	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gVec[4]);
-	Larm->Walk(deltatime);
-	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gVec[5]);
-	Rarm->Walk(deltatime);
-	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gVec[6]);
-	Lleg->Walk(deltatime);
-	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gVec[7]);
-	Rleg->Walk(deltatime);
-
-}
-
-void EnemyChickenHandling(float deltatime)
-{
-	ChickenLeftArm* Larm = dynamic_cast<ChickenLeftArm*>(gEnemyVec[4]);
-	Larm->handling();
-
-	ChickenRightArm* Rarm = dynamic_cast<ChickenRightArm*>(gEnemyVec[5]);
-	Rarm->handling();
-
-	ChickenLeftLeg* Lleg = dynamic_cast<ChickenLeftLeg*>(gEnemyVec[6]);
-	Lleg->handling();
-
-	ChickenRightLeg* Rleg = dynamic_cast<ChickenRightLeg*>(gEnemyVec[7]);
-	Rleg->handling();
-}
 
 //===========================================================================================
 
@@ -240,8 +160,8 @@ void ChickenBody::Update(float deltatime)
 		// 도착하면 y,z 위치 증가 -> y_pos가 2.1이 넘어갈 때까지
 		gIsReach = true;
 		for (int i{}; i < 8; ++i) {
-			gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + v);
-			gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + v);
+			gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + ending_velocity);
+			gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + ending_velocity);
 			gVec.at(i)->SetChickenFaceDir('s');
 		}
 

@@ -58,12 +58,13 @@ void SetChickenFaceDir(unsigned char key);
 void SetOffGlobalDir();
 
 void ChickenHandling(float deltatime);
-void EnemyChickenHandling(float deltatime);
 void ChickenMove(float deltatime);
-
 void ChickenRun();
 void ChickenWalk();
 void ChickenJump();
+
+void EnemyChickenHandling(float deltatime);
+void EnemyChickenUpdatePos();
 
 //===========================================================================================
 
