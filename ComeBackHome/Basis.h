@@ -121,6 +121,8 @@ public:
 	virtual void SetChickenFaceDir(unsigned char key) {}
 	virtual Dir GetChickenDir() { return STOP; }
 	virtual void SwitchCollisionState() {} // 충돌 검사 on/off
+	virtual void SetEnemyFace(Dir dir) {}
+
 
 	// Road, Grass 
 	virtual int GetZindex() { return 0; }

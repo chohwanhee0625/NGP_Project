@@ -97,7 +97,7 @@ public:
 	float	Player_Pos_x;
 	float	Player_Pos_y;
 	float	Player_Pos_z;
-	char	Player_Face;
+	int		Player_Face;
 	bool	GameOver_Flag;
 
 	//UPDATE_DATA& operator=(const UPDATE_DATA& rhs);

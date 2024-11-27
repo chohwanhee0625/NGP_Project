@@ -115,7 +115,7 @@ void UPDATE_DATA::from_json(std::string& j_str)
 	Player_Pos_x = jObject.at("OtherPos_x").get<float>();
 	Player_Pos_y = jObject.at("OtherPos_y").get<float>();
 	Player_Pos_z = jObject.at("OtherPos_z").get<float>();
-	Player_Face = jObject.at("OtherFace").get<char>();
+	Player_Face = jObject.at("OtherFace").get<int>();
 	GameOver_Flag = jObject.at("Over").get<bool>();
 
 }
