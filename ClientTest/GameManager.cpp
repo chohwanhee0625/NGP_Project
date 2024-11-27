@@ -65,25 +65,25 @@ void GameManager::RecvWorldData(SOCKET sock)
 	m_InitPlayerData[0].from_json(j_str);		// MY Player Data
 	j_str = Recv(sock);
 	m_InitPlayerData[1].from_json(j_str);		// Other Player Data
-	cout << j_str << endl;
+	//cout << j_str << endl;
 
 	// recv Roads Data
 	INIT_DATA_R m_roadData;
 	j_str = Recv(sock);
 	m_roadData.from_json(j_str);
-	cout << j_str << endl;
+	//cout << j_str << endl;
 
 	// recv Cars Data
 	INIT_DATA_C m_carData;
 	j_str = Recv(sock);
 	m_carData.from_json(j_str);
-	cout << j_str << endl;
+	//cout << j_str << endl;
 
 	// recv Woods Data
 	INIT_DATA_W m_woodData;
 	j_str = Recv(sock);
 	m_woodData.from_json(j_str);
-	cout << j_str << endl;
+	//cout << j_str << endl;
 }
 
 void GameManager::SetWorldData(SOCKET sock)
