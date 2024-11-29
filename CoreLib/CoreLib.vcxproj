@@ -149,12 +149,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include.cpp" />
+    <ClCompile Include="LF_Queue.cpp" />
     <ClCompile Include="PacketClass.cpp" />
     <ClCompile Include="PacketIO.cpp" />
     <ClCompile Include="PacketIO.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h" />
+    <ClInclude Include="LF_Queue.h" />
     <ClInclude Include="nlohmann\json.hpp" />
     <ClInclude Include="PacketClass.h" />
   </ItemGroup>
