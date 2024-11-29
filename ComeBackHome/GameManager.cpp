@@ -134,15 +134,3 @@ void GameManager::RecvWorldData(SOCKET sock)
 	SetMother(); // 도착지점 엄마 닭 만들기
 }
 
-void GameManager::SetWorldData()
-{
-
-}
-
-void GameManager::RecvOtherPlayerData(SOCKET sock)
-{
-}
-
-void GameManager::SendMyPlayerData(SOCKET sock)
-{
-}

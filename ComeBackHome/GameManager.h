@@ -16,8 +16,5 @@ public:
 	void UpdateWorld(SOCKET sock);
 
 	void RecvWorldData(SOCKET sock);
-	void SetWorldData();
-	void RecvOtherPlayerData(SOCKET sock);
-	void SendMyPlayerData(SOCKET sock);
 };
 
