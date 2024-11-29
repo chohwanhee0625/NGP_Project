@@ -106,7 +106,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 void SessionManager::EndGame(SOCKET client_sock)
 {
-	SendGameOverFlag(client_sock);
+	//SendGameOverFlag(client_sock);
 
 }
 
@@ -119,13 +119,13 @@ void SessionManager::InitWorldData(bool p_id[2])
 	//		( ChickenBody::InitMatrix4() )  
 	//const float x_offset = 0.5f;
 
-	m_playerData[p_id[0]].player_pos_x = 0.0f;
-	m_playerData[p_id[0]].player_pos_y = 0.0f;
-	m_playerData[p_id[0]].player_pos_z = 0.0f;
+	//m_playerData[p_id[0]].player_pos_x = 0.0f;
+	//m_playerData[p_id[0]].player_pos_y = 0.0f;
+	//m_playerData[p_id[0]].player_pos_z = 0.0f;
 
-	m_playerData[p_id[1]].player_pos_x = 0.0f;
-	m_playerData[p_id[1]].player_pos_y = 0.0f;
-	m_playerData[p_id[1]].player_pos_z = 0.0f;
+	//m_playerData[p_id[1]].player_pos_x = 0.0f;
+	//m_playerData[p_id[1]].player_pos_y = 0.0f;
+	//m_playerData[p_id[1]].player_pos_z = 0.0f;
 
 	// # send 함수에서 호출해서 사용
 	m_InitPlayerData[0] = { 0 };
@@ -250,18 +250,3 @@ void SessionManager::SendWorldData(SOCKET client_sock, int id)
 	// send Woods Data
 	Send(client_sock, m_woodData.to_json());
 }
-
-void SessionManager::RecvMyPlayerData(int my_id, SOCKET client_sock)
-{
-
-}
-
-void SessionManager::SendOtherPlayerData(int other_id, SOCKET client_sock)
-{
-}
-
-void SessionManager::SendGameOverFlag(SOCKET client_sock)
-{
-
-}
-
