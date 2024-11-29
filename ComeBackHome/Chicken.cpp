@@ -163,6 +163,12 @@ void ChickenBody::Update(float deltatime)
 			gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + ending_velocity);
 			gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + ending_velocity);
 			gVec.at(i)->SetChickenFaceDir('s');
+
+			//gGameManager.m_playerData[(int)ID::ENERMY];
+			gEnemyVec.at(i)->SetXpos(gVec.at(i)->GetXpos());
+			gEnemyVec.at(i)->SetYpos(gVec.at(i)->GetYpos());
+			gEnemyVec.at(i)->SetZpos(gVec.at(i)->GetZpos());
+			gEnemyVec.at(i)->SetEnemyFace(South);
 		}
 
 		if (m_y_pos >= 2.1)

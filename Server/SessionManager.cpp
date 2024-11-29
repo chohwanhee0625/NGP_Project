@@ -47,7 +47,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 	int other_id = 1 - my_id;
 	SendWorldData(client_sock, my_id);
 
-	// 준비 완료 플래그 받기 
+	// 준비 완료 플래그 받기
 	RecvStartFlag(client_sock);
 	m_startflag[my_id] = true;
 
@@ -67,35 +67,38 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 	while (true)
 	{
 		{
-		//// recv my player data
-		std::lock_guard<std::mutex> lock(mtx);
+			//// recv my player data
+			std::lock_guard<std::mutex> lock(mtx);
 
-		// 1. 클라이언트에서 데이터를 패킷 구조체에 저장하고 to_json함수로 데이터를 Json string형식으로 저장
-		// 2. 패킷 사이즈, string을 char*로 변환한 데이터 정보를 서버로 Send
-		// 3. char*로 변환된 가변길이 데이터를 순서대로 서버에서 받아서 string에 저장 Recv 
-		// 4. string에 저장된 데이터를 from_json에서 parse(파싱) 과정으로 string으로 저장된 데이터의 원본을 복원
-		j_str = Recv(client_sock);
-		m_updateData[my_id].from_json(j_str); 
+			// 1. 클라이언트에서 데이터를 패킷 구조체에 저장하고 to_json함수로 데이터를 Json string형식으로 저장
+			// 2. 패킷 사이즈, string을 char*로 변환한 데이터 정보를 서버로 Send
+			// 3. char*로 변환된 가변길이 데이터를 순서대로 서버에서 받아서 string에 저장 Recv 
+			// 4. string에 저장된 데이터를 from_json에서 parse(파싱) 과정으로 string으로 저장된 데이터의 원본을 복원
+			j_str = Recv(client_sock);
+			m_updateData[my_id].from_json(j_str);
 
-		// 우승자 검사
-		if (m_updateData[my_id].Player_Pos_z >= 150.f) {		// TODO: 골라인 z위치 측정 후 반영
-			m_updateData[my_id].GameOver_Flag = true;
-			m_winner[my_id] = true;
+			//std::cout << m_updateData[my_id].Player_Pos_z << std::endl;
+
+			// 우승자 검사
+			if (m_updateData[my_id].Player_Pos_z <= -15.f) {		// TODO: 골라인 z위치 측정 후 반영
+				m_updateData[my_id].GameOver_Flag = true;
+				m_winner[my_id] = true;
+			}
+			else if (m_updateData[other_id].Player_Pos_z <= -15.f) {
+				m_updateData[other_id].GameOver_Flag = true;
+				m_winner[other_id] = true;
+			}
+
+			//// send other player data
+			// ohter_id를 맡은 스레드에서 업데이트한 정보를 클라이언트에 Send
+			j_str = m_updateData[other_id].to_json();
+			Send(client_sock, j_str);
+
+			if (m_winner[my_id] or m_winner[other_id]) {
+				std::cout << "Goal" << std::endl;
+				//break;
+			}
 		}
-		else if (m_updateData[other_id].Player_Pos_z >= 150.f) {
-			m_updateData[other_id].GameOver_Flag = true;
-			m_winner[other_id] = true;
-		}
-
-		//// send other player data
-		// ohter_id를 맡은 스레드에서 업데이트한 정보를 클라이언트에 Send
-		j_str = m_updateData[other_id].to_json();
-		Send(client_sock, j_str);
-
-		if (m_winner[my_id] or m_winner[other_id])
-			break;
-		}
-
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ)); 
 	}
 
