@@ -1,6 +1,5 @@
 #include "GameManager.h"
 
-char* SERVERIP = (char*)"127.0.0.1";
 
 SOCKET GameManager::WaitForOtherPlayer()
 {

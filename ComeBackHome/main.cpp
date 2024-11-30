@@ -57,6 +57,11 @@ std::uniform_real_distribution<float> grandomcolor{0.f,1.f};
 
 void main(int argc, char** argv)
 {
+	std::string SERVERIP;
+	std::cout << "Enter SERVERIP: ";
+	std::cin >> SERVERIP;
+	gGameManager.SERVERIP = (char*)SERVERIP.c_str();
+
 	// 윈속 초기화
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
@@ -88,9 +93,7 @@ void main(int argc, char** argv)
 
 
 	gPlaybutton.InitBuffer();
-	gPlaybutton.LoadTexture("play_button.png");
-	gPlaybutton.resize(0.5, 0.1, 1.0);
-	gPlaybutton.move(0, -0.25, -0.001);
+	gPlaybutton.LoadTexture("start_image.png");
 
 	InitBorder(); // 우측 상단 핑크색 경계 만들기 
 	SetgVec(); // 초기 객체 만들기 

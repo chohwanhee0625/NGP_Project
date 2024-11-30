@@ -7,6 +7,7 @@
 class GameManager
 {
 public:
+	char* SERVERIP = (char*)"127.0.0.1";
 	UPDATE_DATA m_playerData[2];
 
 public:
