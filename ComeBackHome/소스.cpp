@@ -295,42 +295,6 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		break;
 	default:
 		if (GAME_START == false) {
-			//gPlaybutton.change_img("chick.jpg");
-			//gPlaybutton.move(0, 0.25, -0.001);
-			//gPlaybutton.resize(2.0, 10.0, 1.0);
-			//gPlaybutton.Render();
-
-			//std::thread connectionThread([&]() {
-			//	SOCKET sock = gGameManager.WaitForOtherPlayer();
-			//	gConnectionEstablished = true;
-			//	gSocket = sock;
-			//	});
-			//connectionThread.detach();
-			//// 접속을 기다리는 동안 UI를 계속 렌더링
-			//glutPostRedisplay();
-
-			//if (gConnectionEstablished) {
-			//	glUseProgram(gShaderProgramID);
-			//	SetOffAllofToggle();
-			//	SetInitToggle();
-			//	gCamera.InitCamera();
-			//	gLight->InitLight();
-			//	SendStartFlag(gSocket);
-			//	RecvStartFlag(gSocket);
-
-			//	GAME_START = true;
-			//	std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, gSocket);
-			//	networkThread.detach();
-
-			//	gTimer.starttimer();
-			//	glutTimerFunc(1, TimerFunction, 1);
-			//}
-			gPlaybutton.change_img("chick.jpg");
-			gPlaybutton.resize(0.5, 0.5, 1.0);
-			gPlaybutton.Render();
-			glutSwapBuffers();
-			glutPostRedisplay();
-
 			SOCKET sock = gGameManager.WaitForOtherPlayer();
 
 			glUseProgram(gShaderProgramID);
