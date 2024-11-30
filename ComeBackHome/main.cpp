@@ -45,7 +45,6 @@ bool gChickenDir[4]{};
 
 int seednum;
 
-std::random_device gRandDevice; // 진짜 난수 발생기 -> 이 값을 시드값으로
 std::mt19937 gRandomEngine; // 알고리즘 + 진짜 난수 시드 :: 진짜진짜 난수 생성
 std::uniform_int_distribution<int> gBoolUniform{ 0,1 };
 std::uniform_int_distribution<int> gRoadSet{ 5, 10 };
@@ -78,8 +77,8 @@ void main(int argc, char** argv)
 		std::cout << "GLEW Initalize\n";
 	}
 
-	seednum = 2020;
-	gRandomEngine = std::mt19937(static_cast<unsigned int>(seednum));
+//	seednum = 2020;
+//	gRandomEngine = std::mt19937(static_cast<unsigned int>(seednum));
 
 	make_shaderProgram(); // 쉐이더 프로그램 만들기
 	ShowMenu(); // 게임 플레이 방법
