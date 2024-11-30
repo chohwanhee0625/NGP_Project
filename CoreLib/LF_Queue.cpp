@@ -2,17 +2,18 @@
 
 LF_QUEUE::LF_QUEUE()
 {
-	head = tail = new NODE(-1);
+	UPDATE_DATA init;
+	head = tail = new NODE(init);
 }
 
 void LF_QUEUE::clear()
 {
-	while (Deq() != -1);
+	while (Deq() != false);
 }
 
-void LF_QUEUE::Enq(int x)
+void LF_QUEUE::Enq(UPDATE_DATA player_data)
 {
-	NODE* p = new NODE(x);
+	NODE* p = new NODE(player_data);
 	while (true) {
 		NODE* last = tail;
 		NODE* next = last->next;
@@ -20,6 +21,7 @@ void LF_QUEUE::Enq(int x)
 		if (next == nullptr) {
 			if (true == CAS(&(last->next), nullptr, p)) {
 				CAS(&tail, last, p);
+				size++;
 				return;
 			}
 		}
@@ -27,24 +29,35 @@ void LF_QUEUE::Enq(int x)
 	}
 }
 
-int LF_QUEUE::Deq()
+bool LF_QUEUE::Deq()
 {
 	while (true) {
 		NODE* first = head;
 		NODE* last = tail;
 		NODE* next = first->next;
 		if (first != head) continue;
-		if (next == nullptr) return -1;
+		if (next == nullptr) return false;
 		if (first == last) {
 			CAS(&tail, last, next);
 			continue;
 		}
-		int value = next->x;
 		if (true == CAS(&head, first, next)) {
+			size--;
 			delete first;
-			return value;
+			return true;
 		}
 	}
+}
+
+UPDATE_DATA LF_QUEUE::Front()
+{
+	NODE* p = head->next;
+	return p->m_player_data;
+}
+
+int LF_QUEUE::Size()
+{
+	return size;
 }
 
 bool LF_QUEUE::CAS(NODE* volatile* ptr, NODE* old_ptr, NODE* new_ptr)

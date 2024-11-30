@@ -102,6 +102,10 @@ public:
 
 	UPDATE_DATA& operator=(const UPDATE_DATA& rhs);
 public:
+	UPDATE_DATA()
+		: Player_ID(-1), Player_Pos_x(0), Player_Pos_y(0), Player_Pos_z(0)
+		, Player_Face(0), GameOver_Flag(0) {}
+	UPDATE_DATA(UPDATE_DATA& player_data);
 	std::string to_json();
 
 	void from_json(std::string& j_str);

@@ -1,6 +1,15 @@
 #include "GameManager.h"
 
 
+GameManager::GameManager()
+{
+	UPDATE_DATA init_data;
+	init_data.Player_ID = 1;
+	m_otherPlayer.Enq(init_data);
+	m_otherPlayer.Enq(init_data);
+	m_otherPlayer.Enq(init_data);
+}
+
 SOCKET GameManager::WaitForOtherPlayer()
 {
 	using namespace std;
@@ -49,13 +58,11 @@ void GameManager::UpdateWorld(SOCKET sock)
 		j_str = m_playerData[(int)ID::ME].to_json();
 		Send(sock, j_str);
 
-		//cout << j_str << endl << endl;
 		
 		// recv otherplayer data
 		j_str = Recv(sock);
 		m_playerData[(int)ID::ENERMY].from_json(j_str);
-
-		//cout << j_str << endl << endl;
+		m_otherPlayer.Enq(m_playerData[(int)ID::ENERMY]);
 
 		//if (/* GameEndFlag == true */)
 		//	break;
