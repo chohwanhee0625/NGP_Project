@@ -882,7 +882,7 @@ void EnemyChickenUpdatePos()
 	float enemy_body_z = other_player.Player_Pos_z;
 
 	if (gGameManager.m_otherPD_queue.Size() >= 2) {
-		std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;
+		//std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;
 
 		//while (gGameManager.m_otherPD_queue.Size() >= 5)
 		//	gGameManager.m_otherPD_queue.Deq();

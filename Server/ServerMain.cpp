@@ -60,7 +60,7 @@ int main()
 			auto sock2 = client_queue.front();
 			client_queue.pop();
 
-			game_threads.emplace_back(SessionManager::StartGame, &GM, sock1, sock2);
+			game_threads.emplace_back(&SessionManager::StartGame, &GM, sock1, sock2);
 		}
 	}
 
