@@ -1,6 +1,14 @@
 #include "GameManager.h"
 
 
+GameManager::GameManager()
+{
+	//UPDATE_DATA init_data;
+	//init_data.Player_ID = 1;
+	//m_otherPD_queue.Enq(init_data);
+	//m_otherPD_queue.Enq(init_data);
+}
+
 SOCKET GameManager::WaitForOtherPlayer()
 {
 	// connect
@@ -29,6 +37,7 @@ SOCKET GameManager::WaitForOtherPlayer()
 	return sock;
 }
 
+unsigned int render_counter;
 void GameManager::UpdateWorld(SOCKET sock)
 {	
 	cout << "UpdateWorld" << std::endl;
@@ -39,11 +48,12 @@ void GameManager::UpdateWorld(SOCKET sock)
 		std::string j_str;
 		j_str = m_playerData[(int)ID::ME].to_json();
 		Send(sock, j_str);
-		
+
 		// recv otherplayer data
 		j_str = Recv(sock);
 		m_playerData[(int)ID::ENERMY].from_json(j_str);
-
+		m_otherPD_queue.Enq(m_playerData[(int)ID::ENERMY]);
+		render_counter = 0;
 		//if (/* GameEndFlag == true */)
 		//	break;
 
