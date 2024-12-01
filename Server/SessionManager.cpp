@@ -49,7 +49,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 	
 	// 나와 상대편 각각 준비가 완료 플래그를 받은게 확인이 되면 신호 주고 while 나가기 => 다른 스레드 기다려주기
 	while (true) {
-		if (m_startflag[my_id] and m_startflag[other_id]) {	
+		if (true == (m_startflag[my_id] && m_startflag[other_id])) {	
 			SendStartFlag(client_sock);
 			break;
 		}

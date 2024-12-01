@@ -9,7 +9,8 @@
 
 //===========================================================================================
 
-const float ending_velocity{ 0.002 };
+const float ending_velocity{ 0.1f };
+// const float ending_velocity{ 0.002 };
 
 // 간격
 const float g_offset_x{ 0.07 };
@@ -146,7 +147,74 @@ void ChickenBody::Walk(float deltatime)
 
 void ChickenBody::Update(float deltatime)
 {
-	if (m_z_pos > -(g_max_z) * 0.1 && !gIsReach) {
+	float goal_line = g_max_z * 0.1; // 15.f 
+
+	// z를 + 단위로 재려고 -1 곱함
+	float player_z_pos = MINUS * gVec.at(0)->GetZpos();  
+	float enemy_z_pos  = MINUS * gEnemyVec.at(0)->GetZpos();
+	static bool winner;
+
+	// 적이나 플레이어가 도착했을 시
+	if (((goal_line <= player_z_pos) || (goal_line <= enemy_z_pos)) || gIsReach == true) {
+
+		// 첫 도착 시점 
+		if (false == gIsReach) {
+			PlaySound(L"BackSound.wav", NULL, SND_ASYNC);
+			gIsReach = true;
+
+			// if 플레이어가 이기는 경우 else 적이 이기는 경우
+			if (enemy_z_pos < player_z_pos) winner = PLAYER; else winner = ENEMY; 
+		}
+
+		switch (winner)
+		{
+		case PLAYER:
+			for (int i = 0; i < 8; ++i) {
+				gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + ending_velocity * deltatime);
+				gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + ending_velocity * deltatime);
+				gVec.at(i)->SetChickenFaceDir('s');
+
+				//gGameManager.m_playerData[(int)ID::ENERMY];
+				gEnemyVec.at(i)->SetXpos(gVec.at(i)->GetXpos());
+				gEnemyVec.at(i)->SetYpos(gVec.at(i)->GetYpos());
+				gEnemyVec.at(i)->SetZpos(gVec.at(i)->GetZpos());
+				gEnemyVec.at(i)->SetEnemyFace(South);
+			}
+			break;
+
+		case ENEMY:
+			for (int i = 0; i < 8; ++i) {
+				gEnemyVec.at(i)->SetYpos(gEnemyVec.at(i)->GetYpos() + ending_velocity * deltatime);
+				gEnemyVec.at(i)->SetZpos(gEnemyVec.at(i)->GetZpos() + ending_velocity * deltatime);
+				gEnemyVec.at(i)->SetEnemyFace(South); 
+
+				//gGameManager.m_playerData[(int)ID::ENERMY];
+				gVec.at(i)->SetXpos(gEnemyVec.at(i)->GetXpos());
+				gVec.at(i)->SetYpos(gEnemyVec.at(i)->GetYpos());
+				gVec.at(i)->SetZpos(gEnemyVec.at(i)->GetZpos());
+				gEnemyVec.at(i)->SetChickenFaceDir('s');
+			}
+			break;
+		}
+
+		if (m_y_pos >= 2.1)
+		{
+			// 빠져나가기
+			glutLeaveMainLoop();
+		}
+	}
+	// 아무도 도착 못 했을 시 -> 게임중
+	else if( gIsReach == false )
+	{
+		Collision();
+		Walk(deltatime);
+		UpdateChickenYpos(deltatime);
+	}
+
+#if 0
+	float goal_line = -g_max_z * 0.1; // -15.f 
+
+	if (m_z_pos > goal_line && !gIsReach) {
 		Collision();
 		Walk(deltatime);
 		UpdateChickenYpos(deltatime);
@@ -176,6 +244,7 @@ void ChickenBody::Update(float deltatime)
 			glutLeaveMainLoop();
 		}
 	}
+#endif
 }
 
 void ChickenBody::Collision()
