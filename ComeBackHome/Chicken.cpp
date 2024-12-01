@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Car.h"
 #include "Tree.h"
+#include "GameManager.h"
 
 //===========================================================================================
 
@@ -13,6 +14,9 @@ const float ending_velocity{ 0.002 };
 
 // АЃАн
 const float g_offset_x{ 0.07 };
+
+GameManager GM;
+
 
 //===========================================================================================
 
@@ -146,7 +150,9 @@ void ChickenBody::Walk(float deltatime)
 
 void ChickenBody::Update(float deltatime)
 {
-	if (m_z_pos > -(g_max_z) * 0.1 && !gIsReach) {
+	
+	//if (m_z_pos > -(g_max_z) * 0.1 && !gIsReach)
+	 if(false == GM.m_playerData[(int)(ID::ME)].GameOver_Flag) {
 		Collision();
 		Walk(deltatime);
 		UpdateChickenYpos(deltatime);

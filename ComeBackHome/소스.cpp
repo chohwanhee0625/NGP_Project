@@ -247,7 +247,7 @@ void TimerFunction(int value)
 		gEnemyVecUpdate(deltatime);
 
 		glutPostRedisplay();				//화면 재출력
-		glutTimerFunc(20, TimerFunction, 1); // 다시 호출 
+		glutTimerFunc(5, TimerFunction, 1); // 다시 호출 
 	}
 }
 
