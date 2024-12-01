@@ -90,7 +90,6 @@ void main(int argc, char** argv)
 	gPlaybutton.InitBuffer();
 	gPlaybutton.LoadTexture("start_image.png");
 
-	InitBorder(); // 우측 상단 핑크색 경계 만들기 
 	// SetgVec(); // 초기 객체 만들기 
 	//SetgEnemyVec();
 

@@ -293,8 +293,8 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 	default:
 		if (GAME_START == false) {
 			SOCKET sock = gGameManager.WaitForOtherPlayer();
-
 			glUseProgram(gShaderProgramID);
+
 			SetOffAllofToggle();
 			SetInitToggle();
 			gCamera.InitCamera();
@@ -304,10 +304,10 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 
 			// 준비 완료 플래그 서버에 보내기
 			SendStartFlag(sock);
-			std::cout << "send flag\n" << std::endl;
+			std::cout << "Send My Read Flag\n" << std::endl;
 			// 상대편까지 모두 준비 완료 플래그 -> 게임 시작 
 			RecvStartFlag(sock);
-			std::cout << "recv flag\n" << std::endl;
+			std::cout << "Recv Other Ready Flag\n" << std::endl;
 
 			GAME_START = true;
 			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
@@ -392,8 +392,12 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		gCamera.InitCamera();
 		gLight->InitLight();
 		gIsMovingChicken = OFF;
-		gVecClear();
-		SetgVec();
+	//	gVecClear();
+	//	SetgVec();
+		for (int j{}; j < 8; ++j) 
+		{
+			gVec.at(j)->InitMatrix4(); 
+		}
 		break;
 	}
 	glutPostRedisplay();
@@ -523,7 +527,6 @@ void SetGround(INIT_DATA_R road_data)
 		bool isGrass = road_data.Roads_Flags[idx];
 
 		if (isGrass == GRASS) {
-			//bool finalGrass = (idx >= map_size - 11);
 			pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx, false }; // 잔디 1칸 설치
 			gVec.push_back(pFloor);
 		}
@@ -545,56 +548,12 @@ void SetGround(INIT_DATA_R road_data)
 		pFloor = new Grass{ cube_vertex_array_normal, floor_color, i + idx ,true }; 
 		gVec.push_back(pFloor); 
 	}
-
-#if 0
-	int count{};
-	Road* pRoad{};
-	RoadLane* pLine{};
-	Grass* pFloor{};
-	int idx{ 0 };
-	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,false };
-	gVec.push_back(pFloor);
-	++idx;
-
-	while(idx < 150) {
-		// 랜덤 개수만큼 도로를 연속으로 만들고 잔디 한칸 만들고 다시 랜덤 개수로 도로 만들기 ( 도로 3칸 -> 잔디 1칸 -> 도로 5칸 -> 잔디 1칸 .. )
-		int cnt{ gRoadSet(gRandomEngine) };
-
-		for (int j = 0; j < cnt; ++j) {
-			count++;
-			
-			bool carDir = gBoolUniform(gRandomEngine);
-			pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
-			gVec.push_back(pRoad);
-			
-			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
-			gVec.push_back(pLine); 
-		}
-		idx += cnt; // 도로 개수만큼 idx 증가
-
-		pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx,false }; // 잔디 1칸 설치
-		gVec.push_back(pFloor);
-		++idx;
-	}
-
-	// true: 마지막 잔디 땅 표시 -> 나무 설치X, 엄마 위치( 1칸 아님 )
-	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,true};
-	gVec.push_back(pFloor);
-	
-	for (int i{}; i < 10; ++i)
-	{
-		pFloor = new Grass{ cube_vertex_array_normal, floor_color, i+idx ,true };
-		gVec.push_back(pFloor);
-	}
-	//// 도착 지점 잔디 설치
-#endif
 }
 
 void SetCars(INIT_DATA_C car_data)
 {
 	int cnt{};
 	int size{ int(gVec.size()) };
-	
 	
 	for (int i{}; i < size; ++i)
 	{
@@ -611,14 +570,12 @@ void SetCars(INIT_DATA_C car_data)
 		}
 	}
 	
-	cout << "차 개수: " << cnt << '\n';
+	cout << "Cars Count: " << cnt << '\n';
 }
 
 void SetWoods(INIT_DATA_W wood_data)
 {
-
 	int grass_cnt{};
-
 
 	for (int i{}; i < gVec.size(); ++i) 
 	{
@@ -656,7 +613,7 @@ void SetRoadLane()
 			gVec.at(i)->CreateLane();
 		}
 	}
-	cout << "차선 개수: " << cnt << '\n';
+	cout << "RoadLane Count: " << cnt << '\n';
 }
 
 void SetMother()
@@ -785,11 +742,11 @@ void SetPerspectiveToggle()
 {
 	if (gToggle[(int)Toggle::Perpective] == Third) {
 		gToggle[(int)Toggle::Perpective] = One;
-		cout << "1인칭 카메라 : ON\n";
+		cout << "First Person Camera : ON\n";
 	}
 	else if (gToggle[(int)Toggle::Perpective] == One) {
 		gToggle[(int)Toggle::Perpective] = Third;
-		cout << "3인칭 카메라 : ON\n";
+		cout << "Third Person Camera : ON\n";
 	}
 }
 
@@ -797,11 +754,11 @@ void SetNearFarCameraToggle()
 {
 	if (gToggle[(int)Toggle::NearFar] == Near) {
 		gToggle[(int)Toggle::NearFar] = Far;
-		cout << "먼 3인칭 카메라 : ON\n";
+		cout << "Far Third Person Camera : ON\n";
 	}
 	else if (gToggle[(int)Toggle::NearFar] == Far) {
 		gToggle[(int)Toggle::NearFar] = Near;
-		cout << "가까운 3인칭 카메라 : ON\n";
+		cout << "Near Third Person Camera : ON\n";
 	}
 }
 

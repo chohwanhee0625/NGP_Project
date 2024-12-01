@@ -3,15 +3,15 @@
 
 SOCKET GameManager::WaitForOtherPlayer()
 {
-	using namespace std;
-
 	// connect
 	int retval;
 
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock == INVALID_SOCKET) exit(1);
-	int flag = 1;
-	setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
+	
+	// 고광신이 지움
+	//int flag = 1;
+	//setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
 
 	// connect()
 	struct sockaddr_in serveraddr;
@@ -26,14 +26,12 @@ SOCKET GameManager::WaitForOtherPlayer()
 	// recv world Data
 	RecvWorldData(sock);
 
-	std::cout << "게임 시작 가능?" << std::endl;
 	return sock;
 }
 
 void GameManager::UpdateWorld(SOCKET sock)
-{
-	using namespace std::chrono;
-	std::cout << "UpdateWorld" << std::endl;
+{	
+	cout << "UpdateWorld" << std::endl;
 	
 	while (true)
 	{
@@ -57,9 +55,7 @@ void GameManager::UpdateWorld(SOCKET sock)
 
 void GameManager::RecvWorldData(SOCKET sock)
 {
-	using namespace std;
-
-	//=============================================================
+	//===========================================================
 	// recv Player Data
 	INIT_DATA_P m_InitPlayerData; 
 
