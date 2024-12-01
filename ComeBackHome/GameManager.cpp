@@ -3,11 +3,10 @@
 
 GameManager::GameManager()
 {
-	UPDATE_DATA init_data;
-	init_data.Player_ID = 1;
-	m_otherPlayer.Enq(init_data);
-	m_otherPlayer.Enq(init_data);
-	m_otherPlayer.Enq(init_data);
+	//UPDATE_DATA init_data;
+	//init_data.Player_ID = 1;
+	//m_otherPD_queue.Enq(init_data);
+	//m_otherPD_queue.Enq(init_data);
 }
 
 SOCKET GameManager::WaitForOtherPlayer()
@@ -52,7 +51,7 @@ void GameManager::UpdateWorld(SOCKET sock)
 		// recv otherplayer data
 		j_str = Recv(sock);
 		m_playerData[(int)ID::ENERMY].from_json(j_str);
-		m_otherPlayer.Enq(m_playerData[(int)ID::ENERMY]);
+		m_otherPD_queue.Enq(m_playerData[(int)ID::ENERMY]);
 
 		//if (/* GameEndFlag == true */)
 		//	break;
