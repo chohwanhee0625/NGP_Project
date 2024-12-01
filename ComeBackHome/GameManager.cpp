@@ -37,6 +37,7 @@ SOCKET GameManager::WaitForOtherPlayer()
 	return sock;
 }
 
+unsigned int render_counter;
 void GameManager::UpdateWorld(SOCKET sock)
 {	
 	cout << "UpdateWorld" << std::endl;
@@ -52,7 +53,7 @@ void GameManager::UpdateWorld(SOCKET sock)
 		j_str = Recv(sock);
 		m_playerData[(int)ID::ENERMY].from_json(j_str);
 		m_otherPD_queue.Enq(m_playerData[(int)ID::ENERMY]);
-
+		render_counter = 0;
 		//if (/* GameEndFlag == true */)
 		//	break;
 

@@ -865,7 +865,7 @@ void EnemyChickenHandling(float deltatime)
 	Rleg->handling();
 }
 
-unsigned int render_counter;
+extern unsigned int render_counter;
 void EnemyChickenUpdatePos()
 {
 	UPDATE_DATA other_player{};
@@ -882,7 +882,7 @@ void EnemyChickenUpdatePos()
 	float enemy_body_z = other_player.Player_Pos_z;
 
 	if (gGameManager.m_otherPD_queue.Size() >= 2) {
-		while (gGameManager.m_otherPD_queue.Size() >= 4)
+		while (gGameManager.m_otherPD_queue.Size() >= 5)
 			gGameManager.m_otherPD_queue.Deq();
 
 		UPDATE_DATA previous_player = gGameManager.m_otherPD_queue.Front();
@@ -891,7 +891,7 @@ void EnemyChickenUpdatePos()
 		UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Front();
 		gGameManager.m_otherPD_queue.Deq();
 
-		float alpha = (render_counter % 5 + 1) / 10;
+		float alpha = (render_counter + 1) / 20;
 		float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
 		float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
 		float interpolated_z = alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
