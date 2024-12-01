@@ -262,7 +262,6 @@ void ChickenBody::Collision()
 
 			// 모든 축에서의 충돌이 있는지 확인하여 최종 충돌 판정
 			if (collisionX && collisionY && collisionZ) {
-				cout << "충돌 성공!" << i << endl;
 				for (int j{}; j < 8; ++j)
 				{
 					if (South == gVec.at(j)->GetChickenDir())
