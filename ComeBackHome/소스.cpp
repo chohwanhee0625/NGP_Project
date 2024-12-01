@@ -865,6 +865,7 @@ void EnemyChickenHandling(float deltatime)
 	Rleg->handling();
 }
 
+unsigned int render_counter;
 void EnemyChickenUpdatePos()
 {
 	UPDATE_DATA other_player{};
@@ -890,14 +891,16 @@ void EnemyChickenUpdatePos()
 		UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Front();
 		gGameManager.m_otherPD_queue.Deq();
 
-		float alpha = 0.2f;
-		float interpolated_x = current_player.Player_Pos_x + alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
-		float interpolated_y = current_player.Player_Pos_y + alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
-		float interpolated_z = current_player.Player_Pos_z + alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
+		float alpha = (render_counter % 5 + 1) / 10;
+		float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
+		float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
+		float interpolated_z = alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
+		
+		enemy_body_x += interpolated_x;
+		enemy_body_y += interpolated_y;
+		enemy_body_z += interpolated_z;
 
-		enemy_body_x = interpolated_x;
-		enemy_body_y = interpolated_y;
-		enemy_body_z = interpolated_z;
+		render_counter++;
 	}
 
 	enum chicken_model { body = 0, head, mouse, eyes, leftarm, rightarm, leftleg, rightleg };
