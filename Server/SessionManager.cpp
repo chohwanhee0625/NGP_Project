@@ -11,6 +11,7 @@ std::uniform_int_distribution<int> gCarspeed{ 1,3 };
 std::uniform_real_distribution<float> gRandomColor{ 0.f,1.f };
 
 std::mutex mtx;
+// 여러 변수나 코드 블록의 동기화 
 
 //===============================================================================================
 
@@ -19,9 +20,10 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 	bool th_id[2] { 0, 1 };
 	InitWorldData(th_id);
 	
-	int flag = 1;
-	setsockopt(client_sock_1, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
-	setsockopt(client_sock_2, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
+	// 고광신이 지움
+//	int flag = 1;
+//	setsockopt(client_sock_1, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
+//	setsockopt(client_sock_2, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
 
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_1, (int)th_id[0]));
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_2, (int)th_id[1]));
@@ -30,6 +32,7 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 		if (m_endflag[0] == true && m_endflag[1] == true)
 			break;
 
+	// 멤버 스레드가 모두 끝날 때까지 기다리는 역할 -> 모든 작업이 완료된 후에 다음 단계로 간다
 	for (auto& th : m_threads) 
 		th.join();
 }
@@ -56,13 +59,17 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 	while (true) 
 	{
 		{
-			//// recv my player data
-			std::lock_guard<std::mutex> lock(mtx);
+			std::lock_guard<std::mutex> lock(mtx); // 동기화를 위한 잠금 
 
 			// 1. 클라이언트에서 데이터를 패킷 구조체에 저장하고 to_json함수로 데이터를 Json string형식으로 저장
 			// 2. 패킷 사이즈, string을 char*로 변환한 데이터 정보를 서버로 Send
 			// 3. char*로 변환된 가변길이 데이터를 순서대로 서버에서 받아서 string에 저장 Recv 
 			// 4. string에 저장된 데이터를 from_json에서 parse(파싱) 과정으로 string으로 저장된 데이터의 원본을 복원
+			//
+			// from_json : 데이터 원본 복원
+			// to_json   : 데이터 string으로 저장
+
+			//// recv my player data
 			j_str = Recv(client_sock);
 			m_updateData[my_id].from_json(j_str);
 
@@ -87,6 +94,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 			}
 		}
 
+		// 초당 40번으로 패킷 전송 주기를 유지한다
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ)); 
 	}
 

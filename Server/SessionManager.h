@@ -31,6 +31,7 @@ private:
 	INIT_DATA_C				m_carData;
 	INIT_DATA_W				m_woodData;
 
+	// atomic : 하나의 스레드가 작업을 끝내기 전까지, 대기해준다( 간단한 변수의 안전한 접근 )
 	volatile std::atomic<bool>		m_winner[2]{ false, false };
 	volatile std::atomic<bool>		m_endflag[2]{ false, false };
 	volatile std::atomic<bool>		m_startflag[2]{ false, false };

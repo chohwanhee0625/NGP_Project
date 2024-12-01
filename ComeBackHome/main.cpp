@@ -66,7 +66,6 @@ void main(int argc, char** argv)
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
 		return;
 
-	// gwangsin [11/02 : 7:22]
 	glutInit(&argc, argv);						  // GLUT 초기화 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); // [깊이검사 depth test 추가]디스플레이 모드 설정
 	glutInitWindowPosition(100, 100);			  // 윈도우의 위치 지정 
@@ -87,15 +86,12 @@ void main(int argc, char** argv)
 
 	make_shaderProgram(); // 쉐이더 프로그램 만들기
 	ShowMenu(); // 게임 플레이 방법
-	SetInitToggle(); // 토글 초기화 
-	InitLight(); // 조명 초기 세팅
-
 
 	gPlaybutton.InitBuffer();
 	gPlaybutton.LoadTexture("start_image.png");
 
 	InitBorder(); // 우측 상단 핑크색 경계 만들기 
-	SetgVec(); // 초기 객체 만들기 
+	// SetgVec(); // 초기 객체 만들기 
 	//SetgEnemyVec();
 
 	glEnable(GL_DEPTH_TEST);

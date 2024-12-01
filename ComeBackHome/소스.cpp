@@ -251,9 +251,6 @@ void TimerFunction(int value)
 	}
 }
 
-volatile bool gConnectionEstablished = false;
-SOCKET gSocket;
-std::mutex gMutex;
 GLvoid KeyUpboard(unsigned char key, int x, int y)
 {
 	switch (key)
@@ -301,7 +298,9 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			SetOffAllofToggle();
 			SetInitToggle();
 			gCamera.InitCamera();
+			InitLight();
 			gLight->InitLight();
+			InitBorder(); // 우측 상단 핑크색 경계 만들기 
 
 			// 준비 완료 플래그 서버에 보내기
 			SendStartFlag(sock);
