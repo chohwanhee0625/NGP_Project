@@ -91,6 +91,10 @@ public:
 	void SetYpos(float _f) { m_y_pos = _f; }
 	void SetXpos(float _f) { m_x_pos = _f; }
 
+	void AddXpos(float _f) { m_x_pos += _f; }
+	void AddYpos(float _f) { m_y_pos += _f; }
+	void AddZpos(float _f) { m_z_pos += _f; }
+
 	// BasisComponent
 	void WorldMatrix();
 	//virtual void WorldMatrix();
