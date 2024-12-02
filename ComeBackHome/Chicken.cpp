@@ -152,7 +152,6 @@ void ChickenBody::Update(float deltatime)
 	// z를 + 단위로 재려고 -1 곱함
 	float player_z_pos = MINUS * gVec.at(0)->GetZpos();  
 	float enemy_z_pos  = MINUS * gEnemyVec.at(0)->GetZpos();
-	static bool winner;
 
 	// 적이나 플레이어가 도착했을 시
 	if (((goal_line <= player_z_pos) || (goal_line <= enemy_z_pos)) || gIsReach == true) {
@@ -162,39 +161,26 @@ void ChickenBody::Update(float deltatime)
 			PlaySound(L"BackSound.wav", NULL, SND_ASYNC);
 			gIsReach = true;
 
-			// if 플레이어가 이기는 경우 else 적이 이기는 경우
-			if (enemy_z_pos < player_z_pos) winner = PLAYER; else winner = ENEMY; 
+			// if 적이 이긴다면 -> 플레이어 위치를 적 위치로 초기화
+			if (player_z_pos < enemy_z_pos) {
+				for (int i = 0; i < 8; ++i) {
+					gVec.at(i)->SetXpos(gEnemyVec.at(i)->GetXpos());
+					gVec.at(i)->SetYpos(gEnemyVec.at(i)->GetYpos());
+					gVec.at(i)->SetZpos(gEnemyVec.at(i)->GetZpos());
+				}
+			}
 		}
 
-		switch (winner)
-		{
-		case PLAYER:
-			for (int i = 0; i < 8; ++i) {
-				gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + ending_velocity * deltatime);
-				gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + ending_velocity * deltatime);
-				gVec.at(i)->SetChickenFaceDir('s');
+		for (int i = 0; i < 8; ++i) {
+			gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + ending_velocity * deltatime);
+			gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + ending_velocity * deltatime);
+			gVec.at(i)->SetChickenFaceDir('s');
 
-				//gGameManager.m_playerData[(int)ID::ENERMY];
-				gEnemyVec.at(i)->SetXpos(gVec.at(i)->GetXpos());
-				gEnemyVec.at(i)->SetYpos(gVec.at(i)->GetYpos());
-				gEnemyVec.at(i)->SetZpos(gVec.at(i)->GetZpos());
-				gEnemyVec.at(i)->SetEnemyFace(South);
-			}
-			break;
-
-		case ENEMY:
-			for (int i = 0; i < 8; ++i) {
-				gEnemyVec.at(i)->SetYpos(gEnemyVec.at(i)->GetYpos() + ending_velocity * deltatime);
-				gEnemyVec.at(i)->SetZpos(gEnemyVec.at(i)->GetZpos() + ending_velocity * deltatime);
-				gEnemyVec.at(i)->SetEnemyFace(South); 
-
-				//gGameManager.m_playerData[(int)ID::ENERMY];
-				gVec.at(i)->SetXpos(gEnemyVec.at(i)->GetXpos());
-				gVec.at(i)->SetYpos(gEnemyVec.at(i)->GetYpos());
-				gVec.at(i)->SetZpos(gEnemyVec.at(i)->GetZpos());
-				gEnemyVec.at(i)->SetChickenFaceDir('s');
-			}
-			break;
+			//gGameManager.m_playerData[(int)ID::ENERMY];
+			//gEnemyVec.at(i)->SetXpos(gVec.at(i)->GetXpos());
+			//gEnemyVec.at(i)->SetYpos(gVec.at(i)->GetYpos());
+			//gEnemyVec.at(i)->SetZpos(gVec.at(i)->GetZpos());
+			//gEnemyVec.at(i)->SetEnemyFace(South);
 		}
 
 		if (m_y_pos >= 2.1)

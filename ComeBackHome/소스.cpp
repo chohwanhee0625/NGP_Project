@@ -297,10 +297,10 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 
 			SetOffAllofToggle();
 			SetInitToggle();
-			gCamera.InitCamera();
+			InitBorder(); // 우측 상단 핑크색 경계 만들기 
 			InitLight();
 			gLight->InitLight();
-			InitBorder(); // 우측 상단 핑크색 경계 만들기 
+			gCamera.InitCamera();
 
 			// 준비 완료 플래그 서버에 보내기
 			SendStartFlag(sock);
@@ -670,6 +670,9 @@ void gVecDraw()
 
 void gEnemyVecDraw()
 {
+	if (gIsReach == true) return;
+	// 게임 끝난 시점이면 적 대신 플레이어만 그리기
+
 	for (auto& obj : gEnemyVec) {
 		obj->DrawObject();
 	}
@@ -881,6 +884,7 @@ void EnemyChickenUpdatePos()
 	float enemy_body_y = other_player.Player_Pos_y;
 	float enemy_body_z = other_player.Player_Pos_z;
 
+#if 1
 	if (gGameManager.m_otherPD_queue.Size() >= 2) {
 		//std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;
 
@@ -904,6 +908,7 @@ void EnemyChickenUpdatePos()
 
 		render_counter++;
 	}
+#endif
 
 	enum chicken_model { body = 0, head, mouse, eyes, leftarm, rightarm, leftleg, rightleg };
 
