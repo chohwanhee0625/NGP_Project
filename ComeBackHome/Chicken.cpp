@@ -175,12 +175,6 @@ void ChickenBody::Update(float deltatime)
 			gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + ending_velocity * deltatime);
 			gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + ending_velocity * deltatime);
 			gVec.at(i)->SetChickenFaceDir('s');
-
-			//gGameManager.m_playerData[(int)ID::ENERMY];
-			//gEnemyVec.at(i)->SetXpos(gVec.at(i)->GetXpos());
-			//gEnemyVec.at(i)->SetYpos(gVec.at(i)->GetYpos());
-			//gEnemyVec.at(i)->SetZpos(gVec.at(i)->GetZpos());
-			//gEnemyVec.at(i)->SetEnemyFace(South);
 		}
 
 		if (m_y_pos >= 2.1)
@@ -196,41 +190,6 @@ void ChickenBody::Update(float deltatime)
 		Walk(deltatime);
 		UpdateChickenYpos(deltatime);
 	}
-
-#if 0
-	float goal_line = -g_max_z * 0.1; // -15.f 
-
-	if (m_z_pos > goal_line && !gIsReach) {
-		Collision();
-		Walk(deltatime);
-		UpdateChickenYpos(deltatime);
-		
-	}
-	else
-	{
-		if(!gIsReach)
-			PlaySound(L"BackSound.wav", NULL, SND_ASYNC);
-		
-		// 도착하면 y,z 위치 증가 -> y_pos가 2.1이 넘어갈 때까지
-		gIsReach = true;
-		for (int i{}; i < 8; ++i) {
-			gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + ending_velocity);
-			gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + ending_velocity);
-			gVec.at(i)->SetChickenFaceDir('s');
-
-			//gGameManager.m_playerData[(int)ID::ENERMY];
-			gEnemyVec.at(i)->SetXpos(gVec.at(i)->GetXpos());
-			gEnemyVec.at(i)->SetYpos(gVec.at(i)->GetYpos());
-			gEnemyVec.at(i)->SetZpos(gVec.at(i)->GetZpos());
-			gEnemyVec.at(i)->SetEnemyFace(South);
-		}
-
-		if (m_y_pos >= 2.1)
-		{
-			glutLeaveMainLoop();
-		}
-	}
-#endif
 }
 
 void ChickenBody::Collision()
