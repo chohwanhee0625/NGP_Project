@@ -64,7 +64,7 @@ void ChickenWalk();
 void ChickenJump();
 
 void EnemyChickenHandling(float deltatime);
-void EnemyChickenUpdatePos();
+void EnemyChickenUpdatePos(float deltatime);
 
 //===========================================================================================
 

@@ -698,7 +698,7 @@ void gVecUpdate(float deltatime)
 
 void gEnemyVecUpdate(float deltatime)
 {
-	EnemyChickenUpdatePos();
+	EnemyChickenUpdatePos(deltatime);
 
 	EnemyChickenHandling(deltatime);
 }
@@ -869,7 +869,7 @@ void EnemyChickenHandling(float deltatime)
 }
 
 extern unsigned int render_counter;
-void EnemyChickenUpdatePos()
+void EnemyChickenUpdatePos(float deltatime)
 {
 	UPDATE_DATA other_player{};
 	other_player = gGameManager.m_playerData[(int)ID::ENERMY];
@@ -897,7 +897,7 @@ void EnemyChickenUpdatePos()
 		UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Front();
 		//gGameManager.m_otherPD_queue.Deq();
 
-		float alpha = (render_counter + 1) / 20;
+		float alpha = ((render_counter + 1) / 20) * deltatime;
 		float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
 		float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
 		float interpolated_z = alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
