@@ -152,11 +152,12 @@ bool end_flag = false;
 bool enmy_flag = false;
 void ChickenBody::Update(float deltatime)
 {	
-	UPDATE_DATA player_data = gGameManager.m_playerData[(int)ID::ME];
-	UPDATE_DATA enmy_data = gGameManager.m_playerData[(int)ID::ENERMY];
-	// 적이나 플레이어가 도착했을 시
-	if (((player_data.GameOver_Flag == true) || (enmy_data.GameOver_Flag == true)) || gIsReach == true) {
+	S_GAME_OVER winner = gGameManager.m_winner;
+	int my_id = gGameManager.my_id;
+	int other_id = 1 - my_id;
 
+	// 적이나 플레이어가 도착했을 시
+	if (winner.End_Flag == true) {
 		// 첫 도착 시점
 		if (false == gIsReach) {
 			PlaySound(L"BackSound.wav", NULL, SND_ASYNC);
@@ -164,7 +165,7 @@ void ChickenBody::Update(float deltatime)
 			gPlaybutton.change_img("winner.png");
 
 			// if 적이 이긴다면 -> 플레이어 위치를 적 위치로 초기화
-			if (enmy_data.GameOver_Flag == true and player_data.GameOver_Flag == false and enmy_flag == false) {
+			if (winner.Winner_ID[other_id] == true and winner.Winner_ID[my_id] == false and enmy_flag == false) {
 				enmy_flag = true;
 				gPlaybutton.change_img("loser.png");
 				for (int i = 0; i < 8; ++i) {
@@ -184,12 +185,10 @@ void ChickenBody::Update(float deltatime)
 		if (m_y_pos >= 2.1 and end_flag == false)
 		{
 			main_viewport();
+			// Disconnect Server
 			GAME_OVER = true;
 			end_flag = true;
 			gPlaybutton.resize(1.f, -1.f, 1.f);
-
-			// Disconnect Server
-			//gGameManager.Disconnect();
 
 			glUseProgram(gUIShaderProgramID);
 		}

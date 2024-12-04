@@ -60,29 +60,33 @@ void GameManager::UpdateWorld()
 		m_otherPD_queue.Enq(m_playerData[(int)ID::ENERMY]);
 		render_counter = 0;
 		
-		
-		//if (/* GameEndFlag == true */)
+		// recv winner flag
+		j_str = Recv(m_sock);
+		m_winner.from_json(j_str);
 
-		//	break;
+		if (GAME_OVER == true)
+			break;
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
 
 	// end Game Event
+	Disconnect();
 }
 
 void GameManager::RecvWorldData()
 {
 	//===========================================================
 	// recv Player Data
-	INIT_DATA_P m_InitPlayerData; 
+	INIT_DATA_P m_InitPlayerData;
 
 	std::string j_str = Recv(m_sock);
-	m_InitPlayerData.from_json(j_str);		// MY Player Data	
+	m_InitPlayerData.from_json(j_str);		// MY Player Data
 	SetChicken(m_InitPlayerData.Player_ID);
 	//m_InitPlayerData.from_json(j_str);		// Other Player Data
 	SetgEnemyVec(m_InitPlayerData.Player_ID);
 
+	my_id = m_InitPlayerData.Player_ID;
 	cout << "Set Chicken" << endl;
 	//=============================================================
 	// recv Roads Data

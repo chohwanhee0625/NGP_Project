@@ -17,7 +17,7 @@ int main()
 	// listen 소켓 생성
 	SOCKET listen_sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (listen_sock == INVALID_SOCKET) return 888;
-
+	
 	int optval = 1;
 
 	// 고광신이 지움

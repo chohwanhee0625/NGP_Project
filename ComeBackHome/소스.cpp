@@ -377,6 +377,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		break;
 		// 프로그램 종료
 	case 'q': case 'Q':
+		GAME_OVER = true;
 		glutLeaveMainLoop();
 		break;
 	case 'j': case 'J':

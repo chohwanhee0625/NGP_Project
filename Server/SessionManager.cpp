@@ -37,10 +37,12 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 		th.join();
 }
 
+std::atomic<bool> game_flag = false;
 DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 {
 	using namespace std::chrono;
 	int other_id = 1 - my_id;
+	m_updateData[my_id].Player_ID = my_id;
 	SendWorldData(client_sock, my_id);
 
 	// 준비 완료 플래그 받기
@@ -69,28 +71,37 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 			// from_json : 데이터 원본 복원
 			// to_json   : 데이터 string으로 저장
 
-			//// recv my player data
+			// recv my player data
 			j_str = Recv(client_sock);
+			if (j_str.empty() == true) break;
+
 			m_updateData[my_id].from_json(j_str);
 
 			// 우승자 검사
-			if (m_updateData[my_id].Player_Pos_z <= -15.f) {		// TODO: 골라인 z위치 측정 후 반영
+			if (m_updateData[my_id].Player_Pos_z <= -15.f) {
 				m_updateData[my_id].GameOver_Flag = true;
-				m_winner[my_id] = true;
+				m_winner.Winner_ID[my_id] = true;
+				m_winner.End_Flag = true;
+				game_flag = true;
 			}
 			else if (m_updateData[other_id].Player_Pos_z <= -15.f) {
 				m_updateData[other_id].GameOver_Flag = true;
-				m_winner[other_id] = true;
+				m_winner.Winner_ID[other_id] = true;
+				m_winner.End_Flag = true;
+				game_flag = true;
 			}
 
-			//// send other player data
+			// send other player data
 			// ohter_id를 맡은 스레드에서 업데이트한 정보를 클라이언트에 Send
 			j_str = m_updateData[other_id].to_json();
 			Send(client_sock, j_str);
 
-			if (m_winner[my_id] or m_winner[other_id]) {
-				//std::cout << "Goal" << std::endl;
-				//break;
+			// send winner flag
+			j_str = m_winner.to_json();
+			Send(client_sock, j_str);
+
+			if (m_winner.End_Flag == true) {
+				break;
 			}
 		}
 
@@ -105,8 +116,8 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 void SessionManager::EndGame(SOCKET client_sock)
 {
-	//SendGameOverFlag(client_sock);
-
+	int result = shutdown(client_sock, SD_BOTH);
+	closesocket(client_sock);
 }
 
 void SessionManager::InitWorldData(bool p_id[2])
@@ -114,8 +125,8 @@ void SessionManager::InitWorldData(bool p_id[2])
 	//-----------------------------------------------------------------------------------------
 	// Init Player Data 
 
-	m_InitPlayerData[0] = { 0 };
-	m_InitPlayerData[1] = { 1 };
+	m_InitPlayerData[0].Player_ID = { 0 };
+	m_InitPlayerData[1].Player_ID = { 1 };
 
 	//-----------------------------------------------------------------------------------------
 	// Init Roads Data 
