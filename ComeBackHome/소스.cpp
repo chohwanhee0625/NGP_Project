@@ -19,8 +19,6 @@
 #include "GameManager.h"
 #include "PacketIO.h"
 
-UI gPlaybutton;
-GameManager gGameManager;
 bool GAME_START = false;
 std::mutex g_lock;
 bool Interpolated = true;
@@ -216,9 +214,9 @@ GLvoid DrawScene()
 	glClearColor(0.5294f, 0.8078f, 0.9804f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 깊이 버퍼 클리어
 
-	if (GAME_START == false)
-		gPlaybutton.Render();
-	else {
+	//if (GAME_START == false)
+	gPlaybutton.Render();
+	if (GAME_START == true and GAME_OVER == false) {
 		main_viewport();
 		border_viewport();
 		chicken_viewport();
@@ -243,6 +241,7 @@ void TimerFunction(int value)
 		
 		//deltatime = std::min(deltatime, 0.2f);
 		//cout << deltatime << endl;
+
 
 		gEnemyVecUpdate(deltatime);
 		gVecUpdate(deltatime);
@@ -378,6 +377,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		break;
 		// 프로그램 종료
 	case 'q': case 'Q':
+		GAME_OVER = true;
 		glutLeaveMainLoop();
 		break;
 	case 'j': case 'J':
