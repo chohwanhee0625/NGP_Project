@@ -23,6 +23,7 @@ UI gPlaybutton;
 GameManager gGameManager;
 bool GAME_START = false;
 std::mutex g_lock;
+bool Interpolated = true;
 
 //===========================================================================================
 
@@ -243,17 +244,14 @@ void TimerFunction(int value)
 		//deltatime = std::min(deltatime, 0.2f);
 		//cout << deltatime << endl;
 
-		gVecUpdate(deltatime);
 		gEnemyVecUpdate(deltatime);
+		gVecUpdate(deltatime);
 
 		glutPostRedisplay();				//화면 재출력
 		glutTimerFunc(5, TimerFunction, 1); // 다시 호출 
 	}
 }
 
-volatile bool gConnectionEstablished = false;
-SOCKET gSocket;
-std::mutex gMutex;
 GLvoid KeyUpboard(unsigned char key, int x, int y)
 {
 	switch (key)
@@ -295,56 +293,22 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 		break;
 	default:
 		if (GAME_START == false) {
-			//gPlaybutton.change_img("chick.jpg");
-			//gPlaybutton.move(0, 0.25, -0.001);
-			//gPlaybutton.resize(2.0, 10.0, 1.0);
-			//gPlaybutton.Render();
-
-			//std::thread connectionThread([&]() {
-			//	SOCKET sock = gGameManager.WaitForOtherPlayer();
-			//	gConnectionEstablished = true;
-			//	gSocket = sock;
-			//	});
-			//connectionThread.detach();
-			//// 접속을 기다리는 동안 UI를 계속 렌더링
-			//glutPostRedisplay();
-
-			//if (gConnectionEstablished) {
-			//	glUseProgram(gShaderProgramID);
-			//	SetOffAllofToggle();
-			//	SetInitToggle();
-			//	gCamera.InitCamera();
-			//	gLight->InitLight();
-			//	SendStartFlag(gSocket);
-			//	RecvStartFlag(gSocket);
-
-			//	GAME_START = true;
-			//	std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, gSocket);
-			//	networkThread.detach();
-
-			//	gTimer.starttimer();
-			//	glutTimerFunc(1, TimerFunction, 1);
-			//}
-			gPlaybutton.change_img("chick.jpg");
-			gPlaybutton.resize(0.5, 0.5, 1.0);
-			gPlaybutton.Render();
-			glutSwapBuffers();
-			glutPostRedisplay();
-
 			SOCKET sock = gGameManager.WaitForOtherPlayer();
-
 			glUseProgram(gShaderProgramID);
+
 			SetOffAllofToggle();
 			SetInitToggle();
-			gCamera.InitCamera();
+			InitBorder(); // 우측 상단 핑크색 경계 만들기 
+			InitLight();
 			gLight->InitLight();
+			gCamera.InitCamera();
 
 			// 준비 완료 플래그 서버에 보내기
 			SendStartFlag(sock);
-			std::cout << "send flag\n" << std::endl;
+			std::cout << "Send My Read Flag\n" << std::endl;
 			// 상대편까지 모두 준비 완료 플래그 -> 게임 시작 
 			RecvStartFlag(sock);
-			std::cout << "recv flag\n" << std::endl;
+			std::cout << "Recv Other Ready Flag\n" << std::endl;
 
 			GAME_START = true;
 			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
@@ -420,7 +384,10 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	case 'p': case'P':
 		SetPerspectiveToggle();
 		break;
-	
+	case 'e' : case 'E':
+		Interpolated = !Interpolated;
+		std::cout << "Interpolated" << std::endl;
+		break;
 
 		// ---------- 리셋  ----------
 	case 'r': case'R':
@@ -429,8 +396,12 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		gCamera.InitCamera();
 		gLight->InitLight();
 		gIsMovingChicken = OFF;
-		gVecClear();
-		SetgVec();
+	//	gVecClear();
+	//	SetgVec();
+		for (int j{}; j < 8; ++j) 
+		{
+			gVec.at(j)->InitMatrix4(); 
+		}
 		break;
 	}
 	glutPostRedisplay();
@@ -560,7 +531,6 @@ void SetGround(INIT_DATA_R road_data)
 		bool isGrass = road_data.Roads_Flags[idx];
 
 		if (isGrass == GRASS) {
-			//bool finalGrass = (idx >= map_size - 11);
 			pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx, false }; // 잔디 1칸 설치
 			gVec.push_back(pFloor);
 		}
@@ -582,56 +552,12 @@ void SetGround(INIT_DATA_R road_data)
 		pFloor = new Grass{ cube_vertex_array_normal, floor_color, i + idx ,true }; 
 		gVec.push_back(pFloor); 
 	}
-
-#if 0
-	int count{};
-	Road* pRoad{};
-	RoadLane* pLine{};
-	Grass* pFloor{};
-	int idx{ 0 };
-	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,false };
-	gVec.push_back(pFloor);
-	++idx;
-
-	while(idx < 150) {
-		// 랜덤 개수만큼 도로를 연속으로 만들고 잔디 한칸 만들고 다시 랜덤 개수로 도로 만들기 ( 도로 3칸 -> 잔디 1칸 -> 도로 5칸 -> 잔디 1칸 .. )
-		int cnt{ gRoadSet(gRandomEngine) };
-
-		for (int j = 0; j < cnt; ++j) {
-			count++;
-			
-			bool carDir = gBoolUniform(gRandomEngine);
-			pRoad = new Road{ cube_vertex_array_normal, floor_color, j+idx, carDir }; // 정점, 색, 지형 인덱스( 몇 번째 도로인지 ) 인수로 전달
-			gVec.push_back(pRoad);
-			
-			pLine = new RoadLane{ cube_vertex_array_normal, floor_color, 3 ,j + idx }; // 도로 흰색 라인 
-			gVec.push_back(pLine); 
-		}
-		idx += cnt; // 도로 개수만큼 idx 증가
-
-		pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx,false }; // 잔디 1칸 설치
-		gVec.push_back(pFloor);
-		++idx;
-	}
-
-	// true: 마지막 잔디 땅 표시 -> 나무 설치X, 엄마 위치( 1칸 아님 )
-	pFloor = new Grass{ cube_vertex_array_normal, floor_color, idx ,true};
-	gVec.push_back(pFloor);
-	
-	for (int i{}; i < 10; ++i)
-	{
-		pFloor = new Grass{ cube_vertex_array_normal, floor_color, i+idx ,true };
-		gVec.push_back(pFloor);
-	}
-	//// 도착 지점 잔디 설치
-#endif
 }
 
 void SetCars(INIT_DATA_C car_data)
 {
 	int cnt{};
 	int size{ int(gVec.size()) };
-	
 	
 	for (int i{}; i < size; ++i)
 	{
@@ -648,14 +574,12 @@ void SetCars(INIT_DATA_C car_data)
 		}
 	}
 	
-	cout << "차 개수: " << cnt << '\n';
+	cout << "Cars Count: " << cnt << '\n';
 }
 
 void SetWoods(INIT_DATA_W wood_data)
 {
-
 	int grass_cnt{};
-
 
 	for (int i{}; i < gVec.size(); ++i) 
 	{
@@ -693,7 +617,7 @@ void SetRoadLane()
 			gVec.at(i)->CreateLane();
 		}
 	}
-	cout << "차선 개수: " << cnt << '\n';
+	cout << "RoadLane Count: " << cnt << '\n';
 }
 
 void SetMother()
@@ -750,6 +674,9 @@ void gVecDraw()
 
 void gEnemyVecDraw()
 {
+	if (gIsReach == true) return;
+	// 게임 끝난 시점이면 적 대신 플레이어만 그리기
+
 	for (auto& obj : gEnemyVec) {
 		obj->DrawObject();
 	}
@@ -775,7 +702,7 @@ void gVecUpdate(float deltatime)
 
 void gEnemyVecUpdate(float deltatime)
 {
-	EnemyChickenUpdatePos();
+	EnemyChickenUpdatePos(deltatime);
 
 	EnemyChickenHandling(deltatime);
 }
@@ -822,11 +749,11 @@ void SetPerspectiveToggle()
 {
 	if (gToggle[(int)Toggle::Perpective] == Third) {
 		gToggle[(int)Toggle::Perpective] = One;
-		cout << "1인칭 카메라 : ON\n";
+		cout << "First Person Camera : ON\n";
 	}
 	else if (gToggle[(int)Toggle::Perpective] == One) {
 		gToggle[(int)Toggle::Perpective] = Third;
-		cout << "3인칭 카메라 : ON\n";
+		cout << "Third Person Camera : ON\n";
 	}
 }
 
@@ -834,11 +761,11 @@ void SetNearFarCameraToggle()
 {
 	if (gToggle[(int)Toggle::NearFar] == Near) {
 		gToggle[(int)Toggle::NearFar] = Far;
-		cout << "먼 3인칭 카메라 : ON\n";
+		cout << "Far Third Person Camera : ON\n";
 	}
 	else if (gToggle[(int)Toggle::NearFar] == Far) {
 		gToggle[(int)Toggle::NearFar] = Near;
-		cout << "가까운 3인칭 카메라 : ON\n";
+		cout << "Near Third Person Camera : ON\n";
 	}
 }
 
@@ -945,7 +872,8 @@ void EnemyChickenHandling(float deltatime)
 	Rleg->handling();
 }
 
-void EnemyChickenUpdatePos()
+extern unsigned int render_counter;
+void EnemyChickenUpdatePos(float deltatime)
 {
 	UPDATE_DATA other_player{};
 	other_player = gGameManager.m_playerData[(int)ID::ENERMY];
@@ -959,6 +887,32 @@ void EnemyChickenUpdatePos()
 	float enemy_body_x = other_player.Player_Pos_x;
 	float enemy_body_y = other_player.Player_Pos_y;
 	float enemy_body_z = other_player.Player_Pos_z;
+
+#if 1
+	if (Interpolated == true) {
+		if (gGameManager.m_otherPD_queue.Size() >= 2) {
+			//std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;
+
+			//while (gGameManager.m_otherPD_queue.Size() >= 6)
+			//	gGameManager.m_otherPD_queue.Deq();
+
+			UPDATE_DATA previous_player = gGameManager.m_otherPD_queue.Front();
+
+			UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Second();
+
+			float alpha = ((render_counter + 1) / (PACKET_FREQ)) * deltatime;
+			float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
+			float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
+			float interpolated_z = alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
+
+			enemy_body_x += interpolated_x;
+			enemy_body_y += interpolated_y;
+			enemy_body_z += interpolated_z;
+
+			//render_counter++;
+		}
+	}
+#endif
 
 	enum chicken_model { body = 0, head, mouse, eyes, leftarm, rightarm, leftleg, rightleg };
 

@@ -19,7 +19,8 @@ int main()
 	if (listen_sock == INVALID_SOCKET) return 888;
 
 	int optval = 1;
-	setsockopt(listen_sock, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval));
+	// 고광신이 지움
+//	setsockopt(listen_sock, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval));
 
 	// bind()
 	struct sockaddr_in serveraddr;
@@ -39,7 +40,7 @@ int main()
 	int addrlen;
 
 	queue<SOCKET> client_queue;
-	SessionManager GM;
+	vector<thread> game_threads;
 	while (true)
 	{
 		// accept()
@@ -51,15 +52,22 @@ int main()
 		
 		if (client_queue.size() >= 2)
 		{
+			SessionManager GM;
+
 			auto sock1 = client_queue.front();
 
 			client_queue.pop();
 			auto sock2 = client_queue.front();
 			client_queue.pop();
-			GM.StartGame(sock1, sock2);
 
+			game_threads.emplace_back(&SessionManager::StartGame, &GM, sock1, sock2);
 		}
 	}
+
+	for (auto& t : game_threads) {
+		t.join();
+	}
+
 	// 소켓 닫기
 	closesocket(listen_sock);
 	// 윈속 종료

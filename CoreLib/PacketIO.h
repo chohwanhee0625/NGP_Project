@@ -7,3 +7,5 @@ std::string Recv(SOCKET sock);
 
 void SendStartFlag(SOCKET client_sock);
 std::string RecvStartFlag(SOCKET client_sock);
+
+void Disconnect(SOCKET sock);

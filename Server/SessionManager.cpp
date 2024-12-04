@@ -1,8 +1,6 @@
 #include "SessionManager.h"
 #include "PacketIO.h"
 
-
-
 // std::random_device gRandDevice; // 진짜 난수 발생기 -> 이 값을 시드값으로
 std::random_device rd;
 std::mt19937 gRandomEngine(rd()); // 알고리즘 + 진짜 난수 시드 :: 진짜진짜 난수 생성
@@ -12,23 +10,20 @@ std::uniform_int_distribution<int> gRoadSet{ 5, 10 };
 std::uniform_int_distribution<int> gCarspeed{ 1,3 };
 std::uniform_real_distribution<float> gRandomColor{ 0.f,1.f };
 
-
 std::mutex mtx;
-
+// 여러 변수나 코드 블록의 동기화 
 
 //===============================================================================================
 
 void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 {
 	bool th_id[2] { 0, 1 };
-	// 고광신이 지움 11/27 22:06
-//	SendStartFlag(client_sock_1);
-//	SendStartFlag(client_sock_2);
 	InitWorldData(th_id);
 	
-	int flag = 1;
-	setsockopt(client_sock_1, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
-	setsockopt(client_sock_2, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
+	// 고광신이 지움
+//	int flag = 1;
+//	setsockopt(client_sock_1, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
+//	setsockopt(client_sock_2, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
 
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_1, (int)th_id[0]));
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_2, (int)th_id[1]));
@@ -37,6 +32,7 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 		if (m_endflag[0] == true && m_endflag[1] == true)
 			break;
 
+	// 멤버 스레드가 모두 끝날 때까지 기다리는 역할 -> 모든 작업이 완료된 후에 다음 단계로 간다
 	for (auto& th : m_threads) 
 		th.join();
 }
@@ -47,55 +43,58 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 	int other_id = 1 - my_id;
 	SendWorldData(client_sock, my_id);
 
-	// 준비 완료 플래그 받기 
+	// 준비 완료 플래그 받기
 	RecvStartFlag(client_sock);
 	m_startflag[my_id] = true;
-
-	//HANDLE h_other = m_threads[other_id].native_handle();
 	
 	// 나와 상대편 각각 준비가 완료 플래그를 받은게 확인이 되면 신호 주고 while 나가기 => 다른 스레드 기다려주기
 	while (true) {
-		if (m_startflag[my_id] == m_startflag[other_id]) {	
+		if (m_startflag[my_id] && m_startflag[other_id]) {	
 			SendStartFlag(client_sock);
 			break;
 		}
 	}
 
-	//SetThreadPriority(h_other, THREAD_PRIORITY_NORMAL);
-
 	std::string j_str;
-	while (true)
+	while (true) 
 	{
 		{
-		//// recv my player data
-		std::lock_guard<std::mutex> lock(mtx);
+			std::lock_guard<std::mutex> lock(mtx); // 동기화를 위한 잠금 
 
-		// 1. 클라이언트에서 데이터를 패킷 구조체에 저장하고 to_json함수로 데이터를 Json string형식으로 저장
-		// 2. 패킷 사이즈, string을 char*로 변환한 데이터 정보를 서버로 Send
-		// 3. char*로 변환된 가변길이 데이터를 순서대로 서버에서 받아서 string에 저장 Recv 
-		// 4. string에 저장된 데이터를 from_json에서 parse(파싱) 과정으로 string으로 저장된 데이터의 원본을 복원
-		j_str = Recv(client_sock);
-		m_updateData[my_id].from_json(j_str); 
+			// 1. 클라이언트에서 데이터를 패킷 구조체에 저장하고 to_json함수로 데이터를 Json string형식으로 저장
+			// 2. 패킷 사이즈, string을 char*로 변환한 데이터 정보를 서버로 Send
+			// 3. char*로 변환된 가변길이 데이터를 순서대로 서버에서 받아서 string에 저장 Recv 
+			// 4. string에 저장된 데이터를 from_json에서 parse(파싱) 과정으로 string으로 저장된 데이터의 원본을 복원
+			//
+			// from_json : 데이터 원본 복원
+			// to_json   : 데이터 string으로 저장
 
-		// 우승자 검사
-		if (m_updateData[my_id].Player_Pos_z >= 150.f) {		// TODO: 골라인 z위치 측정 후 반영
-			m_updateData[my_id].GameOver_Flag = true;
-			m_winner[my_id] = true;
+			//// recv my player data
+			j_str = Recv(client_sock);
+			m_updateData[my_id].from_json(j_str);
+
+			// 우승자 검사
+			if (m_updateData[my_id].Player_Pos_z <= -15.f) {		// TODO: 골라인 z위치 측정 후 반영
+				m_updateData[my_id].GameOver_Flag = true;
+				m_winner[my_id] = true;
+			}
+			else if (m_updateData[other_id].Player_Pos_z <= -15.f) {
+				m_updateData[other_id].GameOver_Flag = true;
+				m_winner[other_id] = true;
+			}
+
+			//// send other player data
+			// ohter_id를 맡은 스레드에서 업데이트한 정보를 클라이언트에 Send
+			j_str = m_updateData[other_id].to_json();
+			Send(client_sock, j_str);
+
+			if (m_winner[my_id] or m_winner[other_id]) {
+				std::cout << "Goal" << std::endl;
+				//break;
+			}
 		}
-		else if (m_updateData[other_id].Player_Pos_z >= 150.f) {
-			m_updateData[other_id].GameOver_Flag = true;
-			m_winner[other_id] = true;
-		}
 
-		//// send other player data
-		// ohter_id를 맡은 스레드에서 업데이트한 정보를 클라이언트에 Send
-		j_str = m_updateData[other_id].to_json();
-		Send(client_sock, j_str);
-
-		if (m_winner[my_id] or m_winner[other_id])
-			break;
-		}
-
+		// 초당 40번으로 패킷 전송 주기를 유지한다
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ)); 
 	}
 
@@ -106,7 +105,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 void SessionManager::EndGame(SOCKET client_sock)
 {
-	SendGameOverFlag(client_sock);
+	//SendGameOverFlag(client_sock);
 
 }
 
@@ -114,29 +113,12 @@ void SessionManager::InitWorldData(bool p_id[2])
 {
 	//-----------------------------------------------------------------------------------------
 	// Init Player Data 
-	//		# 수정할 것 
-	//		( SetChicken )
-	//		( ChickenBody::InitMatrix4() )  
-	//const float x_offset = 0.5f;
 
-	m_playerData[p_id[0]].player_pos_x = 0.0f;
-	m_playerData[p_id[0]].player_pos_y = 0.0f;
-	m_playerData[p_id[0]].player_pos_z = 0.0f;
-
-	m_playerData[p_id[1]].player_pos_x = 0.0f;
-	m_playerData[p_id[1]].player_pos_y = 0.0f;
-	m_playerData[p_id[1]].player_pos_z = 0.0f;
-
-	// # send 함수에서 호출해서 사용
 	m_InitPlayerData[0] = { 0 };
 	m_InitPlayerData[1] = { 1 };
 
-
 	//-----------------------------------------------------------------------------------------
 	// Init Roads Data 
-	//		# 수정할 것 
-	//		( SetGround )
-	//		( Road::InitCarSpawnDir )  
 
 	// 잔디 + 도로 인덱스 개수 ( 맵 크기 )
 	const int max_tiles{ 150 };
@@ -183,9 +165,6 @@ void SessionManager::InitWorldData(bool p_id[2])
 
 	//-----------------------------------------------------------------------------------------
 	// Init Cars Data
-	m_carData;
-	// vector<bool> Roads_Flags;
-	// vector<bool> Dir_Flags;
 	
 	// 만들어진 땅만큼 돌림
 	for (int i = 0; i < m_roadData.Roads_Flags.size(); ++i)
@@ -197,7 +176,6 @@ void SessionManager::InitWorldData(bool p_id[2])
 			m_carData.Cars_Velocity.emplace_back(0.1 + i * 0.002 * gCarspeed(gRandomEngine));
 			
 			// 넘길 차 색상 값 선언 초기화
-			// float tempRGB[static_cast<int>(RGB::END)]{ gRandomColor(gRandomEngine),gRandomColor(gRandomEngine),gRandomColor(gRandomEngine)};
 			std::array<float, static_cast<int>(RGB::END)> tempRGB{ gRandomColor(gRandomEngine),gRandomColor(gRandomEngine),gRandomColor(gRandomEngine) };
 			
 			// 추가
@@ -207,11 +185,8 @@ void SessionManager::InitWorldData(bool p_id[2])
 
 	//-----------------------------------------------------------------------------------------
 	// Init Woods Data
-	//		# 수정할 것 
-	//		( SetWoods )
 
 	const int max_wood = 12;
-	// int max_wood = m_woodData.Woods_Flags[0].size(); 
 	// 최대 나무 개수
 
 	for (int i = 0; i < m_roadData.Roads_Flags.size(); ++i) {
@@ -230,7 +205,6 @@ void SessionManager::InitWorldData(bool p_id[2])
 			m_woodData.Woods_Flags.emplace_back(wood_line);  // 한 줄의 나무 배열을 Woods_Flags에 추가
 		}
 	}
-
 	//-----------------------------------------------------------------------------------------
 }
 
@@ -250,18 +224,3 @@ void SessionManager::SendWorldData(SOCKET client_sock, int id)
 	// send Woods Data
 	Send(client_sock, m_woodData.to_json());
 }
-
-void SessionManager::RecvMyPlayerData(int my_id, SOCKET client_sock)
-{
-
-}
-
-void SessionManager::SendOtherPlayerData(int other_id, SOCKET client_sock)
-{
-}
-
-void SessionManager::SendGameOverFlag(SOCKET client_sock)
-{
-
-}
-

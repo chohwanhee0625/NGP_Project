@@ -67,6 +67,9 @@ enum myEnum
 
 	ROAD = 0,
 	GRASS = 1,
+
+	PLAYER = 0,
+	ENEMY = 1,
 };
 
 typedef int Sign;

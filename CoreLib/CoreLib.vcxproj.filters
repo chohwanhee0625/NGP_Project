@@ -11,6 +11,9 @@
     <ClCompile Include="PacketIO.cpp">
       <Filter>Network</Filter>
     </ClCompile>
+    <ClCompile Include="LF_Queue.cpp">
+      <Filter>LFQueue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include.h" />
@@ -20,6 +23,9 @@
     <ClInclude Include="PacketClass.h">
       <Filter>Packet</Filter>
     </ClInclude>
+    <ClInclude Include="LF_Queue.h">
+      <Filter>LFQueue</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Packet">
@@ -27,6 +33,9 @@
     </Filter>
     <Filter Include="Network">
       <UniqueIdentifier>{e0b2bc26-dbd5-461b-99a6-8425bef60441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LFQueue">
+      <UniqueIdentifier>{8858b5b2-4fa2-4a77-9f09-7292686019d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
