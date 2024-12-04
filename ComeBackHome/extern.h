@@ -1,7 +1,11 @@
 #pragma once
 #include "Souce.h"
 #include "TimeManager.h"
-//#include "UI.h"
+#include "GameManager.h"
+#include "UI.h"
+
+class GameManager;
+class UI;
 
 extern GLchar* gVertexSource; //--- 소스코드 저장 변수
 extern GLchar* gFragmentSource;
@@ -31,6 +35,9 @@ extern bool gIsMovingChicken;
 extern bool gChickenDir[4];
 extern bool gIsReach;
 
+extern GameManager gGameManager;
+extern UI gPlaybutton;
+extern bool GAME_OVER;
 
 //===========================================================================================
 extern const GLfloat cube_vertex_array[36 * 3];

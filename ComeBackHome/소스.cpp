@@ -19,8 +19,6 @@
 #include "GameManager.h"
 #include "PacketIO.h"
 
-UI gPlaybutton;
-GameManager gGameManager;
 bool GAME_START = false;
 std::mutex g_lock;
 bool Interpolated = true;
@@ -216,9 +214,9 @@ GLvoid DrawScene()
 	glClearColor(0.5294f, 0.8078f, 0.9804f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 깊이 버퍼 클리어
 
-	if (GAME_START == false)
-		gPlaybutton.Render();
-	else {
+	//if (GAME_START == false)
+	gPlaybutton.Render();
+	if (GAME_START == true and GAME_OVER == false) {
 		main_viewport();
 		border_viewport();
 		chicken_viewport();
@@ -243,6 +241,7 @@ void TimerFunction(int value)
 		
 		//deltatime = std::min(deltatime, 0.2f);
 		//cout << deltatime << endl;
+
 
 		gEnemyVecUpdate(deltatime);
 		gVecUpdate(deltatime);
@@ -294,6 +293,8 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 	default:
 		if (GAME_START == false) {
 			SOCKET sock = gGameManager.WaitForOtherPlayer();
+			gGameManager.m_sock = sock;
+
 			glUseProgram(gShaderProgramID);
 
 			SetOffAllofToggle();
@@ -311,7 +312,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			std::cout << "Recv Other Ready Flag\n" << std::endl;
 
 			GAME_START = true;
-			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
+			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager);
 			networkThread.detach();
 
 			gTimer.starttimer();
@@ -376,6 +377,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		break;
 		// 프로그램 종료
 	case 'q': case 'Q':
+		GAME_OVER = true;
 		glutLeaveMainLoop();
 		break;
 	case 'j': case 'J':
@@ -386,7 +388,10 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		break;
 	case 'e' : case 'E':
 		Interpolated = !Interpolated;
-		std::cout << "Interpolated" << std::endl;
+		if (Interpolated == false)
+			std::cout << "Interpolated Off" << std::endl;
+		else
+			std::cout << "Interpolated On" << std::endl;
 		break;
 
 		// ---------- 리셋  ----------
@@ -900,7 +905,7 @@ void EnemyChickenUpdatePos(float deltatime)
 
 			UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Second();
 
-			float alpha = ((render_counter + 1) / (PACKET_FREQ)) * deltatime;
+			float alpha = 0.2f;
 			float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
 			float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
 			float interpolated_z = alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
@@ -909,7 +914,7 @@ void EnemyChickenUpdatePos(float deltatime)
 			enemy_body_y += interpolated_y;
 			enemy_body_z += interpolated_z;
 
-			//render_counter++;
+			render_counter++;
 		}
 	}
 #endif

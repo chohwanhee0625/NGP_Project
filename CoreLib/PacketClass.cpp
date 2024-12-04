@@ -25,7 +25,6 @@ std::string INIT_DATA_R::to_json()
 	std::string j_str = jObject.dump(4);
 
 	return j_str;
-	return std::string();
 }
 
 void INIT_DATA_R::from_json(std::string& j_str)
