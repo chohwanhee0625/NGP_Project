@@ -25,7 +25,7 @@ public:
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ WALK_V },
-		face_degree{ 0.f },
+		face_degree{ 180.f },
 		m_fgravity{0.25f},
 		m_fyvelo{0},
 		m_coll{true}
@@ -99,7 +99,7 @@ public:
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ WALK_V },
-		face_degree{ 0.f }
+		face_degree{ 180.f }
 	{
 		initModelLocation();
 		InitVertex(cube_array);
@@ -165,7 +165,7 @@ public:
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ WALK_V },
-		face_degree{ 0.f },
+		face_degree{ 180.f },
 		m_far_x{ 0.0 },
 		m_far_y{ 0.0 },
 		m_far_z{ m_far_value }
@@ -261,7 +261,7 @@ public:
 		: BasisComponent(),
 		face{ STOP },
 		walk_velo{ WALK_V },
-		face_degree{ 0.f },
+		face_degree{ 180.f },
 		m_far_x{ 0.0 },
 		m_far_y{ 0.0 },
 		m_far_z{ m_far_value }
@@ -465,7 +465,7 @@ public:
 		hand_max_degree{ 45.f },
 		face{ STOP },
 		walk_velo{ WALK_V },
-		face_degree{ 0.f },
+		face_degree{ 180.f },
 		m_far_x{ m_far_value },
 		m_far_y{ 0.0 },
 		m_far_z{ 0.0 }
@@ -566,7 +566,7 @@ public:
 		hand_max_degree{ 20.f },
 		face{ STOP },
 		walk_velo{ WALK_V },
-		face_degree{ 0.f },
+		face_degree{ 180.f },
 		m_far_x{ -m_far_value },
 		m_far_y{ 0.0 },
 		m_far_z{ 0.0 }
@@ -670,7 +670,7 @@ public:
 		hand_max_degree{ 20.f },
 		face{ STOP },
 		walk_velo{ WALK_V },
-		face_degree{ 0.f },
+		face_degree{ 180.f },
 		m_far_x{ m_far_value },
 		m_far_y{ 0.0 },
 		m_far_z{ 0.0 }

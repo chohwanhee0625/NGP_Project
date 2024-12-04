@@ -408,7 +408,7 @@ void ChickenBody::ChickenJump()
 void ChickenBody::initModelLocation()
 {
 	face = STOP;
-	face_degree = 0.f;
+	face_degree = 180.f;
 }
 
 //===========================================================================================
@@ -554,7 +554,7 @@ void ChickenHead::UpdateChickenYpos()
 void ChickenHead::initModelLocation()
 {
 	face = STOP;
-	face_degree = 0.f;
+	face_degree = 180.f;
 }
 
 //===========================================================================================
