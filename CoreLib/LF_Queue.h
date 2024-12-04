@@ -25,6 +25,7 @@ public:
 	void Enq(UPDATE_DATA player_data);
 	bool Deq();
 	UPDATE_DATA Front();
+	UPDATE_DATA Second();
 	int Size();
 };
 

@@ -52,6 +52,8 @@ void GameManager::UpdateWorld(SOCKET sock)
 		// recv otherplayer data
 		j_str = Recv(sock);
 		m_playerData[(int)ID::ENERMY].from_json(j_str);
+		if (m_otherPD_queue.Size() > 2)
+			m_otherPD_queue.Deq();
 		m_otherPD_queue.Enq(m_playerData[(int)ID::ENERMY]);
 		render_counter = 0;
 		//if (/* GameEndFlag == true */)
