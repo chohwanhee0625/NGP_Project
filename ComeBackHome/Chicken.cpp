@@ -160,9 +160,12 @@ void ChickenBody::Update(float deltatime)
 		if (false == gIsReach) {
 			PlaySound(L"BackSound.wav", NULL, SND_ASYNC);
 			gIsReach = true;
+			//gPlaybutton.change_img("winner.png");
+
 
 			// if 적이 이긴다면 -> 플레이어 위치를 적 위치로 초기화
 			if (player_z_pos < enemy_z_pos) {
+				//gPlaybutton.change_img("loser.png");
 				for (int i = 0; i < 8; ++i) {
 					gVec.at(i)->SetXpos(gEnemyVec.at(i)->GetXpos());
 					gVec.at(i)->SetYpos(gEnemyVec.at(i)->GetYpos());
@@ -186,7 +189,9 @@ void ChickenBody::Update(float deltatime)
 		if (m_y_pos >= 2.1)
 		{
 			// 빠져나가기
-			glutLeaveMainLoop();
+			//glutLeaveMainLoop();
+
+			glUseProgram(gUIShaderProgramID);
 		}
 	}
 	// 아무도 도착 못 했을 시 -> 게임중

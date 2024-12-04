@@ -42,3 +42,14 @@ std::string RecvStartFlag(SOCKET client_sock)
 	return j_str;
 }
 
+void Disconnect(SOCKET sock)
+{
+	int result = shutdown(sock, SD_BOTH);
+	if (result == SOCKET_ERROR) {
+		closesocket(sock);
+		WSACleanup();
+		return;
+	}
+	closesocket(sock);
+}
+

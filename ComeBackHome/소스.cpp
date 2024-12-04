@@ -23,6 +23,7 @@ UI gPlaybutton;
 GameManager gGameManager;
 bool GAME_START = false;
 std::mutex g_lock;
+bool Interpolated = true;
 
 //===========================================================================================
 
@@ -383,7 +384,10 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	case 'p': case'P':
 		SetPerspectiveToggle();
 		break;
-	
+	case 'e' : case 'E':
+		Interpolated = !Interpolated;
+		std::cout << "Interpolated" << std::endl;
+		break;
 
 		// ---------- 리셋  ----------
 	case 'r': case'R':
@@ -698,7 +702,7 @@ void gVecUpdate(float deltatime)
 
 void gEnemyVecUpdate(float deltatime)
 {
-	EnemyChickenUpdatePos();
+	EnemyChickenUpdatePos(deltatime);
 
 	EnemyChickenHandling(deltatime);
 }
@@ -869,7 +873,7 @@ void EnemyChickenHandling(float deltatime)
 }
 
 extern unsigned int render_counter;
-void EnemyChickenUpdatePos()
+void EnemyChickenUpdatePos(float deltatime)
 {
 	UPDATE_DATA other_player{};
 	other_player = gGameManager.m_playerData[(int)ID::ENERMY];
@@ -885,28 +889,28 @@ void EnemyChickenUpdatePos()
 	float enemy_body_z = other_player.Player_Pos_z;
 
 #if 1
-	if (gGameManager.m_otherPD_queue.Size() >= 2) {
-		//std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;
+	if (Interpolated == true) {
+		if (gGameManager.m_otherPD_queue.Size() >= 2) {
+			//std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;
 
-		//while (gGameManager.m_otherPD_queue.Size() >= 5)
-		//	gGameManager.m_otherPD_queue.Deq();
+			//while (gGameManager.m_otherPD_queue.Size() >= 6)
+			//	gGameManager.m_otherPD_queue.Deq();
 
-		UPDATE_DATA previous_player = gGameManager.m_otherPD_queue.Front();
-		gGameManager.m_otherPD_queue.Deq();
+			UPDATE_DATA previous_player = gGameManager.m_otherPD_queue.Front();
 
-		UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Front();
-		//gGameManager.m_otherPD_queue.Deq();
+			UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Second();
 
-		float alpha = (render_counter + 1) / 20;
-		float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
-		float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
-		float interpolated_z = alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
-		
-		enemy_body_x += interpolated_x;
-		enemy_body_y += interpolated_y;
-		enemy_body_z += interpolated_z;
+			float alpha = ((render_counter + 1) / (PACKET_FREQ)) * deltatime;
+			float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
+			float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
+			float interpolated_z = alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
 
-		render_counter++;
+			enemy_body_x += interpolated_x;
+			enemy_body_y += interpolated_y;
+			enemy_body_z += interpolated_z;
+
+			//render_counter++;
+		}
 	}
 #endif
 
