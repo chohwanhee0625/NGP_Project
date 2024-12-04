@@ -89,7 +89,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 			Send(client_sock, j_str);
 
 			if (m_winner[my_id] or m_winner[other_id]) {
-				std::cout << "Goal" << std::endl;
+				//std::cout << "Goal" << std::endl;
 				//break;
 			}
 		}

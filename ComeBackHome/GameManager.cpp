@@ -50,12 +50,8 @@ void GameManager::UpdateWorld()
 		std::string j_str;
 		j_str = m_playerData[(int)ID::ME].to_json();
 
-		Send(sock, j_str);
+		Send(m_sock, j_str);
 	
-		// recv otherplayer data
-		//j_str = Recv(sock);
-		//m_playerData[(int)ID::ENERMY].from_json(j_str);
-
 		// recv otherplayer data
 		j_str = Recv(m_sock);
 		m_playerData[(int)ID::ENERMY].from_json(j_str);

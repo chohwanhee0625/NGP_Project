@@ -4,6 +4,8 @@
 #include "PacketIO.h"
 #include "Souce.h"
 #include "LF_Queue.h"
+#include "extern.h"
+#include "usingInclude.h"
 
 class GameManager
 {
