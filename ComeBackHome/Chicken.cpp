@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Car.h"
 #include "Tree.h"
+#include "GameManager.h"
 
 //===========================================================================================
 
@@ -14,6 +15,9 @@ const float ending_velocity{ 0.1f };
 
 // 간격
 const float g_offset_x{ 0.07 };
+
+GameManager GM;
+
 
 //===========================================================================================
 
@@ -123,6 +127,7 @@ void ChickenBody::Walk(float deltatime)
 		switch (face)
 		{
 		case STOP:
+
 			break;
 
 		case South:
@@ -147,95 +152,101 @@ void ChickenBody::Walk(float deltatime)
 
 void ChickenBody::Update(float deltatime)
 {
-	float goal_line = g_max_z * 0.1; // 15.f 
-
-	// z를 + 단위로 재려고 -1 곱함
-	float player_z_pos = MINUS * gVec.at(0)->GetZpos();  
-	float enemy_z_pos  = MINUS * gEnemyVec.at(0)->GetZpos();
-
-	// 적이나 플레이어가 도착했을 시
-	if (((goal_line <= player_z_pos) || (goal_line <= enemy_z_pos)) || gIsReach == true) {
-
-		// 첫 도착 시점 
-		if (false == gIsReach) {
-			PlaySound(L"BackSound.wav", NULL, SND_ASYNC);
-			gIsReach = true;
-			//gPlaybutton.change_img("winner.png");
 
 
-			// if 적이 이긴다면 -> 플레이어 위치를 적 위치로 초기화
-			if (player_z_pos < enemy_z_pos) {
-				//gPlaybutton.change_img("loser.png");
-				for (int i = 0; i < 8; ++i) {
-					gVec.at(i)->SetXpos(gEnemyVec.at(i)->GetXpos());
-					gVec.at(i)->SetYpos(gEnemyVec.at(i)->GetYpos());
-					gVec.at(i)->SetZpos(gEnemyVec.at(i)->GetZpos());
+	//if (m_z_pos > -(g_max_z) * 0.1 && !gIsReach)
+	if (false == GM.m_playerData[(int)(ID::ME)].GameOver_Flag) {
+		float goal_line = g_max_z * 0.1; // 15.f 
+
+		// z를 + 단위로 재려고 -1 곱함
+		float player_z_pos = MINUS * gVec.at(0)->GetZpos();
+		float enemy_z_pos = MINUS * gEnemyVec.at(0)->GetZpos();
+
+		// 적이나 플레이어가 도착했을 시
+		if (((goal_line <= player_z_pos) || (goal_line <= enemy_z_pos)) || gIsReach == true) {
+
+			// 첫 도착 시점 
+			if (false == gIsReach) {
+				PlaySound(L"BackSound.wav", NULL, SND_ASYNC);
+				gIsReach = true;
+				//gPlaybutton.change_img("winner.png");
+
+
+				// if 적이 이긴다면 -> 플레이어 위치를 적 위치로 초기화
+				if (player_z_pos < enemy_z_pos) {
+					//gPlaybutton.change_img("loser.png");
+					for (int i = 0; i < 8; ++i) {
+						gVec.at(i)->SetXpos(gEnemyVec.at(i)->GetXpos());
+						gVec.at(i)->SetYpos(gEnemyVec.at(i)->GetYpos());
+						gVec.at(i)->SetZpos(gEnemyVec.at(i)->GetZpos());
+					}
 				}
 			}
+
+			for (int i = 0; i < 8; ++i) {
+				gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + ending_velocity * deltatime);
+				gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + ending_velocity * deltatime);
+				gVec.at(i)->SetChickenFaceDir('s');
+
+				//gGameManager.m_playerData[(int)ID::ENERMY];
+				//gEnemyVec.at(i)->SetXpos(gVec.at(i)->GetXpos());
+				//gEnemyVec.at(i)->SetYpos(gVec.at(i)->GetYpos());
+				//gEnemyVec.at(i)->SetZpos(gVec.at(i)->GetZpos());
+				//gEnemyVec.at(i)->SetEnemyFace(South);
+			}
+
+			if (m_y_pos >= 2.1)
+			{
+				// 빠져나가기
+				//glutLeaveMainLoop();
+
+				glUseProgram(gUIShaderProgramID);
+			}
 		}
-
-		for (int i = 0; i < 8; ++i) {
-			gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + ending_velocity * deltatime);
-			gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + ending_velocity * deltatime);
-			gVec.at(i)->SetChickenFaceDir('s');
-
-			//gGameManager.m_playerData[(int)ID::ENERMY];
-			//gEnemyVec.at(i)->SetXpos(gVec.at(i)->GetXpos());
-			//gEnemyVec.at(i)->SetYpos(gVec.at(i)->GetYpos());
-			//gEnemyVec.at(i)->SetZpos(gVec.at(i)->GetZpos());
-			//gEnemyVec.at(i)->SetEnemyFace(South);
-		}
-
-		if (m_y_pos >= 2.1)
+		// 아무도 도착 못 했을 시 -> 게임중
+		else if (gIsReach == false)
 		{
-			// 빠져나가기
-			//glutLeaveMainLoop();
-
-			glUseProgram(gUIShaderProgramID);
+			Collision();
+			Walk(deltatime);
+			UpdateChickenYpos(deltatime);
 		}
-	}
-	// 아무도 도착 못 했을 시 -> 게임중
-	else if( gIsReach == false )
-	{
-		Collision();
-		Walk(deltatime);
-		UpdateChickenYpos(deltatime);
-	}
 
 #if 0
-	float goal_line = -g_max_z * 0.1; // -15.f 
+		float goal_line = -g_max_z * 0.1; // -15.f 
 
-	if (m_z_pos > goal_line && !gIsReach) {
-		Collision();
-		Walk(deltatime);
-		UpdateChickenYpos(deltatime);
-		
-	}
-	else
-	{
-		if(!gIsReach)
-			PlaySound(L"BackSound.wav", NULL, SND_ASYNC);
-		
-		// 도착하면 y,z 위치 증가 -> y_pos가 2.1이 넘어갈 때까지
-		gIsReach = true;
-		for (int i{}; i < 8; ++i) {
-			gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + ending_velocity);
-			gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + ending_velocity);
-			gVec.at(i)->SetChickenFaceDir('s');
+		if (m_z_pos > goal_line && !gIsReach) {
+			>>>>>> > main
+				Collision();
+			Walk(deltatime);
+			UpdateChickenYpos(deltatime);
 
-			//gGameManager.m_playerData[(int)ID::ENERMY];
-			gEnemyVec.at(i)->SetXpos(gVec.at(i)->GetXpos());
-			gEnemyVec.at(i)->SetYpos(gVec.at(i)->GetYpos());
-			gEnemyVec.at(i)->SetZpos(gVec.at(i)->GetZpos());
-			gEnemyVec.at(i)->SetEnemyFace(South);
 		}
-
-		if (m_y_pos >= 2.1)
+		else
 		{
-			glutLeaveMainLoop();
+			if (!gIsReach)
+				PlaySound(L"BackSound.wav", NULL, SND_ASYNC);
+
+			// 도착하면 y,z 위치 증가 -> y_pos가 2.1이 넘어갈 때까지
+			gIsReach = true;
+			for (int i{}; i < 8; ++i) {
+				gVec.at(i)->SetYpos(gVec.at(i)->GetYpos() + ending_velocity);
+				gVec.at(i)->SetZpos(gVec.at(i)->GetZpos() + ending_velocity);
+				gVec.at(i)->SetChickenFaceDir('s');
+
+				//gGameManager.m_playerData[(int)ID::ENERMY];
+				gEnemyVec.at(i)->SetXpos(gVec.at(i)->GetXpos());
+				gEnemyVec.at(i)->SetYpos(gVec.at(i)->GetYpos());
+				gEnemyVec.at(i)->SetZpos(gVec.at(i)->GetZpos());
+				gEnemyVec.at(i)->SetEnemyFace(South);
+			}
+
+			if (m_y_pos >= 2.1)
+			{
+				glutLeaveMainLoop();
+			}
 		}
-	}
 #endif
+	}
 }
 
 void ChickenBody::Collision()
@@ -397,7 +408,7 @@ void ChickenBody::ChickenJump()
 void ChickenBody::initModelLocation()
 {
 	face = STOP;
-	face_degree = 0.f;
+	face_degree = 180.f;
 }
 
 //===========================================================================================
@@ -543,7 +554,7 @@ void ChickenHead::UpdateChickenYpos()
 void ChickenHead::initModelLocation()
 {
 	face = STOP;
-	face_degree = 0.f;
+	face_degree = 180.f;
 }
 
 //===========================================================================================
