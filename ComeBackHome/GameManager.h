@@ -12,12 +12,14 @@ public:
 	UPDATE_DATA m_playerData[2];
 	LF_QUEUE m_otherPD_queue;
 
+	SOCKET m_sock;
+
 public:
 	GameManager();
 
 	SOCKET WaitForOtherPlayer();
-	void UpdateWorld(SOCKET sock);
+	void UpdateWorld();
 
-	void RecvWorldData(SOCKET sock);
+	void RecvWorldData();
+	void Disconnect();
 };
-

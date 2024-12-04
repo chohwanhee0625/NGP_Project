@@ -294,6 +294,8 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 	default:
 		if (GAME_START == false) {
 			SOCKET sock = gGameManager.WaitForOtherPlayer();
+			gGameManager.m_sock = sock;
+
 			glUseProgram(gShaderProgramID);
 
 			SetOffAllofToggle();
@@ -311,7 +313,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			std::cout << "Recv Other Ready Flag\n" << std::endl;
 
 			GAME_START = true;
-			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
+			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager);
 			networkThread.detach();
 
 			gTimer.starttimer();
@@ -903,7 +905,7 @@ void EnemyChickenUpdatePos(float deltatime)
 
 			UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Second();
 
-			float alpha = ((render_counter + 1) / (PACKET_FREQ)) * deltatime;
+			float alpha = 0.2f;
 			float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
 			float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
 			float interpolated_z = alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
