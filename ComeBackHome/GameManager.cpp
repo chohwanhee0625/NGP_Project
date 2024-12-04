@@ -58,7 +58,10 @@ void GameManager::UpdateWorld()
 			m_otherPD_queue.Deq();
 		m_otherPD_queue.Enq(m_playerData[(int)ID::ENERMY]);
 		render_counter = 0;
+		
+		
 		//if (/* GameEndFlag == true */)
+
 		//	break;
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));

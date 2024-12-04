@@ -28,7 +28,7 @@
 using namespace nlohmann;
 
 #define SERVERPORT 9000
-#define PACKET_FREQ 40
+#define PACKET_FREQ 30
 
 
 enum class Toggle
