@@ -386,7 +386,10 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		break;
 	case 'e' : case 'E':
 		Interpolated = !Interpolated;
-		std::cout << "Interpolated" << std::endl;
+		if (Interpolated == false)
+			std::cout << "Interpolated Off" << std::endl;
+		else
+			std::cout << "Interpolated On" << std::endl;
 		break;
 
 		// ---------- 리셋  ----------
@@ -909,7 +912,7 @@ void EnemyChickenUpdatePos(float deltatime)
 			enemy_body_y += interpolated_y;
 			enemy_body_z += interpolated_z;
 
-			//render_counter++;
+			render_counter++;
 		}
 	}
 #endif
