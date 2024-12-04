@@ -48,6 +48,11 @@ void GameManager::UpdateWorld(SOCKET sock)
 		std::string j_str;
 		j_str = m_playerData[(int)ID::ME].to_json();
 		Send(sock, j_str);
+	
+		// recv otherplayer data
+		//j_str = Recv(sock);
+		//m_playerData[(int)ID::ENERMY].from_json(j_str);
+
 
 		// recv otherplayer data
 		j_str = Recv(sock);
@@ -56,7 +61,10 @@ void GameManager::UpdateWorld(SOCKET sock)
 			m_otherPD_queue.Deq();
 		m_otherPD_queue.Enq(m_playerData[(int)ID::ENERMY]);
 		render_counter = 0;
+		
+		
 		//if (/* GameEndFlag == true */)
+
 		//	break;
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
