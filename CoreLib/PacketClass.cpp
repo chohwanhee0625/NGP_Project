@@ -13,7 +13,7 @@ void INIT_DATA_P::from_json(std::string& j_str)
 {
 	auto jObject = json::parse(j_str);
 
-	Player_ID = jObject.at("ID").get<bool>();
+	Player_ID = jObject.at("ID").get<int>();
 }
 
 //----------------INIT_DATA_R--------------------

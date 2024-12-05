@@ -65,8 +65,11 @@ void GameManager::UpdateWorld()
 		j_str = Recv(m_sock);
 		m_winner.from_json(j_str);
 
-		if (GAME_OVER == true)
-			break;
+		if (m_winner.End_Flag == true) {
+			int winner_id = m_winner.Winner_ID[(int)ID::ME] ? (int)ID::ME : (int)ID::ENERMY;
+			if (m_playerData[winner_id].Player_Pos_y >= MAX_HEIGHT)
+				break;
+		}
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
