@@ -57,6 +57,8 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 		}
 	}
 
+
+
 	std::string j_str;
 	while (true) 
 	{
