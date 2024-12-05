@@ -14,7 +14,16 @@ void Send(SOCKET sock, std::string j_str)
 std::string Recv(SOCKET sock)
 {
 	char header[4];
-	recv(sock, header, sizeof(header), MSG_WAITALL);
+
+	if (SOCKET_ERROR == recv(sock, header, sizeof(header), MSG_WAITALL))
+	{
+		int errorCode = ::WSAGetLastError();
+		if (errorCode != WSAECONNRESET)
+		{
+			return std::string();
+		}
+
+	}
 
 	u_int packet_size;
 	std::memcpy(&packet_size, header, sizeof(u_int));
