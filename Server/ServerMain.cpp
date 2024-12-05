@@ -20,9 +20,6 @@ int main()
 	
 	int optval = 1;
 
-	// 고광신이 지움
-//	setsockopt(listen_sock, SOL_SOCKET, SO_REUSEADDR, (char*)&optval, sizeof(optval));
-
 	// bind()
 	struct sockaddr_in serveraddr;
 	memset(&serveraddr, 0, sizeof(serveraddr));
