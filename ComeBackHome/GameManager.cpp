@@ -39,7 +39,7 @@ SOCKET GameManager::WaitForOtherPlayer()
 	return sock;
 }
 
-unsigned int render_counter;
+std::atomic<unsigned int> render_counter;
 void GameManager::UpdateWorld()
 {	
 	cout << "UpdateWorld" << std::endl;

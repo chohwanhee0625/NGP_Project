@@ -877,7 +877,7 @@ void EnemyChickenHandling(float deltatime)
 	Rleg->handling();
 }
 
-extern unsigned int render_counter;
+extern std::atomic<unsigned int> render_counter;
 void EnemyChickenUpdatePos(float deltatime)
 {
 	UPDATE_DATA other_player{};
@@ -896,6 +896,11 @@ void EnemyChickenUpdatePos(float deltatime)
 #if 1
 	if (Interpolated == true) {
 		if (gGameManager.m_otherPD_queue.Size() >= 2) {
+			other_player = gGameManager.m_otherPD_queue.Front();
+			enemy_body_x = other_player.Player_Pos_x;
+			enemy_body_y = other_player.Player_Pos_y;
+			enemy_body_z = other_player.Player_Pos_z;
+
 			//std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;
 
 			//while (gGameManager.m_otherPD_queue.Size() >= 6)
@@ -905,7 +910,9 @@ void EnemyChickenUpdatePos(float deltatime)
 
 			UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Second();
 
-			float alpha = 0.2f;
+			float alpha = (15.0f / (1000.0f / PACKET_FREQ)) * render_counter * deltatime * 12;	// WiFi Delay and HardWare Performance
+			cout << alpha << endl;
+
 			float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
 			float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
 			float interpolated_z = alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
