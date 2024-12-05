@@ -893,7 +893,6 @@ void EnemyChickenUpdatePos(float deltatime)
 	float enemy_body_y = other_player.Player_Pos_y;
 	float enemy_body_z = other_player.Player_Pos_z;
 
-#if 1
 	if (Interpolated == true) {
 		if (gGameManager.m_otherPD_queue.Size() >= 2) {
 			other_player = gGameManager.m_otherPD_queue.Front();
@@ -918,7 +917,6 @@ void EnemyChickenUpdatePos(float deltatime)
 			render_counter++;
 		}
 	}
-#endif
 
 	enum chicken_model { body = 0, head, mouse, eyes, leftarm, rightarm, leftleg, rightleg };
 
