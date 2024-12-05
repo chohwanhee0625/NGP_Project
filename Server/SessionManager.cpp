@@ -17,32 +17,21 @@ std::mutex mtx;
 
 void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 {
+	std::cout << "StartGame" << std::endl;
 	bool th_id[2] { 0, 1 };
 	InitWorldData(th_id);
 	
-	// 고광신이 지움
-//	int flag = 1;
-//	setsockopt(client_sock_1, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
-//	setsockopt(client_sock_2, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
 
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_1, (int)th_id[0]));
 	m_threads[0].detach();
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_2, (int)th_id[1]));
 	m_threads[1].detach();
 
-	while (true)
-		if (m_endflag[0] == true && m_endflag[1] == true)
-			break;
-
-	//// 멤버 스레드가 모두 끝날 때까지 기다리는 역할 -> 모든 작업이 완료된 후에 다음 단계로 간다
-	//for (auto& th : m_threads) 
-	//	th.join();
 }
 
 std::atomic<bool> game_flag = false;
 DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 {
-	std::cout << "Client_" << my_id << " Thread Create" << std::endl;
 	using namespace std::chrono;
 	int other_id = 1 - my_id;
 	m_updateData[my_id].Player_ID = my_id;
@@ -65,22 +54,14 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 	std::string j_str;
 	while (true) 
 	{
-		{
+
+		// recv my player data
+		j_str = Recv(client_sock);
+
+		m_updateData[my_id].from_json(j_str);
+
+		{	// Critical Section
 			std::lock_guard<std::mutex> lock(mtx); // 동기화를 위한 잠금 
-
-			// 1. 클라이언트에서 데이터를 패킷 구조체에 저장하고 to_json함수로 데이터를 Json string형식으로 저장
-			// 2. 패킷 사이즈, string을 char*로 변환한 데이터 정보를 서버로 Send
-			// 3. char*로 변환된 가변길이 데이터를 순서대로 서버에서 받아서 string에 저장 Recv 
-			// 4. string에 저장된 데이터를 from_json에서 parse(파싱) 과정으로 string으로 저장된 데이터의 원본을 복원
-			//
-			// from_json : 데이터 원본 복원
-			// to_json   : 데이터 string으로 저장
-
-			// recv my player data
-			j_str = Recv(client_sock);
-
-			m_updateData[my_id].from_json(j_str);
-
 			// 우승자 검사
 			if (m_updateData[my_id].Player_Pos_z <= -15.f) {
 				m_updateData[my_id].GameOver_Flag = true;
@@ -94,28 +75,29 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 				m_winner.End_Flag = true;
 				game_flag = true;
 			}
+		}
 
-			// send other player data
-			// ohter_id를 맡은 스레드에서 업데이트한 정보를 클라이언트에 Send
-			j_str = m_updateData[other_id].to_json();
-			Send(client_sock, j_str);
+		// send other player data
+		// ohter_id를 맡은 스레드에서 업데이트한 정보를 클라이언트에 Send
+		j_str = m_updateData[other_id].to_json();
+		Send(client_sock, j_str);
 
-			// send winner flag
-			j_str = m_winner.to_json();
-			Send(client_sock, j_str);
+		// send winner flag
+		j_str = m_winner.to_json();
+		Send(client_sock, j_str);
 
-			if (m_winner.End_Flag == true) {
-				int winner_id = m_winner.Winner_ID[my_id] ? my_id : other_id;
-				if (m_updateData[winner_id].Player_Pos_y >= MAX_HEIGHT)
-					break;
+		if (m_winner.End_Flag == true) {
+			int winner_id = m_winner.Winner_ID[my_id] ? my_id : other_id;
+			if (m_updateData[winner_id].Player_Pos_y >= MAX_HEIGHT) {
+				m_endflag.store(true);
+				break;
 			}
 		}
 
-
-
 		// 초당 40번으로 패킷 전송 주기를 유지한다
-		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ)); 
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
+
 
 	EndGame(client_sock);
 
@@ -124,12 +106,15 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 void SessionManager::EndGame(SOCKET client_sock)
 {
+	std::cout << "Client Disconnect" << std::endl;
 	int result = shutdown(client_sock, SD_BOTH);
 	closesocket(client_sock);
 }
 
 void SessionManager::InitWorldData(bool p_id[2])
 {
+	std::cout << "InitWorldData" << std::endl;
+
 	//-----------------------------------------------------------------------------------------
 	// Init Player Data
 

@@ -23,7 +23,7 @@ public:
 	GameManager();
 
 	SOCKET WaitForOtherPlayer();
-	void UpdateWorld();
+	DWORD WINAPI UpdateWorld();		// 네트워크 스레드 함수
 
 	void RecvWorldData();
 	void Disconnect();

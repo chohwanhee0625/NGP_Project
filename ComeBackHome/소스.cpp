@@ -901,11 +901,6 @@ void EnemyChickenUpdatePos(float deltatime)
 			enemy_body_y = other_player.Player_Pos_y;
 			enemy_body_z = other_player.Player_Pos_z;
 
-			//std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;
-
-			//while (gGameManager.m_otherPD_queue.Size() >= 6)
-			//	gGameManager.m_otherPD_queue.Deq();
-
 			UPDATE_DATA previous_player = gGameManager.m_otherPD_queue.Front();
 
 			UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Second();

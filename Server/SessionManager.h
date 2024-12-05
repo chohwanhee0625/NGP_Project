@@ -28,7 +28,8 @@ private:
 	INIT_DATA_W				m_woodData;
 
 	// atomic : 하나의 스레드가 작업을 끝내기 전까지, 대기해준다( 간단한 변수의 안전한 접근 )
-	std::atomic<bool>		m_endflag[2]{ false, false };
+	//		-> 변수(메모리)의 일부 접근(작업)에 대해 atomic한 동작을 보장한다. (대기하면 Blocking임)
+	std::atomic<bool>		m_endflag {false};
 	std::atomic<bool>		m_startflag[2]{ false, false };
 };
 
