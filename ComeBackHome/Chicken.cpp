@@ -185,14 +185,13 @@ void ChickenBody::Update(float deltatime)
 		if (m_y_pos >= 2.1 and end_flag == false)
 		{
 			main_viewport();
-			// Disconnect Server
 			GAME_OVER = true;
 			end_flag = true;
 			gPlaybutton.resize(1.f, -1.f, 1.f);
 
 			glUseProgram(gUIShaderProgramID);
 		}
-		if (m_y_pos >= 4.1)
+		if (m_y_pos >= MAX_HEIGHT + 0.5f)
 		{
 			// ����������
 			glutLeaveMainLoop();

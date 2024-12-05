@@ -15,16 +15,7 @@ std::string Recv(SOCKET sock)
 {
 	char header[4];
 
-	if (SOCKET_ERROR == recv(sock, header, sizeof(header), MSG_WAITALL))
-	{
-		int errorCode = ::WSAGetLastError();
-		if (errorCode != WSAECONNRESET)
-		{
-			return std::string();
-		}
-
-	}
-
+	recv(sock, header, sizeof(header), MSG_WAITALL);
 	u_int packet_size;
 	std::memcpy(&packet_size, header, sizeof(u_int));
 
@@ -45,7 +36,7 @@ void SendStartFlag(SOCKET client_sock)
 
 std::string RecvStartFlag(SOCKET client_sock)
 {
-	// send Start flag Packet
+	// recv Start flag Packet
 	std::string j_str;
 	j_str = Recv(client_sock);
 	return j_str;
