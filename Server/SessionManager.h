@@ -7,9 +7,6 @@
 class SessionManager
 {
 public:
-	SessionManager() {}
-	~SessionManager() {}
-
 	void			StartGame(SOCKET client_sock_1, SOCKET client_sock_2);
 	DWORD WINAPI	UpdateWorld(SOCKET client_sock, int my_id);
 	void			EndGame(SOCKET client_sock);

@@ -214,8 +214,8 @@ GLvoid DrawScene()
 	glClearColor(0.5294f, 0.8078f, 0.9804f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 깊이 버퍼 클리어
 
-	//if (GAME_START == false)
-	gPlaybutton.Render();
+	if (GAME_START == false or GAME_OVER == true)
+		gPlaybutton.Render();
 	if (GAME_START == true and GAME_OVER == false) {
 		main_viewport();
 		border_viewport();
@@ -893,7 +893,7 @@ void EnemyChickenUpdatePos(float deltatime)
 	float enemy_body_y = other_player.Player_Pos_y;
 	float enemy_body_z = other_player.Player_Pos_z;
 
-#if 0
+#if 1
 	if (Interpolated == true) {
 		if (gGameManager.m_otherPD_queue.Size() >= 2) {
 			//std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;

@@ -26,25 +26,28 @@ void SessionManager::StartGame(SOCKET client_sock_1, SOCKET client_sock_2)
 //	setsockopt(client_sock_2, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(flag));
 
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_1, (int)th_id[0]));
+	m_threads[0].detach();
 	m_threads.emplace_back(std::thread(&SessionManager::UpdateWorld, this, client_sock_2, (int)th_id[1]));
-	
+	m_threads[1].detach();
+
 	while (true)
 		if (m_endflag[0] == true && m_endflag[1] == true)
 			break;
 
-	// 멤버 스레드가 모두 끝날 때까지 기다리는 역할 -> 모든 작업이 완료된 후에 다음 단계로 간다
-	for (auto& th : m_threads) 
-		th.join();
+	//// 멤버 스레드가 모두 끝날 때까지 기다리는 역할 -> 모든 작업이 완료된 후에 다음 단계로 간다
+	//for (auto& th : m_threads) 
+	//	th.join();
 }
 
 std::atomic<bool> game_flag = false;
 DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 {
+	std::cout << "Client_" << my_id << " Thread Create" << std::endl;
 	using namespace std::chrono;
 	int other_id = 1 - my_id;
 	m_updateData[my_id].Player_ID = my_id;
 	SendWorldData(client_sock, my_id);
-
+	
 	// 준비 완료 플래그 받기
 	RecvStartFlag(client_sock);
 	m_startflag[my_id] = true;
@@ -75,7 +78,6 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 
 			// recv my player data
 			j_str = Recv(client_sock);
-			if (j_str.empty() == true) break;
 
 			m_updateData[my_id].from_json(j_str);
 
@@ -103,9 +105,13 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 			Send(client_sock, j_str);
 
 			if (m_winner.End_Flag == true) {
-				break;
+				int winner_id = m_winner.Winner_ID[my_id] ? my_id : other_id;
+				if (m_updateData[winner_id].Player_Pos_y >= MAX_HEIGHT)
+					break;
 			}
 		}
+
+
 
 		// 초당 40번으로 패킷 전송 주기를 유지한다
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ)); 
@@ -125,7 +131,7 @@ void SessionManager::EndGame(SOCKET client_sock)
 void SessionManager::InitWorldData(bool p_id[2])
 {
 	//-----------------------------------------------------------------------------------------
-	// Init Player Data 
+	// Init Player Data
 
 	m_InitPlayerData[0].Player_ID = { 0 };
 	m_InitPlayerData[1].Player_ID = { 1 };

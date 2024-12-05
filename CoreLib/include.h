@@ -29,7 +29,7 @@ using namespace nlohmann;
 
 #define SERVERPORT 9000
 #define PACKET_FREQ 30
-
+const float MAX_HEIGHT = 4.0f;
 
 enum class Toggle
 {
