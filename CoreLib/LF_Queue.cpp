@@ -58,6 +58,10 @@ UPDATE_DATA LF_QUEUE::Front()
 UPDATE_DATA LF_QUEUE::Second()
 {
 	NODE* p = head->next;
+	//NODE* next = p->next;
+	//if (true == CAS(&p, p, next)) {
+	//	return p->m_player_data;
+	//}
 	p = p->next;
 	return p->m_player_data;
 }

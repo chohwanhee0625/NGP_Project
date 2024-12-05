@@ -40,7 +40,7 @@ SOCKET GameManager::WaitForOtherPlayer()
 }
 
 std::atomic<unsigned int> render_counter;
-void GameManager::UpdateWorld()
+DWORD WINAPI GameManager::UpdateWorld()
 {	
 	cout << "UpdateWorld" << std::endl;
 	

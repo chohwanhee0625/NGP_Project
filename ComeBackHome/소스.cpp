@@ -901,17 +901,11 @@ void EnemyChickenUpdatePos(float deltatime)
 			enemy_body_y = other_player.Player_Pos_y;
 			enemy_body_z = other_player.Player_Pos_z;
 
-			//std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;
-
-			//while (gGameManager.m_otherPD_queue.Size() >= 6)
-			//	gGameManager.m_otherPD_queue.Deq();
-
 			UPDATE_DATA previous_player = gGameManager.m_otherPD_queue.Front();
 
 			UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Second();
 
-			float alpha = (15.0f / (1000.0f / PACKET_FREQ)) * render_counter * deltatime * 12;	// WiFi Delay and HardWare Performance
-			cout << alpha << endl;
+			float alpha = (15.0f / (1000.0f / PACKET_FREQ)) * render_counter * deltatime * 12 * (30.f / PACKET_FREQ);	// WiFi Delay and HardWare Performance
 
 			float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
 			float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);

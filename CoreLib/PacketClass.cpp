@@ -95,6 +95,7 @@ UPDATE_DATA::UPDATE_DATA(UPDATE_DATA& player_data)
 {
 	std::lock_guard lock(m_lock);
 
+	Player_ID = player_data.Player_ID;
 	Player_Pos_x = player_data.Player_Pos_x;
 	Player_Pos_y = player_data.Player_Pos_y;
 	Player_Pos_z = player_data.Player_Pos_z;
