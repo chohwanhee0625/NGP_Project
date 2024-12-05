@@ -94,7 +94,7 @@ DWORD WINAPI SessionManager::UpdateWorld(SOCKET client_sock, int my_id)
 			}
 		}
 
-		// 초당 40번으로 패킷 전송 주기를 유지한다
+		// 초당 PACKET_FREQ번으로 루프 주기를 유지한다
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
 
