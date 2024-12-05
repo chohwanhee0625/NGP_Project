@@ -910,8 +910,7 @@ void EnemyChickenUpdatePos(float deltatime)
 
 			UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Second();
 
-			float alpha = (15.0f / (1000.0f / PACKET_FREQ)) * render_counter * deltatime * 12;	// WiFi Delay and HardWare Performance
-			cout << alpha << endl;
+			float alpha = (15.0f / (1000.0f / PACKET_FREQ)) * render_counter * deltatime * 12 * (30.f / PACKET_FREQ);	// WiFi Delay and HardWare Performance
 
 			float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
 			float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
