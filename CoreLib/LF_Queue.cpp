@@ -55,6 +55,13 @@ UPDATE_DATA LF_QUEUE::Front()
 	return p->m_player_data;
 }
 
+UPDATE_DATA LF_QUEUE::Second()
+{
+	NODE* p = head->next;
+	p = p->next;
+	return p->m_player_data;
+}
+
 int LF_QUEUE::Size()
 {
 	return size;

@@ -19,10 +19,9 @@
 #include "GameManager.h"
 #include "PacketIO.h"
 
-UI gPlaybutton;
-GameManager gGameManager;
 bool GAME_START = false;
 std::mutex g_lock;
+bool Interpolated = true;
 
 //===========================================================================================
 
@@ -215,9 +214,9 @@ GLvoid DrawScene()
 	glClearColor(0.5294f, 0.8078f, 0.9804f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 깊이 버퍼 클리어
 
-	if (GAME_START == false)
-		gPlaybutton.Render();
-	else {
+	//if (GAME_START == false)
+	gPlaybutton.Render();
+	if (GAME_START == true and GAME_OVER == false) {
 		main_viewport();
 		border_viewport();
 		chicken_viewport();
@@ -243,11 +242,12 @@ void TimerFunction(int value)
 		//deltatime = std::min(deltatime, 0.2f);
 		//cout << deltatime << endl;
 
+
 		gEnemyVecUpdate(deltatime);
 		gVecUpdate(deltatime);
 
 		glutPostRedisplay();				//화면 재출력
-		glutTimerFunc(20, TimerFunction, 1); // 다시 호출 
+		glutTimerFunc(15, TimerFunction, 1); // 다시 호출 
 	}
 }
 
@@ -293,6 +293,8 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 	default:
 		if (GAME_START == false) {
 			SOCKET sock = gGameManager.WaitForOtherPlayer();
+			gGameManager.m_sock = sock;
+
 			glUseProgram(gShaderProgramID);
 
 			SetOffAllofToggle();
@@ -310,7 +312,7 @@ GLvoid KeyUpboard(unsigned char key, int x, int y)
 			std::cout << "Recv Other Ready Flag\n" << std::endl;
 
 			GAME_START = true;
-			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager, sock);
+			std::thread networkThread(&GameManager::UpdateWorld, &gGameManager);
 			networkThread.detach();
 
 			gTimer.starttimer();
@@ -375,6 +377,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		break;
 		// 프로그램 종료
 	case 'q': case 'Q':
+		GAME_OVER = true;
 		glutLeaveMainLoop();
 		break;
 	case 'j': case 'J':
@@ -383,7 +386,13 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	case 'p': case'P':
 		SetPerspectiveToggle();
 		break;
-	
+	case 'e' : case 'E':
+		Interpolated = !Interpolated;
+		if (Interpolated == false)
+			std::cout << "Interpolated Off" << std::endl;
+		else
+			std::cout << "Interpolated On" << std::endl;
+		break;
 
 		// ---------- 리셋  ----------
 	case 'r': case'R':
@@ -446,7 +455,7 @@ void SetgEnemyVec(bool my_id)
 	
 	other_player.Player_Pos_y = 0.0f;
 	other_player.Player_Pos_z = 0.0f;
-	other_player.Player_Face = (char)Dir::North; // enum값 확인
+	other_player.Player_FaceDegree = 180.f; // enum값 확인
 	other_player.GameOver_Flag = false;
 
 	// 클라이언트 게임 매니저에 데이터 저장
@@ -485,7 +494,7 @@ void SetChicken(bool my_id)
 	
 	my_player.Player_Pos_y = 0.0f;
 	my_player.Player_Pos_z = 0.0f;
-	my_player.Player_Face = (char)Dir::North; // enum값 확인
+	my_player.Player_FaceDegree = 180.f; 
 	my_player.GameOver_Flag = false;
 
 	// 클라이언트 게임 매니저에 데이터 저장
@@ -689,7 +698,7 @@ void gVecUpdate(float deltatime)
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_x = gVec[0]->GetXpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_y = gVec[0]->GetYpos();
 	gGameManager.m_playerData[(int)ID::ME].Player_Pos_z = gVec[0]->GetZpos();
-	gGameManager.m_playerData[(int)ID::ME].Player_Face =  (int)(gVec[0]->GetChickenDir());
+	gGameManager.m_playerData[(int)ID::ME].Player_FaceDegree = (gVec[0]->GetChickenFaceDegree());
 	//cout << gGameManager.m_playerData[(int)ID::ME].Player_Face << endl;
 	
 	g_lock.unlock();
@@ -698,7 +707,7 @@ void gVecUpdate(float deltatime)
 
 void gEnemyVecUpdate(float deltatime)
 {
-	EnemyChickenUpdatePos();
+	EnemyChickenUpdatePos(deltatime);
 
 	EnemyChickenHandling(deltatime);
 }
@@ -869,44 +878,44 @@ void EnemyChickenHandling(float deltatime)
 }
 
 extern unsigned int render_counter;
-void EnemyChickenUpdatePos()
+void EnemyChickenUpdatePos(float deltatime)
 {
 	UPDATE_DATA other_player{};
 	other_player = gGameManager.m_playerData[(int)ID::ENERMY];
 
-	int dir = other_player.Player_Face;
+	float dir = other_player.Player_FaceDegree;
 
 	for (auto& obj : gEnemyVec) {
-		obj->SetEnemyFace((Dir)dir);
+		obj->SetEnemyFace(dir);
 	}
 
 	float enemy_body_x = other_player.Player_Pos_x;
 	float enemy_body_y = other_player.Player_Pos_y;
 	float enemy_body_z = other_player.Player_Pos_z;
 
-#if 1
-	if (gGameManager.m_otherPD_queue.Size() >= 2) {
-		//std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;
+#if 0
+	if (Interpolated == true) {
+		if (gGameManager.m_otherPD_queue.Size() >= 2) {
+			//std::cout << gGameManager.m_otherPD_queue.Size() << std::endl;
 
-		//while (gGameManager.m_otherPD_queue.Size() >= 5)
-		//	gGameManager.m_otherPD_queue.Deq();
+			//while (gGameManager.m_otherPD_queue.Size() >= 6)
+			//	gGameManager.m_otherPD_queue.Deq();
 
-		UPDATE_DATA previous_player = gGameManager.m_otherPD_queue.Front();
-		gGameManager.m_otherPD_queue.Deq();
+			UPDATE_DATA previous_player = gGameManager.m_otherPD_queue.Front();
 
-		UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Front();
-		//gGameManager.m_otherPD_queue.Deq();
+			UPDATE_DATA current_player = gGameManager.m_otherPD_queue.Second();
 
-		float alpha = (render_counter + 1) / 20;
-		float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
-		float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
-		float interpolated_z = alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
-		
-		enemy_body_x += interpolated_x;
-		enemy_body_y += interpolated_y;
-		enemy_body_z += interpolated_z;
+			float alpha = 0.2f;
+			float interpolated_x = alpha * (current_player.Player_Pos_x - previous_player.Player_Pos_x);
+			float interpolated_y = alpha * (current_player.Player_Pos_y - previous_player.Player_Pos_y);
+			float interpolated_z = alpha * (current_player.Player_Pos_z - previous_player.Player_Pos_z);
 
-		render_counter++;
+			enemy_body_x += interpolated_x;
+			enemy_body_y += interpolated_y;
+			enemy_body_z += interpolated_z;
+
+			render_counter++;
+		}
 	}
 #endif
 

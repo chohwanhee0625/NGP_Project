@@ -30,8 +30,9 @@ bool gIsReach{};
 vector<BasisComponent*> gVec; // --> 모든 객체를 Basis 부모 클래스 포인터로 다형성을 사용해 관리하기 위한 변수
 vector<BasisComponent*> gEnemyVec; // 상대 플레이어 렌더링할 벡터
 
-extern UI gPlaybutton;
-extern GameManager gGameManager;
+UI gPlaybutton;
+GameManager gGameManager;
+bool GAME_OVER = false;
 
 bool gToggle[(int)Toggle::END]; // 명령어 토글 
 

@@ -31,14 +31,16 @@ SOCKET GameManager::WaitForOtherPlayer()
 	if (retval == SOCKET_ERROR) exit(1);
 	cout << "Server Connected" << endl;
 
+	m_sock = sock;
+
 	// recv world Data
-	RecvWorldData(sock);
+	RecvWorldData();
 
 	return sock;
 }
 
 unsigned int render_counter;
-void GameManager::UpdateWorld(SOCKET sock)
+void GameManager::UpdateWorld()
 {	
 	cout << "UpdateWorld" << std::endl;
 	
@@ -47,40 +49,51 @@ void GameManager::UpdateWorld(SOCKET sock)
 		// send myplayer data
 		std::string j_str;
 		j_str = m_playerData[(int)ID::ME].to_json();
-		Send(sock, j_str);
+
+
+		Send(m_sock, j_str);
 
 		// recv otherplayer data
-		j_str = Recv(sock);
+		j_str = Recv(m_sock);
 		m_playerData[(int)ID::ENERMY].from_json(j_str);
+		if (m_otherPD_queue.Size() > 2)
+			m_otherPD_queue.Deq();
 		m_otherPD_queue.Enq(m_playerData[(int)ID::ENERMY]);
 		render_counter = 0;
-		//if (/* GameEndFlag == true */)
-		//	break;
+		
+		// recv winner flag
+		j_str = Recv(m_sock);
+		m_winner.from_json(j_str);
+
+		if (GAME_OVER == true)
+			break;
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / PACKET_FREQ));
 	}
 
 	// end Game Event
+	Disconnect();
 }
 
-void GameManager::RecvWorldData(SOCKET sock)
+void GameManager::RecvWorldData()
 {
 	//===========================================================
 	// recv Player Data
-	INIT_DATA_P m_InitPlayerData; 
+	INIT_DATA_P m_InitPlayerData;
 
-	std::string j_str = Recv(sock);
-	m_InitPlayerData.from_json(j_str);		// MY Player Data	
+	std::string j_str = Recv(m_sock);
+	m_InitPlayerData.from_json(j_str);		// MY Player Data
 	SetChicken(m_InitPlayerData.Player_ID);
 	//m_InitPlayerData.from_json(j_str);		// Other Player Data
 	SetgEnemyVec(m_InitPlayerData.Player_ID);
 
+	my_id = m_InitPlayerData.Player_ID;
 	cout << "Set Chicken" << endl;
 	//=============================================================
 	// recv Roads Data
 	INIT_DATA_R m_roadData;
 
-	j_str = Recv(sock);
+	j_str = Recv(m_sock);
 	m_roadData.from_json(j_str);
 
 	std::vector<bool> Roads_Flags = m_roadData.Roads_Flags;
@@ -96,7 +109,7 @@ void GameManager::RecvWorldData(SOCKET sock)
 	//=============================================================
 	// recv Cars Data
 	INIT_DATA_C m_carData;
-	j_str = Recv(sock);
+	j_str = Recv(m_sock);
 	m_carData.from_json(j_str);
 
 	SetCars(m_carData);
@@ -109,7 +122,7 @@ void GameManager::RecvWorldData(SOCKET sock)
 	//=============================================================
 	// recv Woods Data
 	INIT_DATA_W m_woodData;
-	j_str = Recv(sock);
+	j_str = Recv(m_sock);
 	m_woodData.from_json(j_str);
 	SetWoods(m_woodData);
 
@@ -119,5 +132,13 @@ void GameManager::RecvWorldData(SOCKET sock)
 
 	SetRoadLane(); // 도로 흰색 라인 만들기
 	SetMother(); // 도착지점 엄마 닭 만들기
+}
+
+void GameManager::Disconnect()
+{
+	int result = shutdown(m_sock, SD_BOTH);
+	closesocket(m_sock);
+	WSACleanup();
+	return;
 }
 

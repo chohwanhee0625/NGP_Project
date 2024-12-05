@@ -6,13 +6,15 @@
 #include "Camera.h"
 #include "Car.h"
 #include "Tree.h"
+#include "GameManager.h"
+#include "UI.h"
 
 //===========================================================================================
 
 const float ending_velocity{ 0.1f };
 // const float ending_velocity{ 0.002 };
 
-// °£°Ý
+// ï¿½ï¿½ï¿½ï¿½
 const float g_offset_x{ 0.07 };
 
 //===========================================================================================
@@ -24,7 +26,7 @@ void ChickenBody::DrawObject()
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
 	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
 
-	glEnableVertexAttribArray(PosLocation); // Enable ÇÊ¼ö! »ç¿ëÇÏ°Ú´Ü ÀÇ¹Ì
+	glEnableVertexAttribArray(PosLocation); // Enable ï¿½Ê¼ï¿½! ï¿½ï¿½ï¿½ï¿½Ï°Ú´ï¿½ ï¿½Ç¹ï¿½
 	glEnableVertexAttribArray(ColorLocation);
 	glEnableVertexAttribArray(NormalLocation);
 
@@ -32,9 +34,9 @@ void ChickenBody::DrawObject()
 
 	WorldMatrix();
 
-	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ¾Õ¸é
+	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ï¿½Õ¸ï¿½
 
-	glDisableVertexAttribArray(PosLocation); // Disable ÇÊ¼ö!
+	glDisableVertexAttribArray(PosLocation); // Disable ï¿½Ê¼ï¿½!
 	glDisableVertexAttribArray(ColorLocation);
 	glDisableVertexAttribArray(NormalLocation);
 }
@@ -61,7 +63,7 @@ void ChickenBody::InitMatrix4()
 
 void ChickenBody::InitMatrix4(bool player_id)
 {
-	// 0¹ø ÇÃ·¹ÀÌ¾î¸é
+	// 0ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½
 	if (!player_id) {
 		m_x_pos = 0.f;
 		m_y_pos = 0.0f;
@@ -79,11 +81,11 @@ void ChickenBody::WorldMatrix()
 {
 	InitTotalworld();
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ±âº» ÀÌµ¿ 
-	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yÃà ¾ó±¼
-	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ±âº» ½ÅÃà
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ï¿½âº» ï¿½Ìµï¿½ 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yï¿½ï¿½ ï¿½ï¿½
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ï¿½âº» ï¿½ï¿½ï¿½ï¿½
 
-	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ¹öÅØ½º ¼¼ÀÌ´õ¿¡¼­ ¸ðµ¨¸µ º¯È¯ À§Ä¡ °¡Á®¿À±â
+	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ï¿½ï¿½ï¿½Ø½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ðµ¨¸ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
@@ -123,6 +125,7 @@ void ChickenBody::Walk(float deltatime)
 		switch (face)
 		{
 		case STOP:
+
 			break;
 
 		case South:
@@ -145,24 +148,26 @@ void ChickenBody::Walk(float deltatime)
 
 }
 
+bool end_flag = false;
+bool enmy_flag = false;
 void ChickenBody::Update(float deltatime)
-{
-	float goal_line = g_max_z * 0.1; // 15.f 
+{	
+	S_GAME_OVER winner = gGameManager.m_winner;
+	int my_id = gGameManager.my_id;
+	int other_id = 1 - my_id;
 
-	// z¸¦ + ´ÜÀ§·Î Àç·Á°í -1 °öÇÔ
-	float player_z_pos = MINUS * gVec.at(0)->GetZpos();  
-	float enemy_z_pos  = MINUS * gEnemyVec.at(0)->GetZpos();
-
-	// ÀûÀÌ³ª ÇÃ·¹ÀÌ¾î°¡ µµÂøÇßÀ» ½Ã
-	if (((goal_line <= player_z_pos) || (goal_line <= enemy_z_pos)) || gIsReach == true) {
-
-		// Ã¹ µµÂø ½ÃÁ¡ 
+	// ï¿½ï¿½ï¿½Ì³ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+	if (winner.End_Flag == true) {
+		// Ã¹ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if (false == gIsReach) {
 			PlaySound(L"BackSound.wav", NULL, SND_ASYNC);
 			gIsReach = true;
+			gPlaybutton.change_img("winner.png");
 
-			// if ÀûÀÌ ÀÌ±ä´Ù¸é -> ÇÃ·¹ÀÌ¾î À§Ä¡¸¦ Àû À§Ä¡·Î ÃÊ±âÈ­
-			if (player_z_pos < enemy_z_pos) {
+			// if ï¿½ï¿½ï¿½ï¿½ ï¿½Ì±ï¿½Ù¸ï¿½ -> ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ê±ï¿½È­
+			if (winner.Winner_ID[other_id] == true and winner.Winner_ID[my_id] == false and enmy_flag == false) {
+				enmy_flag = true;
+				gPlaybutton.change_img("loser.png");
 				for (int i = 0; i < 8; ++i) {
 					gVec.at(i)->SetXpos(gEnemyVec.at(i)->GetXpos());
 					gVec.at(i)->SetYpos(gEnemyVec.at(i)->GetYpos());
@@ -177,14 +182,26 @@ void ChickenBody::Update(float deltatime)
 			gVec.at(i)->SetChickenFaceDir('s');
 		}
 
-		if (m_y_pos >= 2.1)
+		if (m_y_pos >= 2.1 and end_flag == false)
 		{
-			// ºüÁ®³ª°¡±â
+			main_viewport();
+			// Disconnect Server
+			GAME_OVER = true;
+			end_flag = true;
+			gPlaybutton.resize(1.f, -1.f, 1.f);
+
+			glUseProgram(gUIShaderProgramID);
+		}
+		if (m_y_pos >= 4.1)
+		{
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			glutLeaveMainLoop();
 		}
+
+
 	}
-	// ¾Æ¹«µµ µµÂø ¸ø ÇßÀ» ½Ã -> °ÔÀÓÁß
-	else if( gIsReach == false )
+	// ï¿½Æ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	else if (gIsReach == false)
 	{
 		Collision();
 		Walk(deltatime);
@@ -194,8 +211,8 @@ void ChickenBody::Update(float deltatime)
 
 void ChickenBody::Collision()
 {
-	// m_collÀÌ false¸é Ãæµ¹°Ë»ç X [ ¹«Àû¸ðµå ]
-	//			 true¸é Ãæµ¹°Ë»ç O [ »ýÁ¸¸ðµå ]
+	// m_collï¿½ï¿½ falseï¿½ï¿½ ï¿½æµ¹ï¿½Ë»ï¿½ X [ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ]
+	//			 trueï¿½ï¿½ ï¿½æµ¹ï¿½Ë»ï¿½ O [ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ]
 	if (!m_coll) return;
 
 	if (m_x_pos > 0.5)
@@ -243,13 +260,13 @@ void ChickenBody::Collision()
 				gVec[i]->GetYminBoundary(), gVec[i]->GetZmaxBoundary(), gVec[i]->GetZminBoundary()
 			};
 
-			// Ãæµ¹ ÆÇÁ¤ (AABB Ãæµ¹ °Ë»ç)
+			// ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ (AABB ï¿½æµ¹ ï¿½Ë»ï¿½)
 			bool collisionX = Chickenpivot[0] >= colPivot[1] && Chickenpivot[1] <= colPivot[0];
 			bool collisionY = Chickenpivot[2] >= colPivot[3] && Chickenpivot[3] <= colPivot[2];
 			bool collisionZ = Chickenpivot[4] >= colPivot[5] && Chickenpivot[5] <= colPivot[4];
 
 			
-			// ¸ðµç Ãà¿¡¼­ÀÇ Ãæµ¹ÀÌ ÀÖ´ÂÁö È®ÀÎÇÏ¿© ÃÖÁ¾ Ãæµ¹ ÆÇÁ¤
+			// ï¿½ï¿½ï¿½ ï¿½à¿¡ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
 			if (collisionX && collisionY && collisionZ) {
 				
 				PlaySound(L"dead_sound2.wav", NULL, SND_ASYNC);
@@ -268,13 +285,13 @@ void ChickenBody::Collision()
 				gVec[i]->GetYminBoundary(), gVec[i]->GetZmaxBoundary(), gVec[i]->GetZminBoundary()
 			};
 
-			// Ãæµ¹ ÆÇÁ¤ (AABB Ãæµ¹ °Ë»ç)
+			// ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ (AABB ï¿½æµ¹ ï¿½Ë»ï¿½)
 			bool collisionX = Chickenpivot[0] >= colPivot[1] && Chickenpivot[1] <= colPivot[0];
 			bool collisionY = Chickenpivot[2] >= colPivot[3] && Chickenpivot[3] <= colPivot[2];
 			bool collisionZ = Chickenpivot[4] >= colPivot[5] && Chickenpivot[5] <= colPivot[4];
 
 
-			// ¸ðµç Ãà¿¡¼­ÀÇ Ãæµ¹ÀÌ ÀÖ´ÂÁö È®ÀÎÇÏ¿© ÃÖÁ¾ Ãæµ¹ ÆÇÁ¤
+			// ï¿½ï¿½ï¿½ ï¿½à¿¡ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
 			if (collisionX && collisionY && collisionZ) {
 				for (int j{}; j < 8; ++j)
 				{
@@ -351,7 +368,7 @@ void ChickenBody::ChickenJump()
 void ChickenBody::initModelLocation()
 {
 	face = STOP;
-	face_degree = 0.f;
+	face_degree = 180.f;
 }
 
 //===========================================================================================
@@ -371,7 +388,7 @@ void ChickenHead::DrawObject()
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
 	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
 
-	glEnableVertexAttribArray(PosLocation); // Enable ÇÊ¼ö! »ç¿ëÇÏ°Ú´Ü ÀÇ¹Ì
+	glEnableVertexAttribArray(PosLocation); // Enable ï¿½Ê¼ï¿½! ï¿½ï¿½ï¿½ï¿½Ï°Ú´ï¿½ ï¿½Ç¹ï¿½
 	glEnableVertexAttribArray(ColorLocation);
 	glEnableVertexAttribArray(NormalLocation);
 
@@ -379,9 +396,9 @@ void ChickenHead::DrawObject()
 
 	WorldMatrix();
 
-	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ¾Õ¸é
+	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ï¿½Õ¸ï¿½
 
-	glDisableVertexAttribArray(PosLocation); // Disable ÇÊ¼ö!
+	glDisableVertexAttribArray(PosLocation); // Disable ï¿½Ê¼ï¿½!
 	glDisableVertexAttribArray(ColorLocation);
 	glDisableVertexAttribArray(NormalLocation);
 
@@ -418,11 +435,11 @@ void ChickenHead::WorldMatrix()
 {
 	InitTotalworld();
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ±âº» ÀÌµ¿ 
-	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yÃà ¾ó±¼
-	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ±âº» ½ÅÃà
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ï¿½âº» ï¿½Ìµï¿½ 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yï¿½ï¿½ ï¿½ï¿½
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ï¿½âº» ï¿½ï¿½ï¿½ï¿½
 
-	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ¹öÅØ½º ¼¼ÀÌ´õ¿¡¼­ ¸ðµ¨¸µ º¯È¯ À§Ä¡ °¡Á®¿À±â
+	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ï¿½ï¿½ï¿½Ø½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ðµ¨¸ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
@@ -497,7 +514,7 @@ void ChickenHead::UpdateChickenYpos()
 void ChickenHead::initModelLocation()
 {
 	face = STOP;
-	face_degree = 0.f;
+	face_degree = 180.f;
 }
 
 //===========================================================================================
@@ -517,7 +534,7 @@ void ChickenMouse::DrawObject()
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
 	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
 
-	glEnableVertexAttribArray(PosLocation); // Enable ÇÊ¼ö! »ç¿ëÇÏ°Ú´Ü ÀÇ¹Ì
+	glEnableVertexAttribArray(PosLocation); // Enable ï¿½Ê¼ï¿½! ï¿½ï¿½ï¿½ï¿½Ï°Ú´ï¿½ ï¿½Ç¹ï¿½
 	glEnableVertexAttribArray(ColorLocation);
 	glEnableVertexAttribArray(NormalLocation);
 
@@ -525,9 +542,9 @@ void ChickenMouse::DrawObject()
 
 	WorldMatrix();
 
-	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ¾Õ¸é
+	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ï¿½Õ¸ï¿½
 
-	glDisableVertexAttribArray(PosLocation); // Disable ÇÊ¼ö!
+	glDisableVertexAttribArray(PosLocation); // Disable ï¿½Ê¼ï¿½!
 	glDisableVertexAttribArray(ColorLocation);
 	glDisableVertexAttribArray(NormalLocation);
 
@@ -556,16 +573,16 @@ void ChickenMouse::WorldMatrix()
 {
 	InitTotalworld();
 
-	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // xÃà È¸Àü ±âº»
-	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yÃà È¸Àü ±âº»
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ±âº» ÀÌµ¿ 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // xï¿½ï¿½ È¸ï¿½ï¿½ ï¿½âº»
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yï¿½ï¿½ È¸ï¿½ï¿½ ï¿½âº»
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ï¿½âº» ï¿½Ìµï¿½ 
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // ±âº» ÀÌµ¿ 
-	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yÃà ¾ó±¼
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // ï¿½âº» ï¿½Ìµï¿½ 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yï¿½ï¿½ ï¿½ï¿½
 
-	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ±âº» ½ÅÃà
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ï¿½âº» ï¿½ï¿½ï¿½ï¿½
 
-	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ¹öÅØ½º ¼¼ÀÌ´õ¿¡¼­ ¸ðµ¨¸µ º¯È¯ À§Ä¡ °¡Á®¿À±â
+	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ï¿½ï¿½ï¿½Ø½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ðµ¨¸ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
@@ -679,7 +696,7 @@ void ChickenEyes::DrawObject()
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
 	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
 
-	glEnableVertexAttribArray(PosLocation); // Enable ÇÊ¼ö! »ç¿ëÇÏ°Ú´Ü ÀÇ¹Ì
+	glEnableVertexAttribArray(PosLocation); // Enable ï¿½Ê¼ï¿½! ï¿½ï¿½ï¿½ï¿½Ï°Ú´ï¿½ ï¿½Ç¹ï¿½
 	glEnableVertexAttribArray(ColorLocation);
 	glEnableVertexAttribArray(NormalLocation);
 
@@ -687,9 +704,9 @@ void ChickenEyes::DrawObject()
 
 	WorldMatrix();
 
-	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ¾Õ¸é
+	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ï¿½Õ¸ï¿½
 
-	glDisableVertexAttribArray(PosLocation); // Disable ÇÊ¼ö!
+	glDisableVertexAttribArray(PosLocation); // Disable ï¿½Ê¼ï¿½!
 	glDisableVertexAttribArray(ColorLocation);
 	glDisableVertexAttribArray(NormalLocation);
 
@@ -718,11 +735,11 @@ void ChickenEyes::WorldMatrix()
 {
 	InitTotalworld();
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ±âº» ÀÌµ¿ 
-	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yÃà ¾ó±¼
-	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ±âº» ½ÅÃà
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ï¿½âº» ï¿½Ìµï¿½ 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yï¿½ï¿½ ï¿½ï¿½
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ï¿½âº» ï¿½ï¿½ï¿½ï¿½
 
-	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ¹öÅØ½º ¼¼ÀÌ´õ¿¡¼­ ¸ðµ¨¸µ º¯È¯ À§Ä¡ °¡Á®¿À±â
+	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ï¿½ï¿½ï¿½Ø½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ðµ¨¸ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
@@ -835,7 +852,7 @@ void ChickenLeftArm::DrawObject()
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
 	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
 
-	glEnableVertexAttribArray(PosLocation); // Enable ÇÊ¼ö! »ç¿ëÇÏ°Ú´Ü ÀÇ¹Ì
+	glEnableVertexAttribArray(PosLocation); // Enable ï¿½Ê¼ï¿½! ï¿½ï¿½ï¿½ï¿½Ï°Ú´ï¿½ ï¿½Ç¹ï¿½
 	glEnableVertexAttribArray(ColorLocation);
 	glEnableVertexAttribArray(NormalLocation);
 
@@ -843,9 +860,9 @@ void ChickenLeftArm::DrawObject()
 
 	WorldMatrix();
 
-	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ¾Õ¸é
+	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ï¿½Õ¸ï¿½
 
-	glDisableVertexAttribArray(PosLocation); // Disable ÇÊ¼ö!
+	glDisableVertexAttribArray(PosLocation); // Disable ï¿½Ê¼ï¿½!
 	glDisableVertexAttribArray(ColorLocation);
 	glDisableVertexAttribArray(NormalLocation);
 
@@ -887,20 +904,20 @@ void ChickenLeftArm::WorldMatrix()
 {
 	InitTotalworld();
 
-	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // xÃà È¸Àü ±âº»
-	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yÃà È¸Àü ±âº» 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ±âº» ÀÌµ¿ 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // xï¿½ï¿½ È¸ï¿½ï¿½ ï¿½âº»
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yï¿½ï¿½ È¸ï¿½ï¿½ ï¿½âº» 
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ï¿½âº» ï¿½Ìµï¿½ 
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // ±âº» ÀÌµ¿ 
-	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yÃà ¾ó±¼
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // ï¿½âº» ï¿½Ìµï¿½ 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yï¿½ï¿½ ï¿½ï¿½
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // ±âº» ÀÌµ¿
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // ï¿½âº» ï¿½Ìµï¿½
 	m_total_world = glm::rotate(m_total_world, glm::radians(hand_degree), glm::vec3(0.0f, 0.0f, 1.0f));
-	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // ±âº» ÀÌµ¿
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // ï¿½âº» ï¿½Ìµï¿½
 
-	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ±âº» ½ÅÃà
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ï¿½âº» ï¿½ï¿½ï¿½ï¿½
 
-	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ¹öÅØ½º ¼¼ÀÌ´õ¿¡¼­ ¸ðµ¨¸µ º¯È¯ À§Ä¡ °¡Á®¿À±â
+	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ï¿½ï¿½ï¿½Ø½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ðµ¨¸ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
@@ -1040,7 +1057,7 @@ void ChickenRightArm::DrawObject()
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
 	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
 
-	glEnableVertexAttribArray(PosLocation); // Enable ÇÊ¼ö! »ç¿ëÇÏ°Ú´Ü ÀÇ¹Ì
+	glEnableVertexAttribArray(PosLocation); // Enable ï¿½Ê¼ï¿½! ï¿½ï¿½ï¿½ï¿½Ï°Ú´ï¿½ ï¿½Ç¹ï¿½
 	glEnableVertexAttribArray(ColorLocation);
 	glEnableVertexAttribArray(NormalLocation);
 
@@ -1048,9 +1065,9 @@ void ChickenRightArm::DrawObject()
 
 	WorldMatrix();
 
-	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ¾Õ¸é
+	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ï¿½Õ¸ï¿½
 
-	glDisableVertexAttribArray(PosLocation); // Disable ÇÊ¼ö!
+	glDisableVertexAttribArray(PosLocation); // Disable ï¿½Ê¼ï¿½!
 	glDisableVertexAttribArray(ColorLocation);
 	glDisableVertexAttribArray(NormalLocation);
 
@@ -1080,18 +1097,18 @@ void ChickenRightArm::WorldMatrix()
 {
 	InitTotalworld();
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ±âº» ÀÌµ¿ 
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ï¿½âº» ï¿½Ìµï¿½ 
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // ±âº» ÀÌµ¿ 
-	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yÃà ¾ó±¼
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // ï¿½âº» ï¿½Ìµï¿½ 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yï¿½ï¿½ ï¿½ï¿½
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // ±âº» ÀÌµ¿
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // ï¿½âº» ï¿½Ìµï¿½
 	m_total_world = glm::rotate(m_total_world, glm::radians(-hand_degree), glm::vec3(0.0f, 0.0f, 1.0f));
-	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // ±âº» ÀÌµ¿
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // ï¿½âº» ï¿½Ìµï¿½
 
-	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ±âº» ½ÅÃà
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ï¿½âº» ï¿½ï¿½ï¿½ï¿½
 
-	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ¹öÅØ½º ¼¼ÀÌ´õ¿¡¼­ ¸ðµ¨¸µ º¯È¯ À§Ä¡ °¡Á®¿À±â
+	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ï¿½ï¿½ï¿½Ø½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ðµ¨¸ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
@@ -1217,7 +1234,7 @@ void ChickenLeftLeg::DrawObject()
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
 	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
 
-	glEnableVertexAttribArray(PosLocation); // Enable ÇÊ¼ö! »ç¿ëÇÏ°Ú´Ü ÀÇ¹Ì
+	glEnableVertexAttribArray(PosLocation); // Enable ï¿½Ê¼ï¿½! ï¿½ï¿½ï¿½ï¿½Ï°Ú´ï¿½ ï¿½Ç¹ï¿½
 	glEnableVertexAttribArray(ColorLocation);
 	glEnableVertexAttribArray(NormalLocation);
 
@@ -1225,9 +1242,9 @@ void ChickenLeftLeg::DrawObject()
 
 	WorldMatrix();
 
-	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ¾Õ¸é
+	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ï¿½Õ¸ï¿½
 
-	glDisableVertexAttribArray(PosLocation); // Disable ÇÊ¼ö!
+	glDisableVertexAttribArray(PosLocation); // Disable ï¿½Ê¼ï¿½!
 	glDisableVertexAttribArray(ColorLocation);
 	glDisableVertexAttribArray(NormalLocation);
 
@@ -1257,18 +1274,18 @@ void ChickenLeftLeg::WorldMatrix()
 {
 	InitTotalworld();
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ±âº» ÀÌµ¿
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ï¿½âº» ï¿½Ìµï¿½
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // ±âº» ÀÌµ¿ 
-	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yÃà ¾ó±¼
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // ï¿½âº» ï¿½Ìµï¿½ 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yï¿½ï¿½ ï¿½ï¿½
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // ±âº» ÀÌµ¿
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // ï¿½âº» ï¿½Ìµï¿½
 	m_total_world = glm::rotate(m_total_world, glm::radians(hand_degree), glm::vec3(1.0f, 0.0f, 0.0f));
-	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // ±âº» ÀÌµ¿
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // ï¿½âº» ï¿½Ìµï¿½
 
-	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ±âº» ½ÅÃà
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ï¿½âº» ï¿½ï¿½ï¿½ï¿½
 
-	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ¹öÅØ½º ¼¼ÀÌ´õ¿¡¼­ ¸ðµ¨¸µ º¯È¯ À§Ä¡ °¡Á®¿À±â
+	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ï¿½ï¿½ï¿½Ø½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ðµ¨¸ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 
@@ -1401,7 +1418,7 @@ void ChickenRightLeg::DrawObject()
 	int ColorLocation = glGetAttribLocation(gShaderProgramID, "in_Color");
 	int NormalLocation = glGetAttribLocation(gShaderProgramID, "in_Normal");
 
-	glEnableVertexAttribArray(PosLocation); // Enable ÇÊ¼ö! »ç¿ëÇÏ°Ú´Ü ÀÇ¹Ì
+	glEnableVertexAttribArray(PosLocation); // Enable ï¿½Ê¼ï¿½! ï¿½ï¿½ï¿½ï¿½Ï°Ú´ï¿½ ï¿½Ç¹ï¿½
 	glEnableVertexAttribArray(ColorLocation);
 	glEnableVertexAttribArray(NormalLocation);
 
@@ -1409,9 +1426,9 @@ void ChickenRightLeg::DrawObject()
 
 	WorldMatrix();
 
-	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ¾Õ¸é
+	glDrawArrays(GL_TRIANGLES, 0, 36); // 1 ï¿½Õ¸ï¿½
 
-	glDisableVertexAttribArray(PosLocation); // Disable ÇÊ¼ö!
+	glDisableVertexAttribArray(PosLocation); // Disable ï¿½Ê¼ï¿½!
 	glDisableVertexAttribArray(ColorLocation);
 	glDisableVertexAttribArray(NormalLocation);
 }
@@ -1453,20 +1470,20 @@ void ChickenRightLeg::WorldMatrix()
 {
 	InitTotalworld();
 
-	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // xÃà È¸Àü ±â
-	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yÃà È¸Àü ±âº» 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ±âº» ÀÌµ¿ 
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_x_degree), glm::vec3(1.0f, 0.0f, 0.0f)); // xï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½
+	m_total_world = glm::rotate(m_total_world, glm::radians(m_y_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yï¿½ï¿½ È¸ï¿½ï¿½ ï¿½âº» 
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_x_pos, m_y_pos, m_z_pos)); // ï¿½âº» ï¿½Ìµï¿½ 
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // ±âº» ÀÌµ¿ 
-	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yÃà ¾ó±¼
+	m_total_world = glm::translate(m_total_world, glm::vec3(m_far_x, m_far_y, m_far_z)); // ï¿½âº» ï¿½Ìµï¿½ 
+	m_total_world = glm::rotate(m_total_world, glm::radians(face_degree), glm::vec3(0.0f, 1.0f, 0.0f)); // yï¿½ï¿½ ï¿½ï¿½
 
-	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // ±âº» ÀÌµ¿
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, 0.125 * 0.025, 0)); // ï¿½âº» ï¿½Ìµï¿½
 	m_total_world = glm::rotate(m_total_world, glm::radians(hand_degree), glm::vec3(1.0f, 0.0f, 0.0f));
-	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // ±âº» ÀÌµ¿
+	m_total_world = glm::translate(m_total_world, glm::vec3(0, -0.125 * 0.025, 0)); // ï¿½âº» ï¿½Ìµï¿½
 
-	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ±âº» ½ÅÃà
+	m_total_world = glm::scale(m_total_world, glm::vec3(m_x_scale, m_y_scale, m_z_scale)); // ï¿½âº» ï¿½ï¿½ï¿½ï¿½
 
-	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ¹öÅØ½º ¼¼ÀÌ´õ¿¡¼­ ¸ðµ¨¸µ º¯È¯ À§Ä¡ °¡Á®¿À±â
+	unsigned int modelLocation = glGetUniformLocation(gShaderProgramID, "modelTransform"); //--- ï¿½ï¿½ï¿½Ø½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ðµ¨¸ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(this->m_total_world));
 }
 

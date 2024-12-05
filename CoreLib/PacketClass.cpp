@@ -25,7 +25,6 @@ std::string INIT_DATA_R::to_json()
 	std::string j_str = jObject.dump(4);
 
 	return j_str;
-	return std::string();
 }
 
 void INIT_DATA_R::from_json(std::string& j_str)
@@ -87,7 +86,7 @@ UPDATE_DATA& UPDATE_DATA::operator=(const UPDATE_DATA& rhs)
 	Player_Pos_x = rhs.Player_Pos_x;
 	Player_Pos_y = rhs.Player_Pos_y;
 	Player_Pos_z = rhs.Player_Pos_z;
-	Player_Face = rhs.Player_Face;
+	Player_FaceDegree = rhs.Player_FaceDegree;
 	GameOver_Flag = rhs.GameOver_Flag;
 	return *this;
 }
@@ -97,7 +96,7 @@ UPDATE_DATA::UPDATE_DATA(UPDATE_DATA& player_data)
 	Player_Pos_x = player_data.Player_Pos_x;
 	Player_Pos_y = player_data.Player_Pos_y;
 	Player_Pos_z = player_data.Player_Pos_z;
-	Player_Face = player_data.Player_Face;
+	Player_FaceDegree = player_data.Player_FaceDegree;
 	GameOver_Flag = player_data.GameOver_Flag;
 }
 
@@ -109,7 +108,7 @@ std::string UPDATE_DATA::to_json()
 	jObject["OtherPos_x"] = Player_Pos_x;
 	jObject["OtherPos_y"] = Player_Pos_y;
 	jObject["OtherPos_z"] = Player_Pos_z;
-	jObject["OtherFace"] = Player_Face;
+	jObject["OtherFace"] = Player_FaceDegree;
 	jObject["Over"] = GameOver_Flag;
 	std::string j_str = jObject.dump(4);
 
@@ -125,7 +124,7 @@ void UPDATE_DATA::from_json(std::string& j_str)
 	Player_Pos_x = jObject.at("OtherPos_x").get<float>();
 	Player_Pos_y = jObject.at("OtherPos_y").get<float>();
 	Player_Pos_z = jObject.at("OtherPos_z").get<float>();
-	Player_Face = jObject.at("OtherFace").get<int>();
+	Player_FaceDegree = jObject.at("OtherFace").get<float>();
 	GameOver_Flag = jObject.at("Over").get<bool>();
 
 }
