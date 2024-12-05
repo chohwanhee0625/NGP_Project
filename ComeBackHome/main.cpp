@@ -82,17 +82,11 @@ void main(int argc, char** argv)
 		std::cout << "GLEW Initalize\n";
 	}
 
-//	seednum = 2020;
-//	gRandomEngine = std::mt19937(static_cast<unsigned int>(seednum));
-
 	make_shaderProgram(); // 쉐이더 프로그램 만들기
 	ShowMenu(); // 게임 플레이 방법
 
 	gPlaybutton.InitBuffer();
 	gPlaybutton.LoadTexture("start_image.png");
-
-	// SetgVec(); // 초기 객체 만들기 
-	//SetgEnemyVec();
 
 	glEnable(GL_DEPTH_TEST);
 	glFrontFace(GL_CCW);
