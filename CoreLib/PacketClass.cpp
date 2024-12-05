@@ -93,6 +93,8 @@ UPDATE_DATA& UPDATE_DATA::operator=(const UPDATE_DATA& rhs)
 
 UPDATE_DATA::UPDATE_DATA(UPDATE_DATA& player_data)
 {
+	std::lock_guard lock(m_lock);
+
 	Player_Pos_x = player_data.Player_Pos_x;
 	Player_Pos_y = player_data.Player_Pos_y;
 	Player_Pos_z = player_data.Player_Pos_z;
